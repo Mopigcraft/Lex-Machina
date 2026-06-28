@@ -2,7 +2,10 @@
 
 *Ładuj gdy: nowa sprawa, nowe roszczenie, użycie przepisu, zmiana dziedziny prawa*
 
----
+> ⛔ HARD GATE — ZAKAZ CYTOWANIA Z PAMIĘCI
+> Przed użyciem JAKIEGOKOLWIEK artykułu, numeru Dz.U., brzmienia przepisu, stawki, kary, terminu ustawowego lub sygnatury orzeczenia: wykonaj weryfikację online (KROK P3).
+> Pominięcie P3 = błąd dyskredytujący pismo. Nie ma trybu szybkiego ani wyjątku "jestem pewny".
+> Szczegóły: view /mnt/skills/user/shared/PRAWO-HARDGATE.md
 
 ## KROK P1 — Identyfikacja dziedziny prawa
 
@@ -23,13 +26,11 @@ Jakiej dziedziny dotyczy sprawa? (może być kilka jednocześnie)
 > Reguła: jedna sprawa może dotyczyć wielu dziedzin jednocześnie.
 > Np. zwolnienie z pracy = prawo pracy + dobra osobiste (KC) + ewentualnie KK (mobbing).
 
----
-
 ## KROK P2 — Wstępna lista przepisów
 
 Wypisz wstępną listę przepisów dla sprawy. Każdy z nich zweryfikujesz w P3.
 
-Najczęściej stosowane przepisy wg dziedzin:
+Najczęściej stosowane przepisy wg dziedzin (ORIENTACYJNIE — weryfikuj online przed użyciem):
 
 ### Prawo pracy (KP)
 - art. 81 §1 — wynagrodzenie za czas gotowości do pracy
@@ -102,30 +103,26 @@ Najczęściej stosowane przepisy wg dziedzin:
 - art. 204 — zakres reprezentacji zarządu
 - art. 293 §1 — odpowiedzialność członków zarządu
 
----
-
 ## KROK P3 — Weryfikacja przepisu online (OBOWIĄZKOWA)
 
-**Przed użyciem każdego przepisu w piśmie:**
+> ⛔ HARD GATE — Ten krok jest obowiązkowy dla każdego przepisu.
+> Pominięcie = naruszenie zasady źródłowości = ryzyko błędu dyskredytującego całe pismo.
 
 ```
 PROCEDURA WERYFIKACJI:
-1. Wejdź na: https://isap.sejm.gov.pl lub https://prawo.sejm.gov.pl
-2. Wyszukaj akt prawny (po nazwie lub Dz.U.)
-3. Otwórz tekst jednolity — sprawdź datę ("stan na dzień: [data]")
-4. Znajdź artykuł — czy istnieje w tym brzmieniu?
-5. Czy był nowelizowany po dacie zdarzenia? (prawo intertemporalne)
-6. Zapisz: pełne oznaczenie z Dz.U.
+1. web_fetch → https://isap.sejm.gov.pl (wyszukaj akt po nazwie lub Dz.U.)
+2. Otwórz tekst jednolity — sprawdź datę ("stan na dzień: [data]")
+3. Znajdź artykuł — odczytaj AKTUALNE brzmienie ze strony
+4. Czy był nowelizowany po dacie zdarzenia? (prawo intertemporalne)
+5. Zapisz: pełne oznaczenie z Dz.U.
 ```
 
-**Pełne oznaczenie przy pierwszym użyciu:**
+Pełne oznaczenie przy pierwszym użyciu:
 ```
 art. 81 §1 ustawy z dnia 26 czerwca 1974 r. — Kodeks pracy
-(t.j. Dz.U. z 2023 r. poz. 1465 ze zm.)
+(t.j. Dz.U. z [rok z weryfikacji online] r. poz. [nr z weryfikacji online] ze zm.)
 ```
-→ Dalej w tekście: skrót "art. 81 §1 KP"
-
----
+Dalej w tekście: skrót "art. 81 §1 KP"
 
 ## KROK P4 — Zasada intertemporalna
 
@@ -140,8 +137,6 @@ FORMAT W PIŚMIE:
 WERYFIKACJA:
 isap.sejm.gov.pl → Historia zmian artykułu → Wybierz wersję na datę zdarzenia
 ```
-
----
 
 ## KROK P5 — Kolejność przepisów w piśmie
 

@@ -94,6 +94,6 @@ TECHNIKI DO ZASTOSOWANIA: [mały krok / kotwica czasowa / impeachment]
 ## ŁĄCZ Z
 | Sytuacja | Skill |
 |---|---|
-| Analiza akt przed rozprawą | `analiza-sadowa-v5` |
+| Analiza akt przed rozprawą | `analiza-sadowa-v6` |
 | Ocena wartości zeznań jako dowodu | `analizator-dowodow-v3` |
-| Mowa końcowa po przesłuchaniu | `analiza-sadowa-v5` |
+| Mowa końcowa po przesłuchaniu | `analiza-sadowa-v6` |

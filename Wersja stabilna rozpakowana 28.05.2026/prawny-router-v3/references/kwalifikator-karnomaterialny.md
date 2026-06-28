@@ -1,6 +1,6 @@
 # Kwalifikator Karnomaterialny v1.0
 # Moduł: Drzewo Decyzyjne Podobnych Czynów Zabronionych
-# Dla: prawo-polskie-v2 / prawo-karne.md / analiza-sadowa-v5
+# Dla: prawo-polskie-v2 / prawo-karne.md / analiza-sadowa-v6
 
 ---
 
@@ -559,7 +559,7 @@ AKTY PRAWNE (weryfikuj aktualność przed użyciem):
 PO USTALENIU KWALIFIKACJI Z TEGO MODUŁU → przejdź do:
 
 Kwalifikacja ustalona → analiza merytoryczna:
-  → analiza-sadowa-v5 (pełna analiza 11 filtrów, predykcja wyniku)
+  → analiza-sadowa-v6 (pełna analiza 11 filtrów, predykcja wyniku)
 
 Potrzebne orzecznictwo w tożsamych sprawach:
   → orzeczenia-sadowe-v2 (wyszukaj po przepisie + stanie faktycznym)
@@ -584,6 +584,6 @@ Przesłuchanie sprawcy lub świadka:
 
 *kwalifikator-karnomaterialny v1.1 · Moduł referencyjny dla prawo-polskie-v2*
 *Re-weryfikacja online: 21.05.2026 | KK Dz.U.2025.383 t.j. (wersja od 29.01.2026)*
-*Integracja: prawo-karne.md + wykroczenia.md + analiza-sadowa-v5 (Filtr #1)*
+*Integracja: prawo-karne.md + wykroczenia.md + analiza-sadowa-v6 (Filtr #1)*
 *Weryfikacja przepisów: isap.sejm.gov.pl · Orzecznictwo: sn.pl, orzeczenia.ms.gov.pl*
 *Zakaz cytowania z pamięci AI — każdy próg kwotowy i tryb ścigania weryfikuj przed analizą*

@@ -1,5 +1,28 @@
 # MD3a — Walidacja formalna
 
+## KROK 0 — SKAN BŁĘDÓW DAT I NAZW (przed analizą merytoryczną)
+
+Przed przystąpieniem do oceny treści dokumentów wykonaj szybki skan oczywistych
+błędów pisarskich w datach i nazwach własnych, które mogłyby zostać przypadkowo
+przeniesione do analizy lub pisma:
+
+```
+[ ] Czy w dokumencie występują daty z rokiem przyszłym względem daty samego pisma
+    lub pozostałych dokumentów (np. pismo z 2025 r. odnosi się do "9.10.2025"
+    podczas gdy z kontekstu wynika 2024 r.)? → odnotuj jako PRAWDOPODOBNY BŁĄD
+    PISARSKI, nie jako nowe zdarzenie; przyjmij datę wynikającą z kontekstu, ale
+    zaznacz obie wersje.
+[ ] Czy to samo imię/nazwisko/nazwa występuje w różnych zapisach w różnych
+    dokumentach lub fragmentach (literówki, OCR, inna osoba)? → odnotuj do MD3c
+    jako kandydat [DOUBT][IDENT] / [CROSS][IDENT], nie poprawiaj automatycznie.
+```
+
+Wynik tego skanu raportuj na początku analizy jako krótką sekcję
+"Uwagi do materiału przed analizą" — to zapobiega błędnemu cytowaniu dat lub
+nazw w dalszej części i w ewentualnym piśmie procesowym.
+
+---
+
 ## Lista kontrolna
 
 ```

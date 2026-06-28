@@ -53,7 +53,7 @@ Na podstawie wykrytych dziedzin wskaż listę modułów do uruchomienia
 | `[CYBER]` | Cyberprzestępczość | art. 267 KK, dostęp do konta, monitoring, e-mail bez zgody | MD3b | MP11, MP6 | Alert legalności nagrań / dostępu |
 | `[ADM]` | Postępowanie administracyjne | KPA, decyzja, organ, odwołanie, WSA, NSA | MD5 | MP2, MP0 | Termin odwołania: 14 dni (art. 129 KPA) |
 | `[PPSA]` | Sądowa kontrola administracji | WSA, NSA, skarga, PPSA | MD5 | MP2 | Termin skargi: 30 dni (art. 53 §1 PPSA) |
-| `[GOSP]` | Prawo gospodarcze | KSH, spółka, zarząd, udziały, umowa B2B | MD1, MD4 | MP2 | Postęp. gospodarcze: prekluzja art. 458⁵ KPC |
+| `[GOSP]` | Prawo gospodarcze | KSH, spółka, zarząd, udziały, umowa B2B, statut, umowa spółki, founders' agreement, regulamin zarządu/RN | MD1, MD4 | MP2 | Postęp. gospodarcze: prekluzja art. 458⁵ KPC; redakcja/analiza dokumentu → `analizator-umow-v1` J20 |
 | `[RODZ]` | Prawo rodzinne / spadkowe | alimenty, rozwód, podział majątku, spadek, testament | MD4, MD5 | MP2, MP4 | Weryfikuj akty stanu cywilnego |
 | `[UBEZP]` | Ubezpieczenia społeczne | ZUS, składki, zasiłek, KRUS, decyzja ZUS | MD3a, MD5 | MP2 | Odwołanie do SO przez KPA |
 | `[ETYKA]` | Etyka pełnomocników | zarzut wobec adwokata, radcy, notariusza | — | MP2, MP4 | Sprawdź kodeks etyki zawodowej |

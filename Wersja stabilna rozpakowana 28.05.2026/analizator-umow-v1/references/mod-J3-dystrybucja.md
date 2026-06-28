@@ -1,17 +1,22 @@
 # MODUŁ J3 — UMOWY DYSTRYBUCYJNE: FRANCZYZA I AGENCYJNA
-## Analizator Umów v2 · Moduł J3
+## Analizator Umów v1 · Moduł J3
 
 > Wczytaj dla: umowa franczyzy (franczyzodawca/biorca), umowa agencyjna,
 > umowa dystrybucyjna, umowa przedstawicielstwa handlowego.
 
 ---
+
+> ⛔ HARD GATE — przed podaniem art. KC dot. agencji, franczyzy, dystrybucji weryfikuj w ISAP:
+> isap.sejm.gov.pl → KC → art. 758–764⁹ (agencja), art. 353¹ (swoboda umów)
+> eur-lex.europa.eu → Dyrektywa 86/653/EWG (agenci handlowi) — jeśli dot. UE
+> Orzecznictwo: sn.pl / orzeczenia.ms.gov.pl — nie cytuj z pamięci.
 ## J.5 UMOWA FRANCZYZY
 
 **Podstawa: KC art. 353¹ (umowa nienazwana)**
 ```
 UWAGA: Brak osobnej regulacji franczyzy w prawie polskim
-  Stosuje się KC + dyrektywy UE (jeśli dotyczy) + kodeksy etyki branżowych
-  Weryfikuj: Europejski Kodeks Etyki Franczyzy (jeśli franczyzodawca jest jego sygnatariuszem)
+  Stosuje się KC oraz przepisy szczególne zależnie od modelu (konsument, konkurencja, dane, własność intelektualna).
+  Kodeksy branżowe traktuj wyłącznie jako standard kontraktowy/etyczny, nie jako źródło powszechnie obowiązującego prawa.
 ```
 
 ### Pułapki:
@@ -89,7 +94,7 @@ SZCZEGÓLNA UWAGA: Przepisy o umowie agencyjnej zawierają liczne normy bezwzgl�
 
 **AG-1 — Świadczenie wyrównawcze pominięte (CRITICAL)**
 ```
-PRAWO: KC art. 764³ — świadczenie wyrównawcze (del credere):
+PRAWO: KC art. 764³ — świadczenie wyrównawcze:
   Po rozwiązaniu umowy agent może żądać świadczenia wyrównawczego jeśli:
   (1) pozyskał nowych klientów lub rozwinął istniejących
   (2) dający zlecenie czerpie znaczne korzyści z klientów po rozwiązaniu
@@ -111,12 +116,12 @@ REKOMENDACJA DLA AGENTA:
 
 **AG-2 — Prowizja del credere bez limitu (HIGH RISK)**
 ```
-PRAWO: KC art. 761⁶ — agent przejmujący ryzyko wypłacalności klienta (del credere)
+PRAWO: KC art. 761⁷ — agent przejmujący ryzyko wypłacalności klienta (del credere)
   musi za to otrzymać dodatkowe wynagrodzenie; ryzyko del credere ograniczone do
   konkretnej transakcji (nie ogólne)
 
 PUŁAPKA: "Agent odpowiada za wypłacalność klientów pozyskanych przez agenta"
-  → Bez dodatkowego wynagrodzenia del credere → naruszenie art. 761⁶ KC
+  → Bez dodatkowego wynagrodzenia del credere → naruszenie art. 761⁷ KC
   → Agent przejmuje ryzyko kredytowe przedsiębiorcy bez zapłaty
 ```
 

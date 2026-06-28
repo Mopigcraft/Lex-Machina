@@ -41,6 +41,15 @@ Strona twierdząca:
 Status: bezsporne / sporne / wymaga weryfikacji / kolizja
 ```
 
+**Reguła tożsamości (osoby/podmioty):** dla każdego faktu typu `osoba` zapisz
+*dosłowny* zapis imienia/nazwiska/nazwy jak w źródle — nie normalizuj, nie
+poprawiaj literówek, nie zakładaj że różne zapisy ("Wiatrak" / "Wiatr" / "Wlazło",
+"Poudel" / "Paudel") oznaczają tę samą osobę. Jeśli ten sam DOC-ID lub powiązany
+dokument zawiera różne zapisy dla osoby odgrywającej tę samą rolę procesową
+(strona, świadek, podpisujący), odnotuj to jako odrębny fakt `[F00X-IDENT]`
+ze statusem `wymaga weryfikacji` i przekaż do MD3c jako kandydat na `[DOUBT][IDENT]`
+lub `[CROSS][IDENT]`.
+
 ### Warstwa B — czynności procesowe i materialnoprawne
 
 Wyodrębnij:

@@ -11,6 +11,12 @@
 [ ] Czy daty tego samego zdarzenia są spójne między dokumentami? (→ CROSS)
 [ ] Czy kwoty są identyczne we wszystkich dokumentach? (→ CROSS)
 [ ] Czy nazwy własne (adresy e-mail, nazwy firm, imiona) są identyczne wszędzie? (→ INTRA/CROSS)
+[ ] Czy TOŻSAMOŚĆ OSOBY PODPISUJĄCEJ dokument dowodowy (imię/nazwisko na podpisie,
+    pokwitowaniu, formularzu) zgadza się z danymi strony/świadka używanymi w pismach
+    procesowych? Drobne różnice w zapisie nazwiska (np. "Wiatr" vs "Wiatrak",
+    "Poudel" vs "Paudel") NIE są pomijane jako oczywista zgodność — wymagają
+    explicit odnotowania jako [DOUBT] lub [CROSS], nawet jeśli prawdopodobnie
+    chodzi o tę samą osobę. (→ DOUBT/CROSS, kategoria IDENT)
 [ ] Czy kwalifikacja prawna faktu jest spójna (np. zaliczka vs nienależne środki)? (→ INTRA)
 [ ] Czy domena/serwer konta mailowego jest spójna z kwalifikacją służbowe/prywatne? (→ INTRA)
 [ ] Czy chronologia zdarzeń jest możliwa (daty → terminy → działania)? (→ CROSS)
@@ -28,6 +34,34 @@
 | `'inter'` | `[CROSS]` | Sprzeczność między twierdzeniami **różnych stron** lub dokumentów |
 | `'legal'` | `[LEG]` | Sprzeczność **treści dokumentu z przepisem prawa** |
 | `'doubt'` | `[DOUBT]` | Niejednoznaczność / wątpliwość nierozstrzygnięta |
+
+> **Podkategoria IDENT** (nie jest osobnym `type`, lecz tagiem w `title`):
+> rozbieżność tożsamości osoby podpisującej dokument dowodowy vs. dane strony/świadka
+> w pismach procesowych (np. różne zapisy nazwiska na podpisie i w piśmie). Renderuj
+> jako `[DOUBT][IDENT]` (gdy nie wiadomo, czy to ta sama osoba) albo `[CROSS][IDENT]`
+> (gdy jedna strona explicite zaprzecza, że to inna osoba). Zawsze `status` co najmniej
+> `DO SPRAWDZENIA` — rozbieżność tożsamości na dokumencie kluczowym dla rozliczenia
+> (np. pokwitowanie odbioru gotówki) może podważyć cały dowód.
+
+---
+
+## ► FORMAT INLINE — SPRZECZNOŚĆ IDENT (rozbieżność tożsamości podpisującego)
+
+```
+[❓ IDENT-N] STATUS: DO SPRAWDZENIA / KRYTYCZNE
+DOKUMENT:    [nazwa dokumentu zawierającego podpis/dane]
+OSOBA WG SPRAWY: [imię i nazwisko strony/świadka jak w pismach procesowych]
+OSOBA WG DOKUMENTU: [imię i nazwisko / podpis jak zapisane na dokumencie]
+
+CYTAT:
+  Źródło: [nazwa dokumentu] · Lok.: [str. X]
+  „[dosłowny zapis nazwiska/podpisu, max 100 zn.]"
+
+ROZBIEŻNOŚĆ: [opisz różnicę — literówka / inna osoba / błąd OCR / niewyjaśnione]
+ZNACZENIE: [czy dokument jest kluczowy dla rozliczenia/roszczenia — jeśli tak,
+            rozbieżność tożsamości podważa wartość dowodową dokumentu]
+REKOMENDACJA: [zażądać wyjaśnienia / oryginału / potwierdzenia że to ta sama osoba]
+```
 
 ---
 
@@ -179,5 +213,9 @@ contradictions.push({
 Kolizja kwot jest zawsze co najmniej OSTRZEŻENIE.  
 Zmiana wersji bez wyjaśnienia w kolejnym piśmie = INTRA-CONTRA co najmniej DO SPRAWDZENIA.  
 Sprzeczność między pismem a dowodem pierwotnym ma pierwszeństwo analityczne przed sprzecznością retoryczną.
+Rozbieżność tożsamości [IDENT] na dokumencie, który jest GŁÓWNYM dowodem dla danej
+przesłanki (np. pokwitowanie odbioru środków, podpis na porozumieniu) = co najmniej
+DO SPRAWDZENIA; jeśli żadna ze stron nie wyjaśniła rozbieżności w żadnym dotychczasowym
+piśmie = KRYTYCZNE.
 
 ---

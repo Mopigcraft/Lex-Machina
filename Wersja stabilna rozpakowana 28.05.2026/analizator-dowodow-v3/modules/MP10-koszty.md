@@ -71,7 +71,9 @@ Koszty ogłoszeń:
 ## 10.3 Koszty zastępstwa procesowego (koszty pełnomocnika)
 
 ```text
-Stawka minimalna z rozporządzenia (do weryfikacji: Dz.U. 2015 poz. 1800 ze zm.):
+Stawka minimalna z rozporządzenia:
+  adwokaci: Dz.U. 2026 poz. 215 t.j. (Rozp. MS z 22.10.2015 r., t.j. 12.02.2026) ✅ VER: 2026-06-09
+  radcowie: Dz.U. 2026 poz. 118 t.j. (Rozp. MS z 22.10.2015 r. o opł. czynności radców) ✅ VER: 2026-06-09
 WPS / kategoria sprawy:
 Stawka minimalna dla tej sprawy:
 Stawka realna (umowna) pełnomocnika użytkownika:

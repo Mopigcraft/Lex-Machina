@@ -1,5 +1,5 @@
 # MODUŁ I — ZAKAZ KONKURENCJI: ANALIZA KOMPLEKSOWA
-## Analizator Umów v2 · Moduł Ekspercki
+## Analizator Umów v1 · Moduł Ekspercki
 
 > **Wczytaj ten moduł gdy:** umowa o zakazie konkurencji (odrębna lub klauzula),
 > zakaz podczas zatrudnienia (art. 101¹ KP), zakaz po ustaniu (art. 101² KP),
@@ -8,11 +8,16 @@
 
 ---
 
+> ⛔ HARD GATE — przed podaniem art. KP lub KC dotyczących zakazu weryfikuj w ISAP:
+> isap.sejm.gov.pl → Kodeks pracy (t.j. aktualny) → art. 101¹ i 101²
+> isap.sejm.gov.pl → Kodeks cywilny → art. 353¹, 483–484 (kary umowne), art. 5
+> Orzecznictwo SN dot. zakazu konkurencji: sn.pl — nie cytuj z pamięci.
+
 ## I.1 MAPA PRAWNA ZAKAZU KONKURENCJI
 
 ### Weryfikacja online — ZAWSZE przed analizą:
 ```
-isap.sejm.gov.pl → Kodeks pracy → art. 101¹ i 101² (zakaz pracowniczy)
+isap.sejm.gov.pl → Kodeks pracy (t.j. Dz.U. 2025 poz. 277) → art. 101¹ i 101²
 isap.sejm.gov.pl → Kodeks cywilny → art. 353¹, 483–484, 5 (zakaz B2B)
 isap.sejm.gov.pl → ustawa o zwalczaniu nieuczciwej konkurencji (UZNK)
 sn.pl → fraza "zakaz konkurencji" → aktualna linia orzecznicza
@@ -22,15 +27,15 @@ sn.pl → fraza "zakaz konkurencji" → aktualna linia orzecznicza
 
 | Typ relacji | Podstawa prawna | Odszkodowanie | Forma | Skutek naruszenia |
 |---|---|---|---|---|
-| Pracownik–Pracodawca (podczas UoP) | art. 101¹ KP | brak wymogu | pisemna rygor nieważności | kara umowna + odszkodowanie |
-| Pracownik–Pracodawca (po UoP) | art. 101² KP | **min. 25% wynagrodzenia — obligatoryjne** | pisemna rygor nieważności | kara umowna; pracodawca może zwolnić z zakazu |
+| Pracownik–Pracodawca (podczas UoP) | art. 101¹ KP | brak wymogu | pisemna rygor nieważności | odpowiedzialność pracownika oceniaj przez reżim KP; nie zakładaj automatycznej skuteczności kary umownej wobec pracownika |
+| Pracownik–Pracodawca (po UoP) | art. 101² KP | **min. 25% wynagrodzenia — obligatoryjne** | pisemna rygor nieważności | kara umowna zasadniczo dopuszczalna wobec byłego pracownika; ustanie zakazu/zwolnienie tylko według ustawy albo wyraźnego mechanizmu umownego |
 | B2B Wykonawca–Zamawiający | KC art. 353¹ | brak wymogu ustawowego | dowolna (pisemna rekomendowana) | kara umowna + odszkodowanie |
-| Sprzedaż przedsiębiorstwa / udziałów | KC + UZNK art. 17 | brak wymogu | dowolna | odszkodowanie za UZNK |
+| Sprzedaż przedsiębiorstwa / udziałów | KC art. 353¹, 55¹, 55², 555, 58; KSH art. 180 (udziały sp. z o.o.); pomocniczo UZNK art. 3, 11, 15 i 18 gdy zakaz służy czynom nieuczciwej konkurencji | brak wymogu ustawowego | zależna od czynności głównej | kara umowna / odszkodowanie / roszczenia UZNK |
 | Umowa franczyzy | KC art. 353¹ | brak wymogu | zwykle pisemna | kara umowna |
-| Umowa agencyjna | KC art. 764⁶ | **min. 1/3 prowizji — obligatoryjne** | pisemna pod rygorem nieważności | kara umowna |
+| Umowa agencyjna | KC art. 764⁶–764⁸ | odpowiednia suma pieniężna, chyba że umowa stanowi inaczej albo rozwiązanie nastąpiło z przyczyn obciążających agenta | pisemna pod rygorem nieważności | kara umowna / roszczenia z umowy |
 
 > **KRYTYCZNY ALERT:** Zakaz po ustaniu zatrudnienia (UoP) BEZ odszkodowania → nieważny
-> z mocy prawa (art. 101² §2 KP). Zakaz agencyjny bez odszkodowania → art. 764⁶ §3 KC → nieważny.
+> z mocy prawa (art. 101² §2 KP). Zakaz agencyjny wymaga odrębnej analizy art. 764⁶ §3–4 KC: odszkodowanie jest zasadą dyspozytywną, a brak kwoty uruchamia kryterium „odpowiedniej sumy”, chyba że umowa skutecznie stanowi inaczej.
 
 ---
 
@@ -64,7 +69,7 @@ KROK 5 — ODSZKODOWANIE (zakaz post-contractual):
   UoP: min. 25% wynagrodzenia za każdy miesiąc zakazu (art. 101² §2 KP)
     → UWAGA: 25% = minimum absolutne; nieważne postanowienie niższe
     → Oblicz: [suma wynagrodzeń z okresu równego zakazowi] × 25% / [miesiące zakazu]
-  Agencyjna: min. 1/3 średniej prowizji miesięcznej (art. 764⁶ KC)
+  Agencyjna: „odpowiednia suma pieniężna” według art. 764⁶ §3–4 KC, chyba że umowa stanowi inaczej albo rozwiązanie nastąpiło z przyczyn obciążających agenta
   B2B: brak wymogu → ale brak = ryzyko art. 5 KC / uznanie za klauzulę sprzeczną
     z dobrymi obyczajami jeśli zakaz realnie eliminuje możliwość zarobkowania
 
@@ -93,7 +98,7 @@ PRZYKŁAD PROBLEMATYCZNY:
   → SN: zakaz musi dotyczyć faktycznie konkurencyjnej działalności
 
 WERYFIKUJ: sn.pl → "zakaz konkurencji definicja działalności"
-  Kluczowe orzeczenia (sprawdź aktualne na sn.pl):
+  Orzecznictwo traktuj pomocniczo i cytuj wyłącznie po sprawdzeniu w oficjalnej bazie SN:
   - Zakres zakazu ograniczony do tej samej branży i rodzaju działalności
   - Nie można zakazać pracy w innej, nawet pokrewnej branży bez uzasadnienia
 
@@ -115,11 +120,11 @@ MECHANIZM:
   Pracodawca czeka miesiąc, zwalnia z zakazu, przestaje płacić odszkodowanie
   Pracownik przez ten miesiąc odmówił ofert pracy = realna strata
 
-STAN PRAWNY (weryfikuj w sn.pl — linia orzecznicza):
+STAN PRAWNY (weryfikuj najpierw KP w ISAP, a orzecznictwo wyłącznie w oficjalnych bazach SN/sądów):
   Zwolnienie z zakazu = pracodawca traci prawo do egzekwowania zakazu od dnia zwolnienia
   ALE: Pracownik zachowuje prawo do odszkodowania za okres, w którym rzeczywiście
   przestrzegał zakazu i poniósł straty (utracone szanse)
-  Orzeczenie SN (szukaj: sn.pl "zwolnienie z zakazu konkurencji odszkodowanie"):
+  Orzecznictwo SN (szukaj w sn.pl: "zwolnienie z zakazu konkurencji odszkodowanie") — stosuj tylko po weryfikacji sygnatury i tezy:
   pracownik może żądać odszkodowania za straty poniesione w okresie faktycznego przestrzegania
 
 REKOMENDACJA DLA PRACOWNIKA:
@@ -144,11 +149,11 @@ MECHANIZM OBRONY — ART. 484 §2 KC (miarkowanie):
   Miarkowanie możliwe gdy:
   (a) zobowiązanie jest w znacznej części wykonane (zakaz przestrzegano 11 z 12 miesięcy)
   (b) kara jest rażąco wygórowana w stosunku do szkody
-  Weryfikuj: orzeczenia.ms.gov.pl → "miarkowanie kary umownej zakaz konkurencji"
+  Weryfikuj: orzeczenia.ms.gov.pl lub sn.pl → "miarkowanie kary umownej zakaz konkurencji"
 
 WAŻNA ASYMETRIA:
-  W UoP pracownik NIE może zrzec się miarkowania z góry — art. 18 KP
-  W B2B strony mogą wyłączyć miarkowanie (art. 353¹ KC) — ale SN może zakwestionować
+  W relacji pracowniczej nie kopiuj mechanicznie cywilnoprawnych klauzul kar wobec pracownika; oceniaj przez art. 18 KP i przepisy o odpowiedzialności materialnej pracownika.
+  W B2B próby wyłączenia miarkowania oceniaj przez art. 353¹, 58 i 5 KC; nie traktuj ich jako bezpiecznych bez analizy orzecznictwa.
 
 REKOMENDACJA:
   „§X. Kara umowna za naruszenie zakazu wynosi [3-krotność] miesięcznego
@@ -166,15 +171,14 @@ KONTEKST:
 
 PUŁAPKI SPECYFICZNE:
 □ Brak odszkodowania → w KC nie ma wymogu (w przeciwieństwie do KP)
-  ale sąd może uznać za sprzeczny z UZNK (art. 17) jeśli zakaz eliminuje
-  możliwość zarobkowania
+  ale sąd może oceniać zakaz przez art. 58 §2 KC, art. 5 KC oraz — gdy zakaz służy nieuczciwym praktykom rynkowym — przez UZNK art. 3, 11, 15 i 18
 □ Zakaz zbyt długi (5–10 lat) → ryzyko art. 58 §2 KC (zasady współżycia)
 □ Zakaz zbyt szeroki → "nie prowadzić działalności w Polsce" bez specyfikacji
 □ Brak definicji beneficjenta zakazu → czy obejmuje podmioty powiązane ze sprzedającym?
 
 WERYFIKUJ:
-  isap.sejm.gov.pl → UZNK → art. 17 (zakaz konkurencji przy sprzedaży przedsiębiorstwa)
-  KC → art. 551 (składniki przedsiębiorstwa) + art. 555 (sprzedaż przedsiębiorstwa)
+  isap.sejm.gov.pl → KC → art. 55¹, 55², 555, 353¹, 58
+  isap.sejm.gov.pl → UZNK → art. 3, 11, 15, 18; UWAGA: art. 17 UZNK dotyczy reklamy, nie zakazu konkurencji przy sprzedaży przedsiębiorstwa
   Sprawdź orzeczenia sn.pl: "zakaz konkurencji sprzedaż udziałów"
 
 REKOMENDACJA:
@@ -188,25 +192,29 @@ REKOMENDACJA:
   odszkodowanie w wysokości [X]% Ceny Nabycia, płatne [jednorazowo / ratami]."
 ```
 
-### PUŁAPKA ZK-5 — Zakaz agencyjny bez obligatoryjnego odszkodowania (CRITICAL)
+### PUŁAPKA ZK-5 — Zakaz agencyjny z błędnie skonstruowanym wynagrodzeniem lub zakresem (HIGH RISK)
 ```
 PODSTAWA: art. 764⁶ KC — ZAWSZE weryfikuj w isap.sejm.gov.pl
 
 WYMOGI USTAWOWE (zakaz po ustaniu umowy agencyjnej):
-□ Forma pisemna pod rygorem nieważności (art. 764⁶ §4 KC)
-□ Max czas: 2 lata po ustaniu umowy (art. 764⁶ §1 KC)
-□ Odszkodowanie: min. 1/3 średniej miesięcznej prowizji z ostatnich 2 lat
-  (lub z okresu trwania umowy, jeśli krótsza) — obligatoryjne
-□ Obejmuje wyłącznie: klientów agenta + teren/grupę klientów agenta
+□ Forma pisemna pod rygorem nieważności (art. 764⁶ §1 KC)
+□ Max czas: 2 lata po rozwiązaniu umowy (art. 764⁶ §2 KC)
+□ Zakres: tylko grupa klientów lub obszar geograficzny objęte działalnością agenta
+  oraz rodzaj towarów lub usług stanowiących przedmiot umowy (art. 764⁶ §1 KC)
+□ Suma pieniężna: art. 764⁶ §3–4 KC — zasadą jest odpowiednia suma pieniężna;
+  jeżeli nie określono wysokości, należy się suma odpowiednia do korzyści dającego
+  zlecenie i utraconych możliwości zarobkowych agenta. Ustawa nie przewiduje
+  sztywnego minimum 1/3 prowizji.
 
-SKUTEK BRAKU ODSZKODOWANIA:
-  Klauzula zakazu jest nieważna z mocy prawa (art. 764⁶ §3 KC)
-  Agent może swobodnie podjąć działalność konkurencyjną
+SKUTEK BRAKÓW:
+  Brak formy pisemnej, przekroczenie 2 lat albo zbyt szeroki zakres → wysokie ryzyko
+  nieważności/bezskuteczności zastrzeżenia. Brak kwoty nie oznacza automatycznie
+  nieważności — stosuj art. 764⁶ §4 KC, chyba że umowa skutecznie stanowi inaczej.
 
 PUŁAPKA PRAKTYCZNA:
-  "Strony wyłączają stosowanie art. 764⁶ KC"
-  → Nie można wyłączyć — przepis jest bezwzględnie wiążący po stronie agenta
-  → Weryfikuj: isap.sejm.gov.pl → KC art. 764⁶ → charakter normy
+  "Agentowi nie przysługuje żadna suma za zakaz" → możliwe na gruncie brzmienia
+  art. 764⁶ §3 KC, ale wymaga jednoznacznego zapisu i oceny przez art. 353¹, 58 i 5 KC.
+  W interesie agenta żądaj konkretnej kwoty lub mechanizmu obliczenia.
 ```
 
 ### PUŁAPKA ZK-6 — Zakaz konkurencji a prawo do świadczeń pracowniczych (MEDIUM RISK)
@@ -219,7 +227,7 @@ SYTUACJA:
 ANALIZA:
   Zakaz konkurencji ≠ zakaz pracy → pracownik może pracować u niebędącego konkurentem
   Zasiłek: PUP może uznać, że pracownik "jest dostępny na rynku pracy" mimo zakazu
-  → Weryfikuj: web_search "zakaz konkurencji zasiłek dla bezrobotnych [rok]"
+  → Weryfikuj urzędowo: ISAP + praca.gov.pl / właściwy urząd pracy; nie opieraj się na poradnikach prywatnych
 
 PUŁAPKA: Pracodawca stosuje zakaz jako "karę" po zwolnieniu, by utrudnić znalezienie pracy
   Jednocześnie wypłaca minimalne 25% → pracownik dostaje mniej niż zasiłek
@@ -249,7 +257,7 @@ MECHANIZM OBEJŚCIA:
   → De facto zakaz konkurencji bez odszkodowania
 
 PODSTAWA PRAWNA:
-  isap.sejm.gov.pl → ustawa z 5.07.2018 o ochronie tajemnic przedsiębiorstwa
+  isap.sejm.gov.pl → ustawa o zwalczaniu nieuczciwej konkurencji → art. 11 UZNK (tajemnica przedsiębiorstwa); brak odrębnej polskiej ustawy z 5.07.2018 o ochronie tajemnic przedsiębiorstwa
   (implementacja dyrektywy UE 2016/943)
   → "tajemnica" musi spełniać TRZY kryteria: poufność + wartość gospodarcza + środki ochrony
 
@@ -443,7 +451,7 @@ WYNIK OGÓLNY:
 
 ---
 
-*Moduł I / analizator-umow-v2 · Dla UoP → references/umowy-o-prace.md (Moduł H)*
+*Moduł I / analizator-umow-v1 · Dla UoP → references/umowy-o-prace.md (Moduł H)*
 *Dla umów B2B → references/b2b-podwykonawcze.md (Moduł G)*
-*Dla innych typów umów → references/inne-typy-umow.md (Moduł J)*
+*Dla routingu typów umów → references/mod-J0-routing.md (Moduł J — nawigacja)*
 *Prawo weryfikuj w ISAP · Orzeczenia: sn.pl · Zawsze aktualny tekst jednolity*

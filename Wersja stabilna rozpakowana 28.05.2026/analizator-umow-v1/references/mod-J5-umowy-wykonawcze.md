@@ -1,17 +1,22 @@
 # MODUŁ J5 — UMOWY WYKONAWCZE: DZIEŁO, ZLECENIE, UGODA
-## Analizator Umów v2 · Moduł J5
+## Analizator Umów v1 · Moduł J5
 
 > Wczytaj dla: umowa o dzieło, umowa zlecenia, ugoda sądowa / pozasądowa,
 > porozumienie kończące spór, umowa rezultatu vs. starannego działania.
 
 ---
+
+> ⛔ HARD GATE — przed podaniem art. KC dot. dzieła, zlecenia, ugody weryfikuj w ISAP:
+> isap.sejm.gov.pl → KC → art. 627–646 (dzieło), art. 734–751 (zlecenie), art. 917–918 (ugoda)
+> isap.sejm.gov.pl → KC → art. 627¹ (podwykonawstwo w robotach budowlanych)
+> Orzecznictwo SN dot. kwalifikacji dzieło/zlecenie: sn.pl — nie cytuj z pamięci.
 ## J.9 UMOWA O DZIEŁO
 
 **Podstawa: KC art. 627–646**
 ```
 isap.sejm.gov.pl → KC → art. 627–646
 UWAGA: ZUS może kwestionować umowy o dzieło i przekwalifikowywać na zlecenie
-  → Weryfikuj: web_search "ZUS umowa o dzieło przekwalifikowanie [rok]"
+  → Weryfikuj wyłącznie oficjalnie: zus.pl oraz ISAP; orzeczenia: sn.pl/orzeczenia.ms.gov.pl
 ```
 
 ### Pułapki:
@@ -67,7 +72,7 @@ REKOMENDACJA:
 **ZL-1 — Brak minimalnej stawki godzinowej (CRITICAL)**
 ```
 PRAWO: ustawa o minimalnym wynagrodzeniu za pracę → minimalna stawka godzinowa zlecenia
-  → WERYFIKUJ ONLINE aktualne stawki: isap.sejm.gov.pl lub web_search "minimalna stawka godzinowa [rok]"
+  → WERYFIKUJ aktualne stawki wyłącznie urzędowo: ISAP + gov.pl/rodzina lub właściwe rozporządzenie w Dzienniku Ustaw
   → Obowiązek ewidencji czasu pracy (w umowie lub oddzielnie)
   → Penalizacja: zleceniodawca odpowiada za wypłatę stawki minimalnej
 

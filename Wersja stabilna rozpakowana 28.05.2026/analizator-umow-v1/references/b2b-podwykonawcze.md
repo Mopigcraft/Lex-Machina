@@ -1,11 +1,17 @@
 # MODUŁ G — UMOWY B2B I PODWYKONAWCZE
-## Analizator Umów v2 · Moduł Ekspercki
+## Analizator Umów v1 · Moduł Ekspercki
 
 > **Wczytaj ten moduł gdy:** umowa B2B (kontrakt menedżerski, ramowa współpracy,
 > umowa o świadczenie usług między przedsiębiorcami), umowa podwykonawcza
 > (budowlana, IT, produkcyjna), lub gdy wykrywasz ryzyko kwalifikacji pracowniczej.
 
 ---
+
+> ⛔ HARD GATE — przed podaniem art. KP, KC, uSUS weryfikuj w ISAP:
+> isap.sejm.gov.pl → Kodeks pracy (t.j. aktualny) → art. 22 §1, §1¹ (test stosunku pracy)
+> isap.sejm.gov.pl → Kodeks cywilny → art. 353¹, 734–751 (zlecenie), 627–646 (dzieło)
+> isap.sejm.gov.pl → ustawa o systemie ubezpieczeń społecznych → art. 8 ust. 2a (zbieg tytułów)
+> Orzecznictwo SN dot. kwalifikacji: sn.pl / orzeczenia.ms.gov.pl — nie cytuj z pamięci.
 
 ## G.1 KWALIFIKACJA: B2B vs STOSUNEK PRACY
 
@@ -32,7 +38,7 @@ WYNIK TESTU:
   3–4 cechy → strefa szara — OSTRZEŻENIE; zidentyfikuj i rekomenduj korektę
   5–8 cech  → pseudosamozatrudnienie; ALERT KRYTYCZNY:
               → ryzyko: PIP/ZUS może zakwalifikować jako UoP
-              → skutki: zaległe składki ZUS (3 lata wstecz) + odsetki + sankcje
+              → skutki: zaległe składki ZUS za okres nieprzedawniony + odsetki + sankcje; termin przedawnienia weryfikuj w ustawie o SUS
               → podstawa: art. 22 §1¹ KP + art. 8 ust. 2a ustawy o SUS
 ```
 
@@ -40,7 +46,7 @@ WYNIK TESTU:
 ```
 1. isap.sejm.gov.pl → Kodeks pracy → art. 22
 2. isap.sejm.gov.pl → ustawa z 13.10.1998 o systemie ubezpieczeń społecznych → art. 8 ust. 2a
-3. web_search "pseudosamozatrudnienie PIP kontrola [rok bieżący]"
+3. Oficjalnie: pip.gov.pl → aktualne stanowiska/komunikaty kontrolne; ISAP → art. 22 KP
 ```
 
 ---
@@ -55,18 +61,15 @@ PROBLEM: Klauzula "Wykonawca nie może świadczyć usług podmiotom
          → BRAK obowiązku odszkodowania (w przeciwieństwie do UoP!)
          → może faktycznie uniemożliwić działalność zawodową
 
-WERYFIKUJ: isap.sejm.gov.pl → KC art. 3531 (swoboda umów) + art. 5 KC (nadużycie)
-           orzeczenia.ms.gov.pl → zakaz konkurencji B2B rażące wygórowanie
+ALERT: Zakaz B2B bez odszkodowania jest co do zasady ważny (KC art. 353¹),
+       ale może być uznany za nadużycie prawa (art. 5 KC) lub sprzeczny
+       z zasadami współżycia społecznego (art. 58 §2 KC) jeśli eliminuje
+       możliwość zarobkowania.
 
-REKOMENDACJA DLA WYKONAWCY:
-  „§X ust. Y. Zakaz konkurencji wiąże Wykonawcę przez okres nie dłuższy niż
-  [6/12] miesięcy od zakończenia Umowy, wyłącznie w odniesieniu do podmiotów,
-  z którymi Zamawiający prowadził aktywną współpracę w ostatnich 12 miesiącach.
-  Za każdy miesiąc obowiązywania zakazu Zamawiający wypłaci Wykonawcy
-  odszkodowanie w wysokości [X]% średniego miesięcznego wynagrodzenia netto
-  z ostatnich 3 miesięcy współpracy."
-
-PUŁAPKA: brak wypłaty odszkodowania przy B2B → mimo to zakaz może wiązać (KC)
+PEŁNA ANALIZA (matryca reżimów, test ważności, wszystkie pułapki ZK-1 do ZK-8,
+szablony klauzul, scoring, rekomendacje):
+→ OBOWIĄZKOWO wczytaj: view references/zakaz-konkurencji.md (Moduł I)
+  — jest to jedyne kompletne źródło dla zakazu konkurencji w tym systemie
 ```
 
 ### PUŁAPKA 2 — Prawa autorskie "na wszelki wypadek" (HIGH RISK)
@@ -97,12 +100,12 @@ PUŁAPKA: przeniesienie praw do "przyszłych utworów" nieznanych w chwili zawar
 PROBLEM: Termin płatności powyżej 60 dni w transakcjach handlowych
          → naruszenie ustawy z 8.03.2013 o przeciwdziałaniu nadmiernym opóźnieniom
            w transakcjach handlowych (weryfikuj: isap.sejm.gov.pl, t.j. Dz.U. 2023 poz. 1790)
-         → TWARDSZY LIMIT 60 dni (bez wyjątku) gdy dłużnikiem jest DUŻE PRZEDSIĘBIORSTWO,
+         → TWARDY LIMIT 60 dni (bez wyjątku) gdy dłużnikiem jest DUŻE PRZEDSIĘBIORSTWO,
            a wierzycielem jest MŚP (art. 7 ust. 2a ustawy)
          → Strony B2B symetryczne mogą umówić >60 dni jeśli nie jest rażąco nieuczciwe
 
 WERYFIKUJ:
-  isap.sejm.gov.pl → ustawa 2013 przeciwdziałanie nadmiernym opóźnieniom → art. 7, 8, 10
+  isap.sejm.gov.pl → ustawa 2013 przeciwdziałanie nadmiernym opóźnieniom (t.j. Dz.U.2023.1790) → art. 7, 8, 10
   Sprawdź aktualny próg odsetek ustawowych za opóźnienie w transakcjach handlowych
   (M.P. 2025 poz. 602 — od 1.07.2025; wcześniej M.P. 2024 poz. 1106)
 
@@ -127,7 +130,7 @@ REKOMENDACJA:
 ### PUŁAPKA 4 — Odpowiedzialność nieograniczona wykonawcy (CRITICAL)
 ```
 PROBLEM: "Wykonawca ponosi pełną odpowiedzialność za wszelkie szkody"
-         → w B2B brak limitu KP (art. 119 KP) → odpowiedzialność pełna włącznie z utraconym zykiem
+         → w B2B brak limitu KP (art. 119 KP) → odpowiedzialność pełna włącznie z utraconym zyskiem
          → możliwa odpowiedzialność wielokrotnie przekraczająca wynagrodzenie
 
 REKOMENDACJA DLA WYKONAWCY:
@@ -247,7 +250,7 @@ REKOMENDACJA:
 
 ```
 PROCEDURA:
-1. web_search "art. 647¹ KC 2024 2025 podwykonawcy solidarna odpowiedzialność"
+1. Oficjalnie: ISAP → KC art. 647¹ w aktualnym tekście ujednoliconym; orzeczenia wyłącznie z sn.pl/orzeczenia.ms.gov.pl
 2. isap.sejm.gov.pl → KC art. 647¹ — sprawdź aktualne brzmienie
 3. Ustal: czy inwestor wyraził zgodę na podwykonawcę? (pisemnie / milcząco?)
 4. Ustal: czy umowa podwykonawcza zawiera wynagrodzenie i zakres?
@@ -324,54 +327,31 @@ ALERT: Rękojmia B2B może być ograniczona lub wyłączona — sprawdź klauzul
 
 ---
 
-## G.4 UMOWY PODWYKONAWCZE IT — SEKCJA SPECJALNA
+## G.4 UMOWY PODWYKONAWCZE IT — ODESŁANIE DO MODUŁU J6
 
-### Specyficzne pułapki w branży IT:
+> ⛔ TREŚĆ PRZENIESIONA — nie duplikuj. Pułapki IT opisane szczegółowo w dedykowanym module.
 
-**Pułapka IT-1 — "Time & Material" bez górnego pułapu:**
+Dla umów podwykonawczych IT (software development, SaaS, wdrożenia, licencje, SLA)
+**obowiązkowo wczytaj**:
+
 ```
-PROBLEM: Wynagrodzenie T&M bez cap = brak budżetu po stronie zamawiającego
-         Zamawiający może twierdzić, że zakres był szerszy niż planowano
-REKOMENDACJA:
-  „§X. Szacunkowy budżet wynosi [kwota] netto (cap). Przekroczenie cap wymaga
-  pisemnej zgody Zamawiającego przed poniesieniem dodatkowych kosztów. Brak
-  zgody oznacza, że Wykonawca realizuje dalsze prace na własne ryzyko."
+view references/mod-J6-it-konsorcjum.md
 ```
 
-**Pułapka IT-2 — Acceptance criteria niedefiniowane:**
-```
-PROBLEM: Brak kryteriów akceptacji = zamawiający może odmawiać odbioru bez powodu
-REKOMENDACJA:
-  „§X. Odbiór Rezultatu następuje na podstawie Protokołu Odbioru.
-  Zamawiający ma [5/10] dni roboczych na zgłoszenie zastrzeżeń na piśmie.
-  Brak zgłoszenia w terminie oznacza milczącą akceptację (fikcja odbioru).
-  Zastrzeżenia muszą być szczegółowe i możliwe do implementacji."
-```
+Moduł J6 zawiera pełne opracowanie pułapek IT, których skróty znajdują się w G.5:
+- T&M cap → SD-3 / J6.2
+- Acceptance criteria / odbiór → SD-2 / J6.2
+- Escrow kodu → SD-4 / J6.2
+- Licencja vs przeniesienie praw → SD-1 / J6.2 + szablony J6.5
+- Change request / scope creep → SD-3 / J6.2
+- SLA / uptime / kary → J6.3
+- RODO w umowach IT → J6.4 + mod-shared-rodo.md
 
-**Pułapka IT-3 — Escrow kodu źródłowego pominięty:**
-```
-PROBLEM: Zamawiający płaci za SaaS/oprogramowanie, nie ma dostępu do kodu
-         → upadłość Wykonawcy = utrata systemu
-REKOMENDACJA:
-  „§X. Wykonawca zobowiązuje się do złożenia kodu źródłowego Oprogramowania
-  wraz z dokumentacją techniczną do depozytu (escrow) u [notariusza / podmiotu
-  escrow] na koszt Zamawiającego. Zamawiający uzyskuje dostęp do depozytu
-  w przypadku: (a) ogłoszenia upadłości Wykonawcy, (b) likwidacji Wykonawcy,
-  (c) istotnego naruszenia Umowy przez Wykonawcę nienaprawionego w terminie."
-```
-
-**Pułapka IT-4 — Licencja vs przeniesienie praw:**
-```
-LICENCJA ≠ PRZENIESIENIE PRAW AUTORSKICH
-  Licencja: Wykonawca zachowuje prawa, Zamawiający może używać
-  Przeniesienie: Zamawiający staje się właścicielem praw
-
-Sprawdź: co chce zamawiający i co gwarantuje umowa
-Weryfikuj: isap.sejm.gov.pl → ustawa o prawie autorskim → art. 41 ust. 1
-
-PUŁAPKA: "Licencja wyłączna" ≠ przeniesienie praw — Wykonawca wciąż jest autorem
-PUŁAPKA: "Przeniesienie" musi wskazywać pola eksploatacji → art. 41 ust. 2
-```
+> **Uwaga G.2 Pułapka 2 vs J6 SD-1:** Pułapka 2 w G.2 (prawa autorskie B2B ogólnie)
+> i SD-1 w J6 (prawa autorskie oprogramowania) to dwa poziomy szczegółowości:
+> G.2 → zasady ogólne dla każdej umowy B2B;
+> J6 SD-1 → szczegóły specyficzne dla oprogramowania (art. 74 PrAut, dekompilacja,
+> open-source, pola eksploatacji dla SaaS). Wczytaj OBA gdy umowa dotyczy IT.
 
 ---
 
@@ -385,6 +365,7 @@ IDENTYFIKACJA:
 
 KLUCZOWE KLAUZULE DO WERYFIKACJI:
 □ Zakaz konkurencji (Pułapka 1) — zakres, czas, odszkodowanie
+  → Pełna analiza: view references/zakaz-konkurencji.md (Moduł I)
 □ Prawa autorskie / IP (Pułapka 2) — pola eksploatacji, wyłączenia, wynagrodzenie
 □ Termin płatności (Pułapka 3) — max 60 lub 30 dni; sprawdź ustawę
 □ Limit odpowiedzialności (Pułapka 4) — czy jest? Czy uwzględnia winę umyślną?
@@ -403,14 +384,17 @@ DODATKOWE DLA BUDOWLANYCH:
 □ Rękojmia — termin i zakres (B-5)
 
 DODATKOWE DLA IT:
-□ T&M cap (IT-1)
-□ Acceptance criteria (IT-2)
-□ Escrow kodu (IT-3)
-□ Licencja vs przeniesienie (IT-4)
+  → OBOWIĄZKOWO wczytaj: view references/mod-J6-it-konsorcjum.md
+□ T&M cap → J6 SD-3
+□ Acceptance criteria / odbiór → J6 SD-2
+□ Escrow kodu → J6 SD-4
+□ Licencja vs przeniesienie → J6 SD-1
+□ Change request / scope creep → J6 SD-3
+□ SLA / uptime → J6.3
 
 SCORING:
-□ Balans B2B — tabela D.1 (wczytaj Moduł D z SKILL.md)
-□ Raport końcowy — sekcja F (wczytaj Moduł F z SKILL.md)
+□ Balans B2B — tabela D.1 (sekcja "MODUŁ D — BALANS DOKUMENTU" w SKILL.md)
+□ Raport końcowy — sekcja F.1 (sekcja "MODUŁ F — RAPORT KOŃCOWY" w SKILL.md)
 ```
 
 ---
@@ -474,5 +458,6 @@ SCORING:
 
 ---
 
-*Moduł G / analizator-umow-v2 · Dla umów o pracę → references/umowy-o-prace.md*
+*Moduł G / analizator-umow-v1 · Dla umów o pracę → references/umowy-o-prace.md (Moduł H)*
+*Zakaz konkurencji (pełna analiza) → references/zakaz-konkurencji.md (Moduł I)*
 *Prawo weryfikuj w ISAP · Klauzule w rejestrze UOKiK · Zawsze aktualny tekst jednolity*

@@ -1,17 +1,23 @@
 # MODUŁ J1 — NAJEM MIESZKANIOWY I KOMERCYJNY
-## Analizator Umów v2 · Moduł J1
+## Analizator Umów v1 · Moduł J1
 
 > Wczytaj dla: najem mieszkaniowy (lokator–właściciel), najem komercyjny (biuro,
 > lokal usługowy, magazyn), najem okazjonalny, instytucjonalny.
 
 ---
+
+> ⛔ HARD GATE — przed podaniem art. KC, OPL, terminów wypowiedzenia weryfikuj w ISAP:
+> isap.sejm.gov.pl → KC → art. 659–692 (najem)
+> isap.sejm.gov.pl → ustawa z 21.06.2001 r. o ochronie praw lokatorów (OPL) — tekst jedn.
+> isap.sejm.gov.pl → ustawa z 20.07.2017 r. o Krajowym Zasobie Nieruchomości (najem instytucjonalny)
+> Orzecznictwo: orzeczenia.ms.gov.pl — nie cytuj z pamięci.
 ## J.2 NAJEM MIESZKANIOWY
 
 **Podstawa prawna do weryfikacji:**
 ```
 isap.sejm.gov.pl → ustawa z 21.06.2001 o ochronie praw lokatorów (OPL)
 isap.sejm.gov.pl → KC → art. 659–692 (najem)
-isap.sejm.gov.pl → ustawa o najmie okazjonalnym i instytucjonalnym (jeśli dotyczy)
+isap.sejm.gov.pl → OPL → rozdziały o najmie okazjonalnym i instytucjonalnym (to reżimy w OPL, nie osobna ustawa)
 ```
 
 ### Pułapki dla Najemcy:

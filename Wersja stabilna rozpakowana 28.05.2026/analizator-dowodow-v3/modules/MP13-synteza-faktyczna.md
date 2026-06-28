@@ -17,6 +17,14 @@ własnej *i* wersji przeciwnika. Narracja jednowersyjna jest niepełna i proceso
 niebezpieczna. Wersja przeciwnika nie jest lustrzanym odbiciem — jest odrębną
 interpretacją tych samych lub innych faktów, z własną logiką faz.
 
+**Reguła walidacji twierdzeń (CLAIM-VALIDATION):** przed zbudowaniem łańcuchów
+przyczynowych i narracji wykonaj weryfikację twierdzeń strony zgodnie z
+`view /mnt/skills/user/shared/CLAIM-VALIDATION.md`.
+Twierdzenie strony sprzeczne z faktami z M1 → oznacz `[⛔ SPRZECZNE]` i zastąp
+tym co wynika z materiału; nie buduj na nim łańcucha.
+Twierdzenie bez oparcia w M1 → oznacz `[⛔ NIEUDOWODNIONE]`; oznaczaj w narracji
+jako hipotezę `[H]`, nie jako fakt.
+
 ---
 
 ## 13.0 Aktywacja sekcji — tabela warunkowa

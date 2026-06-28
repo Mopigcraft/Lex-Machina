@@ -1,5 +1,5 @@
 # MODUŁ H — UMOWY O PRACĘ I STOSUNEK PRACY
-## Analizator Umów v2 · Moduł Ekspercki
+## Analizator Umów v1 · Moduł Ekspercki
 
 > **Wczytaj ten moduł gdy:** umowa o pracę, kontrakt menedżerski z cechami UoP,
 > rozwiązanie umowy o pracę, porozumienie rozwiązujące, aneks do UoP,
@@ -7,15 +7,21 @@
 
 ---
 
+> ⛔ HARD GATE — przed podaniem art. KP, aktualnych kwot, terminów weryfikuj w ISAP:
+> isap.sejm.gov.pl → Kodeks pracy (t.j. aktualny) — ZAWSZE aktualny tekst ujednolicony
+> isap.sejm.gov.pl → ustawa o minimalnym wynagrodzeniu → aktualne stawki
+> isap.sejm.gov.pl → ustawa o szczególnych zasadach rozwiązywania stosunków pracy
+> Orzecznictwo SN/SA dot. UoP: sn.pl / orzeczenia.ms.gov.pl — nie cytuj z pamięci.
+
 ## H.1 FUNDAMENTY PRAWNE — WERYFIKACJA ONLINE
 
 Przed każdą analizą umowy o pracę weryfikuj w isap.sejm.gov.pl:
 
 ```
 AKTY PRAWNE DO SPRAWDZENIA:
-□ Kodeks pracy (t.j. Dz.U. z [rok bieżący] poz. [numer]) — ZAWSZE aktualny t.j.
+□ Kodeks pracy — ZAWSZE aktualny tekst ujednolicony przez isap.sejm.gov.pl; nie opieraj się wyłącznie na numerze t.j., bo późniejsze zmiany mogą być już w tekście ujednoliconym
 □ Ustawa o minimalnym wynagrodzeniu za pracę — sprawdź AKTUALNE progi
-□ Rozporządzenie w sprawie wynagrodzenia za pracę w godzinach nadliczbowych
+□ Godziny nadliczbowe: weryfikuj bezpośrednio KP art. 151–151¹ i akty wykonawcze tylko wtedy, gdy dotyczą konkretnej grupy pracowników
 □ Ustawa o szczególnych zasadach rozwiązywania stosunków pracy (zwolnienia grupowe)
 □ Ustawa o związkach zawodowych — konsultacje przy wypowiedzeniu
 
@@ -88,18 +94,10 @@ BEZWZGLĘDNE WYMOGI ART. 101² KP:
 □ Forma pisemna pod rygorem nieważności
 □ Odszkodowanie min. 25% wynagrodzenia za każdy miesiąc zakazu
 □ Zdefiniowany zakres terytorialny i przedmiotowy zakazu
-□ Możliwość zwolnienia z zakazu przez pracodawcę → pracownik traci
-  prawo do odszkodowania od dnia zwolnienia (ale zachowuje za poprzedni okres)
 
-PUŁAPKA KRYTYCZNA: "Pracodawca może jednostronnie zwolnić pracownika z zakazu"
-  → Pracownik poniósł koszty (odmowa ofert pracy), pracodawca cofnął zakaz
-  → SN: pracownikowi przysługuje odszkodowanie za poniesione straty mimo cofnięcia
-  Weryfikuj orzeczenia: sn.pl → zakaz konkurencji
-
-REKOMENDACJA DLA PRACOWNIKA:
-  „§X. W przypadku zwolnienia Pracownika z zakazu przez Pracodawcę
-  Pracownikowi przysługuje odszkodowanie za cały uzgodniony okres zakazu,
-  płatne jednorazowo w terminie [30] dni od dnia zwolnienia z zakazu."
+PEŁNA ANALIZA (pułapki zwolnienia z zakazu, miarkowanie kary, matryca reżimów):
+→ OBOWIĄZKOWO wczytaj: view references/zakaz-konkurencji.md (Moduł I)
+  szczególnie: I.2 Test ważności, I.3 Pułapki ZK-1 do ZK-8, I.4 Checklista, I.5 Szablony
 ```
 
 ### PUŁAPKA P-4 — Odpowiedzialność materialna ponad limity KP (CRITICAL)
@@ -158,13 +156,10 @@ MECHANIZM: "Pracownik zobowiązuje się nie ujawniać know-how, metod pracy,
             + faktycznie niemożliwe jest pracowanie w branży bez tych zasobów
             = de facto zakaz konkurencji
 
-WERYFIKUJ: sn.pl → poufność vs zakaz konkurencji praktyczne rozróżnienie
-           orzeczenia.ms.gov.pl → sygnatura IV P (sprawy pracownicze)
-
-REKOMENDACJA:
-  Jeśli klauzula poufności realnie uniemożliwia pracę w branży:
-  → Negocjuj przekształcenie w zakaz konkurencji z art. 101² KP
-  → Żądaj odszkodowania odpowiedniego do rzeczywistego ograniczenia
+PEŁNA ANALIZA (ustawa o ochronie tajemnic przedsiębiorstwa, trzy kryteria,
+wzorzec rekomendowanej klauzuli):
+→ OBOWIĄZKOWO wczytaj: view references/zakaz-konkurencji.md (Moduł I)
+  szczególnie: I.3 Pułapka ZK-8 (tajemnica przedsiębiorstwa jako obejście zakazu)
 ```
 
 ### PUŁAPKA P-7 — Porozumienie rozwiązujące z zrzeczeniem roszczeń (CRITICAL)
@@ -460,6 +455,7 @@ SCORING → Balans H/UoP:
 
 ---
 
-*Moduł H / analizator-umow-v2 · Dla umów B2B → references/b2b-podwykonawcze.md*
+*Moduł H / analizator-umow-v1 · Dla umów B2B → references/b2b-podwykonawcze.md*
+*Zakaz konkurencji (pełna analiza) → references/zakaz-konkurencji.md (Moduł I)*
 *Prawo weryfikuj ZAWSZE w ISAP (zmieniało się!) · Orzeczenia: sn.pl, orzeczenia.ms.gov.pl*
 *Nigdy nie podawaj kwot minimalnych z pamięci — weryfikuj online przed każdą odpowiedzią*

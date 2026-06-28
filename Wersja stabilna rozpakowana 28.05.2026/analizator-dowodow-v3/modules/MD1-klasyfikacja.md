@@ -20,9 +20,9 @@ DZIEDZINY: [kody z MX — np. CYW-ZOB, PRAC-ROZW]
 
 | Poziom | Typ | Moc | Przykłady |
 |--------|-----|-----|-----------| 
-| **A** | Dokumenty urzędowe | NAJWYŻSZA | Protokoły PIP/ZUS/UOKiK z sygnaturą, orzeczenia prawomocne, wpisy KRS/KW, decyzje administracyjne |
+| **A** | Dokumenty urzędowe | NAJWYŻSZA | Protokoły PIP/ZUS/UOKiK z sygnaturą, orzeczenia prawomocne, wpisy KRS/KW, decyzje administracyjne, umowa spółki/statut w wersji złożonej do KRS |
 | **B** | Zeznania formalne, opinie biegłych | WYSOKA | Zeznania do protokołu pod rygorem art. 233 §1 KK, opinie biegłych sądowych, protokoły przesłuchań |
-| **C** | Dokumenty prywatne, ślady cyfrowe | ŚREDNIA | Umowy prywatne, e-mail/SMS, nagrania, zdjęcia, faktury, logi IT, korespondencja |
+| **C** | Dokumenty prywatne, ślady cyfrowe | ŚREDNIA | Umowy prywatne, e-mail/SMS, nagrania, zdjęcia, faktury, logi IT, korespondencja, founders' agreement / regulaminy organów (nieujawniane w KRS) |
 | **D** | Twierdzenia bez dokumentu | ZEROWA | Oświadczenia ustne, twierdzenia strony bez potwierdzenia |
 
 ## Reguły korekty poziomu

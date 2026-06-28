@@ -22,7 +22,6 @@ Aby dokończyć pismo, proszę podać:
 [lista brakujących danych — jedno pytanie zbiorcze]
 ────────────────────────────────────────────────────────
 
-
 ════════════════════════════════════════════════════════
                     TREŚĆ PISMA
 ════════════════════════════════════════════════════════
@@ -30,7 +29,6 @@ Aby dokończyć pismo, proszę podać:
 [pełna treść gotowa do skopiowania / wysłania]
 
 ════════════════════════════════════════════════════════
-
 
 💡 UWAGI PRAKTYCZNE
 ────────────────────────────────────────────────────────
@@ -42,14 +40,12 @@ Przykłady:
 • Wezwanie: „Wyślij listem poleconym za potwierdzeniem odbioru —
   dowód doręczenia może być potrzebny w późniejszym postępowaniu."
 
-
 📎 OPŁATA SĄDOWA                ← tylko jeśli pismo wymaga opłaty
 ────────────────────────────────────────────────────────
 Kwota: [X] zł
 Podstawa: [artykuł KSCU]
 Uiszczenie: [przelew na konto sądu / znaczki sądowe / kasa sądu]
 Uwaga: [jeśli dotyczy — np. zaliczenie na apelację]
-
 
 📅 CO DALEJ
 ────────────────────────────────────────────────────────
@@ -59,7 +55,6 @@ Przykłady:
 • Po złożeniu sprzeciwu sąd wyznaczy termin rozprawy.
 • Po złożeniu wniosku o klauzulę sąd wyda tytuł wykonawczy
   w ciągu ok. 2–4 tygodni (bez rozprawy).
-
 
 📋 HYBRID-VALIDATION            ← zawsze
 ────────────────────────────────────────────────────────

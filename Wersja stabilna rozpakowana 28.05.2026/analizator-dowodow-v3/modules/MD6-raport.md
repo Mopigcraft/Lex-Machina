@@ -33,8 +33,8 @@ REKOMENDACJE:
 
 ## FAZA 2 — DASHBOARD GRAFICZNY (≥3 dowodów)
 
-Po analizie modułowej uruchom dashboard v4:
+Po analizie modułowej uruchom dashboard:
 
 ```
-view /mnt/skills/user/analizator-dowodow-v4/assets/dashboard.html
+view /mnt/skills/user/analizator-dowodow-v3/assets/dashboard.html
 → show_widget(widget_code=<treść>, title="analizator_dowodow_dashboard",

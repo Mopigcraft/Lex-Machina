@@ -7,9 +7,13 @@ lub termin zawity musi być obliczony*
 
 ## OP-1 — Tabela opłat sądowych
 
-*⚠ Zawsze weryfikuj aktualne stawki na isap.sejm.gov.pl — KSCU bywa nowelizowana.*
+> ⛔ WERYFIKACJA OBOWIĄZKOWA przed użyciem: KSCU jest nowelizowana nieregularnie.
+> Dane poniższe mają charakter ORIENTACYJNY — aktualne stawki pobierz z:
+> web_fetch → https://isap.sejm.gov.pl (szukaj: ustawa o kosztach sądowych w sprawach cywilnych)
+> lub web_search: "KSCU aktualne stawki [bieżący rok]"
+> Tabela nie zastępuje weryfikacji online — podaj użytkownikowi kwotę DOPIERO po potwierdzeniu.
 
-| Rodzaj pisma | Opłata | Podstawa |
+| Rodzaj pisma | Opłata (orientacyjna) | Podstawa |
 |---|---|---|
 | Pozew do 500 zł | 30 zł | art. 27 pkt 1 KSCU |
 | Pozew do 1 500 zł | 100 zł | art. 27 pkt 2 KSCU |
@@ -105,3 +109,13 @@ Jeśli termin już upłynął: ⛔ TERMIN UPŁYNĄŁ — oceń możliwość przy
 
 > Po uiszczeniu opłaty: wskaż w piśmie "Opłata sądowa uiszczona w kwocie
 > [X] zł, dowód w załączniku nr [Y]."
+
+## Integracja shared/TERM-CALC
+
+Przy każdym terminie albo opłacie wczytaj:
+
+```text
+view /mnt/skills/user/shared/TERM-CALC.md
+```
+
+Terminy krytyczne oznacz jako wymagające sprawdzenia z aktualnym kalendarzem i aktualnym tekstem ustawy.

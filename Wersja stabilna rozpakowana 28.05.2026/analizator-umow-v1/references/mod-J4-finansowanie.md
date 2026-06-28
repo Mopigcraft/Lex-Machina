@@ -1,11 +1,17 @@
 # MODUŁ J4 — UMOWY FINANSOWANIA: POŻYCZKA, LEASING, FACTORING
-## Analizator Umów v2 · Moduł J4
+## Analizator Umów v1 · Moduł J4
 
 > Wczytaj dla: pożyczka prywatna, pożyczka konsumencka (ustawa o kredycie
 > konsumenckim), leasing operacyjny/finansowy, factoring (pełny/niepełny),
 > cesja wierzytelności, finansowanie wierzytelności.
 
 ---
+
+> ⛔ HARD GATE — przed podaniem art. KC, stóp odsetek, progów konsumenckich weryfikuj w ISAP:
+> isap.sejm.gov.pl → KC → art. 720–724 (pożyczka), art. 359 §2¹ (odsetki maksymalne — AKTUALNA wartość)
+> isap.sejm.gov.pl → ustawa o kredycie konsumenckim (Dz.U. 2023 poz. 1028 ze zm.)
+> isap.sejm.gov.pl → ustawa o leasingu (w KC: art. 709¹–709¹⁸)
+> nbp.pl → stopa referencyjna NBP (do obliczenia odsetek ustawowych) — aktualna wartość online.
 ## J.7 POŻYCZKA (prywatna i konsumencka)
 
 **Podstawa:**

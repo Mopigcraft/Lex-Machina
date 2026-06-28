@@ -1,44 +1,44 @@
 # MODUŁ J — ROUTING WEWNĘTRZNY I MASTER CHECKLISTA
-## Analizator Umów v2 · Moduł J — Nawigacja
+## Analizator Umów v1 · Moduł J — Nawigacja
 
 > Ten plik służy do wyboru właściwego modułu tematycznego i finalnej walidacji.
 > Dla analizy konkretnego typu umowy — wczytaj odpowiedni moduł poniżej.
+> **Uwaga:** numery sekcji J.X poniżej to wewnętrzne etykiety; nazwy plików są rozstrzygające.
 
 ---
+
+> ⛔ HARD GATE — moduł routingowy: nie podawaj artykułów z pamięci.
+> Każdy moduł docelowy (J1–J7, G, H, I, MA) zawiera własny HARD GATE z konkretnymi źródłami.
+> Weryfikacja online obowiązkowa przed podaniem jakiejkolwiek podstawy prawnej.
 ## J.1 ROUTING WEWNĘTRZNY
 
-| Typ umowy | Sekcja |
-|---|---|
-| Najem mieszkaniowy (lokator–właściciel) | J.2 |
-| Najem komercyjny (biuro, lokal usługowy) | J.3 |
-| Umowa deweloperska / przedwstępna nieruchomości | J.4 |
-| Franczyza | J.5 |
-| Agencyjna | J.6 |
-| Pożyczka / chwilówka / pożyczka prywatna | J.7 |
-| Leasing operacyjny / finansowy | J.8 |
-| Umowa o dzieło | J.9 |
-| Umowa zlecenia | J.10 |
-| Ugoda / porozumienie | J.11 |
-| Umowy IT: SLA, licencyjna, software development | J.12 |
-| Factoring / finansowanie wierzytelności | J.13 |
-| Konsorcjum / joint venture | J.14 |
-
----
-
-## Ścieżki do modułów tematycznych
-
-| Typ umowy | Moduł | Plik |
+| Typ umowy | Sekcja | Plik do wczytania |
 |---|---|---|
-| Najem mieszkaniowy / komercyjny | J.2–J.3 | `view references/mod-J1-najem.md` |
-| Deweloperska / przedwstępna nieruchomości | J.4 | `view references/mod-J2-nieruchomosci.md` |
-| Franczyza / agencyjna | J.5–J.6 | `view references/mod-J3-dystrybucja.md` |
-| Pożyczka / leasing / factoring | J.7–J.8–J.13 | `view references/mod-J4-finansowanie.md` |
-| Dzieło / zlecenie / ugoda | J.9–J.10–J.11 | `view references/mod-J5-umowy-wykonawcze.md` |
-| IT–SLA / licencyjna / konsorcjum / JV | J.12–J.14 | `view references/mod-J6-it-konsorcjum.md` |
+| Najem mieszkaniowy (lokator–właściciel) | J.2 | `view references/mod-J1-najem.md` |
+| Najem komercyjny (biuro, lokal usługowy) | J.3 | `view references/mod-J1-najem.md` |
+| Umowa deweloperska / przedwstępna nieruchomości | J.4 | `view references/mod-J2-nieruchomosci.md` |
+| Franczyza | J.5 | `view references/mod-J3-dystrybucja.md` |
+| Agencyjna | J.6 | `view references/mod-J3-dystrybucja.md` |
+| Pożyczka / chwilówka / pożyczka prywatna | J.7 | `view references/mod-J4-finansowanie.md` |
+| Leasing operacyjny / finansowy | J.8 | `view references/mod-J4-finansowanie.md` |
+| Umowa o dzieło | J.9 | `view references/mod-J5-umowy-wykonawcze.md` |
+| Umowa zlecenia | J.10 | `view references/mod-J5-umowy-wykonawcze.md` |
+| Ugoda / porozumienie | J.11 | `view references/mod-J5-umowy-wykonawcze.md` |
+| Umowy IT: SLA, licencyjna, software development, SaaS | J.12 | `view references/mod-J6-it-konsorcjum.md` |
+| Factoring / finansowanie wierzytelności | J.13 | `view references/mod-J4-finansowanie.md` |
+| Konsorcjum / joint venture | J.14 | `view references/mod-J6-it-konsorcjum.md` |
+| Transakcje M&A: SPA, SHA, LOI, earn-out | J.15 | `view references/mod-MA-transakcje.md` |
+| Zamówienia publiczne / PZP / FIDIC | J.16 | `view references/mod-J7-pzp.md` |
+| Umowa konsumencka B2C (sprzedaż, OWU, e-commerce, reklamacja, odstąpienie, treść cyfrowa) | J.17 | `view references/mod-J8-b2c.md` |
+| Własność intelektualna: przeniesienie praw autorskich, licencja, umowa z twórcą, wydawnicza, IP (utwory nie-software) | J.18 | `view references/mod-J9-ip-prawa-autorskie.md` |
+| Ubezpieczenia: OWU/polisa majątkowa lub życiowa poza B2C (mienie, OC, D&O, cargo, UFK/IBIP, grupowe) | J.19 | `view references/mod-J10-ubezpieczenia.md` |
+| Founders' agreement, umowa spółki/statut (akt założycielski), umowa spółki cywilnej, regulamin zarządu/RN/rady dyrektorów/walnego | J.20 | `view references/mod-FA-founders-dokumenty-zalozycielskie.md` |
+| Polityka prywatności, klauzule informacyjne, RCP/RCO, PBI, upoważnienia RODO, IOD, procedura naruszeń, instrukcja kancelaryjna/archiwizacja, regulamin pracy/wynagradzania/ZFŚS/monitoringu | J.21 | `view references/mod-J21-rodo-archiwizacja-regulaminy.md` |
+| Routing wielotypowy / niejasny | — | zacznij od tego pliku → tabela J.1 |
 
 ---
 
-## J.15 MASTER CHECKLISTA — KAŻDA UMOWA
+## MASTER CHECKLISTA — KAŻDA UMOWA (stosuj niezależnie od modułu)
 
 ```
 NIEZALEŻNIE OD TYPU — sprawdź zawsze:
@@ -87,6 +87,41 @@ KLAUZULE KOŃCOWE:
 
 ---
 
-*Moduł J / analizator-umow-v2 · Dla zakazu konkurencji → references/zakaz-konkurencji.md*
+## MAPA KRZYŻOWA — KIEDY WCZYTAĆ KILKA MODUŁÓW JEDNOCZEŚNIE
+
+| Sytuacja | Moduły do wczytania łącznie |
+|---|---|
+| B2B IT (kontrakt menedżerski + software) | G (b2b) + J6 (it) |
+| Umowa IT z dostępem do danych | J6 + SHARED-RODO |
+| Umowa deweloperska z zakazem konkurencji | J2 + I (zakaz-konkurencji) |
+| Podwykonawstwo budowlane (GW + Inwestor) | G.3 (b2b) + J7 (PZP jeśli publiczne) |
+| SaaS wieloletni z danymi | J6 + SHARED-RODO + SHARED-LIFECYCLE + SHARED-FM |
+| Transakcja M&A z zakazem konkurencji | MA + I (zakaz-konkurencji) + SHARED-RYZYKO |
+| Umowa o pracę z zakazem konkurencji | H (uop) + I (zakaz-konkurencji) |
+| Franczyza wieloletnia | J3 + SHARED-LIFECYCLE + SHARED-FM |
+| Umowa B2B z ESG / dużą korporacją | G (b2b) + SHARED-ESG |
+| Umowa AI / automatyczne decyzje | J6 + SHARED-AI-ACT + SHARED-RODO |
+| Umowa z twórcą + oprogramowanie (gra, aplikacja z grafiką) | J9 (IP nie-software) + J6 (SD-1 software) |
+| Umowa B2B / podwykonawcza z przeniesieniem praw autorskich | G (b2b) + J9 (IP) |
+| Ubezpieczenie grupowe pracownicze (pracodawca + ubezpieczony konsument) | J10 + J8 (B2C dla ubezpieczonego) |
+| Ubezpieczenie inwestycyjne UFK/IBIP dla konsumenta | J10 + J8 + SHARED-RYZYKO |
+| Wymóg polisy/ubezpieczenia w umowie B2B lub PZP | J10 + G (b2b) lub J7 (PZP) |
+| Founders' agreement + planowana runda inwestycyjna | J20 + MA (LOI/Term Sheet, SHA) |
+| Umowa spółki/statut + przeniesienie IP founderów na spółkę | J20 + J9 (IP) lub J6 SD-1 (software) |
+| Founders' agreement z zakazem konkurencji po odejściu | J20 + I (zakaz-konkurencji) |
+| Umowa spółki cywilnej przekształcana w spółkę handlową | J20 (J20.3 + J20.4/J20.5) |
+| Umowa z dostawcą (DPA) + wewnętrzna polityka retencji danych wynikająca z tej umowy | J21 + shared-rodo |
+| Założenie spółki (J20) + obowiązek RCP/polityki prywatności dla nowej działalności | J20 + J21 |
+| Regulamin pracy/wynagradzania/ZFŚS + spór pracowniczy o jego treść/wprowadzenie | J21 + DR-04 (pisma-procesowe-v3) |
+
+---
+
+*Moduł J / analizator-umow-v1 · Dla zakazu konkurencji → references/zakaz-konkurencji.md*
 *Dla B2B → references/b2b-podwykonawcze.md · Dla UoP → references/umowy-o-prace.md*
+*Dla M&A → references/mod-MA-transakcje.md · Dla PZP → references/mod-J7-pzp.md*
+*Dla founders' agreement / umowa spółki/statut / regulaminy organów →
+references/mod-FA-founders-dokumenty-zalozycielskie.md (J20)*
+*Dla polityki prywatności / RCP / RODO wewnętrzne / archiwizacja / regulamin
+pracy-wynagradzania-ZFŚS-monitoringu → references/mod-J21-rodo-archiwizacja-
+regulaminy.md (J21)*
 *Prawo weryfikuj ZAWSZE w ISAP · Parametry (kwoty, stawki) weryfikuj online — zmieniają się!*

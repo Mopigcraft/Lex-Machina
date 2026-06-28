@@ -113,4 +113,4 @@ REKOMENDACJA: □ Zawiadomienie karne  □ Pozew cywilny  □ Oba równolegle
 | Analiza i wycena dowodów elektronicznych | `analizator-dowodow-v3` |
 | Pozew cywilny o naruszenie dóbr | `pisma-procesowe-v3` |
 | Orzecznictwo SN — stalking | `orzeczenia-sadowe-v2` |
-| Analiza akt karnych | `analiza-sadowa-v5` |
+| Analiza akt karnych | `analiza-sadowa-v6` |

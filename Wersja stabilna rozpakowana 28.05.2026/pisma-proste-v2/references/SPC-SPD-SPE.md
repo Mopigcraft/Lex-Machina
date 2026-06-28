@@ -270,3 +270,9 @@ i egzekucyjnego.
   (odsetki w transakcjach handlowych — ustawa z 8.03.2013 r.).
 - Zachowaj kopię wezwania i potwierdzenie nadania — sąd może wymagać wykazania
   próby polubownego rozwiązania sporu (art. 187 §1 pkt 3 KPC).
+
+---
+
+# SEKCJA SPE-OSTATECZNE — przekierowanie
+
+Jeżeli użytkownik chce wysłać wezwanie ostateczne, po bezskutecznym wcześniejszym wezwaniu albo bezpośrednio przed pozwem, nie używaj zwykłego wariantu SPE. Wczytaj `references/SPE-ostateczne.md`.

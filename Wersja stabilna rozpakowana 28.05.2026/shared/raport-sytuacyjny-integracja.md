@@ -3,10 +3,10 @@
 ## SEKWENCJA WYWOŁANIA (identyczna dla wszystkich skilli)
 
 ```
-1. view /mnt/skills/user/raport-sytuacyjny-v2/assets/RaportSytuacyjnyWidget.html
-2. show_widget(widget_code=<treść pliku>, title="raport_sytuacyjny_sprawy",
-               loading_messages=["Wyciągam dane sprawy...", "Buduję raport..."])
-   Widget pobiera dane z rozmowy przez Anthropic API — nie przekazuj caseData ręcznie.
+1. view /mnt/skills/user/raport-sytuacyjny-v2/SKILL.md
+   → wykonaj KROK 1–5 zgodnie z SKILL.md (blueprint JSON → show_widget inline HTML)
+   Widget generowany jest jako HTML inline z danymi sprawy wbudowanymi jako literały JS.
+   NIE ładuj pliku .jsx przez view — widget tworzony jest inline w show_widget.
 
 KOMUNIKAT przed widgetem:
   "Poniżej aktualny raport sytuacyjny sprawy — możesz uzupełnić brakujące dane."

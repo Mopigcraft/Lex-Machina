@@ -18,10 +18,10 @@ BLOK 0.1 — Czy użytkownik dostarczył materiały źródłowe (dokumenty, pism
   NIE → pomiń Block Zero, przejdź do Fazy 1
   TAK → wykonaj 0.2 i 0.3
 
-BLOK 0.2 — Sprawdź czy MOD-FAKTY (FAKTY.md) został uruchomiony dla tego pisma:
+BLOK 0.2 — Sprawdź czy MOD-FAKTY (FAKTY_v2.md) został uruchomiony dla tego pisma:
   TAK (raport istnieje) → sprawdź wynik w 0.3
   NIE               → ⛔ STOP: "Uruchomiam MOD-FAKTY przed walidacją pisma..."
-                       → view /mnt/skills/user/shared/FAKTY.md
+                       → view /mnt/skills/user/shared/FAKTY_v2.md
                        → wykonaj procedurę F1/F2/F2A/F3
                        → wróć do 0.3
 
