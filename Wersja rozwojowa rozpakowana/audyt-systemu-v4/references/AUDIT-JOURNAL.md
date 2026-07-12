@@ -3,6 +3,102 @@
 **Plik:** `AUDIT-JOURNAL.md`  
 **Opis:** Chronologiczny rejestr wszystkich audytów systemu — wyniki, naprawy, status.  
 **Format wpisu:** jedna sekcja `## AUDYT-YYYY-MM-DD` per sesja audytowa.  
+
+## AUDYT-2026-07-11b — Dodanie MOD-STEP-TRACKER + dependencies/pipeline do analizator-dowodow-v3
+
+**Zakres:** Naprawa WARN (luka proceduralna, nie CRIT).
+Wywołanie: pytanie użytkownika "czy podobny mechanizm nadzorczy jak w pisma
+procesowe i w przesłuchaniu świadków nie powinien być obecny w analizatorze
+dowodów?", potwierdzone poleceniem "tak zrób to".
+
+### 1. STATUS OGÓLNY
+
+| Kategoria | Wynik |
+|---|---|
+| Błędy CRIT | 0 |
+| Luka WARN (zamknięta) | Brak formalnych sekcji YAML dependencies/pipeline/validation; brak integracji z MOD-STEP-TRACKER mimo wieloetapowego, warunkowego routera (BLOK A-J) |
+| Zmodyfikowane pliki | `analizator-dowodow-v3/SKILL.md` (5.12.0→5.13.0), `shared/MOD-STEP-TRACKER.md` (1.1.0→1.2.0) |
+| Kompletność wydania | ✅ PRE-DELIVERY-COMPLETENESS-CHECK wykonany: analizator-dowodow-v3 37=37=37, shared 107=107=107 |
+
+### 2. NAPRAWY
+
+**analizator-dowodow-v3/SKILL.md v5.13.0:**
+- Dodano sekcje YAML `dependencies` (required: shared, MOD-SKAN-DOWODOW-KOMPLETNY,
+  MOD-STEP-TRACKER), `pipeline.stages` (10 etapów AD-KROK0…AD-KROK4),
+  `validation.required_gates` (PRAWO-HARDGATE, SD-VER-GATE-AD, STEP-TRACKER-AD)
+  — wcześniej całkowicie nieobecne w tym skillu.
+- Nowa sekcja **KROK 0c — ST-INIT**: inicjalizacja rejestru kroków zaraz po
+  SD-VER (KROK 0b), przed KROK 1. Wymóg raportowania "⚠️ POMINIĘTY" dla
+  każdego BLOK-u oznaczonego jako obowiązkowy w KROK 2 (np. BLOK G/J przy
+  A2=TAK), którego finalnie nie wykonano.
+- Nowa sekcja **Zakaz** (nieobecna wcześniej w tym skillu) z 5 pozycjami
+  dot. SD-VER, ST-INIT, cichego pomijania BLOK-ów i ST-FINAL przed dashboardem.
+
+**shared/MOD-STEP-TRACKER.md v1.2.0:**
+- 10 nowych pozycji rejestru: AD-KROK0, AD-KROK0a, AD-KROK0b, AD-KROK1,
+  AD-KROK2, AD-BLOKG, AD-BLOKJ, AD-BLOKH, AD-KROK3, AD-KROK4.
+
+### 3. WNIOSKI
+
+Ten sam wzorzec co w audycie 3.13 (przesluchanie-swiadkow): skill miał
+poprawnie wpiętą bramkę DOWODOWĄ (SD-VER), ale brakowało bramki PROCEDURALNEJ
+(STEP-TRACKER). Do sprawdzenia w kolejnym audycie: czy inne skille
+wykonawcze z wieloetapowym routerem warunkowym (np. `analiza-sadowa-v6`,
+które również wywołuje MOD-SKAN-DOWODOW-KOMPLETNY) mają tę samą lukę.
+
+### 4. SNAPSHOT
+
+- Wersje: analizator-dowodow-v3 5.12.0→5.13.0, MOD-STEP-TRACKER 1.1.0→1.2.0
+- Dostarczone jako pełne archiwa: `analizator-dowodow-v3.zip` (37 plików),
+  `shared.zip` (107 plików) — oba zweryfikowane PRE-DELIVERY-COMPLETENESS-CHECK.
+
+## AUDYT-2026-07-11 — Naruszenie ZASADY 7 OUTPUT-COMPLETENESS przy dostarczeniu naprawy PRE-W1a-SD-VER
+
+**Zakres:** Incydent CRIT — nie audyt planowy.
+Wywołanie: użytkownik wskazał wprost "Czy tak nakazuje wydawać skok audyt
+systemu. Błąd krytyczny." po tym, jak naprawiony skill
+`przesluchanie-swiadkow-v2-min90` (dodanie PRE-W1a-SD-VER, v3.13) oraz
+zmodyfikowane pliki `shared/MOD-SKAN-DOWODOW-KOMPLETNY.md` i
+`shared/MOD-STEP-TRACKER.md` zostały dostarczone jako 4 luźne pliki `.md`
+przez `present_files`, zamiast jako kompletne skille spakowane do `.zip`.
+
+### 1. STATUS OGÓLNY
+
+| Kategoria | Wynik |
+|---|---|
+| Błędy CRIT | 1 (ten incydent) |
+| Naruszona zasada | ZASADA 7 — OUTPUT-COMPLETENESS / ZASADA 8 — pełna struktura |
+| Przyczyna | Zasada przywołana z pamięci (proza), bez wykonania mechanicznej sekwencji PRE-DELIVERY-COMPLETENESS-CHECK (liczenie plików + zip całego drzewa) |
+| Naprawa | Wykonano PRE-DELIVERY-COMPLETENESS-CHECK w tej samej sesji — patrz niżej |
+
+### 2. NAPRAWA
+
+KROK 1 (liczba plików oryginału): `przesluchanie-swiadkow-v2-min90` = 29,
+`shared` = 107.
+KROK 2-4 (kopia całych drzew do `/home/claude/full_skills/`, przeliczenie):
+29 = 29, 107 = 107 — zgodność potwierdzona.
+KROK 5 (archiwizacja): `przesluchanie-swiadkow-v2-min90.zip` (29 plików w
+archiwum, zweryfikowane `unzip -Z1`), `shared.zip` (107 plików w archiwum,
+zweryfikowane `unzip -Z1`). Dopiero te dwa archiwa przekazane przez
+`present_files`.
+
+### 3. WNIOSKI
+
+Ten sam wzorzec błędu co incydent AUDYT-2026-07-10b (samo istnienie zasady
+w skillu nie wystarcza — trzeba faktycznie wykonać i pokazać sekwencję
+liczenia plików PRZED wywołaniem `present_files`, nie tylko przywołać
+zasadę słowami). Do rozważenia w kolejnym audycie: czy PRE-DELIVERY-
+COMPLETENESS-CHECK powinien być dodatkowo wymuszony jako pozycja w
+MOD-STEP-TRACKER (np. "OUT-ZIP-CHECK") dla każdej sesji kończącej się
+dostarczeniem naprawy skilla, żeby pominięcie było raportowane
+automatycznie, a nie wykryte dopiero przez korektę użytkownika.
+
+### 4. SNAPSHOT
+
+- Brak nowych plików kanonicznych.
+- Dostarczone poprawnie (po korekcie): `przesluchanie-swiadkow-v2-min90.zip`,
+  `shared.zip` — oba zweryfikowane liczbą plików zgodną ze źródłem.
+
 **Powiązany plik referencyjny:** `AUDIT-REFERENCES.md`
 **Powiązany plik żywy (od 2026-07-07):** `WARN-OTWARTE.md` — zawiera WYŁĄCZNIE
 aktualnie otwarte flagi (WARN numerowane + strukturalne bez numeru). Ten
@@ -16,6 +112,425 @@ jako pierwsze źródło, nie grepuj tego pliku.
 > 3. **Zsynchronizuj `WARN-OTWARTE.md`:** nowa flaga → dodaj wiersz tam;
 >    zamknięta flaga → usuń wiersz stamtąd (pełny opis naprawy zostaje
 >    wyłącznie tutaj, w tym dzienniku, jako wpis historyczny).
+
+---
+
+## AUDYT-2026-07-10h — Korekta nadinterpretacji: PLAIN-TESTIMONY-DEFAULT — przesluchanie-swiadkow-v2-min90 → v3.12
+
+**Zakres:** użytkownik wskazał wprost, że zeznanie świadka Nawrota o
+"dokumentach wewnętrznych — transakcjach" było **trafne i zgodne z
+rzeczywistością** (to rzeczywiście dokumenty dot. zwrotów środków
+cudzoziemcom) — a wcześniejsza odpowiedź w tej sesji błędnie
+zinterpretowała to zeznanie jako wymagające obalenia ("świadek pomylił
+kierunek transakcji" / "celowo przeformułowano"), konstruując zbędną
+kontrteorię tam, gdzie zeznanie było po prostu prawdziwe i neutralne/
+korzystne.
+
+**Mechanizm dodany:** PLAIN-TESTIMONY-DEFAULT — świadoma przeciwwaga dla
+FOUNDATION-VERIFICATION-GATE (audyt 3.8) i EVIDENCE-THREAD-LINKING (audyt
+3.11): dążenie do weryfikacji założeń i łączenia wątków nie oznacza, że
+każde zeznanie trzeba potraktować jako coś do obalenia. Gdy proste, dosłowne
+odczytanie zeznania jest zgodne z materiałem i niekorzystne/neutralne dla
+strony przeciwnej — przyjmij je wprost. Kontrariańską reinterpretację
+uzasadnia wyłącznie konkretna, wskazywalna sprzeczność z innym dowodem, nie
+sam fakt, że zeznanie dotyczy strony przeciwnej.
+
+**Znaczenie tej poprawki:** to pierwsza korekta w tej sesji idąca w
+kierunku "mniej agresywnej" interpretacji, nie "bardziej agresywnej" — dotychczasowe
+audyty (3.7-3.11) dodawały mechanizmy zwiększające rygor i głębokość
+analizy ofensywnej; ten mechanizm równoważy je, zapobiegając nadgorliwości
+analitycznej, która mogłaby osłabić wiarygodność argumentacji użytkownika
+na sali, gdyby oparł się na kontrteorii łatwej do obalenia wskazaniem, że
+świadek miał rację od początku.
+
+### Weryfikacja kompletności
+
+KROK 1: 29. KROK 4: 29. YAML zweryfikowany (`version: '3.12'`). Dostarczono
+jako kompletne archiwum `.zip`.
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.11→v3.12, PLAIN-TESTIMONY-DEFAULT) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+
+---
+
+
+
+**Zakres:** na wyraźne wskazanie użytkownika — trzy odrębnie znalezione
+elementy dowodowe w tej samej sesji (niejasne zeznanie świadka o
+"dokumentach wewnętrznych/transakcjach"; własna wiadomość WhatsApp
+użytkownika odwołująca się do "dokumentu z kwotą do zwrotu"; tabela
+udokumentowanych zwrotów środków cudzoziemcom) zostały przeanalizowane
+osobno, mimo że łączą się w jedną, spójną i korzystną interpretację.
+
+**Mechanizm dodany:** EVIDENCE-THREAD-LINKING — przy każdym nowym ustaleniu
+dowodowym, aktywne poszukiwanie powiązań TEMATYCZNYCH (nie tylko identycznych
+faktów, co już robi CROSS-DOCUMENT-CONSISTENCY-CHECK z audytu 3.7) z
+wcześniej ustalonymi faktami w tej samej rozmowie, z jawnym oznaczeniem
+pewności połączenia (PEWNE vs. PRAWDOPODOBNE/DO POTWIERDZENIA) i propozycją
+pytania testującego prawdziwość połączenia.
+
+### Weryfikacja kompletności
+
+KROK 1: 29. KROK 4: 29. YAML zweryfikowany (`version: '3.11'`, poprawnie
+jako string). Dostarczono jako kompletne archiwum `.zip`.
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.10→v3.11, EVIDENCE-THREAD-LINKING) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+
+---
+
+
+
+**Zakres:** kontynuacja audytu tej samej sesji, na wyraźne polecenie
+użytkownika po analizie protokołów rozpraw (VII P 94/25) i pisma
+procesowego dot. Sharmy/rekrutacji.
+
+### Zidentyfikowane luki
+
+1. **[KRYTYCZNA]** Sąd w postępowaniu VII P 94/25 systematycznie uchylał
+   pytania o upomnienie/kary porządkowe jako wykraczające poza tezę
+   dowodową ("nie jest to przedmiotem tego postępowania") — mechanizm nie
+   sprawdzał wcześniej, czy przygotowywane pytania mieszczą się w
+   zatwierdzonej tezie dowodowej DANEGO postępowania, mimo że sąd stosuje
+   to kryterium konsekwentnie i bezwzględnie, niezależnie od jakości
+   pytania.
+2. Brak rozróżnienia między wieloma równolegle toczącymi się
+   postępowaniami (VII P 94/25, XI P 27/26, V P 566/24, I C 1200/25, VIII
+   W 633/25) — pytania właściwe w jednym mogą być nieadmisyjne w innym.
+3. Ocena przesłanki "czy oferowanie pracy było w zakresie obowiązków"
+   pominęła własne pismo procesowe użytkownika oraz transkrypt zeznań
+   Marii Koroleva, oba już dostępne w tym samym archiwum, oba wprost
+   potwierdzające tę przesłankę.
+4. Brak systematycznego wydobywania z dostępnych transkryptów wcześniejszych
+   przesłuchań tego samego świadka: przyznanych faktów, sprzeczności i
+   wcześniejszych decyzji sądu o uchyleniu pytań wraz z powodem.
+
+### Cztery mechanizmy dodane (v3.9 → v3.10)
+
+| Mechanizm | Lokalizacja | Naprawia punkt | Priorytet |
+|---|---|---|---|
+| TEZA-DOWODOWA-SCOPE-GATE | przed ETAP W3 | 1 | 🔴 KRYTYCZNY |
+| PROCEEDING-DISAMBIGUATION-TABLE | przed ETAP W3 | 2 | wysoki |
+| CONTEXTUAL-REBUTTAL-CHECK | rozszerzenie PRZESŁANKI-GATE (KROK 3-4) | 3 | wysoki |
+| TRANSCRIPT-MINING-GATE | przy PRZESŁANKI-GATE | 4 | wysoki |
+
+### Dodatkowa naprawa techniczna wykryta przy weryfikacji
+
+Przy standardowej weryfikacji YAML (KROK 1/4 z ZASADY 7) wykryto, że
+niezacytowana wartość `version: 3.10` jest interpretowana przez parser
+YAML jako liczba zmiennoprzecinkowa równa `3.1` (bo `3.10 == 3.1`
+matematycznie) — końcowe zero ginie przy odczycie. Naprawiono przez
+zacytowanie: `version: "3.10"`. Warto mieć to na uwadze przy wszystkich
+przyszłych wersjach z zerem na końcu części dziesiętnej.
+
+### Weryfikacja kompletności
+
+KROK 1: 29 plików. KROK 4: 29 plików. Zgodność potwierdzona. YAML
+zweryfikowany po naprawie (`version: '3.10'` — poprawnie jako string).
+Dostarczono jako kompletne archiwum `.zip`.
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.9→v3.10, cztery mechanizmy + naprawa YAML) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+
+---
+
+
+
+**Zakres:** na wyraźne pytanie użytkownika, czy istnieje mechanizm od razu
+weryfikujący przesłanki zarzutów karnych/dyscyplinarnych wobec treści
+pisma — stwierdzono, że mechanizm z audytu 3.8 (LEGAL-ELEMENT-MATCH-CHECK)
+był węższy niż potrzeba: łapał pojedynczą, najbardziej oczywistą
+niezgodność, nie systematyczny przegląd wszystkich przesłanek wszystkich
+przywołanych podstaw prawnych.
+
+**Rozbudowa:** LEGAL-ELEMENT-MATCH-CHECK zastąpiony pełnym PRZESŁANKI-GATE:
+dla każdego dokumentu zarzucającego czyn zabroniony (KK) lub stanowiącego
+podstawę zwolnienia dyscyplinarnego/kary porządkowej (art. 52 KP, art.
+108-109 KP) — obowiązkowy, ustrukturyzowany przegląd: (1) identyfikacja
+każdej podstawy prawnej osobno, (2) weryfikacja jej znamion przez ISAP/
+orzecznictwo (zgodnie z PRAWO-HARDGATE), (3) zestawienie każdej przesłanki
+z konkretnym opisem w dokumencie, (4) wynik w formie tabeli z oceną
+✅/⚠️/🔴 per przesłanka, (5) jednozdaniowy wniosek zbiorczy per podstawa
+prawna. Wykonywane automatycznie, jako wydzielona część pierwszej
+odpowiedzi na taki dokument.
+
+### Weryfikacja kompletności
+
+KROK 1: 29 plików. KROK 4: 29 plików. Zgodność potwierdzona przed
+spakowaniem. Dostarczono jako kompletne archiwum `.zip`.
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.8→v3.9, PRZESŁANKI-GATE) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+
+---
+
+
+
+**Zakres:** kontynuacja audytu z AUDYT-2026-07-10c, na wyraźne polecenie
+użytkownika — tym razem analiza skupiona nie na mechanizmie/procesie
+skilla, lecz na **jakości merytorycznej analizy treści pytań i dokumentów**
+w tej samej, wieloetapowej sesji.
+
+### Zidentyfikowane luki
+
+1. **Teorie budowane przed weryfikacją założeń** — teoria "artefaktu
+   tłumacza" (stopka "Ogród zoologiczny") przedstawiona jako obiecująca,
+   zanim sprawdzono, czy błąd występuje w innych dokumentach (występował —
+   osłabiło to tezę); technika odczytu języka interfejsu Gmaila
+   zaproponowana dla maila, który nie był odpowiedzią na nic (więc technika
+   strukturalnie nie mogła zadziałać) — ustalone dopiero po pytaniu
+   użytkownika.
+2. **Niekompletna ekstrakcja z dużego archiwum** — przy przeszukaniu ZIP
+   pod kątem "pomocy w odzyskaniu środków" wykryto tylko 3 z 5 obecnych w
+   tym samym akapicie źródłowym przypadków; pozostałe dwa (Sharma — 12.000
+   zł, Amit Shrestha) odkrył dopiero użytkownik dwoma osobnymi pytaniami.
+3. **Sprzeczność logiczna w dokumencie zauważona za późno** — "systematyczne/
+   notoryczne" zachowanie przypisane do jednej daty w upomnieniu — możliwe
+   do wykrycia przy pierwszym czytaniu, zgłoszone dopiero na pytanie
+   naprowadzające.
+4. **Błędna kwalifikacja prawna nie zasygnalizowana od razu** — żądanie
+   zwrotu należności opisane w piśmie z 7.10.2024 jako "szantaż"/"groźba
+   bezprawna" (art. 191 §1 KK) — niezgodność ze znamionami przepisu
+   możliwa do zauważenia bez dodatkowych dokumentów.
+5. **Brak systematycznego rozróżnienia powiązanych podmiotów** (Human Park
+   vs. Human Park Global, różne NIP) — analizowano dokumenty pod kątem
+   treści bez prowadzenia zestawienia, który dokument pochodzi od którego
+   podmiotu.
+
+### Pięć mechanizmów dodanych (v3.7 → v3.8)
+
+| Mechanizm | Lokalizacja | Naprawia punkt |
+|---|---|---|
+| FOUNDATION-VERIFICATION-GATE | KROK PRE-W1 — Witness Intelligence | 1 |
+| EXHAUSTIVE-EXTRACTION-GATE | KROK PRE-W1 — Witness Intelligence | 2 |
+| IMMEDIATE-LOGICAL-SCAN | KROK PRE-W1 — Witness Intelligence | 3 |
+| LEGAL-ELEMENT-MATCH-CHECK | KROK PRE-W1 — Witness Intelligence | 4 |
+| ENTITY-DISAMBIGUATION-TABLE | KROK 0 — Wczytaj kontekst sprawy | 5 |
+
+Wszystkie pięć dodano też do sekcji "Zakaz".
+
+**Uwaga o zakresie międzyskillowym:** część tych mechanizmów (zwłaszcza
+EXHAUSTIVE-EXTRACTION-GATE i ENTITY-DISAMBIGUATION-TABLE) dotyczy ogólnej
+jakości analizy dokumentów, nie tylko przygotowania pytań do świadków —
+w przyszłości warto rozważyć analogiczny przegląd `analizator-dowodow-v3`
+pod tym samym kątem (patrz F-7, WARN-OTWARTE.md).
+
+### Weryfikacja kompletności
+
+KROK 1 (oryginał): 29 plików. KROK 4 (po edycji v3.8): 29 plików. Zgodność
+potwierdzona przed spakowaniem. Dostarczono jako kompletne archiwum `.zip`.
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.7→v3.8, pięć mechanizmów — patrz tabela wyżej) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+
+---
+
+
+
+**Zakres:** na wyraźne polecenie użytkownika, po zakończeniu wielogodzinnej,
+wieloetapowej sesji przygotowania przesłuchań świadków (sprawa Wiatrak /
+Human Park Global) — pełna retrospektywna analiza całej sesji pod kątem:
+gdzie skill zadziałał reaktywnie zamiast proaktywnie, jakich bramek
+zabrakło, jakie sygnały zignorowano. To jest **częściowa realizacja flagi
+F-7** (patrz WARN-OTWARTE.md) — dla jednego konkretnego skilla
+(`przesluchanie-swiadkow-v2-min90`); pozostałe skille proceduralne wskazane
+w F-7 nadal czekają na analogiczny przegląd.
+
+### Zidentyfikowane luki (na podstawie faktycznego przebiegu sesji)
+
+1. **Brak weryfikacji faktów wobec dokumentu przed oceną pytania** —
+   pytanie twierdzące, że dokument "nie zawiera dat i opisu naruszeń"
+   zostało przyjęte, mimo że dokument faktycznie zawierał jedną datę i
+   ogólnikowe opisy — wykryte dopiero na żądanie użytkownika.
+2. **Brak bramki czasowej dla argumentów ustawowych** — teoria ochrony
+   sygnalisty zbudowana przed ustaleniem dokładnej daty zgłoszenia RODO;
+   po ujawnieniu daty (8.09.2024, przed wejściem ustawy w życie 25.09.2024)
+   wymagała wycofania.
+3. **Brak mechanizmu wykrywania sprzeczności między dokumentami** —
+   rozbieżność daty dla tej samej osoby (23.08 vs 23.09.2024) w dwóch
+   różnych pismach procesowych wykryta przypadkowo, nie systemowo.
+4. **Weryfikacja cytatów na żądanie, nie domyślnie** — użytkownik musiał
+   samodzielnie poprosić o potwierdzenie dosłowności cytatów użytych
+   w proponowanych pytaniach.
+5. **Brak mechanizmu różnicowego przy wielokrotnym przesyłaniu całego
+   zestawu pytań** — trzykrotne pełne, od-zera oceny tego samego,
+   ewoluującego zestawu; część raz zgłoszonych problemów wracała
+   nienaprawiona bez jawnego wskazania regresji.
+6. **Numeracja duplikująca się** — flagowana wielokrotnie (co najmniej
+   trzykrotnie), nigdy nie zaproponowano automatycznego przenumerowania.
+
+### Sześć bramek dodanych (v3.6 → v3.7)
+
+| Bramka | Lokalizacja w SKILL.md | Naprawia punkt |
+|---|---|---|
+| FACT-CROSS-CHECK-GATE | QUESTION-ADMISSIBILITY-GATE (W3) | 1 |
+| LEGAL-TIMING-GATE | ETAP W2 — Tezy i model | 2 |
+| CROSS-DOCUMENT-CONSISTENCY-CHECK | KROK 0 — Wczytaj kontekst sprawy | 3 |
+| QUOTE-VERIFICATION-DEFAULT | QUESTION-ADMISSIBILITY-GATE (W3) | 4 |
+| REVISION-DIFF-CHECK | po IMPORTED-QUESTIONS-GATE (W1) | 5 |
+| AUTO-RENUMBER-OFFER | po IMPORTED-QUESTIONS-GATE (W1) | 6 |
+
+Wszystkie sześć dodano też do sekcji "Zakaz" jako twarde wymogi, spójnie
+z konwencją całego dokumentu.
+
+### Weryfikacja kompletności (ZASADA 7 / PRE-DELIVERY-COMPLETENESS-CHECK)
+
+KROK 1 (oryginał, `/mnt/skills/user/przesluchanie-swiadkow-v2-min90/`): 29 plików.
+KROK 4 (kopia robocza po edycji): 29 plików. **Zgodność potwierdzona przed spakowaniem.**
+Dostarczono jako kompletne archiwum `.zip` (45 wpisów w archiwum, w tym
+katalogi), nie jako pojedynczy plik.
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.6→v3.7, sześć bramek — patrz tabela wyżej) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+
+---
+
+
+
+**Zgłoszenie:** użytkownik zauważył, że po audycie AUDYT-2026-07-10 (naprawa
+`przesluchanie-swiadkow-v2-min90` → v3.6 oraz `audyt-systemu-v4` → v5.3)
+otrzymał **pojedyncze pliki** (`SKILL.md`, `AUDIT-JOURNAL.md`,
+`WARN-OTWARTE.md`) zamiast kompletnych skilli — wprost sprzeczne z ZASADĄ 7
+(OUTPUT-COMPLETENESS, patrz SKILL.md sekcja "ZASADY KRYTYCZNE", punkt 7).
+
+**Diagnoza przyczyny:** ZASADA 7 była obecna w treści skilla przez całą
+sesję, ale funkcjonowała jako **przypominajka tekstowa**, nie jako wymuszony
+krok proceduralny z weryfikowalnym efektem. Edycja plików (SKILL.md,
+AUDIT-JOURNAL.md, WARN-OTWARTE.md) została wykonana na pojedynczych
+kopiach plików, bez uprzedniego skopiowania całego drzewa katalogu skilla —
+błąd kolejności działania (edycja przed inwentaryzacją struktury), nie
+brak wiedzy o zasadzie.
+
+**Zakres naruszenia — inwentaryzacja rzeczywista wykonana post factum:**
+
+| Skill | Plików w oryginale | Plików dostarczonych | Brakowało |
+|---|---|---|---|
+| `przesluchanie-swiadkow-v2-min90` | 29 | 1 (SKILL.md) | 28 plików (CHANGELOG.md, MANIFEST.md, README.md, assets/, components/, docs/, examples/, integration/, 6× references/*.md poza już edytowanym, reports/, rules/, schemas/, templates/, tests/, typologies/) |
+| `audyt-systemu-v4` | 12 | 3 (SKILL.md, AUDIT-JOURNAL.md, WARN-OTWARTE.md) | 9 plików (README.md, modules/×3, references/CHECKLIST-DEDUP.md, references/mapa_dzu_*.md ×3, widgets/WIDGET-MENU.md) |
+
+**Naprawa natychmiastowa (ta sesja):** oba skille spakowane ponownie jako
+kompletne archiwa `.zip`, z weryfikacją liczbową plików oryginał vs. kopia
+(29=29, 12=12) wykonaną i pokazaną PRZED dostarczeniem. Zmienione wyłącznie
+pliki faktycznie edytowane w AUDYT-2026-07-10; reszta plików identyczna
+bit-w-bit z oryginałem.
+
+**Naprawa systemowa:** ZASADA 7 rozszerzona o **PRE-DELIVERY-COMPLETENESS-CHECK**
+— obowiązkową sekwencję mechaniczną (policz pliki oryginału → kopiuj całe
+drzewo → edytuj kopię → policz pliki po edycji → porównaj → dopiero wtedy
+zip całego katalogu → dopiero wtedy `present_files`). Reguła nie pozwala
+już na poprzestanie na przywołaniu zasady z pamięci — wymaga pokazania
+wyniku liczenia plików w samej odpowiedzi jako dowodu wykonania kroku.
+Pełny tekst: `SKILL.md`, ZASADY KRYTYCZNE, punkt 7.
+
+**Klasyfikacja:** CRIT — zamknięty w tej samej sesji, w której został
+wykryty. Nie wymaga wpisu w WARN-OTWARTE.md (nie jest to otwarta flaga —
+naprawa systemowa i naprawa doraźna wykonane łącznie, jednocześnie).
+
+### STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `audyt-systemu-v4/SKILL.md` | ZMIENIONY (ZASADA 7 wzmocniona o PRE-DELIVERY-COMPLETENESS-CHECK; changelog 5.4; version 5.3→5.4) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+| `przesluchanie-swiadkow-v2-min90/` | PONOWNIE DOSTARCZONY jako kompletny .zip (29/29 plików) |
+| `audyt-systemu-v4/` | PONOWNIE DOSTARCZONY jako kompletny .zip (12/12 plików) |
+
+---
+
+## AUDYT-2026-07-10 — ZASADA 11: rozszerzenie zakresu audytu na wszystkie skille prawne (STAŁA ZASADA, nie precedens) + pierwszy audyt proceduralny: przesluchanie-swiadkow-v2-min90 → v3.6
+
+**Zakres:** Użytkownik polecił wprost, po audycie przeprowadzonym w toku
+przygotowania przesłuchań świadków w konkretnej sprawie pracowniczej, że
+mechanizm audytowy ma odtąd obejmować **wszelkie skille prawne w systemie**
+— nie jako jednorazowy wyjątek dla jednego skilla, lecz jako stałą zasadę
+("Bo i to ma dotyczyć wszelkich skuli prawnych, nie jako precedens").
+
+> ⚠️ **Uwaga kontekstowa:** ten wpis, w odróżnieniu od większości poprzednich
+> w tym dzienniku, **nie dotyczy mapy Dz.U. ani numerów aktów prawnych**.
+> Dotyczy jakości proceduralnej skilla `przesluchanie-swiadkow-v2-min90`
+> (przygotowanie pytań do świadków) — zgodnie z nową ZASADĄ 11.
+
+### 1. ZMIANA STRUKTURALNA — ZASADA 11 (SKILL.md audyt-systemu-v4, v5.2 → v5.3)
+
+Zakres audytu rozszerzony z "mapa Dz.U. + DR-01...DR-16" na "wszystkie
+skille prawne w `/mnt/skills/user/`", w tym proceduralne (pisma-procesowe-v3,
+przesluchanie-swiadkow-v2-min90, analizator-dowodow-v3, chronologia-sprawy-v1
+i inne). Dla skilli proceduralnych przedmiotem audytu jest domyślne (nie
+tylko na żądanie) stosowanie wbudowanych bramek jakości, nie poprawność
+numeru Dz.U. Pełny opis zasady: `audyt-systemu-v4/SKILL.md`, sekcja "Cel".
+
+### 2. PIERWSZY AUDYT POD NOWĄ ZASADĄ — `przesluchanie-swiadkow-v2-min90` (v3.5 → v3.6)
+
+**Przyczyna audytu:** w toku wieloturowego przygotowania pytań do świadka
+w konkretnej sprawie, bramki jakości już obecne w skillu (QUESTION-
+ADMISSIBILITY-GATE, WHY-GATE, SAFE-Q) okazały się stosowane **reaktywnie**
+— dopiero na wyraźne żądanie użytkownika o ocenę 0-10 — a nie domyślnie przy
+pierwszym generowaniu pytań. Dodatkowo: (a) pytania dostarczone gotowe przez
+użytkownika były oceniane pod względem gramatyczno-taktycznym bez wcześniejszej
+rekonstrukcji tezy, co pozwoliło pytaniom pobocznym/fishing-expedition przejść
+bramkę; (b) odręczne elementy na wgranym dokumencie (przekreślenie, adnotacja)
+ujawniły się dopiero na pytanie użytkownika, nie w toku systematycznej
+ekstrakcji dokumentu; (c) tezy/dowody/rola świadka bywały przyjmowane milcząco
+zamiast jawnie potwierdzane na starcie.
+
+**Cztery bramki dodane** (pełny opis w changelogu 3.6 samego skilla):
+
+| Bramka | Naprawia |
+|---|---|
+| GATE-DEFAULT-NOW | Stosowanie QUESTION-ADMISSIBILITY-GATE/WHY-GATE przy PIERWSZYM generowaniu pytań, nie dopiero na żądanie oceny |
+| IMPORTED-QUESTIONS-GATE | Rekonstrukcja tezy jednym zdaniem dla KAŻDEGO pytania dostarczonego gotowego przez użytkownika, przed oceną/poprawą |
+| DOCUMENT-SCAN-PROMPT | Obowiązkowe zbadanie/zapytanie o odręczne elementy przy każdym nowym dokumencie, zamiast czekania na inicjatywę użytkownika |
+| TEZY-DOWODY-SWIADEK-GATE | Obowiązkowe jawne ustalenie (jeśli nie wynika wprost z materiałów): max. 3 tez do wykazania, posiadanych dowodów, tożsamości/roli świadka — przed rozpoczęciem generowania pytań |
+
+**Plik zmieniony:** `przesluchanie-swiadkow-v2-min90/SKILL.md` (v3.5 → v3.6,
+872 → 998 linii). Dostarczony użytkownikowi jako plik do samodzielnej
+podmiany (mount `/mnt/skills/user/` jest read-only dla środowiska
+wykonawczego — nie można zapisać zmiany "na żywo").
+
+### 3. NOWA FLAGA OTWARTA — F-7
+
+Pozostałe skille proceduralne systemu (m.in. `pisma-procesowe-v3`,
+`analizator-dowodow-v3`, `chronologia-sprawy-v1`, `pisma-proste-v2`,
+`przewodnik-prawny-v2`) **nie zostały jeszcze systematycznie sprawdzone**
+pod kątem tych samych czterech wzorców braków (bramki stosowane reaktywnie
+zamiast domyślnie; brak rekonstrukcji tezy dla materiału dostarczonego
+gotowego; brak systematycznego skanu dokumentów pod kątem elementów
+nieoczywistych; milczące przyjmowanie ustaleń zamiast jawnego potwierdzenia).
+Wymaga sesji dedykowanej, per skill, zgodnie z ZASADĄ 11 — nie do
+rozstrzygnięcia w tym wpisie samą deklaracją zasady.
+
+### 4. STRUKTURA SYSTEMU — zmiany w tej sesji
+
+| Plik | Akcja |
+|---|---|
+| `audyt-systemu-v4/SKILL.md` | ZMIENIONY (ZASADA 11 dodana w sekcji Cel; changelog 5.3; version 5.2→5.3) |
+| `audyt-systemu-v4/references/AUDIT-JOURNAL.md` | ZMIENIONY (ten wpis) |
+| `audyt-systemu-v4/references/WARN-OTWARTE.md` | ZMIENIONY (F-7 dodana) |
+| `przesluchanie-swiadkow-v2-min90/SKILL.md` | ZMIENIONY (v3.5→v3.6, 4 bramki — patrz sekcja 2 powyżej) |
 
 ---
 
@@ -11059,77 +11574,3 @@ rozszerzone — to zadanie na kolejną sesję gdy dziedzina będzie aktywna.
 - Analizator: v5.7.0 → v5.11.0 (4 sesje akumulacyjne)
 - CHECKLIST-DEDUP: +17 wpisów łącznie sesja 1-4
 
-
----
-
-## AUDYT-2026-07-07b — Audyt literaturowy analizator-umow-v1 + naprawa luki reformy PIP (Dz.U. 2026 poz. 473)
-
-**Zakres:** Targeted — audyt literatury eksperckiej dot. redakcji umów w Polsce
-(analizator-umow-v1), wykrycie luki (moduł B2B nie uwzględniał reformy PIP wchodzącej
-w życie 08.07.2026), naprawa + synchronizacja statusu ustawy we wszystkich mapach.
-
-### 1. STATUS OGÓLNY
-
-| Kategoria | Wynik |
-|---|---|
-| Błędy CRIT | 0 |
-| Ostrzeżenia WARN | 0 (znalezisko naprawione w tej samej sesji, nie otwierano formalnego WARN) |
-| Nowe sekcje | 1 (G.1C w b2b-podwykonawcze.md) |
-| Zmodyfikowane pliki | 7 |
-| Wersja analizator-umow-v1 | 1.12 (była 1.11) |
-
-### 2. ZNALEZISKO
-
-Audyt literaturowy (raport PARP o umowach B2B, materiały EY/Grant Thornton/RPMS/Calamari/
-gov.pl o reformie PIP, literatura legal design/plain language) wykazał, że moduł
-`analizator-umow-v1/references/b2b-podwykonawcze.md` — mimo szczegółowego testu
-kwalifikacji G.1 i zakazu oświadczeń deklaratoryjnych G.1B — **nie uwzględniał reformy
-uprawnień PIP** (ustawa z 11.03.2026, Dz.U. 2026 poz. 473), która wchodzi w życie
-**08.07.2026** (dzień po dacie tej sesji) i wprowadza administracyjną ścieżkę reklasyfikacji
-B2B→UoP bez pośrednictwa sądu (art. 10 ust. 1 pkt 7a ustawy o PIP).
-
-Reforma była już wcześniej skatalogowana materiałowo w DR-04
-(`mod-ustawa-PIP-inspekcja-pracy.md` sekcja 5/6, sesja 2026-06-13) oraz w mapach
-(`AKTY-PRAWNE-MASTER.md`, `ROUTING-MAP.md`, `dr-04/MAPA-AKTOW.md`, `mapa_dzu`) — ale
-wyłącznie ze statusem ⏳ "jeszcze nie obowiązuje" i **bez propagacji do modułu umownego**
-(analizator-umow-v1), który faktycznie generuje/analizuje klauzule B2B dla klienta.
-
-### 3. NAPRAWY
-
-**a) `analizator-umow-v1/references/b2b-podwykonawcze.md`:**
-- Nowa sekcja **G.1C** — pełny opis konsekwencji redakcyjnych reformy: nowa ścieżka
-  decyzji administracyjnej, pułapka rozwiązania umowy w trakcie kontroli (art. 34 ust. 2g
-  — skutek wsteczny do dnia rozpoczęcia kontroli), interpretacja indywidualna GIP (art. 14b,
-  40 zł), podwyższone kary (60–90 tys. zł), okno abolicyjne 08.07.2026–08.07.2027, zmiana
-  procedury raportowej Faza 0/F.1.
-- Zaktualizowano wynik testu G.1 (5–8 cech) o odesłanie do G.1C.
-- `analizator-umow-v1/SKILL.md`: wersja 1.11→1.12, wpis CHANGELOG.
-
-**b) Synchronizacja statusu ustawy ⏳→✅ (obowiązująca od 08.07.2026, VER 2026-07-07)
-w 5 lokalizacjach** — zgodnie z zasadą "dzień się kończy, wstaw jako aktualne":
-- `dr-04-prawo-pracy-zus-swiadczenia/modules/mod-ustawa-PIP-inspekcja-pracy.md`
-  (nagłówek, sekcja 5 — poprawiono też numerację podsekcji 6.1–6.5 → 5.1–5.5,
-  niespójną z nagłówkiem "## 5.", quality gate)
-- `dr-04-prawo-pracy-zus-swiadczenia/MAPA-AKTOW.md` (wiersze KP i PIP)
-- `shared/AKTY-PRAWNE-MASTER.md` (wiersze KP i PIP, BLOK 5)
-- `prawo-polskie-v2/ROUTING-MAP.md` (wiersz PIP)
-- `audyt-systemu-v4/references/mapa_dzu_2026-07-04.md` (wiersze 2026/473 i 2024/1712,
-  dodano analizator-umow-v1 jako konsumenta wiersza 473)
-
-### 4. ZASTRZEŻENIE (przekazane użytkownikowi, nie jest WARN)
-
-Ustawa objęta kontrolą następczą Trybunału Konstytucyjnego (nie wstrzymuje to jej
-wejścia w życie ani obowiązywania). Wpisano jako aktualną na wyraźne polecenie
-użytkownika ("dzień już się kończy, wstawiaj jako aktualne") — każdy moduł zawiera
-przypomnienie o weryfikacji online statusu przy konkretnej sprawie. Dodano obserwację
-informacyjną O-2 w WARN-OTWARTE.md.
-
-### 5. WNIOSKI
-
-Wzorzec do zapamiętania dla przyszłych audytów: akt prawny może być poprawnie
-skatalogowany w mapach systemowych (AKTY-PRAWNE-MASTER, ROUTING-MAP, mapa_dzu) i w
-module DR- właściwym merytorycznie, a mimo to pozostać nieuwzględniony w modułach
-*wykonawczych* innych skilli (tu: analizator-umow-v1), które z niego faktycznie
-korzystają przy generowaniu dokumentów dla klienta. Rekomendacja: przy TRYB DZU
-sprawdzać nie tylko czy akt jest skatalogowany, ale czy propagacja objęła wszystkie
-moduły *konsumujące* dany temat (patrz DEPENDENCY-GRAPH), nie tylko moduł źródłowy.

@@ -1,11 +1,13 @@
 # MOD-STEP-TRACKER — Śledzenie Kroków i Raportowanie Pominięć
 
 > **Plik:** `/mnt/skills/user/shared/MOD-STEP-TRACKER.md`
-> **Wersja:** 1.0.0 (2026-06-24)
+> **Wersja:** 1.2.0 (2026-07-11)
 > **Status:** PRODUKCJA — plik kanoniczny shared
 > **Pozycja w pipeline:**
 >   - prawny-router-v3: inicjowany w KROK 0 zaraz po HARD GATE
 >   - pisma-procesowe-v3: integruje się z automat stanów
+>   - przesluchanie-swiadkow-v2-min90: inicjowany w PRE-W1a-SD-VER (audyt 3.13)
+>   - analizator-dowodow-v3: inicjowany w KROK 0c, zaraz po SD-VER z KROK 0b (audyt 5.13.0)
 >   - Każdy skill dziedzinowy: raportuje wykonanie/pominięcie swoich kroków
 
 ---
@@ -69,7 +71,32 @@ REJESTR = {
   "W3-AUDYT":    { name: "AUDYT-KOŃCOWY + COURT-SIMULATION",      status: "○ OCZEKUJE" },
   "W3-PEER":     { name: "PEER-REVIEW + POST-VALIDATION [CP-PEER]", status: "○ OCZEKUJE" },
   "HYBRID":      { name: "HYBRID-VALIDATION",                     status: "○ OCZEKUJE" },
-  "DOCX":        { name: "Generowanie .docx",                     status: "○ OCZEKUJE" }
+  "DOCX":        { name: "Generowanie .docx",                     status: "○ OCZEKUJE" },
+
+  // PRZESŁUCHANIE ŚWIADKÓW (przesluchanie-swiadkow-v2-min90) — dodane w audycie 3.13
+  "SW-PRE-W1a": { name: "PRE-W1a SD-VER (skan i weryfikacja dowodów świadka)", status: "○ OCZEKUJE" },
+  "SW-PRE-W1":  { name: "KROK PRE-W1 WITNESS-INTELLIGENCE",        status: "○ OCZEKUJE" },
+  "SW-KROK0":   { name: "KROK 0 — kontekst sprawy",                status: "○ OCZEKUJE" },
+  "SW-W1":      { name: "W1 — INTAKE",                             status: "○ OCZEKUJE" },
+  "SW-W1-SUPP": { name: "W1 — SUPPLEMENT (warstwa B wg typu świadka)", status: "○ OCZEKUJE" },
+  "SW-W2":      { name: "W2 — TEZY I MODEL PRZESŁUCHANIA",         status: "○ OCZEKUJE" },
+  "SW-CP-W2":   { name: "CHECKPOINT-W2 (obowiązkowa pauza)",        status: "○ OCZEKUJE" },
+  "SW-W3":      { name: "W3 — PYTANIA (FPW + QUESTION-ADMISSIBILITY-GATE)", status: "○ OCZEKUJE" },
+  "SW-W4":      { name: "W4 — PRÓBA GENERALNA",                    status: "○ OCZEKUJE" },
+  "SW-W5":      { name: "W5 — BINDER SĄDOWY",                      status: "○ OCZEKUJE" },
+  "SW-W6":      { name: "W6 — SŁUCHANIE DIRECT I ADAPTACJA",       status: "○ OCZEKUJE" },
+
+  // ANALIZATOR DOWODÓW (analizator-dowodow-v3) — dodane w audycie 5.13.0
+  "AD-KROK0":  { name: "KROK 0 — blokada wstępna (przekierowanie do analizator-umow?)", status: "○ OCZEKUJE" },
+  "AD-KROK0a": { name: "KROK 0a — wykrycie trybu MODE (A/B/C)",     status: "○ OCZEKUJE" },
+  "AD-KROK0b": { name: "KROK 0b — SD-VER skan kompletności plików", status: "○ OCZEKUJE" },
+  "AD-KROK1":  { name: "KROK 1 — intake i widget-kreator",          status: "○ OCZEKUJE" },
+  "AD-KROK2":  { name: "KROK 2 — centralny router (BLOK A-F)",      status: "○ OCZEKUJE" },
+  "AD-BLOKG":  { name: "BLOK G — rejestr stron/świadków (obowiązkowy gdy A2=TAK)", status: "○ OCZEKUJE" },
+  "AD-BLOKJ":  { name: "BLOK J — lapsusy autorskie [LAPSUS] (obowiązkowy gdy A2=TAK)", status: "○ OCZEKUJE" },
+  "AD-BLOKH":  { name: "BLOK H — kwestie sporne DIS (gdy D3/D4=TAK)", status: "○ OCZEKUJE" },
+  "AD-KROK3":  { name: "KROK 3 — wykonanie modułów MD/MP",          status: "○ OCZEKUJE" },
+  "AD-KROK4":  { name: "KROK 4 — dashboard (gdy B1=TAK)",           status: "○ OCZEKUJE" }
 }
 
 Pomiń kroki nieistotne dla typu zadania (np. W1-MACIERZ gdy brak dowodów).
@@ -214,6 +241,34 @@ ST-CP-INTEGRACJA:
 ## HISTORIA ZMIAN
 
 ```
+1.2.0 (2026-07-11)
+Przyczyna: użytkownik zapytał wprost, czy analizator-dowodow-v3 nie powinien
+  mieć tego samego mechanizmu nadzorczego co pisma-procesowe-v3 i
+  przesluchanie-swiadkow-v2-min90. Analiza wykazała: skill miał już poprawnie
+  wpiętą bramkę DOWODOWĄ (SD-VER, KROK 0b), ale ZERO integracji z tym
+  modułem — żaden pominięty BLOK diagnostyczny (np. BLOK G/J przy A2=TAK
+  w wieloetapowym routerze KROK 2/3) nie był raportowany użytkownikowi.
+Naprawa:
+  + Dodano 10 pozycji REJESTRU dla pipeline'u analizatora: AD-KROK0,
+    AD-KROK0a, AD-KROK0b, AD-KROK1, AD-KROK2, AD-BLOKG, AD-BLOKJ, AD-BLOKH,
+    AD-KROK3, AD-KROK4.
+  + analizator-dowodow-v3/SKILL.md v5.13.0: nowy etap KROK 0c (ST-INIT) zaraz
+    po SD-VER z KROK 0b, przed KROK 1; sekcja "Zakaz" (nieobecna wcześniej)
+    z zakazem cichego pomijania obowiązkowych BLOK-ów; dodano formalne
+    sekcje YAML dependencies/pipeline.stages/validation.required_gates
+    (wcześniej całkowicie nieobecne w tym skillu).
+
+1.1.0 (2026-07-11)
+Przyczyna: przesluchanie-swiadkow-v2-min90 nie miało własnych pozycji w
+  REJESTRZE KROKÓW ani twardej integracji z tym modułem — pipeline świadka
+  (PRE-W1..W6) mógł być realizowany bez żadnego śledzenia pominięć, co
+  ujawniło się przy pominięciu skanowania 130 stron akt osobowych świadka.
+Naprawa:
+  + Dodano 11 pozycji REJESTRU dla pipeline'u świadka: SW-PRE-W1a, SW-PRE-W1,
+    SW-KROK0, SW-W1, SW-W1-SUPP, SW-W2, SW-CP-W2, SW-W3, SW-W4, SW-W5, SW-W6.
+  + przesluchanie-swiadkow-v2-min90/SKILL.md: inicjalizacja REJESTRU w
+    PRE-W1a.3, aktualizacja po każdym etapie zgodnie z FAZĄ 1 tego modułu.
+
 1.0.1 (2026-06-25)
 Przyczyna: Moduł był OSIEROCONY — istniał w shared/ i był wpięty tylko w
   pisma-procesowe-v3, ale prawny-router-v3 NIE wywoływał go w żadnym kroku

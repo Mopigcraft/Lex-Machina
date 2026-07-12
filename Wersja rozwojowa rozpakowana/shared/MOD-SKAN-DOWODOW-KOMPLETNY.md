@@ -1,13 +1,16 @@
 # MOD-SKAN-DOWODOW-KOMPLETNY — Pełna inwentaryzacja i weryfikacja odczytania 100% stron
 
 > **Plik:** `/mnt/skills/user/shared/MOD-SKAN-DOWODOW-KOMPLETNY.md`
-> **Wersja:** 1.1.0 (2026-06-22)
+> **Wersja:** 1.4.0 (2026-07-11)
 > **Status:** PRODUKCJA — plik kanoniczny shared
 > **Pozycja w pipeline:**
 >   - prawny-router-v3: KROK 0C-EXT — rozszerzenie KROK 0C, wykonywane PO rozpakowaniu ZIP,
 >     PRZED PD0 z MOD-PORCJOWANIE-DOWODOW
 >   - pisma-procesowe-v3: W1.2c-PRE — PRZED MOD-MACIERZ-DOWOD-TEZA i PRZED PD0
 >   - analizator-dowodow-v3: BLOK-B-EXT — rozszerzenie BLOK B, PRZED MD1
+>   - przesluchanie-swiadkow-v2-min90: PRE-W1a-SD-VER — TWARDA, BEZPOŚREDNIA
+>     zależność (nie tylko pośrednio przez analizator-dowodow), PRZED
+>     KROK-PRE-W1-INTELLIGENCE (profil świadka) — dodane w audycie 3.13
 >
 > **Relacja z MOD-PORCJOWANIE-DOWODOW:**
 >   MOD-PORCJOWANIE-DOWODOW zarządza ROZMIAREM partii (ile plików naraz).
@@ -283,6 +286,33 @@ SZCZEGÓLNA UWAGA — ZEZNANIA ŚWIADKÓW (protokoły sądowe):
 ## REGUŁY SZCZEGÓLNE
 
 ```
+REGUŁA-DOKUMENT-WZMIANKOWANY-NIEODNALEZIONY (NOWE — v1.4.0):
+  ⛔ Gdy w JAKIMKOLWIEK dokumencie procesowym (zeznanie, protokół, pismo strony,
+  korespondencja) pada odniesienie do KONKRETNEGO, nazwanego dokumentu
+  ("notatka dołączona do akt", "kopia upomnienia", "załącznik nr X",
+  "protokół z dnia..."), a ten dokument NIE występuje fizycznie w SD-REJ:
+
+  1. NIE utożsamiaj go automatycznie z innym, fizycznie obecnym dokumentem
+     o zbliżonej funkcji lub temacie — to odrębne ustalenie faktyczne,
+     nawet jeśli oba dotyczą tego samego zdarzenia (np. odręczny dopisek
+     na piśmie o ukaraniu ≠ odrębna notatka służbowa, chyba że materiał
+     wprost to potwierdza).
+  2. Oznacz jako osobną pozycję: "⬛ DO WERYFIKACJI — [opis dokumentu],
+     wzmiankowany w [źródło + strona/minuta], nieodnaleziony w przekazanym
+     materiale".
+  3. ⛔ ZAKAZ budowania tezy dowodowej na przypuszczeniu co do treści takiego
+     dokumentu. Zapytaj użytkownika, gdzie można go znaleźć (inny protokół,
+     inne postępowanie, pełna wersja transkryptu), zamiast zgadywać.
+  4. Jeśli po sprawdzeniu użytkownik potwierdzi, że dokument nie istnieje
+     lub nie zostanie dostarczony — przenieś pozycję do SD-BRAKUJĄCY-DOWÓD
+     i kontynuuj analizę bez niej, z jawną adnotacją o luce dowodowej.
+
+  Zastosowanie nie ogranicza się do pism procesowych stron (patrz
+  REGUŁA-PISMA-PROCESOWE-STRONY powyżej) — dotyczy też zeznań świadków
+  analizowanych w przesluchanie-swiadkow-v2-min90 (PRE-W1a.4,
+  DOCUMENT-REFERENCED-NOT-FOUND-GATE) oraz każdego innego skilla
+  wywołującego ten moduł.
+
 REGUŁA-PISMA-PROCESOWE-STRONY (NOWE — v1.2.0):
   ⛔ Każde pismo procesowe POWODA / POZWANEGO / WNIOSKODAWCY w materiale
   (riposta, pismo przygotowawcze, odpowiedź na pozew, rozszerzenie pozwu,
@@ -386,6 +416,22 @@ Którykolwiek = NIE → wróć do właściwego kroku. Nie generuj pisma.
 ## HISTORIA ZMIAN
 
 ```
+1.4.0 (2026-07-11)
+Przyczyna: sprawa świadka Marii Korolevej — model zbudował trzy tezy
+  i pytania przesłuchania wyłącznie na plikach tekstowych + 1 zrasteryzowanym
+  dokumencie, pomijając 130 stron trzech dużych zeskanowanych plików akt
+  osobowych (dependencies.required tego modułu w przesluchanie-swiadkow-v2
+  było tylko POŚREDNIE, przez analizator-dowodow — pomijalne). Dodatkowo
+  model pomylił odręczny, przekreślony dopisek pracownika na upomnieniu
+  z odrębną "notatką służbową", której istnienia nie zweryfikował w materiale.
+Naprawa:
+  + Dodano przesluchanie-swiadkow-v2-min90 jako integrację BEZPOŚREDNIĄ
+    (PRE-W1a-SD-VER), nie tylko przez analizator-dowodow.
+  + REGUŁA-DOKUMENT-WZMIANKOWANY-NIEODNALEZIONY: generalizacja obowiązku
+    oznaczania dokumentów wzmiankowanych, ale fizycznie nieobecnych
+    w materiale, jako "⬛ DO WERYFIKACJI" — z zakazem utożsamiania ich
+    z innymi, fizycznie obecnymi dokumentami o zbliżonej funkcji.
+
 1.3.0 (2026-06-27)
 Przyczyna: analiza błędów sprawa VII P 94/25 (sesja 2026-06-27):
   SD-VER = KOMPLET ale macierz D×T budowana z pamięci — nie z per-teza

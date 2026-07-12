@@ -1,9 +1,22 @@
 # ORZECZENIA-OUTPUT-SCHEMA — Protokół danych wyjściowych orzeczenia-sadowe-v2
 
 > **Plik:** `/mnt/skills/user/shared/ORZECZENIA-OUTPUT-SCHEMA.md`
-> **Wersja:** 1.1
+> **Wersja:** 1.3
 > **Właściciel:** orzeczenia-sadowe-v2
 > **Konsumenci:** pisma-procesowe-v3 (W3.2), analizator-umow-v1, analiza-sadowa-v6
+
+> **Zmiana 1.3 (2026-07-09):** Dodano Regułę 8 (ZAKAZ CYTOWANIA CZĘŚCIOWEGO
+> REKORDU) po incydencie: orzeczenie SA Białystok przywołane jako "sąd + data"
+> bez sygnatury (I ACa 620/06 dopisana dopiero na wyraźne żądanie użytkownika).
+> Wprowadzono też rozróżnienie cytat pierwotny / teza wtórna — dla drugiego
+> przywołanego orzeczenia teza pochodziła wyłącznie z omówienia w artykule
+> wtórnym (prawo.pl), nie z bezpośredniego odczytu treści wyroku.
+
+> **Zmiana 1.2 (2026-07-09):** Dodano Regułę 7 (ZAKAZ MIESZANIA ŹRÓDEŁ POD
+> WSPÓLNYM CYTATEM) po incydencie: teza o skutkach braku pouczenia (art. 110/112
+> k.p.) pochodząca z komentarza kadrowego (Infor.pl) została przedstawiona obok
+> cytatu z konkretnego wyroku (V Pa 88/18) bez jasnego rozdzielenia źródeł, co
+> sugerowało, że wyrok potwierdza tę tezę, choć wyrok jej nie zawierał.
 
 ---
 
@@ -139,6 +152,42 @@ Consumer samodzielnie wybiera pola których potrzebuje.
    orzeczenia-sadowe-v2), consumer MUSI ująć tę informację w raporcie/piśmie
    jako zastrzeżenie procesowe — zakaz przedstawiania sprawy jako jednoznacznie
    silnej bez tego ujawnienia.
+
+7. **ZAKAZ MIESZANIA ŹRÓDEŁ POD WSPÓLNYM CYTATEM** — każda teza prawna w
+   odpowiedzi MUSI mieć jednoznacznie przypisane źródło jednego z dwóch typów:
+   `[ORZECZENIE: sygnatura]` albo `[KOMENTARZ/PRAKTYKA: nazwa/URL]`. Zabronione
+   jest:
+   a) przedstawianie tezy pochodzącej z komentarza, poradnika branżowego lub
+      praktyki kadrowej jako elementu treści konkretnego wyroku, nawet jeśli
+      oba źródła omawiane są w tej samej odpowiedzi lub dotyczą tego samego
+      przepisu;
+   b) odpowiadanie na żądanie "cytaty z tego wyroku" fragmentem, który w
+      rzeczywistości nie znajduje się w treści tego orzeczenia — jeśli dana
+      teza nie występuje w zweryfikowanym tekście wyroku, NIE włącza się jej
+      do odpowiedzi typu "cytaty z wyroku X", niezależnie od tego, jak dobrze
+      pasuje merytorycznie.
+   Naruszenie = wprowadzenie w błąd co do siły dowodowej twierdzenia (teza
+   "z orzecznictwa" ma inną wagę niż teza "z poradnika"). Gdy nie ma pewności
+   z którego dokładnie źródła (orzeczenie czy komentarz) pochodzi dana teza —
+   NIE przypisuj jej do orzeczenia "na wszelki wypadek"; oznacz jako
+   ⚠️ [ŹRÓDŁO DO POTWIERDZENIA] i zaproponuj dodatkowe wyszukanie.
+
+8. **ZAKAZ CYTOWANIA/PRZYWOŁYWANIA CZĘŚCIOWEGO REKORDU ORZECZENIA** — pole
+   `sygnatura` jest `[OBL]` (zob. REKORD ORZECZENIA powyżej) i musi towarzyszyć
+   orzeczeniu od pierwszego przywołania, nie dopiero na żądanie użytkownika.
+   Zabronione jest przywoływanie orzeczenia w formie "sąd + data" bez sygnatury,
+   nawet tytułem skrótu czy w odpowiedzi roboczej — brak zweryfikowanej sygnatury
+   w danym momencie NIE zwalnia z jej wskazania: albo zostaje ona ustalona przed
+   wysłaniem odpowiedzi (dodatkowe wyszukanie), albo całe przywołanie orzeczenia
+   otrzymuje status ⚠️ [SYGNATURA DO POTWIERDZENIA] i jest wyraźnie oznaczone jako
+   niekompletne, a nie prezentowane jako gotowy rekord.
+   **Rozróżnienie cytat pierwotny vs. wtórny:** gdy teza z `[ORZECZENIE: sygnatura]`
+   pochodzi z bezpośredniego odczytu tekstu orzeczenia (np. treść ze strony
+   orzeczenia.*.gov.pl) — oznacz jako `[CYTAT PIERWOTNY]`. Gdy teza pochodzi z
+   omówienia/streszczenia wyroku w artykule wtórnym (portal branżowy, komentarz),
+   a treść samego orzeczenia nie została zweryfikowana bezpośrednio — oznacz jako
+   `[TEZA WTÓRNA — niezweryfikowana w oryginale, wg opisu: nazwa/URL źródła wtórnego]`
+   i NIE przedstawiaj jej jako dosłownego cytatu z wyroku.
 
 ---
 

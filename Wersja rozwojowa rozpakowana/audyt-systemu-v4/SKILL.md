@@ -1,6 +1,6 @@
 ---
 name: audyt-systemu-v4
-version: 5.2
+version: 5.4
 type: governance-audit
 compatibility:
   - Claude
@@ -24,6 +24,20 @@ references:
 ## Cel
 Audyt jakości, spójności i bezpieczeństwa systemu prawniczych skilli AI.
 Po zakończeniu audytu: **obowiązkowa aktualizacja plików references**.
+
+> ⚙️ **ZASADA 11 (2026-07-10, STAŁA — nie precedens):** Zakres audytu obejmuje
+> **wszystkie skille prawne w systemie**, nie tylko mapę Dz.U. i skille DR-01
+> do DR-16. Obejmuje to również skille proceduralne (np. `pisma-procesowe-v3`,
+> `przesluchanie-swiadkow-v2-min90`, `analizator-dowodow-v3`,
+> `chronologia-sprawy-v1`), gdzie przedmiotem audytu nie jest poprawność
+> numeru aktu prawnego, lecz **poprawność i domyślne (nie tylko na żądanie)
+> stosowanie wbudowanych bramek jakości** (np. zakazy pytań sugestywnych,
+> wymóg rekonstrukcji tezy, wymóg jawnego potwierdzenia ról/dowodów/tez przed
+> generowaniem treści). Wpis dokumentujący taki audyt trafia do tego samego
+> `AUDIT-JOURNAL.md`, z jawnym wskazaniem w tytule sekcji, że dotyczy skilla
+> proceduralnego, a nie mapy Dz.U. — żeby FAZA 3 (Dz.U.) nie myliła kontekstów.
+> Ta zasada nie jest jednorazowym wyjątkiem — obowiązuje dla każdego kolejnego
+> audytu, dowolnego skilla w `/mnt/skills/user/`.
 
 ---
 
@@ -407,6 +421,38 @@ z WARN-OTWARTE.md, dodaj pełny wpis do AUDIT-JOURNAL.md.
    zawierający WSZYSTKIE pliki i podfoldery danego skilla, nie tylko zmieniony plik.
    Naruszenie tej zasady (dostarczenie samego pliku zamiast pełnego skilla) jest błędem
    krytycznym równoważnym CRIT i musi być odnotowane w AUDIT-JOURNAL.
+
+   > 🔴 **PRE-DELIVERY-COMPLETENESS-CHECK (dodane 2026-07-10, po incydencie CRIT
+   > opisanym w AUDIT-JOURNAL.md, wpis AUDYT-2026-07-10b):** sama treść zasady
+   > jako proza okazała się niewystarczająca — została pominięta mimo obecności
+   > w skillu. Dlatego dostarczenie naprawy jakiegokolwiek skilla wymaga
+   > wykonania i pokazania w odpowiedzi poniższej, mechanicznej sekwencji —
+   > nie samego przywołania zasady z pamięci:
+   >
+   > ```bash
+   > # KROK 1 — policz pliki oryginału PRZED jakąkolwiek edycją
+   > find /mnt/skills/user/<skill> -type f | wc -l
+   >
+   > # KROK 2 — skopiuj CAŁE drzewo (nie pojedynczy plik) do katalogu roboczego
+   > cp -r /mnt/skills/user/<skill> /home/claude/full_skills/<skill>
+   >
+   > # KROK 3 — dopiero teraz nanieś zmiany na skopiowanym drzewie (str_replace)
+   >
+   > # KROK 4 — policz pliki w kopii PO edycji — liczba musi być identyczna
+   > # (edycja treści pliku nie zmienia liczby plików, chyba że świadomie
+   > # dodajesz/usuwasz plik — wtedy różnicę trzeba wprost uzasadnić)
+   > find /home/claude/full_skills/<skill> -type f | wc -l
+   >
+   > # KROK 5 — spakuj CAŁY katalog (nie pojedyncze pliki) do archiwum
+   > zip -r /mnt/user-data/outputs/<skill>.zip <skill>
+   > ```
+   >
+   > **Wynik KROK 1 i KROK 4 musi zostać pokazany w odpowiedzi (liczba=liczba)
+   > PRZED wywołaniem `present_files`.** Jeśli liczby się nie zgadzają bez
+   > wyjaśnienia — to jest CRIT, dostarczenie wstrzymane do wyjaśnienia różnicy.
+   > `present_files` dla naprawy skilla wolno wywołać wyłącznie na archiwum
+   > całego katalogu (`.zip`), nigdy na pojedynczym, samodzielnie skopiowanym
+   > pliku typu `SKILL.md` czy `AUDIT-JOURNAL.md` z pominięciem reszty drzewa.
 8. ⛔ **ZASADA WERYFIKACJI NUMERU NIEZALEŻNIE OD NAZWY (dodana 2026-07-02s,
    na wyraźny nakaz użytkownika) — "jeśli nazwy różnią się choć trochę,
    sprawdzaj w ISAP".**
@@ -508,6 +554,51 @@ audyt-systemu-v4/
 *Wersja: 5.0 | Ostatnia aktualizacja: 2026-07-04*
 
 ## CHANGELOG
+
+**5.4 (2026-07-10b) — CRIT wykryty i naprawiony: naruszenie ZASADY 7 (OUTPUT-COMPLETENESS); zasada wzmocniona mechaniczną procedurą:**
+- **Incydent:** naprawa `przesluchanie-swiadkow-v2-min90` (v3.6) oraz
+  pierwsza wersja naprawy `audyt-systemu-v4` (v5.3) zostały dostarczone
+  użytkownikowi jako pojedyncze pliki (`SKILL.md`, `AUDIT-JOURNAL.md`,
+  `WARN-OTWARTE.md`) zamiast jako kompletne skille — bezpośrednie
+  naruszenie ZASADY 7, mimo że zasada była obecna w SKILL.md przez cały
+  czas trwania sesji. Sama proza reguły okazała się niewystarczająca do
+  wymuszenia zachowania.
+- **Naprawa natychmiastowa w tej samej sesji:** oba skille dostarczone
+  ponownie jako kompletne archiwa ZIP (29/29 i 12/12 plików, zweryfikowane
+  liczbowo względem oryginału).
+- **Naprawa systemowa (ZASADA 7 wzmocniona):** dodano
+  PRE-DELIVERY-COMPLETENESS-CHECK — obowiązkową, mechaniczną sekwencję
+  (policz pliki oryginału → skopiuj całe drzewo → edytuj kopię → policz
+  pliki po edycji → porównaj liczby → dopiero wtedy spakuj cały katalog
+  do .zip → dopiero wtedy present_files). Wynik liczenia plików PRZED i
+  PO musi być pokazany w odpowiedzi przed dostarczeniem — nie wystarczy
+  odwołanie się do zasady z pamięci. `present_files` dla naprawy skilla
+  dozwolone wyłącznie na zip całego katalogu, nigdy na pojedynczym pliku.
+- Pełny opis incydentu: `AUDIT-JOURNAL.md`, wpis `AUDYT-2026-07-10b`.
+
+**5.3 (2026-07-10) — ZASADA 11: rozszerzenie zakresu audytu na wszystkie skille prawne (stała zasada, nie precedens):**
+- **ZASADA 11 dodana** (sekcja "Cel"): zakres audytu obejmuje odtąd
+  wszystkie skille prawne w `/mnt/skills/user/`, nie tylko mapę Dz.U. i
+  DR-01...DR-16. Obejmuje skille proceduralne (pisma-procesowe-v3,
+  przesluchanie-swiadkow-v2-min90, analizator-dowodow-v3,
+  chronologia-sprawy-v1 i inne), gdzie przedmiotem audytu jest domyślne
+  (nie tylko na żądanie) stosowanie wbudowanych bramek jakości, a nie
+  poprawność numeru aktu prawnego.
+- **Powód wprowadzenia:** audyt na żywym przypadku (sprawa pracownicza,
+  moduł przesłuchań świadków) ujawnił, że bramki jakości (WHY-GATE,
+  QUESTION-ADMISSIBILITY-GATE) były stosowane reaktywnie — dopiero na
+  wyraźne żądanie oceny — zamiast domyślnie przy generowaniu treści.
+  Użytkownik wskazał wprost, że taka kontrola ma dotyczyć wszelkich
+  skilli prawnych systemowo, a nie być jednorazowym wyjątkiem dla jednego
+  skilla.
+- **Pierwszy audyt pod nową zasadą — patrz `AUDIT-JOURNAL.md`, wpis
+  `AUDYT-2026-07-10` (przesluchanie-swiadkow-v2-min90 → v3.6, cztery
+  bramki dodane: GATE-DEFAULT-NOW, IMPORTED-QUESTIONS-GATE,
+  DOCUMENT-SCAN-PROMPT, TEZY-DOWODY-SWIADEK-GATE).**
+- **Otwarta flaga strukturalna (F-7, patrz WARN-OTWARTE.md):** pozostałe
+  skille proceduralne systemu nie zostały jeszcze systematycznie
+  sprawdzone pod kątem tych samych czterech wzorców braków — wymaga
+  sesji dedykowanej per skill.
 
 **5.2 (2026-07-07) — Wydzielony rejestr WARN-OTWARTE.md; ZASADA 10 (na polecenie użytkownika):**
 - **Nowy plik `references/WARN-OTWARTE.md`** — rejestr żywy zawierający
