@@ -1,10 +1,16 @@
 # CHANGELOG — analizator-dowodow-v3
 
-> Pełna historia napraw i zmian wersji (22 wpisy, 4.0.0...5.14.1).
-> Wyniesiona z SKILL.md 2026-07-12 (runda 2 — redukcja kosztu kontekstu)
-> — treść skopiowana 1:1, bez zmian. Wczytuj TYLKO gdy potrzebujesz
-> historii konkretnej naprawy (SKILL.md od v5.14.2 trzyma tylko dwa
-> najnowsze wpisy jako kontekst bieżący).
+> Pełna historia napraw i zmian wersji (25 wpisów, 4.0.0...5.15.0).
+> Wyniesiona z SKILL.md 2026-07-12 (runda 2 — redukcja kosztu kontekstu),
+> ZAKTUALIZOWANA 2026-08-20 (F-78, porządkowanie SKILL.md >1000 linii —
+> dopisano wpisy 5.14.2-5.15.0, które od poprzedniej redukcji ponownie
+> trafiały bezpośrednio do pola YAML `changelog` w SKILL.md zamiast
+> tutaj). Wczytuj TYLKO gdy potrzebujesz historii konkretnej naprawy
+> (SKILL.md trzyma tylko krótkie podsumowanie bieżącej wersji).
+
+- 5.15.0 (2026-07-15, F-7 / ZASADA 11 — audyt proceduralny): dodano BLOK D0 TEZA-GATE, obowiązkowy przed BLOK D (D1-D6) — rekonstrukcja jednym zdaniem tezy centralnej per strona z materiału, zanim ocenione zostaną mocne/słabe strony (D2), ocena prawna (D4) lub raport końcowy (D5). Przyczyna: skill nie miał NIGDZIE (grep 0 wyników) mechanizmu rekonstrukcji tezy — analogiczny wzorzec braku jak w przesluchanie-swiadkow-v2-min90 przed naprawą 3.6 (IMPORTED-QUESTIONS-GATE). Pozostałe 3 wzorce z ZASADY 11 (bramki reaktywne, skan dokumentów, milczące przyjmowanie ustaleń) już były pokryte: KROK 0b SD-VER (HARD GATE od startu), KROK 0c ST-INIT (jawne zgłaszanie pominięć). Pełny opis: audyt-systemu-v4/AUDIT-JOURNAL.md, AUDYT-2026-07-15e.
+
+- 5.14.3 (2026-07-14, sprawa XI P 27/26 — dziedziczenie naprawy SD-GATE-TRUNC): Ten skill wywołuje `shared/MOD-SKAN-DOWODOW-KOMPLETNY.md` bezpośrednio jako HARD GATE w KROK 0b (SD-VER) — patrz linia ~182. Naprawa wprowadzona w module współdzielonym (1.4.0 → 1.5.0: nowa bramka SD-GATE-TRUNC, wykrywanie i obowiązkowe domykanie znaczników `< truncated lines X-Y >` zwracanych przez narzędzie `view` przed ekstrakcją faktów) jest dziedziczona automatycznie, bez zmian w logice tego pliku — zgodnie z zasadą unikania duplikacji (CHECKLIST-DEDUP). Wersja podbita wyłącznie dla odnotowania zależności w dzienniku audytu. Pełny opis incydentu: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-07-14b.
 
 - 5.14.1 (AUDYT SYSTEMU 2026-07-12d — rozwiązanie WARN 'nakładanie kompetencji z analiza-sadowa-v6' z audytu silnika): dodano jawną notę 'Granica kompetencji vs. analiza-sadowa-v6' zaraz po nagłówku (linia ~113). Sam ten skill nie duplikował tabel terminów/orzecznictwa (już poprawnie wskazywał na shared/HYBRID-VALIDATION i shared/terminy w MP12-terminy.md) — źródłem realnej duplikacji był analiza-sadowa-v6, naprawiony równolegle w tej samej sesji (v6.1). Nie zmieniono logiki pipeline'u, wyłącznie dokumentację granicy odpowiedzialności.
 
@@ -50,3 +56,16 @@
 
 - 4.0.0: zakładka Sprzeczności z cytatami, M3b skanowanie sprzeczności z prawem
 
+
+---
+
+## LUKA JAWNA — wersje 5.16.0 i 5.16.1 (odnotowane 2026-08-20z, F-101)
+
+`version: "5.16.1"` widniało w YAML, podczas gdy pole `changelog` deklarowało
+„Wersja bieżąca: 5.15.0", ten plik kończył się na 5.15.0, a nagłówek H1 SKILL.md
+brzmiał „v5.1" — trzy różne numery w jednym pliku. Historii zmian 5.16.0 i 5.16.1
+**nie da się odtworzyć** z materiału w systemie. Odnotowane wprost jako luka,
+zamiast pozostawiać ciszę wyglądającą przy kolejnym audycie na kompletny rejestr.
+Nagłówek H1 naprawiony w tej samej sesji.
+
+- 5.17.0 (2026-08-20z, F-100 A+B i F-101 — sesja badania trzech skilli): **(1) NOWA ZDOLNOŚĆ — KROK 0d DG-LOAD.** Skill dostał dostęp do ośmiu bramek pracy na dokumentach (`shared/MOD-DOKUMENT-GATES.md` §1-§8: DOCUMENT-SCAN-PROMPT, FOUNDATION-VERIFICATION-GATE, EXHAUSTIVE-EXTRACTION-GATE, IMMEDIATE-LOGICAL-SCAN, CROSS-DOCUMENT-CONSISTENCY-CHECK, ENTITY-DISAMBIGUATION-TABLE, EVIDENCE-THREAD-LINKING, QUOTE-VERIFICATION-DEFAULT), które do 2026-08-20z istniały w systemie WYŁĄCZNIE wewnątrz `przesluchanie-swiadkow-v2-min90` — mimo że dotyczą pracy na dokumentach, a nie na świadku, i mimo że ten skill jest PRIMARY dla głębokiej analizy dowodowej wieloplikowej. Dodano tabelę mapującą każdą bramkę na konkretny krok/moduł tego skilla (§2 → MP6 i BLOK J, §3 → MP1 i BLOK G, §4 → §P1 INTRA-CONTRA, §5 → MP3, §6 → BLOK G, §7 → MP13, §8 → raport/dashboard/MD-NARR), wpisano `DOKUMENT-GATES-1-8` do `validation.required_gates`, `MOD-DOKUMENT-GATES` do `dependencies.required`, `AD-KROK0d-DGLOAD` do pipeline'u oraz dwa nowe punkty do sekcji „Zakaz". **(2) Wydzielenie MD7.** Pięć bloków strategicznych (BLOK-KONSEKWENCJE, BLOK-ATAK-NA-DOWOD, BLOK-NEGACJA, BLOK-PROWENIENCJA, DTA-ID-MODE — w. 858-1119, 262 linie) przeniesionych do `modules/MD7-bloki-strategiczne.md`; treść skopiowana bajtowo, weryfikacja porównawcza wykonana przed dostawą. W SKILL.md została tablica wyzwalaczy z progami aktywacji, a moduł zarejestrowano jako pozycję **E7** w BLOKU E routera (KROK 2), czyli w tym samym mechanizmie lazy loadingu co MP6/MP10-MP13. ⚠️ Odnotowane uczciwie: dwa z pięciu bloków są bezwarunkowe („ZAWSZE"), więc przy pełnej analizie moduł i tak zostanie wczytany — realny zysk to tryb minimalny z BLOKU G, przywrócenie SKILL.md roli routera i usunięcie z entrypointu streszczeń, które mogły dryfować względem kanonu w `shared/` (ATAK 692 linie, NEGACJA 684, PROWENIENCJA 457). SKILL.md: 1174 → 983 linie mimo dopisania całego KROKU 0d. **(3)** Naprawiony nagłówek H1 „v5.1" → „v5.17". Pełny opis sesji: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis `AUDYT-2026-08-20z`.

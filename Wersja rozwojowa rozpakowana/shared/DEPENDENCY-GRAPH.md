@@ -49,6 +49,7 @@
 | Plik | Status | Wywołujące skille |
 |------|--------|-------------------|
 | `DOWODY-METODOLOGIA.md` | ACTIVE | analizator-dowodow-v3, pisma-procesowe-v3 |
+| `MOD-DOKUMENT-GATES.md` | ACTIVE | przesluchanie-swiadkow-v2-min90 (PRE-W1a.5), analizator-dowodow-v3 (KROK 0d) — utworzony 2026-08-20z, F-100 A |
 | `ORZECZENIA-HIERARCHIA.md` | INTERNAL→ACTIVE | orzeczenia-sadowe-v2, pisma-procesowe-v3 |
 | `ROSZCZENIA.md` | INTERNAL→ACTIVE | pisma-procesowe-v3 |
 | `STRATEGIA-PROCESOWA.md` | ACTIVE | pisma-procesowe-v3, analiza-sadowa-v6 |

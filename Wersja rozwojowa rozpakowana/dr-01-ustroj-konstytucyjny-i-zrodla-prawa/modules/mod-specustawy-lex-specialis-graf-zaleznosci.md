@@ -43,9 +43,12 @@ techniki legislacyjnej.
 
 Ta sama rozporządzenie co w `mod-ZTP-przepisy-przejsciowe-doktryna.md` —
 Rozporządzenie Prezesa Rady Ministrów z 20.06.2002 ws. Zasad Techniki
-Prawodawczej, t.j. Dz.U. 2016 poz. 283 ze zm. — ale inny dział: **Rozdział 4a
+Prawodawczej, **t.j. Dz.U. 2026 poz. 300** (obwieszczenie konsolidujące
+nowelizację z 26.01.2026 — poprzedni t.j. 2016.283 ze zm. 2026.100
+NIEAKTUALNY jako podstawa cytowania od lutego 2026) — ale inny dział: **Rozdział 4a
 "Przepisy epizodyczne", § 29a-29c** (dodany nowelizacją z 5.11.2015, Dz.U. 2015
 poz. 1812, w życie 1.03.2016).
+✅ VER 2026-08-14 (F-77): portaloswiatowy.pl, rcl.gov.pl
 
 Wymogi § 29a-29c:
 1. W przepisach epizodycznych zamieszcza się regulacje wprowadzające
@@ -311,6 +314,11 @@ Katalog specustaw doraźnych (np. koronawirusowa) POZOSTAJE w niniejszym
 module (sekcja 3) — tamten moduł się do niego odsyła, nie duplikuje.
 
 ## CHANGELOG
+
+**1.2 (2026-08-14, F-77):** Korekta numeru Dz.U. dla ZTP w sekcji 2 —
+poprzedni t.j. 2016.283 zastąpiony aktualnym t.j. 2026.300 (konsolidacja
+nowelizacji 2026.100 z 26.01.2026). Wpis w CHANGELOG 1.0 poniżej pozostaje
+NIEZMIENIONY jako historyczny zapis stanu weryfikacji na 2026-07-17.
 
 **1.1 (2026-07-17):** Wpięto zweryfikowane sygnatury TK (K 4/10 — linia
 potwierdzająca, SK 37/19 — linia krytyczna) do sekcji 4.1, bilans nt.

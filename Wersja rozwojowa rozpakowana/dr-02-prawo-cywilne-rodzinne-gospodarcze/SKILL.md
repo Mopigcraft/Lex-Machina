@@ -199,6 +199,32 @@ nieobecnej art. 184). Rozgraniczenie od kuratora sądowego
                "Ustawa o kredycie konsumenckim" wskazywała błędnie na
                mod-ustawa-deweloperska)
   [✓] OK    mod-KC-cywilne-zobowiazania-odpowiedzialnosc
+              (✅ PODZIELONY 2026-08-20 — naprawa F-78, priorytet 9
+               [1395 linii, urosło z pierwotnych 1036 przy skanie F-78]:
+               plik pod NIEZMIENIONĄ nazwą stał się indeksatorem [183
+               linie, zachowuje CORE/INTAKE/PROCEDURA stosowane zawsze],
+               treść 22 sekcji przeniesiona do 8 plików w podkatalogu
+               `kc-zobowiazania/` [max 329 linii/plik: Aneks D
+               służebności]. Zweryfikowano 100% integralność [22
+               nagłówki = 25 oryginału minus 3 pozostające w indeksie].
+               Naprawiono 1 odesłanie cross-file [bezumowne korzystanie
+               → osobny plik po podziale])
+              (✅ ROZBUDOWANO 2026-08-20 — sekcja 8, skarga pauliańska:
+               dodano 5 zweryfikowanych orzeczeń SN 2021-2025 na
+               podstawie materiału Wolters Kluwer, każde potwierdzone
+               niezależnie w 3+ źródłach [Rząd 2] przed wpisaniem: III
+               CZP 9/24 [model bilansowy, hipoteka NIE wyklucza skargi],
+               I CSK 3618/23 [wielokrotne rozporządzenia], III CZP 60/19
+               [REWOLUCJA — wyrok pauliański jako tytuł egzekucyjny
+               przeciwko osobie trzeciej wprost, zmiana redakcji
+               sentencji], III CZP 32/22 [osłabienie pozycji wobec
+               wierzycieli hipotecznych osoby trzeciej], III CZP 84/22
+               [legitymacja wierzyciela mimo upadłości dłużnika —
+               konkurencja z syndykiem]. ⚠️ 3 pozycje z materiału
+               źródłowego jawnie NIE dopisane — niezweryfikowane
+               niezależnie w tej sesji [I CSK 1119/23, V CSK 13/18, V
+               CSK 321/15] — plus art. 13f KSCU potwierdzony, ale nie
+               zintegrowany z regułami kosztów w tym module)
   [✓] OK    mod-KC-spadki
               (v2.0, rozbudowane 2026-07-19: zapis zwykły/windykacyjny,
                polecenie testamentowe, wykonawca testamentu,
@@ -212,6 +238,25 @@ nieobecnej art. 184). Rozgraniczenie od kuratora sądowego
   [✓] OK    mod-KC-ubezpieczenia
   [✓] NOWY  mod-KC-kredyty-frankowe
   [✓] OK    mod-KRO-rodzinne
+              (✅ PODZIELONY 2026-08-20 — naprawa F-78, priorytet 6
+               [1647 linii]: plik pod NIEZMIENIONĄ nazwą stał się
+               indeksatorem [110 linii, zachowuje ALERT LEGISLACYJNY +
+               FAZĘ 0 + TRYBY KWALIFIKATOR stosowane zawsze], treść 32
+               sekcji przeniesiona do 8 plików w podkatalogu
+               `kro-rodzinne/` [max 341 linii/plik], pogrupowanych
+               tematycznie: małżeństwo/ustrój majątkowy, rozwód/
+               separacja/eksmisja, podział majątku, alimenty [5
+               kategorii razem], pochodzenie dziecka [macierzyństwo/
+               ojcostwo/surogacja razem], rodzice-dzieci/władza/OZSS,
+               procedura/dowody/zmiana danych, referencje/strategia.
+               Zweryfikowano 100% integralność [32 nagłówki = 35
+               oryginału minus 3 pozostające w indeksie]. Naprawiono
+               przy okazji: 1 odesłanie cross-file [POKREWIEŃSTWO →
+               OBOWIĄZEK ALIMENTACYJNY] i 1 PRZEDTEM ISTNIEJĄCĄ
+               nieścisłość nazwy sekcji [odesłanie do "OPŁATY SĄDOWE"
+               zamiast właściwej "KALKULATOR" — treść była zawsze w tym
+               samym pliku, więc lokalizacja nie była błędna, tylko
+               nazwa])
               (rozbudowany 2026-07-19: dodano EKSMISJĘ MAŁŻONKA [art. 58
                §2-4, z zastrzeżeniem SN że nie zastępuje podziału
                majątku], OBOWIĄZEK ALIMENTACYJNY szerszego kręgu

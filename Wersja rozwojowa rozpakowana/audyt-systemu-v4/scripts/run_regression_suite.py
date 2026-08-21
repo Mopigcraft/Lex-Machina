@@ -120,6 +120,12 @@ def main():
     print(out)
     results["T11"] = code
 
+    # --- T12: ŚREDNI (dodany 2026-08-20z, F-101) ---
+    print("── T12 (⭐ ŚREDNI) — Zgodność metadanych wersji skilla " + "─" * 3)
+    code, out = run_script("check_wersje_changelog.py", repo_args)
+    print(out)
+    results["T12"] = code
+
     # T10 (monitorowanie plików Nexto/Virtualo, flaga F-12) USUNIĘTE
     # 2026-07-24d na wyraźne polecenie użytkownika — cały mechanizm
     # (rejestr + skrypt check_nexto_free_files.py) skasowany, patrz

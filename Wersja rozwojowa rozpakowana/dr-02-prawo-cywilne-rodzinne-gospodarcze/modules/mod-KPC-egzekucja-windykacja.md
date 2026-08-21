@@ -138,6 +138,11 @@ Wniosek o klauzulę (art. 781 KPC):
         wskazana w tytule (np. następca prawny) → 50 zł
       • Odpis tytułu egzekucyjnego (jeśli potrzebny) → 6 zł/strona
   → Zażalenie na postanowienie o klauzuli: 7 dni od doręczenia (art. 795 KPC)
+    ⛔ ADRESAT — PUŁAPKA: mimo literalnego brzmienia "sąd drugiej instancji"
+    w art. 795 §2, zażalenie jest w rzeczywistości POZIOME (SN, uchwała
+    III CZP 58/20 z 20.08.2021) — rozpoznaje INNY SKŁAD TEGO SAMEGO sądu
+    rejonowego, za pośrednictwem sądu, który wydał postanowienie. Pełny
+    wzorzec: `shared/ZAZALENIE-ADRESAT-GATE.md` (dodano 2026-08-20, F-13)
 
 Klauzula na małżonka dłużnika (art. 787 KPC):
   → Wierzyciel wykazuje dokumentem, że zobowiązanie powstało za zgodą małżonka

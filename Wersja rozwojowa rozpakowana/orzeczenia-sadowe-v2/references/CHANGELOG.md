@@ -4,6 +4,25 @@
 > (runda 2 — redukcja kosztu kontekstu) — treść skopiowana 1:1, bez zmian.
 > Wczytuj TYLKO gdy potrzebujesz historii konkretnej naprawy.
 
+---
+
+## 2.9.2 (2026-08-20z4) — ujednolicenie standardu: historia zmian wyłącznie w tym pliku
+
+Resztka sekcji `## CHANGELOG` usunięta z korpusu SKILL.md. Historia tego skilla
+mieszkała w `references/` już od wersji 2.7, ale w SKILL.md została pozostałość —
+dokładnie ten sam wzorzec, który wersja 2.9.1 naprawiała w polu `description`.
+
+**Standard systemowy wprowadzony tego dnia:** pełna historia zmian każdego skilla
+mieszka w `references/CHANGELOG.md` — nigdy w sekcji `## CHANGELOG` korpusu SKILL.md
+i nigdy jako pełna lista wpisów w polu `changelog:` frontmatteru. W SKILL.md zostaje
+wyłącznie kilkulinijkowy skrót bieżącej wersji z odesłaniem do tego pliku.
+
+**Dlaczego to nie jest kosmetyka:** rozproszenie historii między trzy lokalizacje było
+BEZPOŚREDNIĄ przyczyną fałszywych wyników testu T12 w sesji 2026-08-20z3 — test szukał
+wpisów w `references/`, nie znajdował ich (bo leżały w SKILL.md) i raportował luki,
+których nie było. Jedna lokalizacja kanoniczna usuwa całą tę klasę błędu.
+Pełny opis: `audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis `AUDYT-2026-08-20z4`.
+
 **2.7 (2026-07-12, runda 2):** wyniesienie tej sekcji CHANGELOG (112 linii,
 wersje 2.1–2.6) z SKILL.md do osobnego pliku referencyjnego — SKILL.md
 skrócony z 940 do 836 linii bez utraty ani jednej informacji. Powód: SKILL.md
@@ -152,3 +171,22 @@ URL `downloadOTK?mpo=`), Zasada 7 (drzewo hierarchii Tier 1), Faza 1-T.4
 **2.1:** uchwały 7 SN jako Kat. 6A z priorytetem; obsługa jurysdykcji zagranicznych
 (Tier 4); fallback przy niedostępności narzędzi sieciowych; dziedzinowe progi
 alertu STARE; szablon zakładki Alerty; integracja SYGNATURY.
+
+---
+
+## HISTORIA PRZENIESIONA Z SKILL.md (2026-08-20z4, ujednolicenie standardu)
+
+> Poniższa treść pochodzi z sekcji `## CHANGELOG` w korpusie SKILL.md. Przeniesiona **1:1, bez zmiany ani jednego
+> zdania**. Powód: historia zmian ma mieszkać w jednym miejscu — w tym pliku —
+> a nie być rozproszona między korpusem SKILL.md, frontmatterem i `references/`.
+> Rozproszenie było źródłem rozjazdów wykrytych flagami F-101 i F-102: test T12
+> szukał historii w `references/` i raportował fałszywe luki tam, gdzie wpisy
+> istniały, tylko w SKILL.md.
+
+> Pełna historia wersji (2.1...2.6) wyniesiona do `references/CHANGELOG.md`
+> (redukcja kosztu kontekstu, 2026-07-12 runda 2) — treść zachowana w 100%,
+> tylko przeniesiona: `view /mnt/skills/user/orzeczenia-sadowe-v2/references/CHANGELOG.md`
+>
+> Najnowsza pozycja: **2.6 (2026-07-06)** — Zasada 11: PLAN MINIMUM 5
+> orzeczeń wspierających + 5 linii przeciwnej, zawsze z przesłankami
+> rozstrzygnięcia.

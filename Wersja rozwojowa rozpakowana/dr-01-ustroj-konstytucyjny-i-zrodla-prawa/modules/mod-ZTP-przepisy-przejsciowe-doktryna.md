@@ -20,11 +20,14 @@ prawna i konstytucyjna, jak ją zakwalifikować w argumentacji).
 
 **Rozporządzenie Prezesa Rady Ministrów z dnia 20 czerwca 2002 r. w sprawie
 „Zasad techniki prawodawczej” (ZTP)**
-Dz.U. 2002 nr 100 poz. 908 → t.j. Dz.U. 2016 poz. 283 → ze zm. Dz.U. 2026 poz. 100
-(nowelizacja opublikowana i zapowiedziana do zebrania w kolejnym tekście
-ujednoliconym przez Rządowe Centrum Legislacji — ⚠️ **przy każdym powołaniu
-sprawdź na ISAP, czy nowy t.j. już się ukazał**, bo zmiana z 2026 poz. 100 jest
-świeża względem tego wpisu).
+Dz.U. 2002 nr 100 poz. 908 → t.j. Dz.U. 2016 poz. 283 → ze zm. Dz.U. 2026
+poz. 100 → **t.j. Dz.U. 2026 poz. 300** (obwieszczenie konsolidujące
+nowelizację z 26.01.2026, opublikowane przez RCL, "szeroki zakres
+wprowadzanych zmian" — luty 2026)
+✅ VER: portaloswiatowy.pl (cytuje bezpośrednio "tekst jedn.: Dz.U. z 2026 r.,
+poz. 300"), rcl.gov.pl (komunikat RCL o nowym tekście ujednoliconym) —
+2026-08-14 (F-77). ⚠️ przy każdym powołaniu i tak sprawdź na ISAP, czy nie
+doszło do kolejnej nowelizacji po 2026-08-14.
 
 Dział regulujący przedmiot tego modułu: **Dział poświęcony przepisom przejściowym
 i dostosowującym** (§ 30 i n. załącznika do rozporządzenia) — obejmuje m.in.:
@@ -227,7 +230,7 @@ tylko generyczne odesłania bez konkretnych sygnatur. Weryfikacja: ISAP, SAOS.
 
 **1.0 (2026-07-17):** Utworzenie modułu na wniosek użytkownika (mechanizm +
 literatura ekspercka nt. przepisów przejściowych). Zweryfikowano online: t.j.
-ZTP (Dz.U. 2016 poz. 283 ze zm. 2026 poz. 100), art. 4 KK, przykłady z
+ZTP (t.j. Dz.U. 2026 poz. 300), art. 4 KK, przykłady z
 rozmowy (orzeczenia o niepełnosprawności, prawo jazdy, kara śmierci).
 Zarejestrowano w `audyt-systemu-v4/references/CHECKLIST-DEDUP.md` jako
 lokalizację kanoniczną dla warstwy doktrynalnej — mechanika dat pozostaje

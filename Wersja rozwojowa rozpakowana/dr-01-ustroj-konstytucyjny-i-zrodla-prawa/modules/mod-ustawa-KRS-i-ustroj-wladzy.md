@@ -1,25 +1,28 @@
 # mod-ustawa-KRS-i-ustroj-wladzy
 
 **Status:** moduł klasy kancelaryjnej — poziom DR-03
-**Źródło weryfikacji:** Ustawa o KRS — Dz.U. 2011 poz. 714 ze zm. | Ustawa o RM — Dz.U. 2022 poz. 2032 ze zm. | Ustawa o wykonywaniu mandatu posła i senatora — Dz.U. 2018 poz. 1799 ze zm.
+**Źródło weryfikacji:** Ustawa o KRS — **Dz.U. 2024 poz. 1186 t.j.** (obwieszczenie Marszałka Sejmu z 1.08.2024 — ⚠️ poprzedni zapis modułu, 2011.714, to wyłącznie data pierwotnej publikacji, NIE t.j.; naprawione 2026-08-14 przy okazji F-15) | Ustawa o RM — Dz.U. 2022 poz. 2032 ze zm. | Ustawa o wykonywaniu mandatu posła i senatora — Dz.U. 2018 poz. 1799 ze zm.
 **Data weryfikacji online:** 2026-06-05
 
-⚠️⚡⚡ FLAGA F-15 (dodana 2026-08-07, na żądanie użytkownika) — patrz
-`audyt-systemu-v4/references/WARN-OTWARTE.md` — WYSOKI PRIORYTET.
-Rada Ministrów PRZYJĘŁA pakiet "praworządnościowy": (1) ustawa ws.
-statusu sędziów powołanych przez KRS w okresie 7.03.2018-13.05.2026
-("neosędziowie") — PRZEWIDUJE pozbawienie mocy prawnej uchwał KRS z
-tego okresu (z wyłączeniem "początkujących sędziów"); (2)
-nowelizacja ustawy o KRS (reforma sposobu wyboru członków-sędziów,
-odpowiedź na wyrok pilotażowy ETPC Wałęsa p. Polsce, deadline
-listopad 2026); (3) zmiany KW/KRS (rejestr). RÓWNOLEGLE: reforma
-ustroju sądów powszechnych (asesorzy w wydziałach rodzinnych,
-spłaszczenie struktury). RPO zgłosił ISTOTNE zastrzeżenia
-konstytucyjne. NIEPEWNY los u Prezydenta (ryzyko weta). ⚠️
-BEZPOŚREDNIE znaczenie: MOŻE wpływać na WAŻNOŚĆ wyroków wydanych
-przez sędziów mianowanych 2018-2026, w TOCZĄCYCH SIĘ lub
-ZAKOŃCZONYCH sprawach — sprawdź status PRZED każdym użyciem tego
-modułu w konkretnej sprawie.
+⚠️⚡⚡ FLAGA F-15 (otwarta 2026-08-07, istotna aktualizacja 2026-08-14) —
+patrz `audyt-systemu-v4/references/WARN-OTWARTE.md` — WYSOKI PRIORYTET,
+wciąż aktywna, ale ROZSTRZYGNIĘTE kluczowe niepewności z pierwotnej wersji:
+✅ Nowelizacja ustawy o KRS (wybór 15 sędziów-członków przez samych
+sędziów) uchwalona 23.01.2026, **ZAWETOWANA przez Prezydenta Nawrockiego
+19.02.2026** — ryzyko weta się zmaterializowało. ✅ W odpowiedzi rząd
+uruchomił "plan B": Sejm 27.02.2026 przyjął uchwałę o uwzględnieniu woli
+sędziów wyrażonej w nieformalnych zgromadzeniach przy wyborze KRS na
+podstawie WCIĄŻ obowiązującej ustawy z 2011 r. ✅ **15.05.2026 Sejm WYBRAŁ
+nową KRS** tym mechanizmem (235 głosów za) — kadencja od 16.05.2026,
+pierwsze posiedzenie 9-10.06.2026. Pytanie "czy nowa KRS powołana" z
+pierwotnej wersji flagi: TAK. ⛔ NADAL OTWARTE: odrębna, SZERSZA "ustawa
+praworządnościowa" regulująca STATUS PRAWNY neosędziów (kategorie
+zielona/żółta, unieważnienie uchwał dawnej KRS, powtórzenie konkursów) —
+projekt UTKNĄŁ w komisji sejmowej z braku kworum, odłożony "po
+wakacjach" (stan na ok. połowę sierpnia 2026). TO jest GŁÓWNE źródło
+ryzyka dla ważności orzeczeń — sprawdź status PRZED każdym użyciem tego
+modułu w konkretnej sprawie. Deadline ETPC (Wałęsa p. Polsce): listopad
+2026, nadal aktualny.
 
 **Zasada:** Każde brzmienie przepisu przed powołaniem → isap.sejm.gov.pl
 
@@ -35,7 +38,7 @@ Konstytucyjny podział władzy, Krajowa Rada Sądownictwa (kompetencje, zaskarż
 | Akt | Dz.U. / uwaga |
 |---|---|
 | Konstytucja RP | Dz.U. 1997 nr 78 poz. 483 — rozdz. V (Prezydent), VI (RM), VIII (sądy i trybunały) |
-| Ustawa o Krajowej Radzie Sądownictwa | Dz.U. 2011 poz. 714 ze zm. — **wielokrotnie nowelizowana; weryfikuj aktualny tekst w ISAP** |
+| Ustawa o Krajowej Radzie Sądownictwa | **Dz.U. 2024 poz. 1186 t.j.** (obw. 1.08.2024) — VER 2026-08-14 (F-15): isap.sejm.gov.pl (WDU20240001186), sejm.gov.pl (oficjalna strona KRS, obwieszczenie 9.02.2026 cytuje ten sam numer), sip.lex.pl. ⚠️ AKT INTENSYWNIE NOWELIZOWANY w 2026 r. (weto z 19.02.2026, uchwała Sejmu z 27.02.2026, wybór nowej KRS 15.05.2026) — mimo to ŻADNA z tych zmian NIE wygenerowała nowego t.j. (nowelizacja odrzucona wetem nie weszła w życie; wybór KRS z 15.05.2026 odbył się na PODSTAWIE tej wciąż obowiązującej ustawy z 2011 r., nie zmienił jej treści) — weryfikuj ponownie w ISAP przed każdym powołaniem, biorąc pod uwagę wysoką aktywność legislacyjną wokół tego aktu |
 | Ustawa o Radzie Ministrów | Dz.U. 2022 poz. 2032 ze zm. — weryfikuj aktualny t.j. w ISAP |
 | Ustawa o wykonywaniu mandatu posła i senatora | Dz.U. 2018 poz. 1799 ze zm. |
 | KPC / PPSA | j.w. — zaskarżenie aktów/uchwał w trybie sądowym |

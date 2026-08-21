@@ -75,12 +75,25 @@ zakończeniu stanu — z odpowiednim przedłużeniem kadencji tych organów.
 | Stan | Ustawa | Kto wprowadza |
 |---|---|---|
 | Stan klęski żywiołowej | Ustawa z 18.04.2002 o stanie klęski żywiołowej (t.j. Dz.U. 2025 poz. 112) | Rada Ministrów, rozporządzenie, max 30 dni |
-| Stan wyjątkowy | Ustawa z 21.06.2002 o stanie wyjątkowym | Prezydent RP na wniosek RM, kontrola Sejmu w 48h |
-| Stan wojenny | Ustawa z 29.08.2002 o stanie wojennym oraz o kompetencjach Naczelnego Dowódcy Sił Zbrojnych... | Prezydent RP na wniosek RM, kontrola Sejmu w 48h |
+| Stan wyjątkowy | Ustawa z 21.06.2002 o stanie wyjątkowym (t.j. Dz.U. 2017 poz. 1928) | Prezydent RP na wniosek RM, kontrola Sejmu w 48h |
+| Stan wojenny | Ustawa z 29.08.2002 o stanie wojennym oraz o kompetencjach Naczelnego Dowódcy Sił Zbrojnych... (t.j. Dz.U. 2025 poz. 504) | Prezydent RP na wniosek RM, kontrola Sejmu w 48h |
 
-⚠️ Numery Dz.U. w tabeli zweryfikowane częściowo online (2026-07-17) — przed
-użyciem w piśmie procesowym zweryfikuj aktualny t.j. każdej z tych ustaw na
-ISAP, były wielokrotnie nowelizowane.
+✅ VER 2026-08-14 (F-77): numery Dz.U. tabeli zweryfikowane u źródła — stan
+klęski żywiołowej i stan wojenny potwierdzone bezpośrednio (Kancelaria Sejmu,
+isap.sejm.gov.pl); stan wyjątkowy potwierdzony pośrednio (2017.1928 wciąż
+cytowany jako aktualny w dokumencie źródłowym datowanym 2026-07-07 — 9 lat
+bez nowego t.j. jest wiarygodne dla rzadko używanej ustawy, ale ⚠️
+zweryfikuj ponownie na ISAP przed użyciem w piśmie, gdyby w międzyczasie
+doszło do nowelizacji). Stan wojenny miał NAJWIĘKSZĄ rozbieżność — poprzedni
+zapis modułu podawał wyłącznie datę uchwalenia bez numeru Dz.U., podczas gdy
+istnieje t.j. z 10.04.2025 (Dz.U. 2025 poz. 504), nowszy niż poprzedni
+t.j. 2022.2091.
+
+⚠️ Mimo pełnej weryfikacji 2026-08-14 (F-77), przed użyciem którejkolwiek
+z tych ustaw w piśmie procesowym ponownie zweryfikuj aktualny t.j. na ISAP —
+zwłaszcza stan wyjątkowy, gdzie brak nowszego t.j. od 2017 r. jest wiarygodny,
+ale niepotwierdzony z absolutną pewnością wobec częstych nowelizacji innych
+aktów tej rodziny.
 
 ---
 
@@ -93,9 +106,15 @@ konstytucyjnego "stanu nadzwyczajnego". Określa organy właściwe w sprawach
 zarządzania kryzysowego, ich zadania i zasady finansowania. Może działać
 **RÓWNOLEGLE** do normalnego funkcjonowania państwa, bez uruchamiania
 Rozdziału XI Konstytucji — to jest właśnie różnica jakościowa, nie tylko
-stopnia. Ostatni tekst jednolity ogłoszony z uwzględnieniem stanu prawnego
-na 16.04.2026 r. — ⚠️ dokładny numer pozycji do potwierdzenia na ISAP przy
-najbliższym audycie (ustawa nowelizowana bardzo często).
+stopnia. Aktualny t.j.: **Dz.U. 2026 poz. 574** (obwieszczenie Marszałka
+Sejmu z 21.04.2026, stan prawny na 16.04.2026), ze zmianą **Dz.U. 2026 poz.
+815** (ustawa z 29.05.2026 wdrażająca dyrektywę UE 2022/2557 o odporności
+podmiotów krytycznych). ✅ VER: isap.sejm.gov.pl (WDU20260000574,
+api.sejm.gov.pl/eli/acts/DU/2026/574/text.pdf), samorzad.pap.pl,
+zamowieniapubliczne doradca.pl — 2026-08-14 (F-77). ⚠️ poprzedni zapis
+modułu nie podawał żadnego numeru ("dokładny numer pozycji do potwierdzenia
+przy najbliższym audycie") — ustawa nowelizowana bardzo często, weryfikuj
+ponownie przed każdym użyciem w piśmie.
 
 ### 3.2 Ustawa o ochronie ludności i obronie cywilnej (5.12.2024, Dz.U. 2024 poz. 1907)
 

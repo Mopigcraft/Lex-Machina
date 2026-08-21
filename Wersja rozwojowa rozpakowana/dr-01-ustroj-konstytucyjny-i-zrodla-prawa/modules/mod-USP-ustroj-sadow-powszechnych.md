@@ -3,6 +3,18 @@
 **Status:** moduł klasy kancelaryjnej — poziom DR-03
 **Źródło weryfikacji:** PUSP — Dz.U. 2024 poz. 334 t.j. ze zm. | USN — Dz.U. 2024 poz. 622 t.j. ze zm.
 **Data weryfikacji online:** 2026-06-05
+
+⚠️⚡ FLAGA F-15 (patrz `mod-ustawa-KRS-i-ustroj-wladzy.md` dla pełnej treści
+i `audyt-systemu-v4/references/WARN-OTWARTE.md`) — DOTYCZY TEGO MODUŁU:
+duża, kompleksowa reforma PUSP (projekty UD322/UD323 — spłaszczenie
+struktury sądownictwa, jednolity status sędziego powszechnego, zwiększone
+kompetencje Ministra Sprawiedliwości) NADAL na etapie opiniowania, RPO
+zgłosił istotne zastrzeżenia konstytucyjne — NIE MYLIĆ z już uchwaloną
+węższą nowelizacją (Dz.U. 2026 poz. 370, wyłącznie asesorzy w wydziałach
+rodzinnych/nieletnich), która jest osobną, mniejszą zmianą. Sprawdź status
+dużej reformy PRZED użyciem tego modułu w sprawie dot. statusu sędziego
+powszechnego lub organizacji sądów.
+
 **Zasada:** Każde brzmienie przepisu przed powołaniem → isap.sejm.gov.pl | LEX/Legalis wyłącznie pomocniczo
 
 ---
@@ -16,8 +28,8 @@ Ustrój sądów powszechnych (SR, SO, SA), Sąd Najwyższy, sądy administracyjn
 
 | Akt | Skrót | Dz.U. / identyfikator ISAP |
 |---|---|---|
-| Prawo o ustroju sądów powszechnych | PUSP | Dz.U. 2024 poz. 334 t.j. ze zm. (zm.: Dz.U. 2025 poz. 526, poz. 1609) |
-| Ustawa o Sądzie Najwyższym | USN | Dz.U. 2024 poz. 622 t.j. ze zm. |
+| Prawo o ustroju sądów powszechnych | PUSP | Dz.U. 2024 poz. 334 t.j. ze zm. (zm.: Dz.U. 2025 poz. 526, 820, 1172, 1178, 1609 oraz **Dz.U. 2026 poz. 26 i 370** — ta ostatnia to ustawa z 27.02.2026 r. o zmianie PUSP, uchwalanie asesorom sądowym orzekania w wydziałach rodzinnych/nieletnich, VER 2026-08-14 przy okazji F-15) |
+| Ustawa o Sądzie Najwyższym | USN | Dz.U. 2024 poz. 622 t.j. ze zm. (zm. potwierdzona: **Dz.U. 2026 poz. 26** — VER 2026-08-14) |
 | Prawo o ustroju sądów administracyjnych | PUSA | weryfikuj aktualny t.j. w ISAP |
 | Prawo o postępowaniu przed sądami administracyjnymi | PPSA | weryfikuj aktualny t.j. w ISAP |
 | Ustawa o skardze na naruszenie prawa strony do rozpoznania sprawy bez nieuzasadnionej zwłoki | ustawa o przewlekłości | weryfikuj aktualny t.j. w ISAP |

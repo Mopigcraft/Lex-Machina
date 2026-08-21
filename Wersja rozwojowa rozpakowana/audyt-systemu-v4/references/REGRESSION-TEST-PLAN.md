@@ -472,3 +472,82 @@ brak). Docelowo — lista wyjątków w skrypcie, żeby test mógł stać się br
 
 **Stan zastany przy wprowadzeniu (2026-08-15z):** 72 / 80 / 53 pozycji
 w trzech kierunkach → flaga F-89.
+
+---
+
+## 12. T12 — ZGODNOŚĆ METADANYCH WERSJI SKILLA (dodane 2026-08-20z, flaga F-101)
+
+**Skrypt:** `scripts/check_wersje_changelog.py` | **Priorytet:** ⭐ ŚREDNI |
+**Charakter:** kontrola tekstowa → WARN (nie bramka; wynik wymaga przeglądu)
+
+**Błąd przeszły, przed którym chroni** (zasada: test odpowiada udokumentowanemu
+incydentowi, nie hipotezie) — TRZY przypadki wykryte w JEDNEJ sesji, w trzech
+skillach z trzech różnych rodzin, co przesądziło o powstaniu testu:
+1. `przesluchanie-swiadkow-v2-min90` — `version: 3.22`, changelog kończy się na
+   3.19; zmiany 3.20-3.22 nie są opisane NIGDZIE i nie da się ich odtworzyć.
+2. `analizator-dowodow-v3` — `version: 5.16.1`, pole `changelog:` deklaruje
+   5.15.0, nagłówek H1 podaje „v5.1": trzy różne numery w jednym pliku.
+3. `audyt-systemu-v4` — stopka „Wersja: 5.0" przy `version: 6.8` (rozjazd
+   dziewięciu wersji i półtora miesiąca), wykryta 2026-08-20y.
+
+**Luka, którą wypełnia:** żaden wcześniejszy test nie patrzył na metadane wersji.
+T1-T4 i T8 kontrolują treść i strukturę, T9 przeniesienia do `shared/`,
+T11 synchronizację aktów. Rozjazd numeru wersji nie blokuje działania skilla —
+i dlatego przeżywał audyty — ale uniemożliwia odpowiedź na pytanie „co się
+zmieniło od kiedy", czyli podstawową operację audytową.
+
+**Cztery kontrolowane nośniki numeru:** pole `version:` w YAML (źródło prawdy),
+najwyższy wpis w `references/CHANGELOG.md`, numer w polu `changelog:` YAML,
+numer w nagłówku H1 i stopce SKILL.md.
+
+**Pułapka float — osobna klasa wykrywana przy okazji.** Niecytowane
+`version: 6.10` YAML parsuje jako **float 6.1**, czyli numer NIŻSZY niż 6.9.
+Problem nie istnieje przy jednocyfrowym minor, więc pojawia się dopiero przy
+przejściu X.9 → X.10 i jest niewidoczny w treści pliku. Wykryty 2026-08-20z
+przypadkiem, przy kontroli parsowalności frontmatterów — pierwszy przebieg
+testu znalazł go w 8 skillach systemu. Klasyfikowany jako **⚠️ ryzyko utajone**,
+nie ⛔ czynny błąd: sam plik działa poprawnie, dopóki nikt nie porównuje wersji
+liczbowo.
+
+**Wynik pierwszego przebiegu (2026-08-20z, `/mnt/skills/user`):** 26 rozbieżności
+w 24 skillach — 5 czynnych rozjazdów ⛔, 21 ryzyk utajonych ⚠️. Szczegóły
+i lista skilli: flaga **F-102** w `WARN-OTWARTE.md`.
+
+**Kryterium wyjścia — ŚWIADOMIE NIE „zero":** luki historii w skillach, których
+przeszłych wersji nie da się odtworzyć (3.20-3.22, 5.16.0-5.16.1), zostają
+jako udokumentowane, a nie usuwane przez zmyślenie wpisów. Kryterium:
+**zero ⛔ czynnych rozjazdów poza pozycjami jawnie oznaczonymi jako
+„LUKA JAWNA" w changelogu danego skilla.**
+
+**Znane ograniczenia (z docstringu skryptu):** parser rozpoznaje trzy formaty
+numeracji wpisów (`**6.9 (data)**`, `- 5.15.0 (data)`, `## v3.15`); skill
+o formacie nietypowym zgłosi brak changelogu zamiast realnej niezgodności.
+Brak `references/CHANGELOG.md` NIE jest błędem — wiele skilli trzyma historię
+wyłącznie w polu YAML. ⚠️ Pierwsza wersja testu przeszukiwała cały plik i dawała
+7 fałszywych trafień z wpisów changelogu cytujących wersje INNYCH plików
+(np. `shared/SKILL.md` wpis 3.15 cytujący „Wersja: 1.1.0" pliku
+MOD-DOKUMENT-ANOMALIE) — naprawione tego samego dnia przez ograniczenie
+wyszukiwania do korpusu pliku, poza frontmatterem.
+
+### 12b — ROZSZERZENIE T12 O STANDARD LOKALIZACJI (2026-08-20z4, ZASADA 15)
+
+Test kontroluje dodatkowo, GDZIE mieszka historia zmian:
+- sekcja `## CHANGELOG` w korpusie SKILL.md zawierająca wpisy wersji → **⛔**
+  (samo odesłanie do pliku jest dozwolone i nie jest zgłaszane),
+- pole `changelog:` w YAML dłuższe niż 15 linii → **⚠️** (to już nie skrót,
+  tylko pełna historia w niewłaściwym miejscu).
+
+**Błąd przeszły, przed którym chroni:** w sesji 2026-08-20z3 sam ten test dał
+fałszywy raport o luce siedmiu wersji w `pisma-procesowe-v3`, bo wpisy 5.12-5.15
+leżały w SKILL.md, a nie w `references/CHANGELOG.md`. Naprawa parsera usunęła
+objaw; ZASADA 15 i ta kontrola usuwają przyczynę.
+
+**Wynik pierwszego przebiegu (2026-08-20z4):** 9 skilli naruszało standard —
+7 z sekcją w korpusie (`analizator-przepisow-v2` 83 linie, `prawny-router-v3` 71,
+`audyt-systemu-v4` 42, `pisma-proste-v2` 62, `pisma-procesowe-v3` 61, `dr-01` 17,
+`orzeczenia-sadowe-v2` 9) i 3 z pełną historią w YAML (`shared` 111 linii,
+`prawny-router-v3` 63, `analiza-sadowa-v6` 39). Wszystkie naprawione tego samego
+dnia; po naprawie test zwraca zero.
+
+**Kryterium wyjścia:** zero ⛔. Skill bez `references/CHANGELOG.md` jest poprawny
+tylko dopóki nie ma historii — przy pierwszym wpisie plik zakłada się od razu.

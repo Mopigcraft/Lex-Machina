@@ -1,6 +1,10 @@
 ---
 name: orzeczenia-sadowe-v2
-version: 2.9
+version: "2.9.2"   # F-102 (2026-08-20z3): pole podawalo 2.9, podczas gdy changelog
+                   # ma wpis 2.9.1 z 2026-07-17 (naprawa YAML w polu description).
+                   # Rozjazd ODWROTNY: wersji nie podbito po wykonanej naprawie,
+                   # wiec `version` cofal skill o jedna zrealizowana zmiane.
+                   # Cudzyslow: patrz pulapka float, test T12.
 type: executive-analiza
 status: production
 compatibility: "web_search, web_fetch, show_widget"
@@ -17,9 +21,18 @@ description: >
   pytanie dotyczy tylko przepisów bez orzeczeń.
   Pełna historia zmian: references/CHANGELOG.md (nie w tym polu — opis
   wyzwalający musi zostać zwięzły dla trafności triggerowania skilla).
+changelog: |
+  Wersja bieżąca: 2.9.2. ⛔ PEŁNA HISTORIA — WYŁĄCZNIE w references/CHANGELOG.md
+  (standard systemowy 2026-08-20z4: jeden plik, jedna lokalizacja; zakaz sekcji
+  changelogu w korpusie SKILL.md i zakaz pełnej listy wpisów w tym polu).
+  Skrót 2.9.2 (2026-08-20z4): resztka sekcji CHANGELOG usunięta z korpusu SKILL.md — całość historii
+  w references/CHANGELOG.md, gdzie mieszkała już od wersji 2.7.
+
 ---
 
-# Wyszukiwanie Orzeczeń Sądowych v2.7
+# Wyszukiwanie Orzeczeń Sądowych v2
+<!-- TYLKO major - pelny numer w polu `version:` YAML (F-102, 2026-08-20z3).
+     Wczesniej v2.7 przy version 2.9/2.9.1. -->
 
 Narzędzie procesowe dla pełnomocników, sędziów i stron działających pro se.
 Łączy interaktywny widget HTML (tryb laik / prawnik) z weryfikowanym
@@ -177,6 +190,21 @@ ten sam standard — komentarz prawniczy, interpretacja urzędowa, glosa):
   ogólny PRAWO-HARDGATE, NIE 30-słowny limit orzeczeń z Zasady 3]" —
   sekcja "[dokładny nagłówek]", https://przyklad.pl/artykul#sekcja
   (jeśli brak kotwicy: "..., sekcja »Kary za naruszenie«, akapit 3 od góry")
+
+**Zasada 2C — Weryfikacja ROLI cytowanego fragmentu (dodano 2026-08-14,
+na żądanie użytkownika — CENTRALNIE w `shared/PRAWO-HARDGATE.md`, sekcja
+"KROK DODATKOWY — WERYFIKACJA ROLI CYTOWANEGO FRAGMENTU").** Zasady 2/2A/
+2B wyżej potwierdzają, że cytat ISTNIEJE i jest DOKŁADNY — ale NIE mówią,
+czyją wypowiedź w uzasadnieniu cytujesz. Uzasadnienie typowo zawiera trzy
+warstwy o różnej wartości: [1] ustalenie/rozstrzygnięcie SĄDU, [2]
+wykładnia prawa dokonana PRZEZ sąd, [3] zreferowane twierdzenie STRONY
+(np. "Powód podniósł, że...", zwykle PRZED zwrotem "Sąd zważył, co
+następuje"). TYLKO [1] i [2] nadają się do powołania jako stanowisko
+sądu. PRZED cytowaniem na poparcie tezy pisma — ustal warstwę wprost z
+treści źródłowej (web_fetch), nie z samego wyrwanego zdania. Pełna
+specyfikacja i sygnały tekstowe do rozpoznania warstwy [3]:
+`shared/PRAWO-HARDGATE.md`, sekcja jw. — w razie rozbieżności rozstrzyga
+PRAWO-HARDGATE jako źródło nadrzędne (ten sam wzorzec co Zasada 2B).
 
 **Zasada 3 — Limit cytatu: maksymalnie 30 słów.**
 Dziedzinowy override globalnego limitu 15 słów z PRAWO-HARDGATE — uzasadniony koniecznością
@@ -933,10 +961,14 @@ Nie dubluj logiki shared w lokalnych plikach. Lokalne moduły mogą tylko doprec
 
 ## CHANGELOG
 
-> Pełna historia wersji (2.1...2.6) wyniesiona do `references/CHANGELOG.md`
-> (redukcja kosztu kontekstu, 2026-07-12 runda 2) — treść zachowana w 100%,
-> tylko przeniesiona: `view /mnt/skills/user/orzeczenia-sadowe-v2/references/CHANGELOG.md`
->
-> Najnowsza pozycja: **2.6 (2026-07-06)** — Zasada 11: PLAN MINIMUM 5
-> orzeczeń wspierających + 5 linii przeciwnej, zawsze z przesłankami
-> rozstrzygnięcia.
+⛔ **Historia zmian tego skilla NIE mieszka w tym pliku.** Pełny changelog:
+
+```
+view /mnt/skills/user/orzeczenia-sadowe-v2/references/CHANGELOG.md
+```
+
+Skrót bieżącej wersji — pole `changelog:` we frontmatterze powyżej.
+Standard systemowy (2026-08-20z4): `references/CHANGELOG.md` jest jedyną
+lokalizacją kanoniczną historii; zakaz odtwarzania sekcji changelogu w korpusie
+SKILL.md i zakaz trzymania pełnej listy wpisów w YAML.
+

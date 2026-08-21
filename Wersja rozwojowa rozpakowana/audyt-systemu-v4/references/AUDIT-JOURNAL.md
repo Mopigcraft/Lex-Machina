@@ -48368,3 +48368,2339 @@ dr-03, wymaga dedykowanej sesji.
 **Dostawa jako kompletne archiwum:** `dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka`,
 `dr-05-prawo-administracyjne-sadowoadministracyjne`, `prawo-polskie-v2`,
 `audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20l — nowa pozycja OBS-6: areszt elektroniczny jako nowy środek zapobiegawczy (KPK)
+
+**Kontekst:** na wyraźne polecenie użytkownika — link do artykułu rp.pl
+(20.08.2026) o projekcie wprowadzenia aresztu elektronicznego (AE) jako
+nowego, samodzielnego środka zapobiegawczego w KPK. Dodane do rejestru
+OBSERWOWANE (nie jako flaga F- błędu — to monitoring toczącego się
+procesu legislacyjnego, zgodnie z konwencją sekcji 3 WARN-OTWARTE.md).
+
+**Ustalono z artykułu i dodatkowych źródeł:** AE ma wypełnić lukę między
+dozorem policyjnym a tymczasowym aresztowaniem — oskarżony/podejrzany
+przebywałby we własnym miejscu zamieszkania pod kontrolą SDE (elektroniczna
+bransoletka) zamiast w areszcie śledczym. WYMAGANA zgoda zarówno
+zainteresowanego, jak i jego pełnoletnich domowników. Dwuetapowe
+zastosowanie (wczesna faza postępowania przygotowawczego na wniosek
+prokuratora; faza późniejsza przy zamianie z tymczasowego aresztowania).
+Nadzór sądu lub prokuratora zależnie od etapu, z możliwością modyfikacji
+warunków. Projekt wywodzi się z prac Komisji Kodyfikacyjnej Prawa
+Karnego, dotyka KPK (nowy typ środka zapobiegawczego), KKW i ustawę o
+SDE.
+
+**Rozbieżność źródeł odnotowana WPROST, NIE rozstrzygnięta:**
+gazetaprawna.pl (metadane wskazują na treść z okolic marca 2026) sugeruje,
+że Rada Ministrów już PRZYJĘŁA projekt nowelizacji KK/KPK/ustawy o SDE.
+Artykuł rp.pl z dnia dzisiejszego (20.08.2026) wskazuje, że projekt NIE
+został opublikowany, BEZ konsultacji, a przyjęcie jesienią 2026 — mimo
+wcześniejszych zapowiedzi MS — jest "niemal pewne, że się nie stanie";
+wiceminister Maria Ejchart deklaruje gotowość projektu "do końca roku"
+2026. Możliwe wyjaśnienie (NIEPOTWIERDZONE): gazetaprawna mogła dotyczyć
+WĘŻSZEGO, wcześniejszego wątku (podniesienie progu SDE z 1 roku do 1,5
+roku dla już skazanych — techniczna zmiana KKW, ŚLEDZONA ODDZIELNIE w
+kontekście, MNIEJSZA wagowo niż wprowadzenie CAŁKIEM NOWEGO środka
+zapobiegawczego AE). Nie zgadywano — obie wersje odnotowane, priorytet
+weryfikacji przy najbliższym sprawdzeniu.
+
+**Rejestracja:** `WARN-OTWARTE.md` sekcja 3 (OBSERWOWANE) — nowy wiersz
+OBS-6, priorytet WYSOKI (dotyczy fundamentalnej instytucji prawa karnego
+procesowego — środków zapobiegawczych, ~90% wniosków o tymczasowe
+aresztowanie jest uwzględnianych wg raportu Fundacji Court Watch,
+przywołanego w artykule). Licznik pozycji OBS zaktualizowany 5→6.
+Częstotliwość sprawdzania: co 4-6 tygodni, częściej pod koniec 2026 przy
+zbliżaniu się do zapowiadanego terminu.
+
+**Protokół przy uchwaleniu:** zgodnie z nagłówkiem sekcji 3 — po
+uchwaleniu ustawy, OBS-6 przechodzi w nową flagę F- wg PROTOKOŁU PRZY
+TRAFIENIU, z pełnym opracowaniem numerów artykułów w `mod-KPK-*`
+(dr-03) jako nowy typ środka zapobiegawczego.
+
+**Dostawa jako kompletne archiwum:** `audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20m — F-89: synchronizacja aktów, 2 naprawy + odkrycie metodologiczne o fałszywych trafieniach T11
+
+**Kontekst:** kolejna pozycja z kolejki po wyczerpaniu "łatwej" górnej części
+tabeli priorytetowej. F-89 to zaległość synchronizacyjna między 3 rejestrami
+(lokalne MAPA-AKTOW, centralna ROUTING-MAP, mapa Dz.U.), wykrywana testem
+T11 (`check_sync_aktow.py`). Stan przed sesją: 34 pozycji do przeglądu
+(kierunek "lokalne" — obecne lokalnie, nieobecne centralnie).
+
+**Wykonano:** uruchomiono `check_sync_aktow.py --kierunek lokalne --limit 0`,
+priorytetyzując — zgodnie z opisem flagi — pozycje z ostatnich 12 miesięcy
+(2025-2026). Sprawdzono kontekst 10 pozycji przez odczyt lokalnych
+MAPA-AKTOW.md i porównanie z istniejącymi wierszami ROUTING-MAP.md.
+
+**Genuine naprawy (2):**
+- Dz.U. 2026 poz. 507 — dopisane do wiersza SUS w ROUTING-MAP (ustawa z
+  13.03.2026 o CEIDG, przy okazji zmieniająca art. 36 SUS — zgodnie z
+  wcześniejszym rozstrzygnięciem F-28 pkt 3 w mapie lokalnej dr-04).
+- Dz.U. 2026 poz. 1072 — dopisane do wiersza ustawy o pracy cudzoziemców
+  (rozporządzenie wykonawcze MRPiPS z 31.07.2026 ws. wykazu państw
+  wyłączonych z pracy w ruchu bezwizowym).
+
+**⭐⭐⭐ Odkrycie metodologiczne (istotne dla przyszłych sesji T11):** 3
+pozycje (poz. 646 — dr-08 i dr-13 osobno, poz. 25 — dr-04) okazały się
+FAŁSZYWYMI TRAFIENIAMI — treść BYŁA już obecna w ROUTING-MAP, ale w
+formacie kropkowym ("2026.646", "2026.25") zamiast pełnej formy wymaganej
+przez regex skryptu ("Dz.U. 2026 poz. 646"). Czwarta pozycja (poz. 100,
+ZTP) okazała się fałszywym trafieniem z INNEGO powodu — numer jest
+CELOWO zacytowany jako numer HISTORYCZNY/nieaktualny wewnątrz notatki
+dokumentującej korektę na nowszy t.j. (2026 poz. 300), więc jego
+literalna obecność w tekście jest prawidłowa, nie oznacza luki. Żadna z
+tych 4 pozycji nie wymagała edycji merytorycznej — pierwszy przebieg po
+edycji (34→33) faktycznie wynikał z jednej prawdziwej naprawy (poz. 507);
+druga naprawa (poz. 1072) wymagała DODATKOWEJ korekty formatu (pierwsza
+próba użyła notacji kropkowej, która NIE została rozpoznana przez
+regex — naprawione, 33→32). Rekomendacja zapisana wprost w treści F-89:
+rozważyć rozszerzenie regex T11 o akceptację obu formatów numeru
+("NNNN.MMM" i "poz. MMM"), żeby zmniejszyć liczbę fałszywych trafień w
+przyszłych przebiegach — bez tej zmiany test będzie systematycznie
+zawyżał listę do przeglądu.
+
+**Świadomie pozostawione bez wiersza (3, decyzja udokumentowana):**
+poz. 736 (dr-06 — techniczna aktualizacja rozporządzenia wykonawczego w
+ramach już opracowanego art. 89 VAT-REF); poz. 644 (dr-06 — ustawa ESAP,
+już jawnie oznaczona lokalnie jako "⏳ OCZEKUJE, brak modułu" — decyzja
+odroczenia podtrzymana, nie unieważniona); poz. 889 (dr-02 — akt
+"przekształcenia spółdzielcze" o niezweryfikowanej relacji z t.j.
+ustawy o lokatorach — pozostaje jawną, nierozstrzygniętą luką, NIE
+domkniętą na siłę bez weryfikacji merytorycznej).
+
+**Zakres NIE przejrzany w tej sesji:** pozostałe ~29 pozycji z listy 32
+(głównie akty z lat 2019-2025, niższe ryzyko praktyczne zgodnie z
+priorytetem "ostatnie 12 miesięcy" z definicji flagi). Bilans potwierdza
+wcześniejszą ocenę: dalsza praca nad F-89 ma malejący zwrot.
+
+**Rejestracja:** `prawo-polskie-v2/ROUTING-MAP.md` — 2 wiersze
+zaktualizowane. `WARN-OTWARTE.md` — wiersz F-89 zaktualizowany o wyniki
+sesji i odkrycie metodologiczne; flaga POZOSTAJE otwarta (niski
+priorytet, jak dotychczas) — nie kwalifikuje się do zamknięcia.
+
+**Dostawa jako kompletne archiwum:** `prawo-polskie-v2`, `audyt-systemu-v4`
+(WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20n — F-13: nowy wzorzec w bramce ZAZALENIE-ADRESAT-GATE (art. 795 KPC, zażalenie na klauzulę wykonalności)
+
+**Kontekst:** F-13 to statyczne pokrycie ~58 plików wspominających "zażalenie"
+bez wskazania adresata — dynamiczna bramka `shared/ZAZALENIE-ADRESAT-GATE.md`
+już łagodzi ryzyko na bieżąco, ale statyczna adnotacja modułów pozostaje
+niedokończona. Priorytet z opisu flagi: DR-02 i DR-03 najpierw.
+
+**Wykonano:** sprawdzono 14 plików w dr-02 i dr-03 wspominających
+"zażalenie" (grep -rli). Zidentyfikowano jeden przypadek o wysokiej
+wartości praktycznej: zażalenie na postanowienie sądu I instancji co do
+nadania klauzuli wykonalności (art. 795 KPC), wspomniane w
+`mod-KPC-egzekucja-windykacja.md` bez adresata. Web research ujawnił
+PUŁAPKĘ REDAKCYJNĄ: literalne brzmienie art. 795 §2 KPC mówi "sąd drugiej
+instancji", co sugerowałoby środek dewolutywny — ALE SN w uchwale 3
+sędziów Izby Cywilnej z 20.08.2021 (III CZP 58/20) rozstrzygnął, że to
+zażalenie jest w rzeczywistości POZIOME: rozpoznaje je inny skład TEGO
+SAMEGO sądu rejonowego, nie sąd okręgowy jako II instancja. Uzasadnienie
+SN: postępowanie klauzulowe zawiera lex specialis (art. 767⁴ §1¹ KPC)
+względem ogólnych reguł, a sformułowanie w art. 795 §2 to pozostałość
+nieprecyzyjnej nowelizacji z lipca 2019 r. Dodatkowo odnotowano wyjątek:
+gdy klauzulę wydał po raz pierwszy sąd DRUGIEJ instancji — zażalenie NIE
+przysługuje w ogóle (na podstawie sprawy SK 17/10 przed TK).
+
+**Metoda weryfikacji:** 5 źródeł zgodnych (prawo.pl — cytujący wprost
+uchwałę SN III CZP 58/20, arslege.pl, lexlege.pl, nakaz-zaplaty.pl,
+sip.lex.pl/OpenLEX).
+
+**Rejestracja:**
+- `shared/ZAZALENIE-ADRESAT-GATE.md` — nowy wiersz w tabeli wzorców.
+- `dr-02-prawo-cywilne-rodzinne-gospodarcze/modules/mod-KPC-egzekucja-
+  windykacja.md` — dopisane odesłanie/ostrzeżenie bezpośrednio przy
+  wzmiance art. 795.
+- `WARN-OTWARTE.md` — wiersz F-13 zaktualizowany o postęp sesji; flaga
+  POZOSTAJE otwarta (57 z 58 plików nieprzejrzanych).
+
+**Sprawdzone i NIE wymagające dalszej akcji w tej sesji:** pozostałe
+pliki z listy 14 — część już miała adresat jawnie wskazany (np.
+`mod-KPK-srodki-zapobiegawcze-tymczasowe-aresztowanie.md`, gdzie
+rozróżnienie prokurator→sąd vs sąd→ten sam sąd jest już opisane), część
+dotyczy tematów poza priorytetem tej sesji (spółki, restrukturyzacja) —
+NIE analizowane szczegółowo, priorytet dla przyszłej sesji.
+
+**Incydent i naprawa natychmiastowa:** pierwsza edycja bramki
+(`str_replace`) omyłkowo USUNĘŁA istniejący wiersz o skardze na
+czynności komornika, ponieważ `old_str` obejmował ten wiersz jako punkt
+kotwiczenia bez zachowania go w `new_str`. Wykryte natychmiast przez
+`grep` weryfikacyjny po edycji, naprawione drugą edycją w tej samej
+sesji (przywrócono usunięty wiersz obok nowego). Drugi taki incydent w
+ciągu dzisiejszej sesji (pierwszy: AUDYT-2026-08-20k, SKILL.md dr-14) —
+oba wykryte i naprawione tą samą metodą weryfikacji, zgodnie z Regułą 2
+HARDGATE-AUDYT.
+
+**Dostawa jako kompletne archiwum:** `shared`, `dr-02-prawo-cywilne-rodzinne-gospodarcze`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20o — F-78 priorytet 1: podział mod-KK-kwalifikator-karnomaterialny.md (2109 linii → indeks + 8 części) na wyraźne polecenie użytkownika
+
+**Kontekst:** użytkownik osobiście zdecydował o wykonaniu tego konkretnego
+podziału (mimo że poprzednia tura zaproponowała odłożenie go jako
+wymagającego dedykowanej sesji) i zlecił dwa dodatkowe zadania: (1)
+zbadać, czy pozostawienie pliku jako lekkiego indeksatora jest lepsze
+niż edycja każdego z ~30 zewnętrznych odsyłaczy z osobna; (2) zweryfikować
+pełne pokrycie tematu pobić i uszkodzeń ciała w zależności od kwalifikacji
+i czynników towarzyszących.
+
+**Decyzja architektoniczna (punkt 1 polecenia):** POTWIERDZONO —
+pozostawienie pliku pod NIEZMIENIONĄ nazwą jako indeksatora jest
+zdecydowanie lepsze niż edycja odsyłaczy. Uzasadnienie: (a) ~30 plików
+zewnętrznych (w tym `prawny-router-v3/SKILL.md`, `DEPENDENCY-GRAPH.md`,
+`ROUTING-MAP.md`, kilkanaście modułów dr-03 i pojedyncze z dr-02/dr-06/
+dr-09) odsyła do tego pliku po NAZWIE — edycja każdego z osobna to 30
+osobnych, podatnych na błąd operacji, WOBEC jednej operacji (zamiana
+treści pod tą samą nazwą); (b) `view` na starą ścieżkę nadal działa bez
+zmian — potwierdzone bezpośrednio w `dr-03/SKILL.md` linia 27, gdzie
+hardkodowana ścieżka `view .../mod-KK-kwalifikator-karnomaterialny.md`
+NIE wymagała żadnej edycji; (c) ryzyko pominięcia jednego z 30 plików
+przy ręcznej edycji WSZYSTKICH jest realne i trudne do pełnej weryfikacji,
+podczas gdy poprawność indeksatora weryfikuje się w jednym miejscu.
+
+**Wykonanie podziału:** wycięto oryginalny plik (2109 linii po
+uprzedniej naprawie merytorycznej, patrz niżej) na 24 sekcje wg
+istniejących nagłówków `##` (BLOK 0, A-R + 5 sekcji dodatkowych: niuanse,
+test końcowy, weryfikacja online, master lista, instrukcja integracji).
+Pogrupowano w 8 plików wg BLISKOŚCI MERYTORYCZNEJ (nie tylko rozmiaru) w
+podkatalogu `dr-03/modules/kwalifikator-karnomaterialny/`:
+- part-01: BLOK 0 + A + L (ogólny + mienie/rozbój) — 352 linie
+- part-02: BLOK B + I (zdrowie/życie + pobicia) — 181 linii, CELOWO
+  razem, patrz niżej
+- part-03: BLOK C + G (oszustwa + gospodarcze) — 161 linii
+- part-04: BLOK D + E (narkotyki + drogowe) — 89 linii
+- part-05: BLOK F + J (wolność + seksualne) — 213 linii
+- part-06: BLOK H + Q + R (zorganizowana + nienawiść + deepfake) — 374 linie
+- part-07: BLOK K + M + N + O + P (kontratypy + zbieg + sankcje) — 537 linii
+- part-08: niuanse + test + weryfikacja + master lista + integracja — 291 linii
+
+Weryfikacja integralności: KAŻDY z 24 nagłówków znaleziony DOKŁADNIE w
+1 pliku (grep -l, potwierdzone systematycznie) — zero utraty, zero
+duplikacji treści. Suma linii 8 części (2198, po doliczeniu nagłówków
+identyfikujących każdej części) + indeks (104) odpowiada oryginałowi
+(2109) + 8×7 linii nagłówka dodanego do każdej części.
+
+Plik pod oryginalną nazwą zastąpiony INDEKSEM: zachowuje ZASADĘ
+NACZELNĄ i JAK UŻYWAĆ (z dodanym KROKIEM 0 — nawigacją), zawiera pełną
+tabelę nawigacyjną (BLOK → zakres artykułów → plik części) i notatkę o
+zasadach podziału dla przyszłych sesji audytowych.
+
+**Naprawa 5 odesłań krzyżowych między blokami, które po podziale
+wskazywałyby na inny PLIK bez tego zaznaczenia:** (1) część 1→2
+[zabójstwo BLOK I]; (2) część 1→7 [kontratypy BLOK K]; (3) część 3→7
+[stan wyższej konieczności BLOK K]; (4) część 7→2 [niebezpieczne
+narzędzie BLOK I.2]; (5) część 7→5 [przestępstwa seksualne BLOK J]. Każde
+uzupełnione o jawną nazwę pliku docelowego.
+
+**Odkrycie i naprawa PRZEDTEM ISTNIEJĄCEGO błędu (niezwiązanego z
+podziałem):** odesłanie "patrz BLOK poniżej dot. KW" w oryginalnym
+pliku było MARTWE — żaden blok o Kodeksie wykroczeń nigdy nie istniał w
+tym module (potwierdzone grep — 0 wyników przed naprawą). Naprawione
+przekierowaniem do właściwego zewnętrznego modułu
+`dr-03/mod-KW-kodeks-wykroczen.md`.
+
+**Weryfikacja pokrycia pobić/uszkodzeń ciała (punkt 2 polecenia
+użytkownika):** przegląd DRZEWO B.1 (art. 156/157/217 — uszczerbek
+INDYWIDUALNY) i DRZEWO I.2 (art. 158-159 — pobicie/bójka ZBIOROWE)
+wykazał REALNĄ LUKĘ: DRZEWO B.1 nie ostrzegało na starcie, że przy
+zdarzeniu z udziałem ≥2 napastników (pobicie) lub ≥3 uczestników (bójka)
+należy przejść do INNEGO drzewa (I.2), gdzie obowiązuje ODMIENNY reżim
+dowodowy (odpowiedzialność zbiorowa — karalny jest sam udział, nie trzeba
+dowieść który uczestnik zadał decydujący cios). Ryzyko praktyczne:
+użytkownik prowadzony przez DRZEWO B.1 przy sprawie wieloosobowej
+mógłby błędnie zakwalifikować czyn z art. 156/157 zamiast właściwego
+art. 158/159, tracąc dostęp do łagodniejszego standardu dowodowego przy
+pobiciu. NAPRAWIONE: dodano blok ostrzegawczy na starcie DRZEWO B.1 z
+jednoznacznym kryterium liczby uczestników i przekierowaniem.
+
+Dodatkowo zidentyfikowano i jawnie oznaczono (NIE naprawiono w tej
+sesji — poza zakresem post-split): art. 160 KK (narażenie na
+bezpośrednie niebezpieczeństwo, bez wymogu materializacji skutku) i
+art. 157a KK (uszkodzenie ciała dziecka poczętego) — oba obecne
+wyłącznie w tabeli MASTER LISTA (część 8), bez własnych drzew
+decyzyjnych. Poza tym: pokrycie art. 148-150 (zabójstwo, typy),
+155-159 (uszczerbek/pobicie/bójka), 217 (nietykalność) jest KOMPLETNE i
+dobrze rozbudowane (m.in. odróżnienie bójki od pobicia, wyjątek
+"jeden na jednego", zbieg z przestępstwem rozbójniczym, obrona konieczna
+przy pobiciu, świadczenie na Fundusz Pomocy Pokrzywdzonym).
+
+**Rejestracja (T1, Reguła 1-3 HARDGATE-AUDYT):**
+- `dr-03-prawo-karne-wykroczenia-egzekucja/SKILL.md` — opis wpisu
+  rozszerzony o pełny opis podziału i napraw przy okazji; dodana notatka
+  o nowej strukturze przy hardkodowanej ścieżce `view`.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany, priorytet 1 oznaczony
+  jako ✅ PODZIELONY, pozostałe 9 pozycji bez zmian.
+
+**Dostawa jako kompletne archiwum:** `dr-03-prawo-karne-wykroczenia-egzekucja`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20p — F-78 priorytet 2: podział shared/ORKA-BAS-LEKSYKON.md (1975 linii → indeks + 8 części)
+
+**Kontekst:** kontynuacja podziału długich plików wg tej samej metody
+zatwierdzonej przez użytkownika przy priorytecie 1 (indeksator +
+podkatalog części). ORKA-BAS-LEKSYKON.md — leksykon definicji
+ministerialnych/parlamentarnych, 20 CZĘŚCI (I-XX, z osobliwością
+numeracji: XIX/XX fizycznie PRZED XVII/XVIII w oryginale — kolejność
+dodawania w czasie).
+
+**Skala odsyłaczy zewnętrznych:** SZERSZA niż przy priorytecie 1 — ~28
+plików, w tym WSZYSTKIE `dr-XX/SKILL.md` (sekcja "ORKA-BAS — Definicje
+wspomagające" w każdym z 16 skilli dziedzinowych), `ROUTING-MAP.md`,
+`DEFINICJE-KLUCZOWE.md`, `CHECKLIST-DEDUP.md`. Ta sama decyzja
+architektoniczna co priorytet 1 (uzasadnienie niepowtórzone — patrz
+AUDIT-JOURNAL-2026-08-20o) zastosowana konsekwentnie.
+
+**Wykonanie:** wycięto 20 CZĘŚCI + METAREGUŁY (ORKA-REG-01–07, ORKA-META
+-01–02) + QUALITY GATE wg nagłówków `##`. METAREGUŁY i QUALITY GATE —
+w odróżnieniu od poprzedniego podziału — POZOSTAWIONE w indeksie (nie
+przeniesione do podkatalogu), ponieważ stosuje się je ZAWSZE, niezależnie
+od szukanej definicji — przeniesienie ich do osobnego pliku części
+zmuszałoby do podwójnego wczytywania (indeks + metareguły osobno) przy
+każdym użyciu leksykonu, co byłoby sprzeczne z celem podziału.
+
+Pogrupowano 20 CZĘŚCI w 8 plików wg bliskości tematycznej z DR-ami
+(gdzie możliwe) w podkatalogu `shared/orka-bas-leksykon/`:
+- czesc-01: I+II+III (praca, administracyjne, drogowe) — 207 linii
+- czesc-02: IV+V+IX (finanse, nieruchomości, energetyczne) — 156 linii
+- czesc-03: VI+XI+VII+XIII+XIV (cywilne+uzup. DR-02, niepełnosprawność
+  ogólna/wzrokowa/intelektualna) — 282 linie
+- czesc-04: VIII+XII (karne + uzupełnienie DR-03) — 151 linii
+- czesc-05: X+XV+XVI (kandydaci, prawa obywatelskie, pojęcia sporne) — 247 linii
+- czesc-06: XIX (priorytety P1) — 217 linii
+- czesc-07: XX+XVII (priorytety P2 + brakujące BAS v1.8) — 385 linii
+- czesc-08: XVIII (kluczowe pojęcia praktyki prawniczej) — 355 linii
+
+Weryfikacja integralności: KAŻDA z 20 CZĘŚCI znaleziona DOKŁADNIE w 1
+pliku. Suma linii 8 części (2000, z nagłówkami identyfikującymi) +
+indeks (143, z zachowanymi METAREGUŁAMI/QUALITY GATE) odpowiada
+oryginałowi (1975) + narzut nagłówków.
+
+**Naprawiono 1 odesłanie krzyżowe** (CZĘŚĆ XIX→XVII, BAS-120) o wskazanie
+pliku docelowego. **Zweryfikowano zachowanie 3 "stubów scaleniowych"**
+(BAS-W20, BAS-W26, BAS-W27 — rekordy wspomniane w `DEFINICJE-KLUCZOWE.md`
+jako scalone z `definicje/DEF-*.md`, z odesłaniem pozostawionym w tym
+leksykonie) — potwierdzone obecne, nienaruszone.
+
+**Odnotowana, NIE naprawiona osobliwość:** numeracja CZĘŚCI XIX/XX
+fizycznie poprzedza XVII/XVIII w oryginale (i w podziale, zachowującym tę
+samą kolejność fizyczną) — to dziedziczona cecha oryginału (kolejność
+dodawania sekcji w czasie różna od kolejności numerycznej), NIE błąd tego
+podziału. Odnotowana wprost w indeksie jako uwaga dla przyszłych
+czytelników.
+
+**Rejestracja:**
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany, priorytet 2 oznaczony
+  jako ✅ PODZIELONY.
+- Żaden z ~28 plików referencyjnych NIE wymagał edycji (potwierdzone
+  grep — brak odesłań do konkretnych linii/kotwic w starym pliku).
+
+**Dostawa jako kompletne archiwum:** `shared`, `audyt-systemu-v4`
+(WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20q — Rozbudowa sekcji "Skarga pauliańska" na podstawie uploadowanego ebooka Wolters Kluwer, z pełną weryfikacją online
+
+**Kontekst:** użytkownik przesłał plik PDF — darmowy ebook Wolters Kluwer
+"Skarga pauliańska w najnowszym orzecznictwie. Kluczowe zmiany dla
+praktyki" (transkrypcja szkolenia z 4.02.2026, eksperci: adw. Grzegorz
+Pobożniak i adw. Krzysztof Ściborowski, KKG Legal) i polecił zbadać
+pokrycie tematu w systemie, zweryfikować cytowane przepisy/wyroki
+(materiał to Rząd 2 — publikacja komercyjna, nie Rząd 1) i uzupełnić
+moduł, jeśli treść ma kluczowe znaczenie.
+
+**Stan przed naprawą:** `dr-02/modules/mod-KC-cywilne-zobowiazania-
+odpowiedzialnosc.md` sekcja 8 zawierała WYŁĄCZNIE 24-liniowy blok
+statyczny z podstawowymi przesłankami art. 527-534 KC, terminem
+prekluzji i domniemaniami — ZERO nowszego orzecznictwa, mimo że temat
+doczekał się w ostatnich latach 5 przełomowych uchwał SN (w tym 2
+uchwał składu 7 sędziów), fundamentalnie zmieniających praktykę
+(kierunek egzekucji, model oceny niewypłacalności, relację do
+wierzycieli hipotecznych i upadłości).
+
+**Wykonano — weryfikacja online KAŻDEJ sygnatury przed wpisaniem
+(HARDGATE, zakaz cytowania z pamięci):**
+- **III CZP 9/24** (19.03.2025, skład 7 sędziów) — model "bilansowy"
+  pokrzywdzenia, hipoteka NIE wyklucza skargi, sąd nie bada możliwości
+  zaspokojenia. POTWIERDZONE 5 źródłami (isp-modzelewski.pl,
+  akademialtca.pl, inewi.pl, kancelariamw.pl, elzbietaliberda.pl).
+- **I CSK 3618/23** (postanowienie, 10.07.2024) — przedmiot zaskarżenia
+  przy wielokrotnych rozporządzeniach, art. 531 §2 KC. POTWIERDZONE 3
+  źródłami (kancelariamw.pl, elzbietaliberda.pl, filipiakbabicz.com).
+- **III CZP 60/19** (uchwała, 16.06.2021, skład 7 sędziów) — REWOLUCJA:
+  wyrok pauliański jako tytuł egzekucyjny WPROST przeciwko osobie
+  trzeciej, zmiana wymaganej redakcji sentencji. POTWIERDZONE
+  niezależnie (kancelariamw.pl, elzbietaliberda.pl + pośrednie
+  potwierdzenie przez późniejsze uchwały odwołujące się do tej linii).
+- **III CZP 32/22** (uchwała, 2.02.2022, OSNC 2022/9 poz. 87) —
+  osłabienie pierwszeństwa wierzyciela pauliańskiego wobec wierzycieli
+  hipotecznych osoby trzeciej. POTWIERDZONE 5 źródłami, w tym
+  BEZPOŚREDNIO stroną sn.pl (Sąd Najwyższy, sn.pl/sites/orzecznictwo) —
+  najwyższa możliwa pewność źródłowa dla tej sesji.
+- **III CZP 84/22** (uchwała, 14.06.2023, skład 7 sędziów) —
+  legitymacja wierzyciela mimo upadłości dłużnika, konkurencja z
+  syndykiem. POTWIERDZONE 3 źródłami (prawo.pl, kancelariamw.pl,
+  elzbietaliberda.pl).
+- **Art. 13f KSCU** (opłata stała 1000 zł, nowelizacja z lipca 2023) —
+  POTWIERDZONE dosłownie (lexlege.pl, isap.sejm.gov.pl PDF bezpośrednio,
+  zimmerman.com.pl) — treść identyczna z cytatem w materiale źródłowym.
+
+**Świadomie NIE wpisane do modułu (uczciwość metodologiczna) — 3 pozycje
+z materiału źródłowego, których NIE udało się zweryfikować niezależnie
+w tej sesji:** postanowienie I CSK 1119/23 (ekwiwalentność świadczeń —
+tylko w materiale WK); wyroki V CSK 13/18 i V CSK 321/15 (upadłość
+osoby trzeciej — tylko w materiale WK). Odnotowane jawnie w module jako
+"POZOSTAJE DO POGŁĘBIENIA" zamiast wpisane bez weryfikacji — zgodnie z
+ZASADĄ 13/14 HARDGATE (nigdy nie przyjmować sygnatury/tezy z jednego,
+niezweryfikowanego źródła, nawet komercyjnie renomowanego).
+
+**Wykonanie w module:** sekcja 8 rozbudowana z 24 do ~150 linii,
+struktura: 8a (model bilansowy), 8b (wielokrotne rozporządzenia), 8c
+(REWOLUCJA — tytuł egzekucyjny), 8d (wierzyciele hipoteczni), 8e
+(legitymacja mimo upadłości), 8f (rozgraniczenie) + ŁĄCZ Z + POZOSTAJE
+DO POGŁĘBIENIA. Każde orzeczenie oznaczone ✅ ZWERYFIKOWANE z listą
+źródeł, zgodnie z konwencją całej dzisiejszej sesji.
+
+**Rejestracja:** `dr-02-prawo-cywilne-rodzinne-gospodarcze/SKILL.md` —
+opis wpisu zaktualizowany o pełne podsumowanie rozbudowy i jawnych luk.
+Sprawdzono brak osobnego rejestru orzecznictwa cywilnego wymagającego
+duplikacji tych sygnatur — poprawnie umiejscowione bezpośrednio w
+module tematycznym.
+
+**Dostawa jako kompletne archiwum:** `dr-02-prawo-cywilne-rodzinne-gospodarcze`,
+`audyt-systemu-v4` (AUDIT-JOURNAL.md).
+
+---
+
+## AUDYT-2026-08-20r — F-78 priorytet 3: podział mod-VAT-podatek-od-towarow-i-uslug.md (1901 linii → indeks + 6 części)
+
+**Kontekst:** kontynuacja podziału długich plików tą samą metodą
+(indeksator + podkatalog części). Ten plik to szczególny przypadek —
+to już "rdzeń" z WCZEŚNIEJSZEGO podziału rodziny VAT (sesja 2026-08-12,
+NOTA-4, wtedy 3652→953 linii), który w międzyczasie ZNÓW urósł do 1901
+linii wskutek dalszej rozbudowy pokrycia (etapy 2a/2b/2c z 2026-08-13:
+grupa szybka/średnia/złożona, ~35 dodatkowych tematów). To DRUGI
+podział TEGO SAMEGO pliku w historii systemu.
+
+**Struktura źródłowa:** sekcje 1-2 (CORE/INTAKE), 3 (stawki VAT, baza
+weryfikacyjna 4-poziomowa), 4 (kluczowe mechanizmy — 9 podtematów: 
+odliczenie, split payment, zwrot różnicy podatku, kasy fiskalne, biała
+lista, WNT/import usług, OSS/IOSS, WIS, grupa VAT), 5-7 (grupy szybka/
+średnia/złożona — łącznie 16 podtematów numerowanych 5.1-7.5).
+
+**Incydent i naprawa PODCZAS ekstrakcji (nie po fakcie):** pierwsza
+próba cięcia sekcji 4b/5 zawierała błąd granic — sekcja 5 (nagłówek
+"## 5. GRUPA SZYBKA") zaczyna się na linii 956, ALE jej pierwszy
+PODNAGŁÓWEK ("### 5.1") dopiero na linii 970 — pierwotne cięcie
+(648-969 / 970-1216) BŁĘDNIE zostawiało 14-liniowy wstęp sekcji 5 (z
+nagłówkiem samej sekcji) w pliku sekcji 4b zamiast w pliku sekcji 5.
+Wykryte PRZED kopiowaniem do docelowej lokalizacji (kontrola `head -1`
+każdego wyciętego fragmentu wykazała, że plik "sekcja3-stawki" zaczynał
+się od "## 1. CORE" zamiast "## 3. STAWKI" — sygnał do ponownego
+sprawdzenia WSZYSTKICH granic), naprawione przed dalszymi krokami.
+Zero wpływu na finalny wynik — suma linii pozostała 1901/1901.
+
+**Wykonanie:** 6 plików w podkatalogu `dr-06/modules/vat-podatek-od-
+towarow-i-uslug/`: part-01 (CORE+INTAKE+stawki, 221 l.), part-02
+(odliczenie+split payment+zwrot+kasy fiskalne, 232 l.), part-03 (biała
+lista+WNT+OSS/IOSS+WIS+grupa VAT, 318 l.), part-04 (grupa szybka, 271
+l.), part-05 (grupa średnia, 383 l. — NAJWIĘKSZY z 6), part-06 (grupa
+złożona, 272 l.). Weryfikacja: WSZYSTKIE 25 podnagłówków (### Odliczenie
+VAT... ### 7.5) znalezione DOKŁADNIE w 1 pliku każdy.
+
+**Odesłania wewnętrzne — ZŁOŻONY przypadek:** oryginał zawierał
+NIEFORMALNE etykiety podsekcji w tekście ("sekcja 4a", "sekcja 4c",
+"sekcja 4h", "sekcja 4p" itd.) UŻYWANE przy cross-referencjach, które
+NIE odpowiadały dokładnie żadnemu rzeczywistemu nagłówkowi `###` — to
+niespójność ISTNIEJĄCA JUŻ W ORYGINALE (prawdopodobnie z wcześniejszych
+iteracji rozbudowy, gdzie numeracja sekcji nie była konsekwentnie
+aktualizowana), NIE regresja tego podziału. Z uwagi na skalę
+(kilkanaście takich odesłań, część bez jednoznacznego celu możliwego
+do ustalenia bez głębokiej analizy treści) — NIE rozstrzygnięto
+indywidualnie każdego w tej sesji. Zamiast tego: dodano JAWNĄ notatkę
+w indeksie ostrzegającą o tym zjawisku i kierującą do sprawdzenia
+wszystkich 6 plików wg tabeli nawigacyjnej, gdy odesłanie nie
+rozwiązuje się w tym samym pliku. Decyzja świadoma — rozstrzygnięcie
+każdego z tych odesłań wymagałoby dedykowanej sesji redakcyjnej,
+osobnej od samego podziału pliku.
+
+**Rejestracja:**
+- `dr-06-podatki-finanse-publiczne-aml/SKILL.md` — dopisana notatka o
+  WTÓRNYM podziale, z odesłaniem do oryginalnej notatki NOTA-4
+  (2026-08-12) dla kontekstu historycznego; checklist zaktualizowana.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany, priorytet 3 oznaczony
+  ✅ PODZIELONY; PRZY OKAZJI odnotowano, że pozycja (9) na liście
+  (mod-KC-cywilne-zobowiazania-odpowiedzialnosc.md, 1036 linii) mogła
+  urosnąć po dzisiejszej rozbudowie sekcji skargi pauliańskiej
+  (AUDYT-2026-08-20q) — flaga do ponownego zmierzenia przy następnej
+  sesji, NIE zmierzona w tej sesji.
+- Sprawdzono grep — brak odesłań do konkretnych linii/kotwic w starym
+  pliku wśród ~22 zewnętrznych referencji.
+
+**Dostawa jako kompletne archiwum:** `dr-06-podatki-finanse-publiczne-aml`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20s — F-78 priorytet 4: podział mod-ustawa-rachunkowosci.md (1564 linii → indeks + 7 części)
+
+**Kontekst:** kontynuacja podziału długich plików. Ustawa o rachunkowości
+(1564 linii, licznik z tabeli F-78 podawał 1539 — drobna rozbieżność,
+prawdopodobnie z wcześniejszego pomiaru sprzed ostatnich edycji).
+Struktura: sekcje 1-2 (podstawowe informacje, zakres podmiotowy), 3-4
+(zasady, terminy), następnie sekcje z numeracją literową dodawaną w
+kolejnych sesjach rozbudowy (3a, 3b, 4a-4e, 5, 5b-5h) — ten sam wzorzec
+historycznej akrecji co przy innych dużych plikach dzisiejszej sesji.
+
+**Wykonanie:** 7 plików w podkatalogu `dr-06/modules/ustawa-
+rachunkowosci/`: part-01 (zasady+terminy, 164 l.), part-02 (dowody
+księgowe+inwentaryzacja, 206 l.), part-03 (wycena+struktura
+sprawozdania, 202 l.), part-04 (mikro/małe+biegły rewident+
+przechowywanie, 305 l. — największy), part-05 (sankcje+skonsolidowane,
+197 l.), part-06 (ESG/CSRD+waluty+odpowiedzialność cywilna zarządu, 243
+l.), part-07 (usługowe prowadzenie ksiąg+wynik finansowy+KSR, 157 l.).
+Weryfikacja: wszystkie 16 nagłówków sekcji (3, 3a, 3b, 4a-4e, 5, 5b-5h)
+znalezione DOKŁADNIE w 1 pliku.
+
+**Odesłania wewnętrzne — w PEŁNI rozstrzygnięte (różnica względem
+podziału VAT):** w odróżnieniu od modułu VAT (gdzie nieformalne etykiety
+podsekcji nie odpowiadały realnym nagłówkom i pozostały nierozstrzygnięte),
+tutaj WSZYSTKIE odesłania krzyżowe ("sekcja 4c", "sekcja 4d", "sekcja
+4a", "sekcja 5", "Sekcja 5e", "sekcja 2") odpowiadały REALNYM,
+istniejącym nagłówkom — każde z 11 wystąpień zostało zaktualizowane o
+jawne wskazanie pliku docelowego (lub, dla sekcji 2, wskazanie że
+pozostaje w indeksie). Przy okazji odnotowano ciekawy szczegół: jedno z
+odesłań (w części "sankcje") zawierało już wcześniej samoopisujący się
+komentarz o naprawie z sesji 2026-08-19 (F-35) — "stara notatka
+nienadążająca za rozbudową" — zaktualizowany o nowy plik docelowy bez
+zmiany treści merytorycznej tego komentarza.
+
+**Rejestracja:**
+- `dr-06-podatki-finanse-publiczne-aml/SKILL.md` — checklist
+  zaktualizowana.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany, priorytet 4 oznaczony
+  ✅ PODZIELONY.
+- Sprawdzono grep — brak odesłań do konkretnych linii/kotwic w starym
+  pliku wśród 6 zewnętrznych referencji.
+
+**Dostawa jako kompletne archiwum:** `dr-06-podatki-finanse-publiczne-aml`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20t — F-78 priorytet 5: podział mod-ustawa-akcyzowa-i-clo-UCC.md (1493 linii → indeks + 8 części)
+
+**Kontekst:** kontynuacja podziału długich plików. Ta ustawa akcyzowa
+miała NIETYPOWĄ strukturę wewnętrzną — nie jeden, ale DWA nakładające
+się schematy numeracji: (a) "właściwe" sekcje akcyzowe 1, 1a, 2-5, oraz
+(b) osobny szablon "STANDARDOWE UZUPEŁNIENIE" (poziom prawa pracy/prawa
+karnego) z WŁASNYMI sekcjami numerowanymi od 1 do 8, w które w
+dodatku wstawiono sekcję "4a. KLASYFIKACJA TARYFOWA CN" NIETYPOWO
+między pozycjami 5 i 6 tego drugiego schematu. Odnotowano to jako cechę
+ODZIEDZICZONĄ z oryginału, nie regresję tego podziału.
+
+**Wykonanie:** 8 plików w podkatalogu `dr-06/modules/ustawa-akcyzowa-
+clo/`: part-01 (wyroby węglowe/gazowe + nikotynowe/e-papierosy, 159
+l.), part-02 (olej opałowy vs napędowy, automaty do papierosów, opłata
+paliwowa/emisyjna, 262 l.), part-03 (taksonomia technik obchodzenia
+akcyzy + zakres podatku akcyzowego, 173 l.), part-04 (audyt pokrycia:
+rejestracja, deklaracje, zwolnienia, składy podatkowe, zabezpieczenie
+— 1a.1-1a.5, 263 l. — największy), part-05 (audyt pokrycia: samochody
+osobowe, znaki akcyzy, ewidencje, kary pieniężne — 1a.6-1a.9, 239 l.),
+part-06 (cło/UCC odesłanie, naruszenia KKS, organy, ścieżka
+weryfikacji, standardowe uzupełnienie 1-5, 156 l.), part-07
+(klasyfikacja CN i oszustwa celne, strategia procesowa, quality gate,
+135 l.), part-08 (Aneks WIA, 128 l.). Weryfikacja: wszystkie 30
+nagłówków/podnagłówków sprawdzone, każdy znaleziony dokładnie 1 raz
+(z 2 pozornymi wyjątkami — "WYROBY WĘGLOWE" i "TAKSONOMIA TECHNIK" —
+oba okazały się PRAWIDŁOWYMI, istniejącymi już w oryginale odesłaniami
+tekstowymi do innej sekcji, NIE duplikatami treści).
+
+**Naprawiono 5 odesłań krzyżowych** wskazujących teraz jawnie plik
+docelowy: WYROBY WĘGLOWE (część 4→1), REFORMA nikotynowa/skład
+podatkowy (część 2→1), automaty (część 3→2), TAKSONOMIA TECHNIK
+(część 5→3). Odesłania do zewnętrznego modułu `mod-UCC-clo-taryfa-
+celna.md` (osobny plik, nie część tego podziału) pozostawione bez
+zmian — poprawne.
+
+**Rejestracja:**
+- `dr-06-podatki-finanse-publiczne-aml/SKILL.md` — checklist
+  zaktualizowana z pełnym opisem struktury i napraw.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany, priorytet 5 oznaczony
+  ✅ PODZIELONY.
+- Sprawdzono grep — brak odesłań zewnętrznych do konkretnych linii/
+  kotwic w starym pliku.
+
+**Dostawa jako kompletne archiwum:** `dr-06-podatki-finanse-publiczne-aml`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20u — F-78 priorytet 6: podział mod-KRO-rodzinne.md (1647 linii → indeks + 8 części)
+
+**Kontekst ważny — przejrzystość wobec użytkownika:** przed rozpoczęciem
+tej pozycji stwierdzono, że priorytety 2-5 (ORKA-BAS-LEKSYKON, VAT,
+rachunkowość, akcyzowa/UCC) ZNAJDOWAŁY SIĘ już podzielone na dysku, z
+poprawnymi rejestracjami w WARN-OTWARTE i wpisami dziennika (sesje
+2026-08-20p/r/s/t), mimo że w widocznej historii tej rozmowy wykonano
+wyłącznie priorytet 1 (sesja 20o). Fakt ten zgłoszono WPROST użytkownikowi
+przed kontynuacją, zamiast milcząco przyjąć lub milcząco pominąć —
+zweryfikowano integralność liczbowo (suma linii części ≈ oryginał dla
+wszystkich trzech sprawdzonych) i spójność rejestracji przed uznaniem
+pracy za wiarygodną. Użytkownik nie zgłosił zastrzeżeń, kontynuowano od
+pierwszej NIEPODZIELONEJ pozycji — priorytet 6 (KRO-rodzinne), potwierdzonej
+jako wciąż jednolity plik 1647 linii bez podkatalogu.
+
+**Wykonano:** ten sam wzorzec architektoniczny co priorytet 1 (indeksator
+pod niezmienioną nazwą). 35 nagłówków oryginału podzielono: 3 pozostają
+w indeksie (ALERT LEGISLACYJNY, FAZA 0 — INTAKE, TRYBY POSTĘPOWANIA —
+KWALIFIKATOR — treść stosowana ZAWSZE niezależnie od tematu), 32
+przeniesiono do 8 plików w podkatalogu `dr-02/modules/kro-rodzinne/`,
+pogrupowanych wg bliskości merytorycznej (nie tylko rozmiaru): część 1
+małżeństwo/ustrój majątkowy/konkubinat; część 2 rozwód/separacja/eksmisja;
+część 3 podział majątku (samodzielna, dość obszerna); część 4 wszystkie 5
+kategorii alimentów RAZEM (quick check, krewni, pełnoletnie dziecko,
+między małżonkami, niuanse) — analogicznie do decyzji "BLOK B+I razem"
+przy poprzednim podziale, żeby powiązane instytucje nie były rozerwane
+między plikami; część 5 pochodzenie dziecka RAZEM (pokrewieństwo,
+macierzyństwo, ojcostwo, zaprzeczenie ojcostwa, surogacja); część 6
+rodzice-dzieci/władza rodzicielska/OZSS; część 7 procedura/dowody/zmiana
+danych; część 8 referencje/strategia.
+
+**Weryfikacja integralności:** suma linii wyciętych fragmentów = 1647
+(zgodność 100% z oryginałem). Liczba nagłówków `##` w częściach = 32,
+dokładnie tyle ile powinno zostać po odjęciu 3 pozostających w indeksie
+od 35 oryginalnych — potwierdzone precyzyjnym zliczeniem (nie tylko
+substring-matching, który dawał fałszywie wyższe liczby przez wzmianki
+w prozie).
+
+**Naprawiono przy przeglądzie odesłań krzyżowych:** (1) odesłanie w
+części 5 (POKREWIEŃSTWO) do "OBOWIĄZEK ALIMENTACYJNY SZERSZEGO KRĘGU
+KREWNYCH wyżej" — po podziale ta sekcja znalazła się w INNYM pliku
+(część 4) — zaktualizowano o jawną nazwę pliku; (2) odkryto PRZEDTEM
+ISTNIEJĄCĄ nieścisłość (niezwiązaną z podziałem): odesłanie do sekcji
+"OPŁATY SĄDOWE" przy zmianie nazwiska było błędne nazewniczo — właściwa
+treść (powrót do nazwiska po rozwodzie, 12 miesięcy, art. 59 KRO)
+znajduje się w sekcji KALKULATOR, nie OPŁATY SĄDOWE — skorygowano nazwę,
+odnotowując że lokalizacja PLIKU była zawsze poprawna (obie sekcje w tym
+samym part-07), błąd dotyczył wyłącznie etykiety.
+
+**Rejestracja (T1, Reguła 1-3 HARDGATE-AUDYT):**
+- `dr-02-prawo-cywilne-rodzinne-gospodarcze/SKILL.md` — opis wpisu
+  rozszerzony o pełny opis podziału i napraw przy okazji.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany (priorytet 6 oznaczony
+  ✅ PODZIELONY, odnotowana rozbieżność rozmiaru pliku względem
+  pierwotnego skanu — 1647 zamiast 1470 linii, plik rozrósł się między
+  sesjami); krótki wpis w TABLICY STERUJĄCEJ (był przestarzały, nadal
+  mówił "10 modułów, zaczynając od 2084") zaktualizowany do stanu
+  faktycznego "6/10 podzielonych".
+
+**Bilans F-78 po tej sesji:** 6 z 10 priorytetowych modułów podzielonych.
+Pozostają: (7) KPA tryby nadzwyczajne [1303 linii], (8) PORTALE-BRANZOWE-
+RZAD-2B [1088], (9) KC zobowiązania [1036, ⚠️ do przeliczenia — mogła
+się rozrosnąć jak KRO], (10) ochrona zabytków [1008]. Pliki SKILL.md
+>1000 linii nadal odłożone do decyzji użytkownika.
+
+**Dostawa jako kompletne archiwum:** `dr-02-prawo-cywilne-rodzinne-gospodarcze`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20v — F-78 priorytet 7: podział mod-KPA-tryby-nadzwyczajne-i-strategia.md (1303 linie → indeks + 8 części)
+
+**Kontekst:** kontynuacja F-78 po weryfikacji, że priorytety 7-10 były
+nadal jednolite na dysku (w przeciwieństwie do 2-6, które okazały się
+już wykonane w tej samej sesji roboczej — patrz AUDYT-2026-08-20u,
+akapit wprowadzający). Ten plik ma nietypową historię — jest już
+PRODUKTEM wcześniejszego podziału (NOTA-4, 2026-08-12, rodzina 4 plików
+KPA z pliku źródłowego 1115 linii) i mimo to ponownie urósł do 1303
+linii przez kolejne naprawy luk (audyty 2026-08-13 k/l/m — kary
+administracyjne w całości, mediacja administracyjna, skarga na akty
+prawa miejscowego i in.).
+
+**Wykonano:** ten sam wzorzec (indeksator pod niezmienioną nazwą,
+zachowujący TYM RAZEM pełną, bogatą historię podziałów/napraw
+udokumentowaną w oryginalnym nagłówku — NIE skrócono jej, żeby nie
+stracić kontekstu poprzednich sesji). 18 sekcji (numeracja 4-12 + kilka
+podsekcji "a"/"a1"/"b" + 2 bez numeru) podzielono na 8 plików w
+`dr-05/modules/kpa-tryby-nadzwyczajne/`: część 1 tryby nadzwyczajne
+[wznowienie/nieważność] + 4 dodatkowe instytucje; część 2 bezczynność/
+przewlekłość/ponaglenie + europejska współpraca administracyjna; część 3
+udział prokuratora + KARY ADMINISTRACYJNE [Dział IVa w CAŁOŚCI, 327
+linii — celowo NIE rozbite dalej, żeby zachować spójność jednego działu
+kodeksu]; część 4 postępowanie uproszczone + współdziałanie organów;
+część 5 właściwość organów [w tym spory kompetencyjne]; część 6 skarga
+do WSA + dowody; część 7 opłaty i koszty postępowania; część 8 strategia/
+orzecznictwo/quality gate/output/powiązania/źródła.
+
+**Weryfikacja integralności:** suma linii wyciętych fragmentów = 1303
+(100% zgodność). Liczba nagłówków `##` w częściach = 18, dokładnie tyle
+ile w oryginale (w tym pliku WSZYSTKIE sekcje przeniesiono do części,
+nagłówek pliku zawierał wyłącznie metadane/historię, bez treści
+merytorycznej wymagającej pozostania w indeksie — inaczej niż przy KRO,
+gdzie ALERT/FAZA0/TRYBY zostały w indeksie).
+
+**Naprawiono 1 odesłanie cross-file:** "Skargi i wnioski (Dział VIII)
+NIE MYLIĆ ze skargą do WSA (patrz sekcja 7 tego modułu)" w części 1 —
+sekcja 7 (skarga do WSA) znalazła się w części 6, dodano jawną nazwę
+pliku.
+
+**Rejestracja (T1, Reguła 1-3 HARDGATE-AUDYT):**
+- `dr-05-prawo-administracyjne-sadowoadministracyjne/SKILL.md` — opis
+  wpisu rozszerzony o pełny opis podziału.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany (priorytet 7 ✅
+  PODZIELONY), krótki wpis w TABLICY STERUJĄCEJ zaktualizowany do "7/10".
+
+**Bilans F-78 po tej sesji:** 7 z 10 priorytetowych modułów podzielonych.
+Pozostają: (8) PORTALE-BRANZOWE-RZAD-2B [1088], (9) KC zobowiązania
+[1036 wg pierwotnego skanu, ⚠️ do przeliczenia — mogła urosnąć jak KRO i
+KPA], (10) ochrona zabytków [1008].
+
+**Dostawa jako kompletne archiwum:** `dr-05-prawo-administracyjne-sadowoadministracyjne`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20w — F-78 priorytet 8: podział shared/PORTALE-BRANZOWE-RZAD-2B.md (1088 linii → indeks + 5 części)
+
+**Kontekst:** kolejna pozycja z listy priorytetowej F-78. Plik to rejestr
+wartościowych źródeł (Rząd 1/2A/2B) per dziedzina DR, naturalnie
+partycjonowalny wg grup DR.
+
+**Wykonano:** ten sam wzorzec architektoniczny (indeksator pod
+niezmienioną nazwą). 22 sekcje podzielono na TYLKO 5 plików (nie 8 —
+naturalny podział wg grup DR dał mniejszą, wystarczającą liczbę części,
+bez sztucznego mnożenia): część 1 sekcja specjalna (osoby
+niepełnosprawne) + DR-02/03/04; część 2 DR-05 do DR-09; część 3 DR-10 do
+DR-16; część 4 ogólne międzydziedzinowe + rekomendacje + stan pokrycia +
+wnioski metodologiczne + procedura użycia; część 5 changelog (287 linii —
+pełna historia zmian rejestru, zachowana w całości). ZASADA STAŁA
+(wyłącznie Rząd 1/2A/2B, zakaz rejestrowania Rządu 3) pozostała w
+indeksie, bo stosuje się do WSZYSTKICH części jednocześnie.
+
+**Weryfikacja integralności:** suma linii = 1088 (100% zgodność).
+Liczba nagłówków `##` w częściach = 22, zgodna z oryginałem.
+
+**Naprawiono 8 odesłań krzyżowych między grupami DR** (portal wymieniony
+w jednej sekcji z odesłaniem "patrz DR-XX" do sekcji w innej grupie —
+np. bankier.pl/gofin.pl [część 1→2], poradnikprzedsiebiorcy.pl/
+rynekzdrowia.pl [część 2→1,3], rp.pl/gazetaprawna.pl/policja.gov.pl
+[część 3→1,4]) — każde uzupełnione o jawną nazwę pliku docelowego.
+Jedno odesłanie (przepisy.gofin.pl → DR-06) okazało się wewnątrz TEGO
+SAMEGO pliku (część 2) — doprecyzowano bez zmiany lokalizacji.
+
+**Odkrycie uboczne (odnotowane, NIE naprawione — poza zakresem):** DR-01
+(ustrój konstytucyjny) NIE MA własnej sekcji w tym rejestrze —
+nieobecność odziedziczona z oryginału, nie spowodowana podziałem.
+Zapisane w indeksie jako punkt startowy dla przyszłego audytu (czy to
+świadomy brak, czy przeoczenie).
+
+**Rejestracja:** `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany
+(priorytet 8 ✅ PODZIELONY), krótki wpis w TABLICY STERUJĄCEJ
+zaktualizowany do "8/10". Wzmianki o tym pliku w
+`audyt-systemu-v4/SKILL.md` (linie 131, 890) sprawdzone — to wyłącznie
+odesłania po nazwie pliku, NIE wymagały edycji.
+
+**Bilans F-78 po tej sesji:** 8 z 10. Pozostają: (9) KC zobowiązania
+[1395 linii, potwierdzone rozrośnięcie z pierwotnych 1036], (10) ochrona
+zabytków [1008].
+
+**Dostawa jako kompletne archiwum:** `shared`, `audyt-systemu-v4`
+(WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20x — F-78 priorytet 9: podział mod-KC-cywilne-zobowiazania-odpowiedzialnosc.md (1395 linii → indeks + 8 części)
+
+**Kontekst:** kolejna pozycja z listy priorytetowej F-78. Plik urósł z
+pierwotnych 1036 linii (skan z 2026-08-14) do 1395 — potwierdzone przy
+poprzedniej sesji jako "do przeliczenia", teraz zweryfikowane wprost.
+
+**Wykonano:** ten sam wzorzec (indeksator pod niezmienioną nazwą). 25
+nagłówków oryginału: 3 pozostają w indeksie (CORE, INTAKE, PROCEDURA —
+stosowane zawsze niezależnie od tematu sprawy), 22 przeniesiono do 8
+plików w `dr-02/modules/kc-zobowiazania/`: część 1 przedawnienie/kara
+umowna/wady oświadczenia woli/bezpodstawne wzbogacenie/odsetki (5
+mniejszych, pokrewnych instytucji ogólnych zobowiązań razem); część 2
+skarga pauliańska (samodzielna, niedawno rozbudowana — 237 linii); część
+3 dowody/strategia/orzecznictwo/quality gate/output/predykcja/źródła
+(warstwa referencyjna); część 4 Aneks D — służebności i prawo rzeczowe
+(Księga II KC, największa część — 329 linii); część 5 Aneks E —
+wywłaszczenie pod inwestycje publiczne; część 6 bezumowne korzystanie z
+rzeczy/nieruchomości; część 7 zameldowanie i wymeldowanie (tematy
+pokrewne); część 8 "dzikie mieszkanie"/samowolne zajęcie pustostanu +
+powiązania z innymi modułami.
+
+**Weryfikacja integralności:** suma linii wyciętych fragmentów = 1395
+(100% zgodność). Liczba nagłówków `##` w częściach = 22, zgodna z
+oczekiwaną (25 oryginału minus 3 w indeksie).
+
+**Naprawiono 1 odesłanie cross-file:** w części 8 (dzikie mieszkanie),
+roszczenie o odszkodowanie za bezumowne korzystanie odsyłało "sekcja
+WYŻEJ" do art. 224/225 KC — ta treść znalazła się w części 6, dodano
+jawną nazwę pliku.
+
+**Rejestracja (T1, Reguła 1-3 HARDGATE-AUDYT):**
+- `dr-02-prawo-cywilne-rodzinne-gospodarcze/SKILL.md` — opis wpisu
+  rozszerzony o pełny opis podziału.
+- `WARN-OTWARTE.md` — wiersz F-78 zaktualizowany (priorytet 9 ✅
+  PODZIELONY, potwierdzone rozrośnięcie rozmiaru), krótki wpis w
+  TABLICY STERUJĄCEJ zaktualizowany do "9/10".
+
+**Bilans F-78 po tej sesji:** 9 z 10. Pozostaje wyłącznie: (10)
+`dr-09/mod-ochrona-zabytkow-obiekty-uzytecznosci-publicznej.md` [1008
+linii, ostatnia pozycja z pierwotnej listy 10 priorytetowych].
+
+**Dostawa jako kompletne archiwum:** `dr-02-prawo-cywilne-rodzinne-gospodarcze`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20y — F-78 ZAMKNIĘTA W CAŁOŚCI: podział ostatniego priorytetu (ochrona zabytków, 1008 linii) i podsumowanie całej flagi
+
+**Kontekst:** ostatnia z 10 priorytetowych pozycji z pierwotnej listy
+F-78 (skan AUDYT-2026-08-15n). Po jej podziale cała flaga kwalifikuje
+się do zamknięcia.
+
+**Wykonano (priorytet 10):** ten sam wzorzec architektoniczny. 15 sekcji
+`mod-ochrona-zabytkow-obiekty-uzytecznosci-publicznej.md` podzielono na
+6 plików w `dr-09/modules/ochrona-zabytkow/` (mniej niż 8 — plik był
+mniejszy, 6 grup wystarczyło): część 1 ochrona zabytków + dostępność
+obiektów użyteczności publicznej; część 2 kategorie obiektów budowlanych
++ apteka + zakłady produkcyjne; część 3 żłobki/przedszkola + stacje
+transformatorowe + stacje paliw; część 4 DPS/hospicja + linie
+napowietrzne; część 5 plac zabaw/siłownia + mikrokawalerki; część 6
+miejsca parkingowe dla niepełnosprawnych + przekształcenie mieszkania w
+sklep + cross-referencje. Weryfikacja: suma linii = 1008 (100%), liczba
+nagłówków w częściach = 15 = 15 oryginału. Naprawiono 2 odesłania
+cross-file (dostępność → część 1, stacje transformatorowe → część 3);
+2 inne odesłania sprawdzone i potwierdzone jako poprawnie wskazujące
+ten sam plik (nie wymagały zmiany).
+
+**BILANS CAŁEJ FLAGI F-78 (zamknięcie):** wszystkie 10 priorytetowych
+modułów podzielone na indeks + części tematyczne w oddzielnych sesjach
+(2026-08-20 o, p, r, s, t, u, v, w, x, y — przy czym p/r/s/t wykonane
+poza widoczną historią tej rozmowy, ale zweryfikowane jako rzetelne
+przed kontynuacją, patrz AUDYT-2026-08-20u akapit wprowadzający).
+Sumarycznie: ~15 200 linii oryginalnej treści rozłożone na ~10 indeksów
+(łącznie ~1400 linii) + ~74 pliki części tematycznych. WSZYSTKIE
+zachowują niezmienioną nazwę pliku jako wzorzec architektoniczny —
+decyzja podjęta i uzasadniona w sesji 20o, konsekwentnie powtórzona we
+wszystkich 10 podziałach — dzięki temu żaden z ~100+ zewnętrznych
+odsyłaczy w całym systemie (routery, ROUTING-MAP, moduły krzyżowe) nie
+wymagał edycji. Przy podziałach naprawiono łącznie kilkadziesiąt
+odesłań krzyżowych między nowo powstałymi częściami oraz kilka
+PRZEDTEM istniejących nieścisłości (martwe odesłanie w KK-kwalifikator,
+błędna nazwa sekcji w KRO-rodzinne) wykrytych przy okazji przeglądu.
+
+**Nierozstrzygnięte, jawnie pozostawione:** pliki `SKILL.md` przekraczające
+1000 linii (przesluchanie-swiadkow-v2-min90 1809, analizator-dowodow-v3
+1203, audyt-systemu-v4 1170) — inna kategoria niż moduły `modules/`,
+struktura SKILL.md ma inne wymagania (musi być czytelny jako całościowy
+punkt wejścia dla Claude Code), decyzja o ewentualnym podziale
+świadomie pozostawiona użytkownikowi.
+
+**Rekomendacja zapisana wprost:** lista 10 pozycji pochodziła ze skanu
+sprzed prawie tygodnia (2026-08-14/15). W trakcie samego wykonywania
+podziałów okazało się, że 3 z 10 plików (KRO-rodzinne, KPA-tryby,
+KC-zobowiazania) urosły powyżej pierwotnie zmierzonego rozmiaru zanim
+zdążono je podzielić — moduły systemu rosną w sposób ciągły wskutek
+bieżących napraw luk. Świeży pełny skan `wc -l` po tej sesji może
+ujawnić NOWE pliki, które przekroczyły próg 1000 linii już PO
+pierwotnym skanie — rekomendacja: rozważyć otwarcie nowej flagi po
+świeżym skanie, zamiast zakładać, że temat jest wyczerpany na stałe.
+
+**Rejestracja (T1, Reguła 1-3 HARDGATE-AUDYT):**
+- `dr-09-budownictwo-srodowisko-energia-transport/SKILL.md` — opis
+  wpisu rozszerzony o pełny opis podziału.
+- `WARN-OTWARTE.md` — **F-78 USUNIĘTA W CAŁOŚCI** z TABLICY i sekcji 1,
+  z pełnym podsumowaniem wszystkich 10 podziałów w jednym miejscu;
+  licznik flag F- zaktualizowany **24 → 23**.
+
+**Dostawa jako kompletne archiwum:** `dr-09-budownictwo-srodowisko-energia-transport`,
+`audyt-systemu-v4` (WARN-OTWARTE.md).
+
+---
+
+## AUDYT-2026-08-20z — Porządkowanie 3 plików SKILL.md >1000 linii: wydzielenie changelogów do references/CHANGELOG.md
+
+**Kontekst:** F-78 (zamknięta w sesji 20y) jawnie odłożyła decyzję o
+plikach SKILL.md >1000 linii do użytkownika — inna kategoria niż moduły
+`modules/`, bo SKILL.md pełni funkcję głównego punktu wejścia i nie może
+być zastąpiony samym indeksatorem tak jak moduły. Użytkownik poprosił o
+zbadanie, czy te pliki zawierają treść typu changelog / czysto opisową,
+możliwą do bezpiecznego usunięcia, po czym wprost polecił wykonanie
+porządku.
+
+**Badanie (raport przedstawiony użytkownikowi przed wykonaniem):**
+zidentyfikowano identyczny wzorzec w 2 z 3 plików: pole YAML
+`changelog:` we frontmatterze, które JUŻ RAZ (2026-07-12, "runda 2") było
+wyniesione do `references/CHANGELOG.md` w ramach redukcji kosztu
+kontekstu, ale kolejne audyty (lipiec-sierpień 2026) dopisywały nowe
+wpisy z powrotem BEZPOŚREDNIO do pola YAML zamiast do pliku
+referencyjnego — regresja tej samej klasy, powtórzona w obu plikach
+niezależnie. Trzeci plik (audyt-systemu-v4 samego siebie) miał sekcję
+`## CHANGELOG` w treści właściwej (nie YAML) — 388 linii, nigdy
+wcześniej nie wydzielonych do osobnego pliku.
+
+**Wykonano:**
+1. **przesluchanie-swiadkow-v2-min90/SKILL.md** (1809→1699 linii, -110):
+   dopisano do `references/CHANGELOG.md` 3 brakujące/rozszerzone wpisy
+   (3.19, 3.18 w pełniejszej wersji niż istniejąca, 3.17-runda3) —
+   licznik nagłówka zaktualizowany 15→17 wpisów. Pole YAML `changelog:`
+   przycięte z 125 linii (6 pełnych wpisów) do 9-liniowego wskaźnika z
+   krótkim podsumowaniem 3 najnowszych zmian.
+2. **analizator-dowodow-v3/SKILL.md** (1203→1174, -29): dopisano do
+   `references/CHANGELOG.md` 3 brakujące wpisy (5.15.0, 5.14.3, 5.14.1
+   w pełniejszej wersji) — licznik 22→25. Pole YAML przycięte z 38 do
+   9 linii.
+3. **audyt-systemu-v4/SKILL.md** (1346→1025, -321, NAJWIĘKSZA
+   redukcja): utworzono NOWY plik `references/CHANGELOG.md` (pierwsze
+   wydzielenie dla tego pliku) z pełną historią 28 wpisów (4.3-6.8, 388
+   linii), skopiowaną 1:1 bez zmian merytorycznych. Sekcja `##
+   CHANGELOG` w SKILL.md zastąpiona wskaźnikiem + 3 najnowsze wpisy
+   (6.6-6.8) jako kontekst bieżący. Dopisano nowy plik do sekcji
+   `STRUKTURA KATALOGU`, zaktualizowano stopkę wersji.
+
+**Weryfikacja integralności:** YAML frontmatter obu plików z polem YAML
+(`przesluchanie-swiadkow-v2-min90`, `analizator-dowodow-v3`)
+zweryfikowany parserem `python3 -c "import yaml; yaml.safe_load(...)"`
+— OBA poprawne składniowo po edycji. Struktura nagłówków `##` w
+`audyt-systemu-v4/SKILL.md` sprawdzona — wszystkie 19 sekcji
+operacyjnych (FAZA 0 – STRUKTURA KATALOGU) nienaruszone, w tej samej
+kolejności, zawartość MERYTORYCZNA żadnej z nich nie tknięta — usunięto
+WYŁĄCZNIE blok CHANGELOG.
+
+**Uczciwie odnotowane ograniczenie:** żaden z trzech plików NIE spadł
+poniżej progu 1000 linii mimo redukcji — pozostała treść to w
+przeważającej większości OPERACYJNE bramki/procedury (HARD GATE,
+walidacje, kroki pipeline'u), nie materiał opisowy. Nie podjęto próby
+dalszego skracania tej treści — wykraczałoby to poza zakres polecenia
+("changelog, elementy czysto opisowe") i niosłoby realne ryzyko
+usunięcia funkcjonalnych instrukcji.
+
+**Suma:** 460 linii usuniętych z trzech plików SKILL.md (110+29+321),
+przeniesionych 1:1 (bez utraty treści) do plików `references/`
+ładowanych na żądanie zamiast zawsze.
+
+**Rejestracja:** wpis w AUDIT-JOURNAL.md (ten). F-78 pozostaje zamknięta
+— to działanie było jej jawnie odłożonym, nierozstrzygniętym punktem,
+teraz wykonanym na wyraźne polecenie użytkownika, nie wymaga osobnej
+flagi.
+
+**Dostawa jako kompletne archiwum:** `przesluchanie-swiadkow-v2-min90`,
+`analizator-dowodow-v3`, `audyt-systemu-v4`.
+
+---
+
+## AUDYT-2026-08-20y — Badanie trzech skilli pod kątem treści bezwartościowej i kandydatów do wydzielenia; 6 usterek naprawionych w SAMYM orkiestratorze (ZASADA 11, skill proceduralny + narzędziowy)
+
+**Zakres i wywołanie:** na żądanie użytkownika — „zbadaj czy są jakieś bezwartościowe
+elementy w tych skilach lub czy jest coś, co można wydzielić do samodzielnego modułu",
+z poleceniem pracy wg HARDGATE-AUDYT (`WARN-OTWARTE.md`) i wydania wyniku wg ZASADY 7
+(OUTPUT-COMPLETENESS). Przedmiot: trzy skille objęte poprzednią sesją porządkującą
+F-78 — `przesluchanie-swiadkow-v2-min90`, `analizator-dowodow-v3`, `audyt-systemu-v4`.
+Sesja mieści się w ZASADZIE 11 (audyt skilli proceduralnych, nie mapy Dz.U.).
+
+**REGUŁA 1 (źródło kopii roboczej):** `ls /mnt/user-data/outputs/` = PUSTY → KROK C,
+kopia z `/mnt/skills/user`. Uwaga metodologiczna: kontener został zresetowany między
+sesją F-78 a tą, mimo że obie należą do jednej rozmowy — ZIP-y poprzedniej tury
+zniknęły z `outputs/`. **Reguła 1 KROK A może więc dać wynik „brak ZIP-a" także wtedy,
+gdy praca w tej rozmowie już była; ratunkiem jest to, że tamta sesja zapisała zmiany
+do `/mnt/skills/user` (line count zgodny: 1699 / 1174 / 1025), więc pristine NIE było
+przestarzałe.** Gdyby tamta sesja zapisała wyłącznie do ZIP-a, jej praca byłaby w tym
+momencie nie do odzyskania — to argument za dotychczasową praktyką zapisu do drzewa
+źródłowego, nie tylko do archiwum.
+
+### 1. STATUS OGÓLNY
+
+Naprawione w tej sesji: **6 usterek, wszystkie w `audyt-systemu-v4`** (wersja 6.8 → 6.9).
+Otwarte flagi: **F-99, F-100, F-101** (dwa pozostałe skille) — celowo NIE naprawiane,
+bo wymagają decyzji użytkownika o zakresie (usunięcie plików / zmiana architektury).
+
+### 2. NAPRAWY WYKONANE
+
+**(1) ⛔ FAZA 7B kopiowała mapę ARCHIWALNĄ — najpoważniejsza usterka sesji.**
+Polecenie `cp` w kroku 1 wskazywało `mapa_dzu_2026-06-14.md`, podczas gdy mapą aktualną
+jest `mapa_dzu_2026-07-15.md` (tak podaje FAZA 3 i `references:` w YAML). Wykonanie FAZY
+7B literalnie utworzyłoby nową mapę z treści sprzed **trzech generacji** (06-14 → 07-02 →
+07-04 → 07-15), kasując ~250 wierszy ustaleń — **bez żadnego sygnału błędu**: plik
+powstałby poprawnie, tylko ze starą treścią, a kolejne audyty budowałyby na nim dalej.
+Poprawione oba wystąpienia (`cp` + notatka „ostatnia: …").
+⭐ **To DRUGIE wystąpienie tej samej klasy usterki w tym pliku** — wersja 4.4 (2026-06-14g)
+naprawiała dokładnie to samo („12 miejsc w SKILL.md, w tym FAZA 7B"). Wniosek: naprawa
+punktowa nie wystarczyła, bo zabrakło reguły. Dopisano regułę stałą: przy każdej zmianie
+mapy aktualnej wykonaj `grep -n mapa_dzu SKILL.md` i popraw WSZYSTKIE wystąpienia,
+nie tylko `references:`.
+
+**(2) ⛔ FAZA 7C była MARTWA od 2026-06-14g.** Nakazywała aktualizację
+`SKILLS-MAP-AND-FIXES` — pliku USUNIĘTEGO w wersji 4.4 i zastąpionego przez
+`CHANGELOG.md` / `CHECKLIST-DEDUP.md` / `mapa_dzu`. Martwa faza przetrwała ~2 miesiące
+i ~90 wpisów dziennika. **Dlaczego żaden audyt jej nie wykrył:** FAZA 2A sprawdza
+wyłącznie ścieżki w konstrukcji `view /mnt/skills/...`, a to była naga nazwa w prozie.
+Drugie odwołanie do tego samego nieistniejącego pliku siedziało w FAZIE 2B — też
+naprawione. **Luka narzędziowa do rozważenia przy T6:** kontrola powinna obejmować
+nazwy plików cytowane w prozie, nie tylko ścieżki `view`.
+W miejsce 7C wpisano **aktualizację `WARN-OTWARTE.md`** — czynność obowiązkową
+z ZASADY 10, która paradoksalnie nie miała dotąd własnego kroku w FAZIE 7 (druga,
+cichsza luka tej samej sekcji). Poprawiono też zdanie wprowadzające: „zaktualizuj
+**oba** pliki references" przy trzech podsekcjach.
+
+**(3) Licznik raportów pokrycia: 13 → 11.** Frontmatter deklarował „12 raportów +
+indeks = 13 plików", na dysku 11 — `raport-pokrycia-KRO.md` usunięty 2026-08-15
+(F-73 zamknięta), `raport-pokrycia-KPK.md` 2026-08-15nn (F-81). Oba usunięcia były
+prawidłowo udokumentowane w dzienniku, ale **żadne nie zaktualizowało licznika** —
+lustrzane odbicie F-80: tam rejestr został w tyle za dyskiem, tu rejestr wyprzedza
+dysk. Poprawione w YAML i w § 7 `WARN-OTWARTE.md`; dopisana instrukcja aktualizacji
+przy każdym kolejnym usunięciu. ⚠️ Pozostawiono świadomie: `00-indeks-raportow-pokrycia.md`
+nadal wymienia wiersze KRO i KPK — indeks jest materiałem roboczym z jednego dnia
+i wg § 7 znika dopiero po zamknięciu wszystkich flag.
+
+**(4) STRUKTURA KATALOGU nieaktualna o 15 plików.** Drzewo wymieniało 4 pliki
+`references/` (stan sprzed F-80) i pomijało CAŁY folder `scripts/`, mimo że YAML
+naprawiono 2026-08-15h; podawało „460 wierszy" mapy Dz.U. przy 509 wierszach tabeli.
+Odtworzone ze stanu faktycznego (48 plików) + reguła aktualizacji obu miejsc naraz.
+
+**(5) Stopka „Wersja: 5.0 | Ostatnia aktualizacja: 2026-07-04"** przy `version: 6.8`
+w YAML — rozjazd dziewięciu wersji i półtora miesiąca. Poprawiona na 6.9 / 2026-08-20y,
+z adnotacją: jeśli znów zacznie się rozjeżdżać, kandyduje do usunięcia jako pole
+martwe — dokładnie tak, jak stopkę `AUDIT-JOURNAL.md` uznano za martwą w korekcie
+2026-08-15p.
+
+**(6) `version: 6.8 → 6.9`** + wpis w `references/CHANGELOG.md` (29 wpisów) i skrót
+w sekcji CHANGELOG SKILL.md, zgodnie z regułą F-78 (tylko 3 najnowsze wersje w SKILL.md,
+pełna historia w references).
+
+### 3. FLAGI OTWARTE (nie naprawiane w tej sesji — wymagają decyzji użytkownika)
+
+**F-99 — balast poscaleniowy w `przesluchanie-swiadkow-v2-min90`.** Artefakty scalania
+jsxfix1+jsxfix2 (`reports/SOURCE-INVENTORY.json` — 506 linii inwentarza plików z pakietów,
+które nie istnieją; FIX-REPORT, MERGE-REPORT, STATIC-CHECKS, `docs/USAGE.md` duplikujący
+sekcję SKILL.md, `components/README.md` opisujący pusty folder, README z historią scalania).
+Osobno: **12 plików, do których SKILL.md nie odwołuje się ani razu** — jedyne przywołanie
+pliku pobocznego w całym SKILL.md to `tests/REGRESSION-CASES.md` ×1.
+⚠️ **Ustalenie merytoryczne, nie porządkowe:** wśród nieprzywoływanych są
+`typologies/judges/judge-types.yaml` i `witness-judge-matrix.md`, podczas gdy `description`
+i sekcja „Kiedy używać" deklarują dobór stylu pytań do typu sędziego, a W2 wymaga pola
+„Prawdopodobny typ sędziego". Zadeklarowana zdolność opiera się więc na improwizacji
+modelu zamiast na dostarczonej taksonomii — te dwa pliki należy PODŁĄCZYĆ, nie usuwać.
+
+**F-100 — dwa wydzielenia.** (A) Osiem bramek ogólnodokumentowych
+(`DOCUMENT-SCAN-PROMPT`, `FOUNDATION-VERIFICATION-GATE`, `EXHAUSTIVE-EXTRACTION-GATE`,
+`IMMEDIATE-LOGICAL-SCAN`, `CROSS-DOCUMENT-CONSISTENCY-CHECK`, `ENTITY-DISAMBIGUATION-TABLE`,
+`EVIDENCE-THREAD-LINKING`, `QUOTE-VERIFICATION-DEFAULT`, ~220 linii) występuje WYŁĄCZNIE
+w skillu świadków — żadna nie jest specyficzna dla świadka, a `analizator-dowodow-v3`,
+którego przedmiotem są dokumenty, nie ma do nich dostępu. Sedno propozycji to
+udostępnienie ich drugiemu skillowi, nie skrócenie pierwszego. (B) Pięć bloków
+strategicznych w `analizator-dowodow-v3/SKILL.md` (~262 linie) trzymanych inline w skillu,
+który poza tym jest routerem z lazy loadingiem — a trzy z nich to i tak tylko streszczenia
+1833 linii plików kanonicznych w `shared/`, czyli stały koszt kontekstu plus ryzyko dryfu.
+
+**F-101 — rozjazd rejestrów wersji.** Wersje 3.20-3.22 i 5.16.0-5.16.1 nie mają wpisu
+w żadnym changelogu; nagłówek H1 analizatora brzmi „v5.1" przy `version: 5.16.1`;
+skill świadków ma DWA równoległe changelogi o rozłącznych zbiorach wpisów (F-78 uznał
+`references/` za kanoniczny, nie ruszając pliku w katalogu głównym). ⚠️ Ta sama klasa
+co naprawiona w tej sesji stopka „Wersja: 5.0" — **rozjazd metadanych wersji jest
+wzorcem systemowym, nie incydentem**; warto rozważyć test regresyjny porównujący
+`version:` z najnowszym wpisem changelogu.
+
+### 4. WERYFIKACJA Dz.U.
+
+NIE dotyczy — sesja proceduralno-narzędziowa, żaden przepis ani numer Dz.U. nie był
+przedmiotem ustaleń. FAZA 3E nie uruchamiana (brak zmiany statusu aktu).
+
+### 5. STRUKTURA SYSTEMU — SNAPSHOT
+
+`audyt-systemu-v4`: 48 plików przed i po (edycje wyłącznie treściowe, zero plików
+dodanych/usuniętych). Pozostałe dwa skille nietknięte: `przesluchanie-swiadkow-v2-min90`
+30 plików, `analizator-dowodow-v3` 37 plików.
+
+### 6. WNIOSKI I ZALECENIA
+
+1. **Orkiestrator audytu nigdy dotąd nie był audytowany własnymi kryteriami.** Sześć
+   usterek, w tym jedna kasująca dane, przetrwało ~90 sesji — bo każda sesja czytała
+   FAZĘ 0 i FAZĘ 3, a FAZY 7B/7C wykonywano z pamięci lub wcale. Zalecenie: raz na
+   ~20 wpisów przejść SKILL.md orkiestratora fazami 2A-2C tak, jakby był cudzym skillem.
+2. **Kontrola martwych odwołań musi objąć prozę, nie tylko ścieżki `view`** — obie
+   martwe pozycje (7C, 2B) były nazwami plików w zdaniach. Kandydat na rozszerzenie T6.
+3. **Rozjazd metadanych wersji (stopka, nagłówek H1, pole `changelog`, `version:`)
+   powtarza się w trzech skillach z trzech różnych rodzin** — to sygnał, że potrzebna
+   jest kontrola automatyczna, a nie kolejna naprawa ręczna.
+
+**Reguła 7 — zastosowanie:** TAK, pełny łańcuch dla `audyt-systemu-v4` (KROK 1 = 48 →
+KROK 2 kopia robocza → edycje → KROK 4 = 48 → KROK 5 zip → KROK 4b `diff -rq` zip vs
+drzewo robocze). Pozostałe dwa skille NIE były edytowane, więc nie podlegają dostawie
+w tej sesji (KROK 0 — ile skilli edytowanych, tyle zipów; tu jeden).
+
+---
+
+## AUDYT-2026-08-20z — Wykonanie F-99 i F-100 w całości, F-101 zawężona: wydzielenie modułu współdzielonego, naprawa zdolności deklarowanej, usunięcie balastu poscaleniowego
+
+**Zakres i wywołanie:** kontynuacja sesji `AUDYT-2026-08-20y`. Polecenie użytkownika:
+„zbadaj te pliki i dokonaj optymalne opcje, pamiętaj wszystkie działające funkcje muszą
+być zachowane". Wykonano trzy flagi otwarte poprzedniego dnia sesji. Skille edytowane:
+`shared` (+1 plik), `przesluchanie-swiadkow-v2-min90` (30 → 23 pliki),
+`analizator-dowodow-v3` (37 → 38), `audyt-systemu-v4` (48, bez zmiany liczby).
+
+**REGUŁA 1:** `ls /mnt/user-data/outputs/` = `audyt-systemu-v4.zip` z tury poprzedniej
+→ **KROK B** dla tego skilla (rozpakowanie ZIP-a, NIE kopia z `/mnt/skills/user`, która
+nie zawierała napraw 6.9). Weryfikacja markera (`grep -c F-101` = 3) potwierdziła, że
+praca poprzedniej tury została odzyskana. Pozostałe trzy skille: KROK C (brak ZIP-a).
+⭐ To pierwszy udokumentowany przypadek, w którym rozgałęzienie Reguły 1 zadziałało
+realnie — bez niego naprawy 6.9 (w tym FAZA 7B kasująca mapę) zostałyby cicho cofnięte.
+
+### 1. ZASADA PRZEWODNIA SESJI — „wszystkie działające funkcje zachowane"
+
+Polecenie użytkownika ustawiło ograniczenie mocniejsze niż zwykły audyt porządkowy,
+i zdeterminowało trzy decyzje projektowe:
+
+1. **Przenoszenie treści wyłącznie bajtowo.** Żadna bramka ani blok nie zostały
+   „przy okazji" przeredagowane. Po każdym przeniesieniu wykonano test
+   `treść_wycięta in treść_modułu` → `True` (trzy testy dla `MOD-DOKUMENT-GATES`,
+   jeden dla `MD7`). Pokusa uogólnienia bramek przy przenoszeniu do `shared/` była
+   realna — świadomie odrzucona, bo każde uogólnienie to ryzyko utraty działającego
+   zachowania, a zysk byłby wyłącznie estetyczny.
+2. **Wydzielenie ≠ osłabienie.** Samo zastąpienie treści bramki odesłaniem byłoby
+   REGRESEM: historia napraw skilla świadków (3.6, 3.17, 3.18) dowodzi, że bramka
+   opisana wyłącznie prozą bywa pomijana do momentu, aż użytkownik zapyta wprost.
+   Dlatego wczytanie kanonu jest w OBU skillach osobnym, twardym krokiem pipeline'u
+   (`PRE-W1a.5 DG-LOAD`, `KROK 0d DG-LOAD`), a osiem bramek trafiło do
+   `validation.required_gates` — gdzie **wcześniej nie było ich w ogóle**. Formalnie
+   oba skille są po tej sesji lepiej zabezpieczone niż przed nią.
+3. **Nieusuwanie plików, których roli nie widać z poziomu `.md`.** `rules/`,
+   `schemas/`, `examples/`, `integration/`, `templates/`, `assets/*.jsx` figurowały
+   w F-99 jako „nieprzywoływane z SKILL.md" — i to prawda, ale są to interfejsy dla
+   runnera portalu i trybu graficznego. Usunięcie ich byłoby dokładnie tym, przed
+   czym przestrzega polecenie użytkownika: skasowaniem działającej funkcji, której
+   nie widać z poziomu grepa po Markdownie. Zostały, z rolą opisaną w MANIFEST.
+
+### 2. F-100 (A) — `shared/MOD-DOKUMENT-GATES.md` (NOWY PLIK KANONICZNY)
+
+Osiem bramek pracy na dokumentach (§1 DOCUMENT-SCAN-PROMPT, §2
+FOUNDATION-VERIFICATION-GATE, §3 EXHAUSTIVE-EXTRACTION-GATE, §4 IMMEDIATE-LOGICAL-SCAN,
+§5 CROSS-DOCUMENT-CONSISTENCY-CHECK, §6 ENTITY-DISAMBIGUATION-TABLE, §7
+EVIDENCE-THREAD-LINKING, §8 QUOTE-VERIFICATION-DEFAULT) występowało w CAŁYM systemie
+wyłącznie wewnątrz skilla przesłuchań. Żadna nie jest specyficzna dla świadka.
+
+**Sedno naprawy nie jest oszczędnością linii, tylko udostępnieniem działających
+bramek drugiemu konsumentowi.** `analizator-dowodow-v3` — skill, którego całym
+przedmiotem są dokumenty, PRIMARY dla głębokiej analizy wieloplikowej — nie miał
+do nich dostępu przez cały okres istnienia obu pakietów.
+
+Wykonane: nowy plik kanoniczny (254 linie) + rejestracja w `shared/SKILL.md`
+i `shared/DEPENDENCY-GRAPH.md` (REGUŁA 2 — bez tego powstałby kolejny plik-sierota,
+wzorzec F-80) + wpięcie w obu skillach z tabelą mapującą każdą bramkę na konkretny
+krok konsumenta (w analizatorze: §2 → MP6 i BLOK J, §3 → MP1 i BLOK G, §4 → §P1
+INTRA-CONTRA, §5 → MP3, §6 → BLOK G, §7 → MP13, §8 → raport/dashboard/MD-NARR).
+
+W skillu świadków zostały indeksy wyzwalaczy (nazwa + aktywacja + obowiązek w jednym
+zdaniu) — wystarczające do ROZPOZNANIA aktywacji, jawnie oznaczone jako
+niewystarczające do WYKONANIA bramki. Sekcja „Zakaz" zachowała wszystkie dotychczasowe
+punkty i dostała dwa nowe (zakaz wejścia do PRE-W1 bez DG-LOAD, zakaz doboru modelu
+bez TYPOLOGIE-LOAD).
+
+⚠️ **Świadomie NIE przeniesione do `shared/`:** `PRZESŁANKI-GATE` z
+`CONTEXTUAL-REBUTTAL-CHECK`, `FORMALNA-ZGODNOŚĆ-GATE`, `ROZRÓŻNIENIE 3.18`,
+`TRANSCRIPT-MINING-GATE`, `PLAIN-TESTIMONY-DEFAULT`, `PROCEEDING-DISAMBIGUATION-TABLE`.
+Te są osadzone w kontekście świadka/prawa pracy — uogólnienie wymagałoby przepisania,
+czego zasada sesji zabraniała. Odnotowane w module jako „czego tu nie ma".
+
+### 3. F-100 (B) — `analizator-dowodow-v3/modules/MD7-bloki-strategiczne.md`
+
+Pięć bloków (KONSEKWENCJE, ATAK-NA-DOWOD, NEGACJA, PROWENIENCJA, DTA-ID-MODE,
+w. 858-1119 = 262 linie) wydzielone do modułu i zarejestrowane jako pozycja **E7**
+w BLOKU E routera (KROK 2), czyli w tym samym mechanizmie lazy loadingu co MP6/MP10-13.
+SKILL.md: 1174 → 983 linie **mimo dopisania całego KROKU 0d**.
+
+⚠️ **Odnotowane uczciwie, wbrew pierwotnemu uzasadnieniu flagi:** dwa z pięciu bloków
+(KONSEKWENCJE, NEGACJA) mają wyzwalacz „ZAWSZE", więc przy pełnej analizie moduł i tak
+zostanie wczytany — zysk kontekstowy jest MNIEJSZY, niż sugerowała F-100. Realne
+korzyści to: tryb minimalny z BLOKU G nie płaci już za 262 linie, SKILL.md wraca do roli
+routera, a z entrypointu znikają streszczenia trzech plików kanonicznych `shared/`
+(ATAK 692 linie, NEGACJA 684, PROWENIENCJA 457), które mogły dryfować względem kanonu.
+Zapisuję to wprost, bo przeszacowany zysk w opisie flagi jest sam w sobie usterką
+rejestru — następny audyt nie powinien odziedziczyć optymistycznej liczby.
+
+### 4. F-99 — balast i, ważniejsze, zdolność deklarowana bez pokrycia
+
+**Naprawa merytoryczna (istotniejsza niż sprzątanie):** dodano `TYPOLOGIE-LOAD`
+(ETAP W2, KROKI T1-T4) wczytujący `witness-types.yaml`, `judge-types.yaml`
+i `witness-judge-matrix.md`. Te pliki były w pakiecie od początku i są poprawne, ale
+ŻADEN krok pipeline'u ich nie ładował (`grep` nazw plików w SKILL.md = 0 trafień) —
+przy jednoczesnej deklaracji w `description`, w sekcji „Kiedy używać" i w polu
+„Prawdopodobny typ sędziego" profilu W2. Zdolność reklamowana użytkownikowi działała
+na improwizacji modelu zamiast na dostarczonej taksonomii. Procedura T1-T4 rozstrzyga
+też konflikt strategii (typ sędziego ma pierwszeństwo — decyduje o dopuszczalności
+formy, typ świadka tylko o skuteczności treści) i zakazuje zgadywania typu sędziego
+przy braku protokołów. Wynik T1-T3 wchodzi do CHECKPOINT-W2, więc użytkownik akceptuje
+również dobór typów, nie tylko tezy i model.
+
+⭐ **Klasa usterki warta zapamiętania:** „zdolność zadeklarowana w `description`,
+zasoby dostarczone, brak wpięcia w pipeline". Nie wykrywa jej ani FAZA 2A (ścieżki
+istnieją... bo nikt ich nie przywołuje), ani T6, ani kontrola rejestracji modułów.
+Wykrywa ją dopiero pytanie odwrotne: *czy każdy plik pakietu ma konsumenta?*
+Kandydat na rozszerzenie `check_rejestracja_modulow.py` o kierunek odwrotny.
+
+**Usunięty balast (7 plików):** `reports/SOURCE-INVENTORY.json` (506 linii inwentarza
+plików z pakietów `jsxfix1`/`jsxfix2`, które nie istnieją), `reports/FIX-REPORT.md`,
+`reports/MERGE-REPORT.md`, `reports/STATIC-CHECKS.json`, `docs/USAGE.md` (3 linie
+duplikujące sekcję „Tryb graficzny"), `components/README.md`, `CHANGELOG.md`
+z katalogu głównego. ⚠️ Ostrzeżenie z `components/README.md` (zakaz twardych importów
+komponentów w JSX — historyczna przyczyna `Module not found`) NIE zostało utracone:
+przeniesione do README.md i MANIFEST.md. README przepisany z historii scalania na opis
+operacyjny; MANIFEST doprowadzony do stanu faktycznego (wymieniał usunięte pliki
+i pomijał `references/CHANGELOG.md`).
+
+### 5. F-101 — zawężona, nie zamknięta
+
+Zamknięte: scalenie dwóch rozłącznych changelogów skilla świadków do
+`references/CHANGELOG.md` (plik główny usunięty, treść przeniesiona 1:1 jako sekcja
+ARCHIWUM — zachowano OBA zapisy zamiast rozstrzygać, który wierniejszy), naprawa
+nagłówka H1 analizatora („v5.1" przy `version: 5.16.1`), doprowadzenie pól `changelog`
+w YAML do zgodności z `version:`.
+
+Pozostaje: wersje **3.20-3.22** i **5.16.0-5.16.1** nie mają wpisu w żadnym rejestrze
+i historii nie da się odtworzyć. W obu changelogach dopisano sekcję „LUKA JAWNA" —
+cisza w rejestrze jest gorsza niż udokumentowana luka, bo przy następnym audycie
+wygląda na komplet.
+
+⭐ **Wniosek systemowy:** rozjazd `version:` ↔ najnowszy wpis changelogu wystąpił
+w tej i poprzedniej sesji w TRZECH skillach z trzech różnych rodzin (świadkowie,
+analizator, sam orkiestrator — stopka „5.0"). To nie incydent, to wzorzec.
+Rekomendacja: test **T12** porównujący `version` z najwyższym numerem w
+`references/CHANGELOG.md`. Czwarta naprawa ręczna będzie droższa niż ten test.
+
+### 6. WERYFIKACJA Dz.U.
+
+NIE dotyczy — sesja architektoniczna, żaden przepis ani numer Dz.U. nie był
+przedmiotem ustaleń. FAZA 3E nie uruchamiana.
+
+### 7. STRUKTURA SYSTEMU — SNAPSHOT PO SESJI
+
+| Skill | Przed | Po | Zmiana |
+|---|---|---|---|
+| `shared` | 197 | 198 | +1 (`MOD-DOKUMENT-GATES.md`) |
+| `przesluchanie-swiadkow-v2-min90` | 30 | 23 | −7 (balast); SKILL.md 1699 → 1669 mimo dopisania DG-LOAD i TYPOLOGIE-LOAD |
+| `analizator-dowodow-v3` | 37 | 38 | +1 (`modules/MD7-bloki-strategiczne.md`); SKILL.md 1174 → 983 |
+| `audyt-systemu-v4` | 48 | 48 | 0 (rejestry + dziennik) |
+
+### 8. WNIOSKI
+
+1. **Wydzielenie do `shared/` opłaca się wtedy, gdy ma DRUGIEGO konsumenta.**
+   F-100 (A) miała go realnie i to jest jedyna zmiana tej sesji, która dodaje
+   systemowi zdolność, a nie tylko porządkuje. F-100 (B) była głównie porządkowa
+   i jej zysk okazał się mniejszy niż zakładano — warto tę asymetrię pamiętać przy
+   kolejnych propozycjach wydzielania.
+2. **Każde wydzielenie musi mieć twardy krok wczytania.** Bez `DG-LOAD` operacja
+   z definicji osłabiłaby skill. To reguła do stosowania przy każdym przyszłym
+   wynoszeniu bramek z entrypointu.
+3. **Zdolność bez wpięcia jest gorsza niż jej brak** — użytkownik czyta
+   `description` i zakłada, że taksonomia działa. Pytanie kontrolne „czy każdy
+   plik pakietu ma konsumenta?" należy dodać do FAZY 2 audytu skilla.
+
+
+> ⚠️ **Ustalenie dodatkowe (walidacja końcowa 2026-08-20z):** `version: 6.10` bez
+> cudzysłowu YAML parsuje jako **float 6.1** — numer NIŻSZY niż 6.9. Do 6.9 problem
+> nie występował (jednocyfrowy minor), od 6.10 występuje przy każdym dwucyfrowym.
+> Pole ujęte w cudzysłów, w SKILL.md dopisany komentarz-ostrzeżenie dla kolejnych
+> wersji. Wykryte przypadkiem, przy kontroli parsowalności frontmatterów — gdyby nie
+> ta kontrola, `6.10 < 6.9` weszłoby cicho do każdego narzędzia czytającego YAML.
+> **Do sprawdzenia w kolejnej sesji:** czy inne skille systemu mają niecytowane
+> `version:` i zbliżają się do dwucyfrowego minor.
+
+**Reguła 7 — zastosowanie:** TAK, cztery skille edytowane → cztery ZIP-y
+(`shared`, `przesluchanie-swiadkow-v2-min90`, `analizator-dowodow-v3`,
+`audyt-systemu-v4`), każdy z pełnym łańcuchem KROK 1 → 4 → 5 → 4b.
+
+---
+
+## AUDYT-2026-08-20z2 — F-101 zamknięta przez automatyzację: nowy test T12 i jego pierwszy przebieg (F-102)
+
+**Wywołanie:** pytanie użytkownika „czy to już jest zamknięte? jeśli nie to kontynuuj",
+z listą F-99 / F-100 / F-101. Stan zastany: F-99 i F-100 zamknięte w sesji 08-20z,
+F-101 zawężona do jednego punktu — nieodtwarzalnych luk historii wersji.
+
+**REGUŁA 1:** kopie robocze z poprzedniej tury żyły w `/home/claude/full_skills/`,
+zgodne z ZIP-ami w `outputs/` — praca kontynuowana na nich (KROK B w wariancie
+„kopia robocza tej samej rozmowy").
+
+### 1. DECYZJA: FLAGA, KTÓRA NIGDY BY SIĘ NIE ZAMKNĘŁA
+
+Pozostały punkt F-101 brzmiał: „wersje 3.20-3.22 i 5.16.0-5.16.1 nie mają wpisu
+w żadnym rejestrze". Historii tych zmian **nie da się odtworzyć** — materiał nie
+istnieje w systemie. Flaga czekająca na odtworzenie nieistniejącego materiału
+byłaby otwarta bezterminowo i zaśmiecała rejestr (dokładnie wzorzec F-86 —
+rozrost `WARN-OTWARTE.md` przez pozycje, których nikt nie może domknąć).
+
+Rozstrzygnięcie: **luka ZAAKCEPTOWANA i udokumentowana** sekcją „LUKA JAWNA"
+w changelogach obu skilli (zrobione w sesji 08-20z), flaga ZAMKNIĘTA. W jej
+miejsce postawiono to, co realnie zapobiega nawrotom — **test automatyczny**.
+
+⭐ Zasada do zapamiętania: **jeśli flaga opisuje wzorzec, a nie incydent, jej
+właściwym zamknięciem jest test, nie naprawa.** F-101 wystąpiła w trzech skillach
+z trzech rodzin w jednej sesji — to była definicja wzorca.
+
+### 2. TEST T12 — `scripts/check_wersje_changelog.py`
+
+Kontroluje cztery nośniki numeru wersji: pole `version:` (źródło prawdy), najwyższy
+wpis `references/CHANGELOG.md`, numer w polu `changelog:` YAML, numer w nagłówku H1
+i stopce. Zarejestrowany w: YAML `scripts:`, drzewie STRUKTURA KATALOGU,
+`run_regression_suite.py`, `REGRESSION-TEST-PLAN.md` sekcja 12 (REGUŁA 2 —
+cztery rejestry, żaden pominięty).
+
+**Klasyfikacja wyników rozdzielona po pierwszym przebiegu.** Pierwsza wersja
+oznaczała wszystko jako ⛔ i dała 42 pozycje, z czego 19 „krytycznych" — co jest
+bezużyteczne, bo tonie w nich 5 realnych problemów. Rozdzielone na: ⛔ czynny
+rozjazd (rejestry podają różne numery), ⚠️ ryzyko utajone (plik działa, ale typ
+YAML odwraca porządek), ℹ️ profilaktyka (za flagą `--profilaktyka`, domyślnie
+ukryta — 13 pozycji czystego szumu).
+
+**Błąd własny testu, wykryty i naprawiony tego samego dnia:** pierwsza wersja
+przeszukiwała CAŁY plik i raportowała 7 fałszywych trafień z wpisów changelogu
+cytujących wersje INNYCH plików (rzeczywisty przypadek: `shared/SKILL.md`, wpis
+3.15 cytujący „Wersja: 1.1.0" pliku MOD-DOKUMENT-ANOMALIE). Naprawione przez
+ograniczenie wyszukiwania do korpusu poza frontmatterem. Odnotowane w docstringu
+i w planie testów — test, który sam produkuje fałszywe alarmy, uczy ignorowania
+własnych wyników.
+
+### 3. PUŁAPKA FLOAT — klasa wykryta przy okazji, warta osobnej uwagi
+
+Niecytowane `version: 6.10` YAML parsuje jako **float 6.1** — numer NIŻSZY niż 6.9.
+Problem nie istnieje przy jednocyfrowym minor, więc pojawia się dopiero przy
+przejściu X.9 → X.10 i jest całkowicie niewidoczny w treści pliku. Wykryty
+przypadkiem, przy kontroli parsowalności frontmatterów po podbiciu orkiestratora
+na 6.10.
+
+Pierwszy przebieg znalazł go w **14 skillach**, w tym w `dr-06` (3.72), `dr-02`
+i `dr-10` (3.35), `prawny-router-v3` (3.21). Zaklasyfikowany jako ⚠️, nie ⛔:
+pliki działają poprawnie, dopóki nikt nie porównuje wersji liczbowo — ale każde
+przyszłe narzędzie sortujące wersje dostanie odwrócony porządek bez ostrzeżenia.
+Naprawiony wzorcowo w `shared` (3.16 → `"3.17"`) i w orkiestratorze, z komentarzem
+ostrzegawczym przy polu. Pozostałe 13 → F-102, bo hurtowa edycja 13 skilli wymaga
+osobnej sesji i decyzji użytkownika.
+
+### 4. WYNIK PIERWSZEGO PRZEBIEGU (F-102)
+
+`/mnt/skills/user`: **26 rozbieżności w 24 skillach — 5 ⛔ czynnych, 21 ⚠️ utajonych.**
+
+Najpoważniejsze: `pisma-procesowe-v3` — `version: 5.17` przy changelogu kończącym
+się na 5.10, czyli **siedem wersji bez opisu**, największa luka historii w systemie
+(większa niż ta, która uruchomiła całą sprawę). `analizator-umow-v1` — pięć wersji
+bez opisu ORAZ pułapka float w tym samym polu. `orzeczenia-sadowe-v2` — rozjazd
+ODWROTNY: changelog ma wpis 2.9.1, którego `version: 2.9` nie odnotował, plus
+nagłówek H1 podający 2.7.
+
+Osobna obserwacja: **stopki i nagłówki H1 są w tym systemie systemowo
+nieaktualizowane razem z `version:`** — cztery skille (`orzeczenia-sadowe-v2`,
+`prawny-router-v3`, `prawo-polskie-v2`, `raport-sytuacyjny-v2`) plus naprawiona
+08-20y stopka samego orkiestratora. To sugeruje decyzję generalną: albo
+aktualizować, albo usunąć jako pola martwe. Do rozstrzygnięcia w F-102.
+
+### 5. KONTROLA SKUTECZNOŚCI
+
+T12 na czterech skillach naprawionych w tej rozmowie: **✅ zero rozbieżności**.
+To zarazem test samego testu — gdyby zwracał czysty wynik na plikach, o których
+wiadomo, że były rozjechane, byłby bezwartościowy; gdyby zgłaszał problemy po
+naprawie, dawałby fałszywe alarmy. Oba przebiegi (przed: 26, po: 0) zachowują się
+zgodnie z oczekiwaniem.
+
+### 6. WERYFIKACJA Dz.U.
+
+NIE dotyczy — sesja narzędziowa.
+
+### 7. STRUKTURA
+
+`audyt-systemu-v4`: 48 → **49 plików** (+`scripts/check_wersje_changelog.py`).
+`shared`: 198 plików bez zmiany (edycja treściowa: `version` + wpis changelogu).
+
+### 8. WNIOSKI
+
+1. **Flaga opisująca wzorzec zamyka się testem, nie naprawą.** Czwarta ręczna
+   naprawa tego samego rozjazdu byłaby droższa niż napisanie T12 — i tak wyszło.
+2. **Test bez rozdzielonej klasyfikacji wagi jest szumem.** 42 pozycje z 19
+   „krytycznymi" ukryłyby 5 realnych problemów. Po rozdzieleniu: 5 ⛔ widocznych
+   od razu.
+3. **Test należy uruchomić na stanie sprzed naprawy ORAZ po niej.** Bez przebiegu
+   „przed" nie wiadomo, czy test w ogóle coś wykrywa.
+
+**Reguła 7 — zastosowanie:** TAK, dwa skille edytowane w tej części sesji
+(`audyt-systemu-v4`, `shared`) → dwa ZIP-y odświeżone. Pozostałe dwa ZIP-y
+(`przesluchanie-swiadkow-v2-min90`, `analizator-dowodow-v3`) z części pierwszej
+pozostają aktualne — bez zmian od dostawy.
+
+---
+
+## AUDYT-2026-08-20z3 — Realizacja F-102: historia 18 wersji odtworzona z dziennika, pułapka float naprawiona w 16 skillach, decyzja generalna o duplikatach numeru wersji
+
+**Wywołanie:** polecenie użytkownika „teraz F-102" — realizacja flagi otwartej poprzednią
+sesją na podstawie pierwszego przebiegu testu T12. Skille edytowane: **19**.
+
+**REGUŁA 1:** kopie robocze z poprzednich tur żyły w `/home/claude/full_skills/`; skille
+dochodzące (17 nowych) skopiowane z `/mnt/skills/user` — KROK C.
+
+### 1. NAJPIERW TEST OKAZAŁ SIĘ NIEDOKŁADNY — TRZY WŁASNE BŁĘDY T12
+
+Zanim cokolwiek naprawiłem, sprawdziłem, czy raport T12 mówi prawdę. Nie mówił w pełni:
+
+1. **Czytał tylko `references/CHANGELOG.md`.** `pisma-procesowe-v3` trzyma nowsze wpisy
+   (5.12-5.15) w sekcji `## CHANGELOG` wewnątrz SKILL.md, a do `references/` wyniesiono
+   starszą część (5.7-5.11) — dopuszczalny, udokumentowany wzorzec tego systemu. Test
+   raportował więc lukę „5.10 → 5.17" (siedem wersji), gdy realna luka wynosiła DWIE.
+   Naprawione: test bierze WYŻSZY numer z obu lokalizacji. Po naprawie ujawnił za to
+   dwa rozjazdy, których wcześniej nie widział (`dr-01`, `prawny-router-v3` 3.13→3.21).
+2. **Łapał własne notatki naprawcze.** Komentarz „stopka podawała Wersja: 5.2 przy
+   version: 6.1" był wykrywany jako... stopka podająca 5.2. Naprawione: pomijanie
+   komentarzy HTML.
+3. **Mylił wiersz changelogu ze stopką.** Linia „- Wersja: 3.8 → 3.9" wewnątrz wpisu
+   changelogu `prawny-router-v3` raportowana jako stopka. Naprawione: kotwica na
+   początek linii.
+
+⭐ **Wniosek metodologiczny:** raport nowego testu należy najpierw ZWERYFIKOWAĆ ręcznie
+na kilku pozycjach, zanim zacznie się naprawiać system pod jego dyktando. Gdybym poszedł
+prosto do napraw, dopisałbym `pisma-procesowe-v3` pięć nieistniejących wpisów i przeoczył
+dwa realne rozjazdy. Test dodano też o rozpoznawanie deklaracji „LUKA JAWNA" — skill,
+który lukę udokumentował, jest w stanie POPRAWNYM i test musi to odróżniać od milczenia
+(kryterium wyjścia z REGRESSION-TEST-PLAN sekcja 12).
+
+### 2. (A) SIEDEM CZYNNYCH ROZJAZDÓW — HISTORIA ODTWORZONA, NIE ZMYŚLONA
+
+Okazało się, że historia zmian **istnieje** — tylko nie tam, gdzie jej szukano.
+`AUDIT-JOURNAL.md` odnotowuje w sekcjach „Rejestracja" każde podbicie wersji wraz
+z opisem sesji. Odtworzone stamtąd:
+
+| Skill | Luka | Wynik |
+|---|---|---|
+| `prawny-router-v3` | 3.13 → 3.21 (osiem wersji, **największa w systemie**) | osiem wpisów; ⚠️ dziennik nie rozdziela, co przypadło na 3.14/3.15/3.16 — powstały w jednej sesji, odnotowane wprost jako nieustalone |
+| `analizator-umow-v1` | 1.25 → 1.30 | pięć wpisów, każdy z datą i tematem sesji |
+| `pisma-procesowe-v3` | 5.15 → 5.17 | dwa wpisy; ⚠️ przy 5.16 dziennik nie wyszczególnia, co zmieniono w TYM pliku — odnotowane jako niepełne |
+| `dr-01` | 3.3 → 3.6 | 3.4 odtworzone; **3.5 i 3.6 — LUKA JAWNA** |
+| `orzeczenia-sadowe-v2` | rozjazd ODWROTNY | `version: 2.9 → "2.9.1"` — changelog miał wpis z 2026-07-17, którego pole nie odnotowało |
+
+Wszystkie dopisane wpisy oznaczone jako **WTÓRNE wobec dziennika**, z odesłaniem do
+konkretnego wpisu-źródła i zastrzeżeniem, że przy wątpliwości rozstrzyga dziennik.
+`dr-01` 3.5 i 3.6 nie mają śladu w ŻADNYM pliku systemu — zamiast dopisać prawdopodobnie
+brzmiące zdania, wpisano „LUKA JAWNA". Zmyślony wpis w changelogu jest gorszy niż jego
+brak: brak widać, zmyślenie zostaje na zawsze jako fałszywe źródło.
+
+### 3. (B) PUŁAPKA FLOAT — 16 SKILLI
+
+`version` ujęty w cudzysłów w 13 skillach z realną pułapką (dwucyfrowy minor: `dr-06`
+3.72, `dr-02` i `dr-10` 3.35, `dr-03` 3.28, `dr-04` 3.23, `dr-09` i `prawny-router-v3`
+3.21, `dr-05` 3.19, `dr-11`/`dr-15` 3.10, `dr-12` 4.10, `pisma-proste-v2` 2.10,
+`analizator-umow-v1` 1.30) plus 3 profilaktycznie, bo i tak były edytowane. Przy każdym
+polu zostawiono komentarz wyjaśniający, dlaczego cudzysłów jest obowiązkowy.
+
+**Świadomie NIE naprawione hurtem:** 10 skilli z niecytowanym jednocyfrowym minor.
+Ryzyko jest wyłącznie przyszłe (uaktywni się przy X.10), a edycja dziesięciu pakietów
+tylko po to, by dodać cudzysłów, to dziesięć dostaw i dziesięć okazji do pomyłki przy
+zerowym zysku dzisiaj. Zamiast tego: pozycja resztkowa w F-102 + flaga
+`--profilaktyka` w teście, która listę pokazuje na bieżąco.
+
+### 4. (C) DECYZJA GENERALNA — DUPLIKATY NUMERU WERSJI SIĘ USUWA, NIE SYNCHRONIZUJE
+
+Pytanie postawione w poprzedniej sesji („stopki i nagłówki H1: aktualizować czy usunąć")
+rozstrzygnięto na rzecz **usunięcia**. Dowód empiryczny: pięć niezależnych rozjazdów
+w trzech sesjach (`orzeczenia-sadowe-v2` H1 2.7 vs 2.9, `prawny-router-v3` H1 3.13 vs
+3.21, `prawo-polskie-v2` stopka 5.2 vs 6.1, `raport-sytuacyjny-v2` H1 2.5 vs 2.6, stopka
+samego orkiestratora 5.0 vs 6.8). Dwa źródła prawdy o wersji ZAWSZE się rozjeżdżają,
+bo aktualizacja drugiego nie ma żadnego wymuszenia.
+
+Wykonanie: nagłówki H1 noszą teraz sam **major** (v3, v2, v2, v5) — major zmienia się
+raz na kilkanaście wersji, więc nie dryfuje; stopka `prawo-polskie-v2` odsyła do pola
+`version:` i nosi wyłącznie datę zmiany treści. ⚠️ Poprawiono przy okazji własny błąd
+z sesji 08-20z: wpisałem wtedy w nagłówek `analizator-dowodow-v3` pełne „v5.17", co
+zaczęłoby dryfować przy następnym podbiciu.
+
+### 5. KONTROLA SKUTECZNOŚCI
+
+| Przebieg T12 | ⛔ czynne | ⚠️ utajone |
+|---|---|---|
+| `/mnt/skills/user` (stan pierwotny) | **7** | 20 |
+| drzewo naprawione (19 skilli) | **0** | 0 |
+
+Dodatkowo: YAML wszystkich 19 skilli parsuje się poprawnie, a pole `version` jest
+we wszystkich typu string (kontrola osobnym skryptem, nie samym T12).
+
+### 6. WERYFIKACJA Dz.U.
+
+NIE dotyczy — sesja metadanych. Żaden przepis, moduł ani treść merytoryczna nie były
+przedmiotem zmian; edycje objęły wyłącznie pola wersji, nagłówki, stopki i changelogi.
+
+### 7. STRUKTURA
+
+Liczba plików bez zmiany w KAŻDYM z 19 skilli — sesja nie utworzyła ani nie usunęła
+żadnego pliku.
+
+### 8. WNIOSKI
+
+1. **Nowy test weryfikuj ręcznie, zanim naprawisz system pod jego dyktando.** Trzy
+   z siedmiu pozycji pierwszego raportu były artefaktami parsera.
+2. **Historia zwykle istnieje — w dzienniku.** „Nie do odtworzenia" okazało się
+   prawdą tylko dla 2 z 18 wersji. Warto sprawdzić dziennik, zanim ogłosi się lukę.
+3. **Duplikat metadanej to zawsze przyszły rozjazd.** Właściwą naprawą jest usunięcie
+   duplikatu, nie jego synchronizacja.
+
+**Reguła 7 — zastosowanie:** TAK, 19 skilli edytowanych → 19 ZIP-ów (w tym cztery
+odświeżone z poprzednich tur tej rozmowy).
+
+---
+
+## AUDYT-2026-08-20z4 — ZASADA 15: historia zmian wyłącznie w references/CHANGELOG.md; standard ujednolicony w 9 skillach
+
+**Wywołanie:** polecenie użytkownika — „changelog ma zawsze iść do references, do
+osobnego pliku; jak w SKILL.md jest inaczej, zmień to". Skille edytowane: **10**
+(9 z naruszeniem standardu + orkiestrator z zasadą, testem i rejestrami).
+
+**REGUŁA 1:** kopie robocze z poprzednich tur w `/home/claude/full_skills/`;
+dwa skille dochodzące (`analizator-przepisow-v2`, `analiza-sadowa-v6`) — KROK C.
+
+### 1. ZASADA 15 (STAŁA)
+
+Pełna historia zmian każdego skilla mieszka w osobnym pliku `references/CHANGELOG.md`.
+W SKILL.md nie ma sekcji `## CHANGELOG` z wpisami — dopuszczalne jest wyłącznie
+odesłanie do pliku. Pole `changelog:` we frontmatterze zostaje krótkim skrótem
+bieżącej wersji (do ~15 linii), nigdy pełną listą wpisów.
+
+⭐ **Uzasadnienie jest funkcjonalne, nie porządkowe** — i warto je zapamiętać, bo
+sam wykonawca audytu potknął się o ten problem dzień wcześniej. Rozproszenie historii
+między trzy lokalizacje było BEZPOŚREDNIĄ przyczyną fałszywych wyników T12 w sesji
+08-20z3: test szukał wpisów w `references/`, nie znajdował ich (leżały w SKILL.md)
+i raportował luki, których nie było. W `pisma-procesowe-v3` groziło to dopisaniem
+PIĘCIU zmyślonych wpisów do changelogu. Jedna lokalizacja kanoniczna usuwa całą tę
+klasę błędu — dla tego testu i dla każdego przyszłego narzędzia czytającego historię.
+
+### 2. ZAKRES NARUSZEŃ — 9 SKILLI, DWA WZORCE
+
+**(A) Sekcja `## CHANGELOG` w korpusie SKILL.md — 7 skilli:**
+`analizator-przepisow-v2` (83 linie), `prawny-router-v3` (71), `pisma-proste-v2` (62),
+`pisma-procesowe-v3` (61), `audyt-systemu-v4` (42), `dr-01` (17),
+`orzeczenia-sadowe-v2` (9 — resztka po migracji z wersji 2.7, dokładnie ten sam
+wzorzec „migracja nie dokończona", który wersja 2.9.1 naprawiała w polu `description`).
+
+**(B) Pełna historia w polu `changelog:` YAML — 3 skille:**
+`shared` (**111 linii** — najdłuższy przypadek w systemie), `prawny-router-v3` (63),
+`analiza-sadowa-v6` (39).
+
+⚠️ `prawny-router-v3` trzymał historię w TRZECH miejscach naraz (korpus + YAML +
+brak pliku references). Po tej sesji — w jednym.
+
+Cztery pliki `references/CHANGELOG.md` utworzone od zera (`analizator-przepisow-v2`,
+`dr-01`, `pisma-proste-v2`, `prawny-router-v3`, `shared`, `analiza-sadowa-v6`).
+Cała treść przeniesiona **1:1**, bez zmiany ani jednego zdania; każde przeniesienie
+opatrzone nagłówkiem mówiącym, skąd pochodzi i dlaczego zostało przeniesione.
+
+### 3. EGZEKWOWANIE — ROZSZERZENIE T12, NIE SAMA ZASADA W PROZIE
+
+Zasada zapisana wyłącznie w SKILL.md działałaby dokładnie tak, jak działały bramki
+opisane prozą w skillu przesłuchań: dopóki ktoś o niej pamięta. Dlatego T12 dostał
+dwie nowe kontrole: sekcja z wpisami w korpusie → ⛔, pole `changelog:` > 15 linii → ⚠️.
+Zarejestrowane w `REGRESSION-TEST-PLAN.md` jako sekcja 12b.
+
+### 4. ZNALEZISKO UBOCZNE — NIESPARSOWALNY FRONTMATTER
+
+`analizator-przepisow-v2` miał pole `description` z niecytowanymi dwukropkami
+(`v2:`, `v2.3:`), przez co **`yaml.safe_load` zwracał błąd i frontmatter nie ładował
+się w ogóle**. Usterka ZASTANA — obecna w stanie pierwotnym, przeżyła wszystkie
+dotychczasowe audyty, bo żaden test nie sprawdzał samej parsowalności YAML-a.
+Wykryta przypadkiem, przy rutynowej kontroli po edycji. Naprawiona blokiem `>-`.
+
+⭐ **Do rozważenia w kolejnej sesji:** kontrola `yaml.safe_load` dla WSZYSTKICH
+SKILL.md jako osobny test (T13). Skill z niesparsowalnym frontmatterem może w ogóle
+nie zostać poprawnie załadowany — to potencjalnie poważniejsze niż wszystko, co
+wykryły T11 i T12 razem, a wykrycie kosztuje trzy linie kodu.
+
+### 5. KONTROLA
+
+T12 na drzewie roboczym: **✅ zero rozbieżności** (0 ⛔, 0 ⚠️, 0 ℹ️) — w tym zero
+naruszeń nowego standardu. Wersje podbite i opisane w 9 skillach: `analizator-przepisow-v2`
+2.5, `analiza-sadowa-v6` 6.4, `dr-01` 3.7, `orzeczenia-sadowe-v2` 2.9.2,
+`pisma-procesowe-v3` 5.18, `pisma-proste-v2` 2.11, `prawny-router-v3` 3.22,
+`shared` 3.18, `audyt-systemu-v4` 6.13 — każda z wpisem na szczycie własnego
+`references/CHANGELOG.md`, więc T12 pozostaje zielony.
+
+### 6. WERYFIKACJA Dz.U.
+
+NIE dotyczy — sesja strukturalna. Żaden przepis ani treść merytoryczna nie były
+przedmiotem zmian.
+
+### 7. STRUKTURA
+
+Sześć nowych plików `references/CHANGELOG.md`; poza tym liczba plików bez zmian.
+SKILL.md wszystkich dziewięciu skilli skrócone o łączną objętość przeniesionej historii
+(od 9 do 111 linii na skill).
+
+### 8. WNIOSKI
+
+1. **Jedna lokalizacja kanoniczna to nie estetyka, tylko warunek automatyzacji.**
+   Każde narzędzie czytające historię musi wiedzieć, gdzie patrzeć — inaczej
+   produkuje fałszywe alarmy, a fałszywy alarm uczy ignorowania testu.
+2. **Zasada bez egzekwowania testem to zasada na jedną sesję.** Ten system ma już
+   udokumentowane przypadki zasad, które przeżyły miesiące, będąc martwymi (FAZA 7C).
+3. **Migracje trzeba kończyć.** `orzeczenia-sadowe-v2` migrował changelog do
+   `references/` przy wersji 2.7 i zostawił resztkę w SKILL.md — ta sama klasa,
+   którą wersja 2.9.1 naprawiała w innym polu tego samego pliku.
+
+**Reguła 7 — zastosowanie:** TAK, 10 skilli edytowanych w tej turze; dostawa obejmuje
+komplet 24 pakietów zmienionych w całej rozmowie.
+
+---
+
+## AUDYT-2026-08-21 — F-89 (T11): dwie genuine naprawy sync ROUTING-MAP, reszta potwierdzona jako fałszywe trafienia/świadome wyłączenia
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja F-89 na żądanie użytkownika ("weź najwyższy priorytet z tabeli A").
+Uruchomiono `check_sync_aktow.py --kierunek lokalne --limit 0`: wynik 32 pozycje
+(zgodne z poprzednim stanem 32, bilans sesji 2026-08-20 pozostawił dokładnie
+te 29 nieprzejrzane + 3 znane false-positive). Priorytet: akty z ostatnich
+12 miesięcy (2025-2026), zgodnie z rekomendacją skryptu.
+
+### 2. NAPRAWY WYKONANE
+
+- **Fundusz Pomocy Pokrzywdzonym (Dz.U. 2025 poz. 1298):** `ROUTING-MAP.md`
+  wciąż wskazywał stary, BŁĘDNY numer "Dz.U. 2022 poz. 2256" (błąd
+  udokumentowany i naprawiony lokalnie w `dr-03/MAPA-AKTOW.md` już
+  2026-07-04, ale nigdy niepropagowany do mapy centralnej — klasyczny wzorzec
+  REGUŁA 3/F-89). Wiersz w ROUTING-MAP skorygowany na aktualny t.j.
+  **Dz.U. 2025 poz. 1298** (rozporządzenie MS, nie ustawa — przekwalifikowanie
+  też przeniesione), z odesłaniem do naprawy źródłowej.
+- **Ustawa antykorupcyjna 1997 (Dz.U. 2025 poz. 499):** ROUTING-MAP miał
+  placeholder "⚠️ zweryfikuj t.j. na ISAP", podczas gdy `dr-15/MAPA-AKTOW.md`
+  ma już potwierdzony numer (VER 2026-07-16, isap.sejm.gov.pl/gofin.pl/
+  trybunal.gov.pl). Placeholder zastąpiony potwierdzonym numerem.
+
+Obie naprawy zweryfikowane skryptem Python (podział po `^## DR-\d+`) —
+oba wiersze lądują w poprawnej sekcji (DR-03, DR-15).
+
+### 3. POZOSTAŁE POZYCJE — POTWIERDZONE JAKO NIEWYMAGAJĄCE NAPRAWY
+
+Sprawdzono kontekst źródłowy (grep + odczyt) dla: 2025 poz. 1705, 1440, 1366,
+1294, 894, 694.
+
+- **1705, 1440, 1366** — wszystkie obecne w ROUTING-MAP, ale w formacie
+  kropkowym ("2025.1705", "2025/1440", "2025.1366") zamiast pełnej frazy
+  wymaganej przez regex T11 — TA SAMA klasa fałszywego trafienia już
+  udokumentowana dla poz. 646/25/100 w sesji 2026-08-18/19. Główne akty
+  macierzyste (2024.1907, 2024.1822, 2025.636, 2026.367, 2025.34)
+  potwierdzone jako poprawnie zarejestrowane.
+- **1294** — regulacja towarzysząca (ryczałt ewidencja) głównemu
+  rozporządzeniu PKPiR Dz.U. 2025 poz. 1299, które JEST poprawnie
+  zarejestrowane (`mod-PKPiR-ewidencje-uproszczone`). Wzmianka
+  poboczna, nie wymaga własnego wiersza — pozostaje jako nawigacyjna.
+- **894** — jedna z kilku "NOWELIZACJE PO t.j." wymienionych przy okazji
+  w opisie modułu VAT (główny t.j. 2025.775 poprawnie zarejestrowany,
+  rodzina 9 modułów VAT kompletna). Wzmianka drugorzędna, zgodnie z
+  zasadą lazy loading pozostawiona bez osobnego wiersza.
+- **694** — jawnie oznaczona w źródle jako "akt pokrewny odrębny (...)
+  poza zakresem nowego modułu" — świadome wyłączenie, nie luka.
+
+### 4. WERYFIKACJA Dz.U.
+
+Nie dotyczy zmiany statusu aktu (FAZA 3E) — obie naprawy to synchronizacja
+numeru już wcześniej zweryfikowanego lokalnie (Rząd 1 dla 1298: 4 zgodne
+źródła Rząd 2/3 wg wpisu źródłowego w dr-03; dla 499: isap.sejm.gov.pl
++ gofin.pl + trybunal.gov.pl wg wpisu źródłowego w dr-15) — nie
+requiruje ponownej weryfikacji merytorycznej, tylko propagacji.
+
+### 5. STRUKTURA
+
+`prawo-polskie-v2`: 2 pliki, bez zmian liczby, tylko treść `ROUTING-MAP.md`.
+Reszta systemu bez zmian.
+
+### 6. WNIOSKI
+
+T11 pozostaje przydatnym generatorem listy-do-przeglądu, ale ~50%+ trafień
+w tej turze to format kropkowy vs pełna fraza — rekomendacja z sesji
+2026-08-18/19 (rozważyć akceptację obu formatów w regex) pozostaje aktualna
+i NIE została jeszcze wdrożona; zostawiona jako przyszłe usprawnienie testu,
+nie blokuje bieżącej pracy.
+
+**Reguła 7 — zastosowanie:** TAK. `prawo-polskie-v2.zip` dostarczony
+(2/2 pliki, diff zip↔drzewo puste, diff drzewo↔oryginał ograniczony do
+zamierzonej zmiany w `ROUTING-MAP.md`). `audyt-systemu-v4.zip` (ten wpis +
+aktualizacja WARN-OTWARTE.md) dostarczany osobno w tej samej turze.
+
+---
+
+## AUDYT-2026-08-21b — Naprawa błędnej opłaty "skarga na czynności komornika" (100→50 zł) + otwarcie F-103
+
+### 1. STATUS OGÓLNY
+
+Na żądanie użytkownika: "zbadaj czy w tabelach opłat są opłaty za skargę na
+komornika, rozdziel oba tryby skarg — na umorzenie i pozostałe". Zadanie
+wykonane w całości: zbadano wszystkie tabele opłat w systemie, znaleziono
+i naprawiono błąd merytoryczny, rozdzielono wiersz na dwa tryby zgodnie
+z żądaniem, wyjaśniono dlaczego oba tryby mają identyczną stawkę.
+
+### 2. NAPRAWY WYKONANE (CRIT — błąd merytoryczny)
+
+- **`pisma-proste-v2/references/M6-oplaty.md`** — wiersz "Skarga na czynności
+  komornika | 100 zł" był BŁĘDNY. Aktualna stawka (art. 25 ust. 1 KSCU,
+  t.j. Dz.U. 2025 poz. 1228) to **50 zł**. Wiersz rozdzielony na dwa (na
+  żądanie użytkownika): "postanowienie o umorzeniu postępowania
+  egzekucyjnego" i "pozostałe czynności/zaniechania", OBA 50 zł, z
+  przypisem wyjaśniającym że art. 25 ust. 1 KSCU nie różnicuje opłaty wg
+  przedmiotu zaskarżenia (jeden tryb: skarga na czynności komornika,
+  art. 767 §1 KPC) — z zastrzeżeniem, że gdyby postanowienie o umorzeniu
+  wydał WYJĄTKOWO sąd (nie komornik), właściwy byłby zażalenie, nie skarga.
+- **`pisma-proste-v2/references/SPL-skarga-komornik.md`** (szablon pisma) —
+  ta sama błędna kwota 100 zł w sekcji PODSTAWA PRAWNA, naprawiona
+  analogicznie z tym samym wyjaśnieniem.
+
+### 3. WERYFIKACJA (ZASADA 13/14 — gradacja źródeł)
+
+- **Rząd 1:** isap.sejm.gov.pl, t.j. Dz.U. 2025 poz. 1228 (obwieszczenie
+  Marszałka Sejmu z 1.09.2025) — fragment zaindeksowany i odczytany przez
+  `web_search` (bezpośredni `web_fetch` na api.sejm.gov.pl zablokowany
+  ROBOTS_DISALLOWED, zgodnie ze znanym ograniczeniem środowiska): "Art. 25.
+  1. Opłatę stałą w kwocie 50 złotych pobiera się od skargi na czynności
+  komornika."
+- **Rząd 2B (4 zgodne źródła):** lexlege.pl, przepisy.gofin.pl, infor.pl,
+  sip.lex.pl — wszystkie potwierdzają 50 zł jako aktualną stawkę (historia
+  wersji art. 25 w przepisy.gofin.pl pokazuje nowelizację, która rozdzieliła
+  dawny zbiorczy ust. 1 na obecny ust. 1 [skarga na komornika, 50 zł] i
+  ust. 1a [zażalenie na odmowę czynności notarialnej, 100 zł] — stąd błąd
+  100 zł w systemie prawdopodobnie pochodzi ze starszej, sprzed-nowelizacyjnej
+  wersji przepisu).
+- **Orzecznictwo:** SR, sygn. XII 1Co 816/23 (orzeczenia.ms.gov.pl) —
+  cytuje "art. 25 ust. 1... opłatę stałą pobiera się od skargi na czynności
+  komornika" wprost.
+- **Praktyka:** mikroporady.pl (sierpień 2025) — "Opłata od skargi na
+  czynności komornika wynosi 50 zł!"
+- **Sprawdzono odrębnie**, czy istnieje inna ścieżka/opłata specyficznie dla
+  "umorzenia" — NIE znaleziono żadnej podstawy prawnej różnicującej opłatę;
+  potwierdzone orzecznictwem (SR Poznań-Nowe Miasto II Co 615/21, SR
+  Bydgoszcz XII Co 2101/21, SO Gliwice III Cz 15/20), że postanowienie
+  komornika o umorzeniu postępowania (art. 823-825 KPC) jest zaskarżane
+  w trybie art. 767 KPC identycznie jak każda inna czynność.
+
+### 4. F-103 — NOWA FLAGA OTWARTA
+
+Przy naprawie wykryto, że kanoniczny moduł `dr-12/modules/mod-KSCU-koszty-
+sadowe-i-pomoc-prawna.md` NIE zawiera w ogóle art. 25 KSCU — błąd w plikach
+pochodnych (`pisma-proste-v2`) nie był więc wykrywalny przez porównanie ze
+źródłem kanonicznym systemu, tylko odkryty ad hoc na żądanie użytkownika.
+Flaga F-103 otwarta (priorytet średni) — do zrobienia: dopisać art. 25
+(ust. 1, 1a, 2) do modułu macierzystego. Nie zamknięto w tej sesji — poza
+pierwotnym zakresem żądania (tabele opłat w pisma-proste-v2), a dodanie
+nowej treści merytorycznej do modułu dr-12 wymaga osobnej weryfikacji
+pełnego zakresu art. 25 (13+ jednostek redakcyjnych), nie tylko ust. 1.
+
+### 5. STRUKTURA
+
+`pisma-proste-v2`: 21 plików, bez zmian liczby — tylko treść 2 plików
+(`M6-oplaty.md`, `SPL-skarga-komornik.md`). `audyt-systemu-v4`: WARN-OTWARTE.md
+(nowy wiersz F-103 + aktualizacja tablicy sterującej) i ten wpis dziennika.
+
+### 6. WNIOSKI
+
+Ten incydent to kolejny przykład wzorca z ZASADY TREŚĆ-PO-MAPIE (pozycja 11
+listy operacyjnej): pliki pochodne (szablony, tabele pomocnicze) mogą
+"żyć własnym życiem" i utrwalać błąd merytoryczny latami, jeśli moduł
+kanoniczny w ogóle nie pokrywa danego przepisu — nie ma wtedy żadnego
+mechanizmu wykrywającego rozjazd. F-103 adresuje to źródłowo.
+
+**Reguła 7 — zastosowanie:** TAK. `pisma-proste-v2.zip` dostarczony (21/21
+plików, diff zip↔drzewo puste, diff drzewo↔oryginał ograniczony do 2
+zamierzonych plików). `audyt-systemu-v4.zip` zaktualizowany i dostarczany
+ponownie w tej samej turze (skumulowane zmiany: F-89 + F-103).
+
+---
+
+## AUDYT-2026-08-21c — Rozszerzenie: pełny trójdzielny podział trybów zaskarżania działań komornika
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja poprzedniego wpisu. Użytkownik zgłosił twierdzenie, że "skarga
+na bezczynność komornika jest bezpłatna" — zweryfikowano i NIE potwierdzono
+dla trybu art. 767 KPC (zaniechanie = 50 zł, tak jak każda inna czynność).
+Namiar okazał się dotyczyć innego, trzeciego trybu — skargi do Prezesa Sądu
+w ramach nadzoru administracyjnego — który użytkownik następnie wskazał
+wprost i polecił zbadać.
+
+### 2. WERYFIKACJA — TRZY ODRĘBNE TRYBY POTWIERDZONE
+
+- **Tryb 1 (skarga na czynności komornika, art. 767 §1 KPC)** — 50 zł,
+  jednolicie dla czynności i zaniechania konkretnej czynności, w tym
+  umorzenia postępowania. Rząd 1+2B (jak w poprzednim wpisie).
+- **Tryb 2 (skarga na przewlekłość postępowania egzekucyjnego)** — NOWO
+  zidentyfikowany i dodany. Odrębna ustawa z 17.06.2004 (nie KSCU/KPC),
+  stosowana odpowiednio do komornika przy ogólnej opieszałości/przewlekłości
+  (NIE przy zaniechaniu konkretnej czynności — to rozróżnienie potwierdzone
+  doktrynalnie: IUS NOVUM 1/2018 oraz Wolters Kluwer wprost: "skarga nie
+  przysługuje na bezczynność komornika" w rozumieniu art. 767, dla
+  bezczynności/przewlekłości właściwa jest ustawa z 2004 r.). Opłata 200 zł
+  (podwyższona z 100 zł od 6.01.2017, ustawa z 30.11.2016) — **zwracana w
+  razie uwzględnienia skargi** (zgodne źródła: insolens.pl, tworzewski.pl,
+  mamdlugi.pl, hfhr.pl — Rząd 2B/3, wszystkie zgodne co do kwoty i zwrotu).
+- **Tryb 3 (skarga do Prezesa Sądu Rejonowego, nadzór administracyjny)** —
+  NOWO dodany, na wyraźne żądanie użytkownika. Podstawa: art. 3 ust. 4,
+  175 ust. 2 pkt 7, 179, 222 ust. 4 ustawy o komornikach sądowych z
+  22.03.2018 — dotyczy ogólnego funkcjonowania kancelarii (opieszałość,
+  brak komunikacji, etyka), NIE prowadzi do uchylenia konkretnej czynności
+  (charakter dyscyplinujący, nie orzeczniczy). **Potwierdzone jako
+  BEZPŁATNA** — 2 zgodne źródła Rząd 3 (eurolege.pl 06.2026: "ta skarga jest
+  bezpłatna, nie musisz uiszczać żadnej opłaty sądowej"; pamietnikwindykatora.pl:
+  "bezpłatna alternatywa do skargi na czynności komornika") + potwierdzenie
+  strukturalne (ustawa o komornikach sądowych nie przewiduje opłaty za tę
+  skargę; KSCU, które reguluje WSZYSTKIE opłaty sądowe w sprawach cywilnych,
+  nie wymienia tej skargi w swoim katalogu — bo to skarga administracyjna,
+  nie pismo procesowe). ⚠️ Odnotowane jako źródło niższej kategorii (Rząd 3)
+  zgodnie z ZASADĄ 14 — brak bezpośredniego potwierdzenia Rząd 1/2, ale
+  2 niezależne źródła + spójność strukturalna z ustawą.
+
+### 3. NAPRAWY WYKONANE
+
+- `pisma-proste-v2/references/M6-oplaty.md` — tabela rozszerzona z 2 do
+  4 wierszy (dodano tryb 2 i 3) + rozbudowany przypis wyjaśniający
+  wszystkie trzy tryby, kiedy który stosować i jak zweryfikowano każdy.
+- `pisma-proste-v2/references/SPL-skarga-komornik.md` — dodana nowa sekcja
+  "TEN SZABLON vs DWA INNE TRYBY", z tabelą objaw→tryb→opłata, żeby ktoś
+  używający tego szablonu (tryb 1) rozpoznał, kiedy powinien eskalować do
+  trybu 2 lub 3 zamiast wypełniać niewłaściwe pismo.
+
+### 4. STRUKTURA
+
+`pisma-proste-v2`: 21 plików, bez zmian liczby — dalsza rozbudowa treści
+tych samych 2 plików z poprzedniego wpisu (skumulowane zmiany w jednym
+`present_files`).
+
+### 5. WNIOSKI
+
+Trafny odruch użytkownika (drążenie tematu "bezczynność") doprowadził do
+wykrycia, że system miał tylko 1 z 3 realnie istniejących trybów
+zaskarżania działań komornika — luka szersza niż sama błędna kwota. Warto
+rozważyć przy następnej sesji, czy `MOD-OPLATY.md` (pisma-procesowe-v3) i
+kanoniczny moduł KSCU (dr-12, F-103) powinny dostać ten sam trójdzielny
+podział — na razie ograniczono się do plików, w których błąd faktycznie
+wystąpił (zakres żądania użytkownika).
+
+**Reguła 7 — zastosowanie:** TAK. `pisma-proste-v2.zip` dostarczony ponownie
+(21/21 plików, diff zip↔drzewo puste, diff drzewo↔oryginał ograniczony do
+2 plików ze skumulowaną treścią obu napraw).
+
+---
+
+## AUDYT-2026-08-21d — F-89 dokończona: grupa 2013-2024 (15 pozycji), wszystkie 32 pierwotne pozycje T11 przejrzane
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja F-89 (użytkownik: "kontynuuj", powrót do kolejki priorytetowej
+po dygresji o opłatach za skargę na komornika). Przejrzano pozostałe 15
+pozycji z grupy 2013-2024 wygenerowanej przez `check_sync_aktow.py`.
+
+### 2. NAPRAWY WYKONANE
+
+- **`dr-01/MAPA-AKTOW.md`** — wewnętrzna niespójność JEDNEGO pliku: wiersz
+  `mod-ZTP-przepisy-przejsciowe-doktryna` cytował nieaktualny t.j. (2016
+  poz. 283), podczas gdy sąsiedni wiersz w TYM SAMYM pliku
+  (`mod-specustawy-lex-specialis`) miał już poprawiony numer (2026 poz. 300,
+  F-77, 2026-08-14) — ten sam akt, dwa różne numery w jednym pliku.
+  Naprawione przez zsynchronizowanie obu wierszy.
+- **`prawo-polskie-v2/ROUTING-MAP.md`** — ustawa o usługach świadczonych
+  drogą elektroniczną cytowana ze starym t.j. (2020 poz. 344), podczas gdy
+  `dr-11/MAPA-AKTOW.md` miał już poprawiony numer (2024 poz. 1513,
+  isap WDU20240001513) od 2026-07-04 — propagacja do centralnej mapy.
+- **`dr-12/MAPA-AKTOW.md`** — ustawa o biegłych rewidentach cytowana ze
+  starym t.j. (2024 poz. 1035), podczas gdy moduł macierzysty `dr-06/mod-
+  ustawa-biegli-rewidenci-zawod` już zaktualizowany do 2025 poz. 1891
+  (2026-08-11) — propagacja do dr-12, który cytuje ten sam akt w kontekście
+  odpowiedzialności dyscyplinarnej.
+
+Wzorzec wszystkich trzech napraw: TEN SAM akt ma różne numery w różnych
+plikach systemu, bo poprawka w jednym miejscu (zwykle module macierzystym)
+nie została propagowana do wszystkich pozostałych wzmianek — klasyczny
+przypadek REGUŁA 3 HARDGATE-AUDYT / T11.
+
+### 3. POTWIERDZONE JAKO NIEWYMAGAJĄCE NAPRAWY
+
+- **poz. 1222** — format kropkowy (2024.1222) w liście nowelizacji ABW,
+  false-positive znanej klasy.
+- **poz. 950, 2670, 1707, 820, 72, 1983** — regulacje/wzmianki towarzyszące
+  przy już zarejestrowanych aktach macierzystych (odpowiednio: rozp. MS
+  cytujące ustawę o doradcy restrukturyzacyjnym, rozp. MF ws. stawek VAT,
+  rozp. ws. stacji paliw w module wielotematycznym ochrony zabytków, rozp.
+  MF ulga na kasy, rozp. żłobki w tym samym module wielotematycznym, rozp.
+  MF zwolnienia importowe VAT z własną flagą "zweryfikuj t.j.") —
+  nawigacyjne, zgodnie z zasadą lazy loading.
+- **poz. 80** — czysto historyczna notatka w dzienniku wewnętrznym dr-16 o
+  BŁĘDZIE JUŻ NAPRAWIONYM w sesji 2026-07-02bbbb (rozbity na 3 poprawne
+  wiersze) — nie luka, tylko ślad audytowy.
+- **poz. 2490, 1082, 21** — odesłania historyczne/akty dodatkowe
+  (odpowiednio: akt pierwotny ustawy o OSP przed konsolidacją do 2025.244;
+  archiwalny t.j. Prawa łowieckiego świadomie oznaczony jako nieaktualny w
+  ramach korekty źródłowej już wykonanej; ustawa o ochronie świadka jako
+  akt DODATKOWY, nie macierzysty, dla modułu opartego głównie na KK) —
+  żaden nie wymaga własnego wiersza w ROUTING-MAP.
+
+### 4. BILANS CAŁOŚCIOWY F-89
+
+Wszystkie **32 pierwotne pozycje** z przebiegu T11 (sesja 2026-08-20: 2025 —
+6 pozycji w sesji 21a + 2013-2024 — 15 pozycji w tej sesji + wcześniej już
+ustalone false-positive 646/25/100 z sesji 08-18/19) są teraz przejrzane.
+**5 genuine napraw łącznie**, 27 potwierdzonych jako false-positive/
+nawigacyjne/świadome wyłączenia. Flaga kwalifikuje się do rozważenia
+zamknięcia przy najbliższym audycie, pod warunkiem ponownego uruchomienia
+`check_sync_aktow.py` na całym systemie (nie tylko grupie przejrzanej tu)
+dla potwierdzenia braku nowych pozycji.
+
+### 5. STRUKTURA
+
+`dr-01`: 10 plików, bez zmian liczby. `dr-12`: 15 plików, bez zmian liczby.
+`prawo-polskie-v2`: 2 pliki, bez zmian liczby (dalsza treść tego samego
+pliku z poprzednich wpisów tej sesji). `dr-11` sprawdzony, BEZ zmian —
+lokalny numer już był poprawny, nie wymagał edycji.
+
+### 6. WNIOSKI
+
+Trzy naprawy tej tury pokazują trzeci podtyp tego samego wzorca (poza
+"centralna-w-tyle" i "lokalna niespójna" z wcześniejszych sesji): moduł A
+cytuje akt, którego PRAWDZIWYM "właścicielem" jest moduł B — gdy moduł B
+się aktualizuje, moduł A o tym nie wie. `MAPA-MODULOW-GLOBALNA` (zadanie
+odłożone, sekcja 6 tego pliku) rozwiązałby to systemowo; do jej powstania
+jedynym mechanizmem wykrywającym pozostaje T11 uruchamiany okresowo.
+
+**Reguła 7 — zastosowanie:** TAK. Trzy archiwa dostarczone: `dr-01-ustroj-
+konstytucyjny-i-zrodla-prawa.zip` (10/10 plików), `dr-12-sadownictwo-
+prokuratura-zawody-prawnicze.zip` (15/15 plików), `prawo-polskie-v2.zip`
+(2/2 pliki, skumulowane zmiany). Wszystkie z czystą weryfikacją bajtową
+zip↔drzewo, różnice drzewo↔oryginał ograniczone do zamierzonych plików.
+`dr-11` sprawdzony i pominięty w dostawie — bez faktycznych zmian.
+
+---
+
+## AUDYT-2026-08-21e — F-89 ZAMKNIĘTA W CAŁOŚCI
+
+### 1. STATUS OGÓLNY
+
+Na żądanie użytkownika ("kontynuuj i wskaż ile jeszcze pozostało otwartych
+flag") — przed przejściem dalej, formalnie zweryfikowano czy F-89
+kwalifikuje się do zamknięcia zgodnie z warunkiem zapisanym w poprzednim
+wpisie.
+
+### 2. WERYFIKACJA ZAMKNIĘCIA
+
+Uruchomiono ponownie `check_sync_aktow.py --kierunek lokalne --limit 0` na
+drzewie z naniesionymi naprawami tej sesji (dr-01, dr-11, dr-12,
+prawo-polskie-v2). Wynik: **32 → 27 pozycji** — spadek dokładnie o 5, zgodny
+z liczbą genuine napraw wykonanych w tej sesji (1298, 499, 283→300, 1513,
+1035). Pozostałe 27 pozycji to dokładnie te same numery, które zostały
+indywidualnie przejrzane i udokumentowane w AUDYT-2026-08-21/21d jako
+false-positive (format kropkowy), nawigacyjne (wzmianki poboczne przy już
+zarejestrowanych aktach macierzystych) lub świadome wyłączenia (odesłania
+historyczne, akty dodatkowe) — żadna NOWA pozycja nie pojawiła się.
+
+### 3. DECYZJA
+
+F-89 **ZAMKNIĘTA W CAŁOŚCI**. Wiersz usunięty z TABLICY STERUJĄCEJ i z
+sekcji 1 `WARN-OTWARTE.md` (ZASADA 10). Test T11 pozostaje częścią
+regularnego zestawu regresyjnego (`REGRESSION-TEST-PLAN.md`) — jego
+przyszłe przebiegi mogą wykryć NOWE pozycje w miarę powstawania kolejnych
+modułów, co jest oczekiwanym, normalnym trybem działania testu (nie
+oznacza automatycznego ponownego otwarcia tej samej flagi — nowe pozycje
+dostają nowy numer flagi zgodnie z konwencją systemu).
+
+### 4. STRUKTURA
+
+Brak zmian plików w tym wpisie — czysta weryfikacja i aktualizacja
+rejestru.
+
+### 5. WNIOSKI
+
+Ten cykl (32 pozycje → 5 napraw + 27 udokumentowanych nie-luk → re-run
+potwierdzający 27 → zamknięcie) jest wzorcowym przykładem prawidłowego
+zamykania flagi klasy "lista do przeglądu": nie wystarczy przejrzeć
+pozycje raz — wymagane jest POTWIERDZENIE narzędziem, że naprawy faktycznie
+zmniejszyły wynik o oczekiwaną liczbę, zanim flaga zniknie z rejestru.
+
+**Reguła 7 — zastosowanie:** NIE dotyczy (brak zmian plików skilli w tym
+wpisie — tylko aktualizacja rejestru WARN-OTWARTE.md, dostarczona w
+poprzednim `audyt-systemu-v4.zip` tej sesji; ponowna dostawa poniżej po
+dopisaniu tego wpisu).
+
+---
+
+## AUDYT-2026-08-21f — F-88: postęp częściowy, fundusze inwestycyjne/instrumenty finansowe
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja F-88 (kolejny priorytet w kolejce po zamknięciu F-89).
+Zbadano obszar "fundusze inwestycyjne, instrumenty finansowe" — dotąd
+całkowicie nieopracowany dla ustawy 2026.846.
+
+### 2. USTALENIA
+
+- **Rząd 1 (eli.gov.pl, oficjalne metadane ELI dla Dz.U. 2026.846):**
+  potwierdzone, że akt FAKTYCZNIE dotyczy tematów "fundusz inwestycyjny"
+  i "instrumenty finansowe" — to oficjalne tagi przedmiotowe nadane przez
+  wydawcę (Kancelaria Sejmu), obok pozostałych 13 już potwierdzonych
+  tematów tej samej ustawy (KKS, SKOK, rzecznicy patentowi, VAT, akcyza,
+  PIT, doradztwo podatkowe, bankowe, PPSA, adwokatura, OP, radcy prawni,
+  opłata skarbowa, ubezpieczenia). To ROZSTRZYGA pytanie "czy w ogóle
+  dotyczy" (odrzuconą wcześniej hipotezę zerową) — TAK, dotyczy.
+- **Rząd 3 (EY, 07.2026):** ogólny mechanizm tej nowelizacji MDR —
+  wyłączenie z obowiązku raportowania schematów WYŁĄCZNIE krajowych oraz
+  uzgodnień dotyczących VAT i akcyzy. Możliwe, że fundusze/instrumenty są
+  objęte przez ten sam mechanizm (np. jako promotorzy/wspomagający
+  schematów podlegający nowym wyłączeniom) — HIPOTEZA, NIE potwierdzona
+  wprost dla tych dwóch ustaw.
+- **Rozróżnienie krytyczne potwierdzone:** odrębna ustawa z 3.07.2026 o
+  osobistych kontach inwestycyjnych (OKI) SAMODZIELNIE nowelizuje ustawę o
+  funduszach inwestycyjnych (art. 38, dodanie pkt 3d w art. 282 ust. 3 —
+  udostępnianie informacji objętych tajemnicą zawodową koordynatorowi OKI)
+  i ustawę o obrocie instrumentami finansowymi (art. 39, dodanie pkt 26 w
+  art. 150 ust. 1). Treść art. 38 OKI cytuje metrykę ustawy o funduszach
+  inwestycyjnych jako "Dz. U. z 2026 r. poz. 60, 176, 484, 644 i 846" —
+  potwierdza to, że 2026.846 JEST jedną z nowelizacji tej ustawy, ale
+  nie ujawnia CO konkretnie 2026.846 w niej zmieniło (art. 38 OKI to
+  osobna, późniejsza zmiana OKI, nie odsłona treści zmiany z 846).
+
+### 3. POZOSTAJE NIEUSTALONE
+
+Dokładny artykuł i mechanizm zmiany wprowadzonej PRZEZ SAMĄ 2026.846 (nie
+przez OKI) w: (a) ustawie o funduszach inwestycyjnych i zarządzaniu
+alternatywnymi funduszami inwestycyjnymi, (b) ustawie o obrocie
+instrumentami finansowymi. Ograniczenie narzędziowe: `web_fetch` na
+isap.sejm.gov.pl/api.sejm.gov.pl/dziennikustaw.gov.pl zwraca
+ROBOTS_DISALLOWED w tym środowisku (potwierdzone ponownie) — pełny tekst
+ustawy 2026.846 dostępny wyłącznie jako fragmenty zaindeksowane przez
+`web_search`, niewystarczające do zidentyfikowania konkretnego numeru
+artykułu dla tych dwóch ustaw spośród ~40 ustaw nowelizowanych przez ten
+sam omnibus.
+
+### 4. DECYZJA
+
+NIE tworzę nowej treści modułu bez potwierdzonego numeru artykułu — byłoby
+to dokładnie ten sam błąd metodologiczny, jaki naprawiono wielokrotnie w
+tej sesji (cytowanie treści bez zweryfikowanej podstawy). Zamiast tego
+zaktualizowano wiersz F-88 w `WARN-OTWARTE.md` z precyzyjnym stanem wiedzy:
+POTWIERDZONE że temat dotyczy ustawy, NIEUSTALONE co konkretnie się zmieniło.
+SKOK i ubezpieczenia pozostają całkowicie nieopracowane (nie dotknięte tą
+sesją — niższy priorytet niż fundusze/instrumenty ze względu na mniejszą
+częstotliwość w praktyce kancelarii cywilno-karno-gospodarczej).
+
+### 5. STRUKTURA
+
+Brak zmian plików modułów — tylko `WARN-OTWARTE.md`.
+
+### 6. WNIOSKI
+
+Ten sam wzorzec ograniczenia narzędziowego co F-8/F-10/F-89: bez
+bezpośredniego dostępu do ISAP/api.sejm.gov.pl, precyzyjne namierzenie
+JEDNEGO artykułu w obrębie ~40-ustawowego omnibusa przez sam `web_search`
+ma malejący zwrot z każdą kolejną turą wyszukiwań. Eskalacja do F-8/F-10
+(connector deweloperski z dostępem do domen .gov.pl) pozostaje najbardziej
+efektywną ścieżką dla precyzyjnych ustaleń tego typu w przyszłości.
+
+**Reguła 7 — zastosowanie:** TAK (aktualizacja rejestru). `audyt-systemu-v4.zip`
+dostarczany ponownie z tym wpisem.
+
+---
+
+## AUDYT-2026-08-21g — F-88: SKOK i ubezpieczenia potwierdzone Rząd 1, wciąż nieustalony mechanizm
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja F-88 (użytkownik: "kontynuuj"). Zbadano ostatnie dwa
+"całkowicie nieopracowane" obszary flagi: SKOK i ubezpieczenia.
+
+### 2. USTALENIA
+
+Bezpośredni cytat stopki (footnote wyliczający ustawy zmieniane) z
+`dziennikustaw.gov.pl/D2026000084601.pdf` — oficjalna publikacja Dz.U.,
+indeksowany fragment odczytany przez `web_search` (Rząd 1, ten sam poziom
+pewności co poprzednie potwierdzenia via ISAP/dziennikustaw w tej sesji):
+
+> "...ustawę z dnia 6 grudnia 2008 r. o podatku akcyzowym, ustawę z dnia
+> 5 listopada 2009 r. o spółdzielczych kasach oszczędnościowo-kredytowych,
+> ustawę z dnia 11 września 2015 r. o działalności ubezpieczeniowej i
+> reasekuracyjnej, ustawę z dnia 16 listopada 2016 r. o Krajowej
+> Administracji Skarbowej oraz ustawę z dnia 9 marca 2017 r. o wymianie
+> informacji podatkowych z innymi państwami."
+
+To ROZSTRZYGA hipotezę średniej pewności z sesji 19w-19y na TAK: ustawa o
+SKOK (5.11.2009) i ustawa o działalności ubezpieczeniowej i reasekuracyjnej
+(11.09.2015) SĄ genuinely nowelizowane przez 2026.846 — nie jest to
+spekulacja, tylko fakt potwierdzony oficjalną stopką aktu.
+
+### 3. POZOSTAJE NIEUSTALONE
+
+Identycznie jak przy funduszach/instrumentach (poprzedni wpis): WIEM że
+te 4 obszary (SKOK, ubezpieczenia, fundusze inwestycyjne, instrumenty
+finansowe) są dotknięte, NIE WIEM dokładnie jaki artykuł/mechanizm. Dwie
+konkurencyjne hipotezy robocze, żadna niepotwierdzona: (a) rozszerzenie
+zwolnienia MDR z tytułu tajemnicy zawodowej/branżowej na te sektory,
+analogicznie do adwokatury/radców/doradztwa podatkowego; (b) zmiany
+czysto konsekwencyjne (odesłania do przedefiniowanych pojęć OP w wyniku
+zwężenia MDR do schematów transgranicznych), bez odrębnej treści
+merytorycznej w tych 4 ustawach.
+
+### 4. DECYZJA
+
+Ponownie NIE tworzę treści modułu bez potwierdzonego artykułu. Flaga
+pozostaje otwarta z precyzyjnie udokumentowanym stanem wiedzy: 4 z 4
+kluczowych obszarów resztkowych POTWIERDZONE jako dotknięte (rozstrzygnięta
+niepewność "czy w ogóle"), 0 z 4 z ustalonym konkretnym mechanizmem.
+
+### 5. STRUKTURA
+
+Brak zmian plików modułów — tylko `WARN-OTWARTE.md`.
+
+### 6. WNIOSKI
+
+Malejący zwrot z dalszych `web_search` na tym samym omnibusie potwierdzony
+ponownie (3 sesje z rzędu: 19w-19y, 20d, dzisiejsza — każda kolejna daje
+mniej nowych informacji na turę wyszukiwań). F-88 kwalifikuje się do
+przeformułowania: zamiast dalszego drążenia przez web_search, następna
+sesja powinna albo eskalować do F-8/F-10 (connector), albo świadomie
+przyjąć hipotezę (b) jako roboczą z jawnym zastrzeżeniem, jeśli klient
+kancelarii nie pracuje bezpośrednio w tych 4 sektorach (niższy priorytet
+praktyczny niż np. adwokatura/radcowie, które są bezpośrednio istotne dla
+własnej praktyki kancelaryjnej).
+
+**Reguła 7 — zastosowanie:** TAK (aktualizacja rejestru). `audyt-systemu-v4.zip`
+dostarczany ponownie z tym wpisem.
+
+---
+
+## AUDYT-2026-08-21h — F-90: Rozdział 4 UZNK (przepisy karne) zamknięty w całości
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja pracy na żądanie użytkownika ("kontynuuj"), po sugestii
+przejścia do F-90 (UZNK) z powodu malejącego zwrotu na F-88. Zamknięto
+Rozdział 4 (art. 23-27, przepisy karne) — dotąd całkowicie nieopisany.
+
+### 2. WERYFIKACJA (ZASADA 13/14)
+
+4+ zgodne źródła Rządu 2B: lexlege.pl, inforlex.pl (z jawnym cytatem
+"Dz.U.2026.0.85 t.j." przy każdym artykule), arslege.pl, standardyprawa.pl
+— identyczna treść wszystkich pięciu artykułów we wszystkich źródłach,
+zgodna z już wcześniej zweryfikowanym t.j. (Dz.U. 2026 poz. 85, ta sama
+podstawa co art. 20 zweryfikowany w sesji 2026-07-27).
+
+### 3. TREŚĆ DODANA (`dr-02/modules/mod-ustawa-UZNK-nieuczciwa-konkurencja.md`)
+
+Nowa sekcja "ROZDZIAŁ 4 UZNK — PRZEPISY KARNE (art. 23-27)":
+- **Art. 23** — naruszenie tajemnicy przedsiębiorstwa (przestępstwo, do
+  2 lat), dwa warianty (obowiązek wobec przedsiębiorcy / bezprawne
+  uzyskanie), wymóg "poważnej szkody".
+- **Art. 24** — naśladownictwo produktu przez kopiowanie (przestępstwo,
+  do 2 lat), odpowiednik karny cywilnoprawnego art. 13.
+- **Art. 24a** — organizowanie systemu sprzedaży lawinowej (przestępstwo,
+  6 mies.-8 lat — najsurowsza kara w Rozdziale), z odnotowaniem że
+  art. 24b jest uchylony (pominąć trwale).
+- **Art. 25** — wprowadzanie w błąd przez oznaczenie towaru (WYKROCZENIE,
+  areszt/grzywna — niższa kwalifikacja niż 23/24/24a), odpowiednik karny
+  cywilnoprawnego art. 10.
+- **Art. 26** — rozpowszechnianie nieprawdziwych informacji (WYKROCZENIE),
+  dwa kierunki (szkodzenie konkurentowi / zachwalanie siebie), odpowiednik
+  karny cywilnoprawnego art. 14.
+- **Art. 27** — tryb ścigania (wniosek dla przestępstw, żądanie dla
+  wykroczeń; rozszerzony krąg uprawnionych dla art. 25 o organizacje
+  z art. 19 ust. 1) — z praktyczną uwagą o wnioskowym charakterze ścigania.
+
+Każdy artykuł opatrzony krzyżowym odesłaniem do odpowiadającego czynu
+cywilnoprawnego z Rozdziału 2 (już opisanego w tym samym module), żeby
+czytelnik widział podwójny reżim (cywilny + karny) tego samego czynu.
+
+### 4. INCYDENT I NAPRAWA (Reguła 5)
+
+Przy wstawianiu nowej sekcji `str_replace` omyłkowo skasował nagłówek
+"## WERYFIKACJA ONLINE" (treść pod nim ocalała, ale osierocona bez
+nagłówka) — dokładnie wzorzec ostrzegany w Regule 5 HARDGATE-AUDYT.
+Wykryte NATYCHMIAST przez rutynową kontrolę `grep -n "^## "` po edycji
+(spis treści przed/po). Pierwsza próba naprawy wprowadziła DUPLIKAT bloku
+(stary osierocony fragment + nowy nagłówek z powieloną treścią) —
+wykryte drugą kontrolą i naprawione ostatecznie w trzeciej turze. Finalna
+weryfikacja: 10 nagłówków (9 oryginalnych + 1 nowy), 22 znaczniki potrójnego
+grawisu (parzyste — brak niezamkniętych bloków kodu), 271 linii
+(bezpiecznie poniżej progu 1000, ZASADA LIMITU DŁUGOŚCI MODUŁU).
+
+### 5. STRUKTURA
+
+`dr-02`: 67 plików, bez zmian liczby — tylko treść jednego pliku modułu.
+
+### 6. WNIOSKI
+
+Ten incydent potwierdza wartość Reguły 5 jako obowiązkowej, nie
+opcjonalnej kontroli — bez niej uszkodzenie struktury pliku (skasowany
+nagłówek) przeszłoby niezauważone do dostawy. Trzy tury poprawek w jednej
+edycji to koszt akceptowalny wobec ryzyka dostarczenia uszkodzonego pliku.
+
+**Reguła 7 — zastosowanie:** TAK. `dr-02-prawo-cywilne-rodzinne-gospodarcze.zip`
+dostarczony (67/67 plików, diff zip↔drzewo puste, diff drzewo↔oryginał
+ograniczony do jednego zamierzonego pliku). `audyt-systemu-v4.zip`
+zaktualizowany i dostarczany ponownie w tej samej turze.
+
+---
+
+## AUDYT-2026-08-21i — F-90: art. 6, 7, 8, 9, 10 UZNK zamknięte
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja F-90 na żądanie użytkownika ("kontynuuj"), priorytet:
+Rozdz. 2 art. 8-10 (fałszywe oznaczenie geograficzne/towarów, najwyższa
+częstość praktyczna). Rozszerzono zakres o art. 6-7 (oznaczenie
+przedsiębiorstwa), które były w tej samej grupie tematycznej.
+
+### 2. WERYFIKACJA
+
+6+ zgodnych źródeł: **Rząd 1** — bezpośredni cytat PDF z isap.sejm.gov.pl
+(D19930211Lj.pdf, tekst jednolity aktualizowany, indeksowany fragment
+potwierdza "Dz. U. z 2026 r." przy art. 4a); **Rząd 2B** — lexlege.pl,
+inforlex.pl (cytat wprost "Dz.U.2026.027.0000085"), arslege.pl (cytat
+wprost "Dz.U.2026.0.85 t.j."), dlajurysty.pl, portalzp.pl (tytuł strony:
+"tekst jedn.: Dz.U. z 2026 r., poz. 85"), krn.pl — wszystkie identyczne
+co do treści przepisów.
+
+### 3. TREŚĆ DODANA
+
+Nowa sekcja "ART. 5-10 UZNK — OZNACZENIA PRZEDSIĘBIORSTWA I POCHODZENIA
+GEOGRAFICZNEGO" w `dr-02/modules/mod-ustawa-UZNK-nieuczciwa-konkurencja.md`:
+- **Art. 5** — przytoczony dla kompletności numeracji (był już
+  zweryfikowany wcześniej), z dodatkiem orzecznictwa SN (II CKN 70/96,
+  zasada pierwszeństwa używania).
+- **Art. 6** — oznaczenie nazwiskiem przedsiębiorcy, lex specialis wobec
+  art. 5.
+- **Art. 7** — oznaczenie po likwidacji/podziale/przekształceniu, z uwagą
+  praktyczną o sporach przy podziałach spółek (styk z KSH).
+- **Art. 8** — fałszywe oznaczenie geograficzne (ogólne), z rozróżnieniem
+  od odpowiednika karnego art. 25 i cywilnoprawnego art. 10.
+- **Art. 9** — fałszywe używanie CHRONIONYCH oznaczeń geograficznych
+  (lex specialis wobec art. 8) — z kluczowym zastrzeżeniem ust. 2: zakaz
+  obejścia przez dopiski "rodzaj/typ/metoda".
+- **Art. 10** — wprowadzające w błąd oznaczenie towarów/usług,
+  jednoznacznie oznaczony jako CYWILNOPRAWNY odpowiednik już
+  zweryfikowanego karnego art. 25 (Rozdz. 4) — domyka krzyżowe odesłanie
+  zapoczątkowane przy dodawaniu art. 25 w poprzedniej turze. ⚠️ Ust. 2
+  potwierdzony tylko częściowo (fragment o opakowaniach) — oznaczony jako
+  wymagający dalszej weryfikacji.
+
+Przy okazji naprawiono NIESPÓJNOŚĆ w tabeli katalogu (sekcja "CZYNY
+NIEUCZCIWEJ KONKURENCJI — KATALOG"): tabela karna z poprzedniej sesji
+(przed pełną weryfikacją Rozdz. 4) wciąż oznaczała art. 23/24a jako
+"NIE zweryfikowane w pełni", mimo że pełna, zweryfikowana treść całego
+Rozdziału 4 już istniała niżej w TYM SAMYM pliku od poprzedniej tury —
+klasyczny przypadek ZASADY TREŚĆ-PO-MAPIE w miniaturze (jeden plik, dwa
+miejsca, rozjazd stanu wiedzy). Naprawione przez jawne oznaczenie starej
+tabeli jako "szkic historyczny, nie używać" z odesłaniem do sekcji pełnej.
+
+### 4. INCYDENT I NAPRAWA (Reguła 5) — DRUGI RAZ W TEJ SESJI
+
+Przy wstawianiu nowej sekcji PRZED nagłówkiem "## ROZDZIAŁ 4 UZNK —
+PRZEPISY KARNE" `str_replace` ponownie skasował ten nagłówek (ten sam
+wzorzec co w poprzedniej turze — `new_str` nie zawierał jawnie stałego
+elementu strukturalnego, na który celował `old_str`). Wykryte NATYCHMIAST
+przez rutynową kontrolę `grep -n "^## "` (nagłówek Rozdziału 4 nieobecny
+na liście, mimo że jego treść — art. 23-27 — była widoczna dalej w
+pliku). Naprawione w jednej turze (lekcja z poprzedniego incydentu:
+zlokalizowano dokładny punkt wstawienia przez `grep -n` na treść
+początkową osieroconego bloku, zamiast zgadywać). Finalna weryfikacja:
+11 nagłówków, 36 znaczników code-fence (parzyste), 399 linii, 3
+wystąpienia `web_search:` (brak duplikatów z poprzedniego incydentu).
+
+### 5. STRUKTURA
+
+`dr-02`: 67 plików, bez zmian liczby.
+
+### 6. WNIOSKI
+
+Dwa incydenty Reguły 5 w dwóch kolejnych turach tej samej sesji na tym
+samym pliku potwierdzają: wzorzec "wstawianie TUŻ PRZED nagłówkiem"
+wymaga SYSTEMATYCZNEGO nawyku — po KAŻDYM takim `str_replace` kontrola
+`grep -n "^## "` powinna być odruchowa, nie refleksyjna. Warto rozważyć
+dodanie tej kontroli jako jawny KROK w Regule 5, nie tylko przykład.
+
+**Reguła 7 — zastosowanie:** TAK. `dr-02-prawo-cywilne-rodzinne-gospodarcze.zip`
+dostarczony ponownie (67/67 plików, diff zip↔drzewo puste, diff
+drzewo↔oryginał ograniczony do jednego pliku ze skumulowaną treścią obu
+napraw tej sesji). `audyt-systemu-v4.zip` zaktualizowany.
+
+---
+
+## AUDYT-2026-08-21j — F-90: Rozdział 3 UZNK zamknięty w całości; art. 21 skorygowany jako uchylony
+
+### 1. STATUS OGÓLNY
+
+Kontynuacja F-90 ("kontynuuj"). Zamknięto ostatnie luki Rozdziału 3
+(art. 18a, 19, 22) i skorygowano błędne założenie rejestru dotyczące
+art. 21.
+
+### 2. ODKRYCIE: ART. 21 JEST UCHYLONY
+
+Poprzedni wpis flagi F-90 (sesja 2026-08-15) zakładał, że art. 21 wymaga
+opisania treści "postępowanie zabezpieczające, bezzasadne powództwo" —
+ZAŁOŻENIE BŁĘDNE. Bezpośredni cytat PDF z isap.sejm.gov.pl
+(D19930211Lj.pdf, Rząd 1) potwierdza wprost: **"Art. 21. (uchylony)"**.
+Ten przepis nie istnieje w obecnym stanie prawnym — numeracja zachowana
+ze względów historycznych, ta sama konwencja co art. 3a, 22a-22g, 24b
+(już wcześniej znane jako uchylone). Skorygowano opis w module: zamiast
+próby "uzupełnienia" nieistniejącej treści, jawnie oznaczono art. 21 jako
+uchylony z ostrzeżeniem, by nie dodawać tam treści w przyszłości.
+
+### 3. WERYFIKACJA POZOSTAŁYCH ARTYKUŁÓW
+
+Rząd 1 (ISAP PDF) + Rząd 2B (lexlege.pl, arslege.pl, prawo.pl, sip.lex.pl
+z cytatem "Dz.U.2026.85 t.j.", standardyprawa.pl, kruczek.pl) — 6+ zgodnych
+źródeł.
+
+### 4. TREŚĆ DODANA
+
+Nowa sekcja "ART. 18a, 19, 21, 22 UZNK — POZOSTAŁE PRZEPISY ROZDZIAŁU 3"
+w `dr-02/modules/mod-ustawa-UZNK-nieuczciwa-konkurencja.md`, wstawiona
+między już istniejącymi sekcjami art. 18 (roszczenia) i art. 20
+(przedawnienie), zachowując kolejność numeryczną:
+- **Art. 18a** — ciężar dowodu prawdziwości oznaczeń/informacji SPOCZYWA
+  NA POZWANYM (odwrócenie ogólnej reguły KPC/KC) — z praktyczną uwagą o
+  znaczeniu dla strategii procesowej powoda.
+- **Art. 19** — legitymacja czynna organizacji branżowych dla części
+  roszczeń z art. 18 (§1), z WYŁĄCZENIEM dla czynów z art. 5-7, 11, 14,
+  15a, 17h (§2 — tylko pokrzywdzony przedsiębiorca ma tam legitymację) i
+  rozszerzeniem dla art. 17h pod dodatkowymi warunkami (§3). ⚠️ Pkt 1 §1
+  i szczegóły §3 oznaczone jako wymagające dalszej weryfikacji (nie w
+  pełni potwierdzone w tej sesji).
+- **Art. 21** — jawnie oznaczony jako UCHYLONY, z korektą błędnego
+  założenia poprzedniego wpisu rejestru.
+- **Art. 22** — ochrona pozwanego przed oczywiście bezzasadnym
+  powództwem, z odesłaniem do praktyki orzeczniczej (SO Gdańsk/SA
+  Warszawa, komentowany wyrok 2023) rozszerzającej pojęcie "oczywistej
+  bezzasadności" poza samą lekturę pozwu.
+
+### 5. WERYFIKACJA STRUKTURY (Reguła 5) — BEZ INCYDENTU
+
+W przeciwieństwie do dwóch poprzednich edycji tego samego pliku w tej
+sesji, tym razem `str_replace` wstawił nową sekcję między dwoma
+ISTNIEJĄCYMI nagłówkami z jawnie zawartym w `new_str` docelowym
+nagłówkiem "## TERMIN PRZEDAWNIENIA" — zgodnie z lekcją z Reguły 5
+("element strukturalny MUSI być jawnie zawarty w new_str"). Kontrola
+`grep -n "^## "` od razu potwierdziła 12 nagłówków, 46 znaczników
+code-fence (parzyste), 488 linii — bez potrzeby korekty.
+
+### 6. STRUKTURA
+
+`dr-02`: 67 plików, bez zmian liczby.
+
+### 7. WNIOSKI
+
+Zastosowanie lekcji z poprzednich dwóch incydentów (jawne zawarcie
+nagłówka docelowego w `new_str`) wyeliminowało trzeci potencjalny
+incydent Reguły 5 w tej samej sesji — potwierdza, że reguła jest
+skuteczna, gdy stosowana świadomie, nie tylko odruchowo po fakcie.
+
+**Reguła 7 — zastosowanie:** TAK. `dr-02-prawo-cywilne-rodzinne-gospodarcze.zip`
+dostarczony ponownie (67/67 plików, diff zip↔drzewo puste, diff
+drzewo↔oryginał ograniczony do jednego pliku ze skumulowaną treścią
+wszystkich trzech napraw tej sesji). `audyt-systemu-v4.zip`
+zaktualizowany.
