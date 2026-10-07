@@ -1,5 +1,21 @@
 # CHANGELOG — Biblioteka shared
 
+- 3.99.16 (2026-10-06): HIERARCHIA-ZRODEL i DOSTEP-MASZYNOWY-API: ETPCz (baza MS etpcz.ms.gov.pl, stałe linki, id dokumentu); Portal Orzeczeń tylko po sygnaturze albo frazie
+
+- 3.99.15 (2026-10-06): HIERARCHIA-ZRODEL i DOSTEP-MASZYNOWY-API: TK wyłącznie ze źródeł urzędowych (karta sprawy IPO po sygnaturze, OTK ZU, formularz IPO); SAOS nie jest źródłem TK
+
+- 3.99.14 (2026-10-06): DOSTEP-MASZYNOWY-API: pełne pola wyszukiwarki SN (snproxy searchOrzeczenia) z kodu widżetu sn.pl
+
+- 3.99.13 (2026-10-06): HIERARCHIA-ZRODEL: SR/SO/SA — link do samego orzeczenia (/content/$N/{id}), konektor sp; TK — konektor tk (wyszukiwanie proste)
+
+- 3.99.12 (2026-10-06): HIERARCHIA-ZRODEL: wyjątek SN — karta sprawy; SAOS RZĄD 3; kolejność baz wg repertorium sygnatury; DOSTEP/SYGNATURY/KONEKTORY/ORZECZENIA-OUTPUT-SCHEMA ujednolicone
+
+- 3.99.11 (2026-10-05m, AUDYT-2026-10-05m): ACTIVATION-MATRIX: wiersz pisma-procesowe-v3 — „skarga do WSA”, „odwołanie do KIO” (pełne pismo, nie schemat pisma prostego).
+
+- 3.99.10 (2026-10-05k, AUDYT-2026-10-05k): ACTIVATION-MATRIX: „oceń szanse”, „szanse wygrania”, „przeanalizuj akta”, „analiza akt” → analiza-sadowa-v6.
+
+- 3.99.9 (2026-10-05i, AUDYT-2026-10-05i): HIERARCHIA-ZRODEL: KANON KOLEJNOŚCI E-1…E-5 i REALIA DOSTĘPNOŚCI RZĘDU 1 oznaczone WERYFIKACJA-ELI; MOD-STEP-TRACKER: FAZA 0 i FAZA 1 oznaczone REJESTR-KROKOW. Treść reguł bez zmian.
+
 - 3.99.8 (2026-10-05, AUDYT-2026-10-05b): Znaczniki `<!-- lex:wykonuje-aplikacja: DISCLAIMER -->` w `DISCLAIMER.md` (ZASADA GŁÓWNA, KIEDY STOSOWAĆ, TREŚĆ, POZYCJA, INTEGRACJA ZE SKILLAMI, SELF-CHECK ROUTERA): aplikacja Lex Machina sama dokłada kanoniczny wariant po bramkach, więc przy odpowiedzi tekstowej modelu nielokalnego sekcje trafiają do modelu jako odesłanie; przy modelu lokalnym, dokumencie AST, trybie mechanicznym i raportach — w całości. Treść reguł bez zmian; poza aplikacją znacznik jest niewidocznym komentarzem.
 
 - 3.99.7 (2026-10-04n, AUDYT-2026-10-04n): Historia zmian SKILL.md i modułów przeniesiona z plików roboczych do `references/HISTORIA-ZMIAN-PLIKOW.md` (plik historyczny, niewczytywany przez model). Treść robocza bez zmian.

@@ -1,5 +1,9 @@
 # CHANGELOG — dr-02-prawo-cywilne-rodzinne-gospodarcze
 
+- 3.64 (2026-10-05p, AUDYT-2026-10-05p): MAPA-AKTOW: zakres KRO (rozwód, separacja, alimenty, władza rodzicielska, kontakty) i ubezpieczeń obowiązkowych (OC sprawcy, wypadek drogowy) — aplikacja wskazuje właściwy moduł aktu.
+
+- 3.63 (2026-10-05l, AUDYT-2026-10-05l): Linie „Hasła spraw” w mod-KRO-rodzinne, mod-ustawa-prawa-konsumenta, mod-PrUpad-upadlosc-restrukturyzacja, mod-KSH-organy-spolki-zoo (dobór modułu przez aplikację). Treść prawna bez zmian.
+
 - 3.62 (2026-10-04n, AUDYT-2026-10-04n): Historia zmian SKILL.md i modułów przeniesiona z plików roboczych do `references/HISTORIA-ZMIAN-PLIKOW.md` (plik historyczny, niewczytywany przez model). Treść robocza bez zmian.
 
 - 3.61 (2026-10-03b, AUDYT-2026-10-03b, F-223): `SKILL.md` odtworzony z `main` sprzed 3.60 (wydanie 3.60 zbudowano z kopii zainstalowanej w claude.ai — host zdjął wcięcie listy `dependencies.requires` i usunął komentarz YAML z 2026-09-27e). Treść 3.60 (F-218, `mod-KC-ubezpieczenia`) bez zmian; jedyna różnica `SKILL.md` względem 3.59 to `version:`.

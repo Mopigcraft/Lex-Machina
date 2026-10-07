@@ -4,7 +4,7 @@ description: "Audyt jakości, spójności i bezpieczeństwa systemu prawnych ski
 dependencies:
   requires:
     - shared
-version: "6.181"   # zawsze w cudzysłowie (6.10 bez niego = float 6.1)
+version: "6.202"   # zawsze w cudzysłowie (6.10 bez niego = float 6.1)
 type: governance-audit
 compatibility: "host-neutral; file read/write, fresh legal-source lookup and optional archive/UI operations mapped by the runtime adapter"
 entrypoint: SKILL.md
@@ -384,12 +384,14 @@ wybrano CEIDG → (3) sam klucz w kolejnej wiadomości → uzupełnienie. Tura 3
 wynikiem jest plik rozszerzenia do zainstalowania w Desktopie. Nie obiecuj działania w przeglądarce.
 
 **0. LISTA WYBORU (tura 1) — zanim cokolwiek zbudujesz.** Jedynym źródłem listy jest
-`python mcp-servers/instaluj_serwery_mcp.py --lista` (11 serwerów, 3 grupy, stała numeracja 1–11);
-nie przepisuj jej z pamięci. Zapytaj jednym zdaniem, które serwery zainstalować:
-   - host z przyciskami wyboru (np. `ask_user_input_v0`): **trzy pytania multi_select = trzy grupy
-     z `--lista`** (≤4 opcje każde): „Akty prawne i orzecznictwo” (ISAP/ELI, EUR-Lex+TSUE, SAOS,
-     CBOSA), „Rejestry podmiotów” (KRS, Biała lista VAT, CEIDG — wymaga klucza), „Podatki, finanse,
-     dane osobowe” (NBP, EUREKA, SUDOP, UODO). Etykiety krótkie; brak zaznaczeń w grupie = pomiń grupę;
+`python mcp-servers/instaluj_serwery_mcp.py --lista` (stan 6.202: 16 serwerów w 3 grupach, numeracja
+stała); nie przepisuj jej z pamięci. Zapytaj jednym zdaniem, które serwery zainstalować:
+   - host z przyciskami wyboru (np. `ask_user_input_v0`, limit 3 pytania × 4 opcje): **jedno pytanie
+     multi_select na poziomie GRUP** z `--lista` — „Akty prawne i orzecznictwo”, „Rejestry podmiotów
+     (CEIDG wymaga klucza)”, „Podatki, finanse, dane osobowe”, „Wybiorę numerami”. Pojedynczych serwerów
+     nie rozpisuj na przyciski: grupa orzecznicza ma 9 pozycji, więcej niż mieści pytanie (korekta 6.202 —
+     dawny opis „trzy pytania = trzy grupy, ≤4 opcje” był niewykonalny od dodania sn/sp/tk/kio/etpcz).
+     „Wybiorę numerami” → pokaż wynik `--lista` i poproś o numery;
    - host bez przycisków: pokaż wynik `--lista` i poproś o odpowiedź numerami, nazwami albo „wszystkie”;
    - użytkownik od razu napisał „wszystkie” / wymienił serwery → pomiń pytanie.
    **Przy CEIDG zawsze** (także w pytaniu z przyciskami — w zdaniu wprowadzającym) podaj link do
@@ -983,6 +985,15 @@ z WARN-OTWARTE.md, dodaj pełny wpis do AUDIT-JOURNAL.md.
    > zakaz pakietu zbiorczego i zakaz dostarczania pojedynczego `SKILL.md`.
    > Sposób udostępnienia (`present_files`, instalacja skilla lub równoważna
    > funkcja hosta) nie zmienia wymogu kompletności.
+   >
+   > ⛔ **Pliki kanału pluginów NIE wchodzą do paczki skilla (F-230, od 6.187).**
+   > `.claude-plugin/` i `.mcp.json` w korzeniu skilla służą wyłącznie instalacji
+   > z marketplace (repozytorium, T38); claude.ai odrzuca wgrywany skill z
+   > manifestem pluginu („Umiejętność nie może zawierać manifestu wtyczki”).
+   > Kompletny skill do wgrania = wszystkie pliki skilla bez tych dwóch pozycji;
+   > `CHECKSUMS.sha256` ich nie wymienia (T21 i tak pomija pliki ukryte).
+   > `dostarcz_skill.sh`, `repack_development_archives.py` i T34 liczą pliki
+   > przed/po bez nich; T34 i weryfikator paczek zgłaszają plik pluginu w ZIP-ie.
 8. ⛔ **ZASADA WERYFIKACJI NUMERU NIEZALEŻNIE OD NAZWY (dodana 2026-07-02s,
    na wyraźny nakaz użytkownika) — "jeśli nazwy różnią się choć trochę,
    sprawdzaj w ISAP" (od 6.125 czytaj: w RZĘDZIE 1 — najpierw ELI).**
@@ -1309,4 +1320,4 @@ audyt-systemu-v4/                               ← 89 plików (stan 2026-09-09b
 
 ---
 
-*Wersja: 6.181 | Ostatnia aktualizacja: 2026-10-05 (AUDYT-2026-10-05h). Stopkę aktualizuj razem z polem `version`.*
+*Wersja: 6.202 | Ostatnia aktualizacja: 2026-10-06 (AUDYT-2026-10-06m). Stopkę aktualizuj razem z polem `version`.*

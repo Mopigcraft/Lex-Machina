@@ -1,5 +1,11 @@
 # CHANGELOG — dr-03-prawo-karne-wykroczenia-egzekucja
 
+- 3.57 (2026-10-06): nowelizacje po t.j. (ELI 2026-10-06): PRD/u.k.p./drogi publiczne/transport drogowy — Dz.U. 2025 poz. 1676, 1734, 1843; Dz.U. 2026 poz. 180, 982; nowa ustawa o zdrowiu zwierząt Dz.U. 2025 poz. 1795
+
+- 3.56 (2026-10-05p, AUDYT-2026-10-05p): MAPA-AKTOW: zakres nowych przestępstw drogowych (nietrzeźwy kierowca, wypadek drogowy, potrącenie, zakaz prowadzenia).
+
+- 3.55 (2026-10-05l, AUDYT-2026-10-05l): mod-KK-art148-162: linia „Hasła spraw” (pobicie, uszczerbek na zdrowiu…). Treść prawna bez zmian.
+
 - 3.54 (2026-10-04n, AUDYT-2026-10-04n): Historia zmian SKILL.md i modułów przeniesiona z plików roboczych do `references/HISTORIA-ZMIAN-PLIKOW.md` (plik historyczny, niewczytywany przez model). Treść robocza bez zmian.
 
 - 3.53 (2026-10-04k, AUDYT-2026-10-04k): MAPA-AKTOW — dwustronne odesłanie między wierszami, które NAKŁADAJĄ SIĘ zakresem: „KK art. 278–295” i „KK art. 291–293, 299 — paserstwo / pranie pieniędzy”. Powód: po dodaniu modułu rozdz. XXXV (3.52) pytanie o art. 291 wskazywało tylko jeden z dwóch właściwych modułów; mechanizm doboru modułów poprawiono po stronie aplikacji, a tu widoczność nakładania się zakresów zapisano wprost w mapie, dla czytelnika i dla dobierania modułów.

@@ -69891,6 +69891,300 @@ Bez nowych numerów; Dz.U. 2026 poz. 1243 — ✅ [VER] RZĄD 1 2026-10-04 (już
 Liczby plików bez zmian. Podbicia: DR-03 3.50 → **3.51**, DR-09 3.42 → **3.43**, prawo-polskie-v2 6.35 → **6.36**, audyt 6.165 → **6.166**.
 
 
+## AUDYT-2026-10-06k — T11: Dz.U. 2026 poz. 982 dopisana do snapshotu indeksu Dz.U. (6.200)
+
+### 1. ŹRÓDŁO
+T11 (check_sync_aktow) po aktualizacji map DR/prawo-polskie: Dz.U. 2026 poz. 982 obecna w MAPA-AKTOW (dr-08, dr-09) i ROUTING-MAP, brak w `references/mapa_dzu_2026-10-04.md`.
+
+### 2. ZMIANA
+Dopisano wiersz 2026 poz. 982 (ustawa z 29.05.2026 o zmianie ustawy o drogach publicznych oraz niektórych innych ustaw; ogł. 22.07.2026, w życie 21.09.2026; zmienia drogi publiczne 1985/60, PRD 1997/602, transport drogowy 2001/1371, u.k.p. 2011/151) — z ELI, akt pierwotny, brzmienie art. u źródła.
+
+### 3. WERYFIKACJA
+T11: brak rozbieżności w trzech rejestrach (MAPA-AKTOW ↔ ROUTING-MAP ↔ mapa Dz.U.). ELI DU/2026/982.
+
+
+## AUDYT-2026-10-06j — sn: weryfikacja captcha przez użytkownika w aplikacji; sp: fraza przez formularz portalu, SAOS z sygnaturą; tk: repertorium spoza listy; cbosa: ponowienie po zerwaniu (6.199)
+
+### 1. ŹRÓDŁO
+Zgłoszenia użytkownika 2026-10-06 (porównanie z wersjami 1.3.3/1.3.4 zmienionymi przez inne modele): sp_szukaj — brak podglądu, SAOS „Wynik 1…5” z rodzajem po angielsku; tk „OK 291/09” odrzucane bez zapytania; sn DO 1/18 — strona weryfikacji Imperva (captcha); cbosa — `UND_ERR_SOCKET` z orzeczenia.nsa.gov.pl.
+
+### 2. ZMIANA
+- sn: sesja z weryfikacji wykonanej przez użytkownika — `SN_SESSION_FILE` (zapis aplikacji po rozwiązaniu captcha w oknie sn.pl) i `SN_COOKIE` (ręcznie, także pole `sn_cookie` w .mcpb); nagłówki XHR jak przeglądarka. Przy blokadzie `powod: SN_WERYFIKACJA_WYMAGANA` + `weryfikacja` (bez wartości ciasteczek). Captcha Imperva to widżet (hCaptcha/reCAPTCHA), nie kod do przepisania — rozwiązuje ją człowiek; konektor jej nie obchodzi. SAOS zastępczo bez zmian (RZĄD 3).
+- sp: fraza przez formularz portalu (`wspolne/formularz.mjs`, wspólny z etpcz); pozycja SAOS z sygnaturą, rodzajem po polsku i `url_saos`.
+- tk: sygnatura w postaci TK spoza listy repertoriów idzie do IPO/OTK ZU; brak trafienia → `REPERTORIUM_SPOZA_LISTY_TK`.
+- cbosa: ponowienie całego żądania po zerwanym połączeniu (1,5 s, 3 s, w budżecie), także przy zerwaniu w trakcie odczytu treści.
+- Pomiar na żywo (full access, 2026-10-06): wbudowany fetch Node (>= 22.21) używa `HTTPS_PROXY` tylko z `NODE_USE_ENV_PROXY=1` — bez niej wszystkie konektory za proxy firmowym dostawały 403; aplikacja ustawia tę flagę w środowisku serwerów MCP.
+- Odpowiedź, która nie jest JSON (strona weryfikacji Imperva/Cloudflare, HTML przerwy technicznej): wspólny `fetch` opakowuje `json()` i zwraca przyczynę (host, kod HTTP, „ochrona przed botami”) zamiast „Unexpected token '<'”; Biała lista nie ponawia wtedy i podaje link do wyszukiwarki.
+- sp: parser listy wyników rozpoznaje `docId` po końcówce (`_RRRR-MM-DD_NNN`) niezależnie od kontekstu (fraza albo sygnatura), a nazwę sądu bierze z granic wiersza wyniku (pomiar na żywo: „zadośćuczynienie” = 52357 trafień, 10 kart z sądami).
+
+### 3. WERYFIKACJA
+`test_sady.mjs` (sesja i opis weryfikacji, formularz frazy, pozycja SAOS, sygnatura TK), `cbosa-example/test_normalizacja.mjs` (ponowienie), `test_protokol.mjs`, `wspolne/test_siec.mjs`. Na żywo (full access): sp_szukaj „zadośćuczynienie” → 52357 trafień, formularz portalu, karty z sądami; ETPCz 43447/19 FOUND. sn.pl, CBOSA, poznan.so, api.sejm.gov.pl z kontenera nadal blokowane albo zrywane (Imperva/polityka sieci) — pełny pomiar na maszynie użytkownika i w CI; okno weryfikacji sn.pl wymaga Windows/macOS.
+
+
+## AUDYT-2026-10-06i — etpcz: pole numeru skargi z pomiaru na żywo (G40B) (6.198)
+
+### 1. ŹRÓDŁO
+G40B (CI, 93c6c01): `etpcz_szukaj` 43447/19 → OUT_OF_SCOPE. Diagnostyka formularza: `POST /searchetpc.advancedsearchform`, pola `complaintNumber` (numer skargi), `complainant` (skarżący), `phrase`, selecty `type`/`sentenceYear`/`complaintCountry`, ukryte `t:ac`, `t:formdata`.
+
+### 2. ZMIANA
+⛔ Błąd konektora: wzorzec pola numeru (`numer|skarg|…`) nie rozpoznawał `complaintNumber` — zapytanie szło do innego pola. Poprawione (`complaint.?number|number|…`, z wyłączeniem `complainant`); selecty wysyłane z wartością zaznaczoną albo pierwszą.
+
+### 3. WERYFIKACJA
+Test na prawdziwym formularzu z logu G40B (`test_sady.mjs`): pole numeru `complaintNumber`, fraza `phrase`, akcja i pola ukryte. Ponowny pomiar na żywo: G40B na kolejnym commicie.
+
+
+## AUDYT-2026-10-06h — konektor etpcz (ETPCz, baza MS); sądy powszechne: link, podgląd i nazwa sądu w wynikach, wyszukiwanie tylko po sygnaturze albo frazie (6.197)
+
+### 1. ŹRÓDŁO
+Użytkownik: w wynikach sądów powszechnych brak podglądu i linku do źródła (II K 1350/18 → dwie pozycje bez linku); Portal Orzeczeń szuka tylko po sygnaturze albo frazie; ETPCz: `etpcz.ms.gov.pl`.
+
+### 2. ZMIANA
+- Panel wyników (aplikacja): link i podgląd z `url_orzeczenia` (SP, TK) i `url_karty` (SN); data, rodzaj/forma i sąd w metadanych; „Pokaż treść” przez `sp_pobierz`, `sn_pobierz`, `tk_pobierz`, `etpcz_pobierz`; etykiety narzędzi SP/SN/TK/ETPCz.
+- `sp`: nazwa sądu z listy wyników portalu (gdy podana) przy każdej pozycji; `sp_szukaj` bez dat i limitu (portal ich nie obsługuje); federacja: sygnatura SR/SO/SA → `sp_sprawdz_sygnature`.
+- Nowy konektor `etpcz`: `etpcz_szukaj` (numer skargi z kontrolą po id dokumentu albo fraza; formularz wyszukiwarki odczytywany ze strony), `etpcz_pobierz` (treść `/etpccontent/$N/{id}`, kontrola numeru skargi). Rejestracja: paczka, manifest, instalator, aplikacja (federacja, polityka R2A, podgląd), G40B i test 10d.
+- Limit plików skilla (T41, < 200): testy offline sn/sp/tk/etpcz scalone w `mcp-servers/test_sady.mjs` (każda sekcja we własnym bloku, asercje bez zmian) — 198 plików.
+- HIERARCHIA-ZRODEL, DOSTEP-MASZYNOWY-API (shared 3.99.16).
+
+### 3. WERYFIKACJA
+Testy offline etpcz (numer skargi ↔ id, rok 20RR, formularz, wyniki) i przebieg na atrapie (formularz → POST → FOUND → treść → MISMATCH dla innej skargi); sp na atrapie (nazwa sądu w wyniku). Pomiar na żywo: G40B w CI (z diagnostyką formularza przy porażce) — piaskownica bez dostępu do etpcz.ms.gov.pl.
+
+
+## AUDYT-2026-10-06g — sn: strona weryfikacji przeglądarki (HTTP 200 HTML) zamiast „Unexpected token '<'”; SAOS zastępczo (6.196)
+
+### 1. ŹRÓDŁO
+Użytkownik: `sn_sprawdz_sygnature` → ERROR „Unexpected token '<', "<html styl"... is not valid JSON”. sn.pl odpowiedział stroną HTML (ochrona przed botami) z kodem 200; ponowienie z ciasteczkami działało tylko po 403.
+
+### 2. ZMIANA
+- Konektor `sn`: odpowiedź snproxy rozpoznawana (`rozpoznajOdpowiedz`): strona HTML/403 = blokada → wyszukiwarka po ciasteczka i ponowienie; nadal HTML → jawny komunikat (ochrona przed botami / przerwa techniczna). `sn_sprawdz_sygnature` przy blokadzie: SAOS zastępczo (RZĄD 3, SN do 2016) z oznaczeniem i linkiem do wyszukiwarki SN; brak trafienia → ERROR z instrukcją ręcznej weryfikacji karty.
+- Aplikacja (`case-law-verifier`): to samo w `fetchSn` (strona HTML 200 = blokada; po ponowieniu nadal → 403, nie błąd parsowania).
+
+### 3. WERYFIKACJA
+Testy offline sn (6 przypadków odpowiedzi) i przebieg narzędzia na atrapie: ponowienie → FOUND z sn.pl; blokada → SAOS zastępczo; blokada bez trafienia → ERROR z opisem; HTTP 500 bez ponowienia. Testy aplikacji: strona HTML 200 → ponowienie → FOUND; trwała blokada → SN_SEARCH_HTTP_403. Czy ciasteczka sesji wystarczą wobec weryfikacji JS sn.pl u użytkownika — niezmierzone (sn.pl niedostępny z piaskownicy i runnerów).
+
+
+## AUDYT-2026-10-06f — błędy sieci konektorów MCP: przyczyna zamiast „fetch failed”, ponowienia, certyfikaty systemu (6.195)
+
+### 1. ŹRÓDŁO
+Użytkownik: `cbosa_szukaj` → ERROR „fetch failed” (bez przyczyny).
+
+### 2. ZMIANA
+- `wspolne/budzet.mjs` (wszystkie serwery): komunikat z kodem i hostem (DNS, TLS, odrzucone, zerwane, limit czasu); ponowienie do 2 razy — błąd przed wysłaniem zawsze, zerwanie po wysłaniu tylko GET/HEAD albo żądanie `lexPowtarzalne` (POST wyszukiwarki CBOSA); w budżecie wywołania.
+- Certyfikaty z magazynu systemu obok wbudowanych (`tls.setDefaultCACertificates`, jak `--use-system-ca`): antywirus/zapora przechwytujące HTTPS na Windows nie kończą się „fetch failed”.
+- Test `wspolne/test_siec.mjs` (lokalny serwer zrywający połączenia).
+
+### 3. WERYFIKACJA
+Test sieci OK (GET po 2 zerwaniach, POST bez ponowienia, POST oznaczony ponowiony, ECONNREFUSED, opisy TLS/DNS); `fetch` respektuje dołożony urząd (pomiar: DEPTH_ZERO_SELF_SIGNED_CERT → ok). Przyczyna u użytkownika nieznana do odczytu nowego komunikatu (piaskownica: CBOSA za blokadą 403).
+
+
+## AUDYT-2026-10-06e — konektor tk wyłącznie ze źródeł urzędowych (IPO, OTK ZU), bez SAOS (6.194)
+
+### 1. ŹRÓDŁO
+Użytkownik: `tk_sprawdz_sygnature` dla P 21/19 zwrócił OUT_OF_SCOPE ze ścieżki SAOS. Zasada: w SAOS szuka tylko SAOS; orzeczenia TK są w `otkzu.trybunal.gov.pl` i `ipo.trybunal.gov.pl` (wyszukiwarka IPO bywa niesprawna).
+
+### 2. ZMIANA
+- `tk_sprawdz_sygnature`: (1) karta sprawy IPO GET `view/sprawa.xhtml?pokaz=dokumenty&sygnatura=K+28%2F05` z kontrolą sygnatury i listą dokumentów (`dokument=`); (2) wyszukiwarka OTK ZU (`/Wyszukiwanie`, pole Sygnatura) → pozycje `/{rok}/{A|B}/{poz}`; (3) formularz JSF IPO. Ścieżka SAOS usunięta. Brak trafienia → OUT_OF_SCOPE z linkami urzędowymi; awaria wszystkich → ERROR.
+- Aplikacja: sygnatura TK w `saos_search` przekierowana do `tk_sprawdz_sygnature` (SAOS nie pokrywa TK).
+- HIERARCHIA-ZRODEL, DOSTEP-MASZYNOWY-API (shared 3.99.15), manifest, test 10c, G40B.
+
+### 3. WERYFIKACJA
+Testy offline tk (karta IPO, dokumenty, formularz i wyniki OTK ZU): OK; test wykrył błąd (zakładka „pokaz=dokumenty” liczona jako dokument) — poprawiony. Wzorce adresów IPO/OTK ZU z publicznych odnośników; niezmierzone na żywo (hosty TK zablokowane w piaskownicy).
+
+
+## AUDYT-2026-10-06d — konektor sn: wszystkie pola wyszukiwarki SN; sp_szukaj w Portalu Orzeczeń, SAOS zastępczo (6.193)
+
+### 1. ŹRÓDŁO
+Użytkownik: wyszukiwanie SN tylko po sygnaturze (fraza kończyła się błędem źródła — trafiała do sn_sprawdz_sygnature); `sp_szukaj` zwracał „Unexpected token '<'” (SAOS oddał stronę HTML). Zasada użytkownika: SAOS zastępczy, korzystamy ze źródeł urzędowych. Kod widżetu sn.pl dostarczony przez użytkownika.
+
+### 2. ZMIANA
+- `sn_szukaj`: pola formularza sn.pl (q+tresc, sygnatura, forma_orzeczenia, data_wydania_od/do, „w dniu”, izba, skład, sędziowie), kontrola trafień wobec sygnatury, formy i dat; karty orzeczeń. W aplikacji `search_case_law source=SN` z tymi polami; federacja: sygnatura → `sn_sprawdz_sygnature`, reszta → `sn_szukaj`.
+- `sp_szukaj`: najpierw Portal Orzeczeń (fraza w polu 1 kontekstu Tapestry, kontrola odczytem treści), SAOS wyłącznie zastępczo; HTML zamiast JSON opisany wprost.
+- DOSTEP-MASZYNOWY-API (shared 3.99.14): parametry snproxy.
+
+### 3. WERYFIKACJA
+Testy offline sn/sp i testy aplikacji: OK. Pozycja frazy w kontekście Tapestry niezmierzona na żywo (piaskownica i runnery bez dostępu) — kontrolowana odczytem treści trafień; przy niezgodności SAOS zastępczo z adnotacją.
+
+## AUDYT-2026-10-06c — TRYB STRUKTURA: konektory MCP sp (sądy powszechne) i tk (Trybunał Konstytucyjny) (6.192)
+
+### 1. ŹRÓDŁO
+Zlecenie: konektory dla sądów powszechnych i TK; przy stałych linkach źródłem jest samo orzeczenie, bez możliwości budowy konektora — wyszukiwanie proste.
+
+### 2. USTALENIA (pomiary z DOSTEP-MASZYNOWY-API, piaskownica bez dostępu do portali)
+- Portal Orzeczeń SP: GET po sygnaturze bez sesji (kontekst Tapestry), stałe linki `/content/$N/{id}` i `/details/$N/{id}`; sygnatura nieunikalna krajowo — portal sądu rozstrzyga; pod łańcuchem UA Chrome 502 → UA neutralny.
+- IPO TK: JSF/PrimeFaces z ViewState, tylko POST; `Sprawa?sygnatura=` nie jest kluczem. Formularz `Szukaj?cid=1` da się jednak wysłać bez przeglądarki (sesja + ViewState → POST) — korekta oceny F-184 po uwadze użytkownika; nazwy pól odczytywane z HTML.
+
+### 3. ZMIANA
+- `sp-example`: `sp_sprawdz_sygnature` (agregat albo portal sądu `sad=miasto.so`; FOUND/AMBIGUOUS po kodzie sądu z id dokumentu; link do orzeczenia), `sp_pobierz` (treść po stałym linku/id), `sp_szukaj` (fraza: SAOS → link urzędowy `source.judgmentUrl`); awaria portalu → SAOS zastępczo (RZĄD 3).
+- `tk-example`: `tk_sprawdz_sygnature` (najpierw formularz IPO; zapasowo SAOS do 2015 z linkiem urzędowym; poza oknem OUT_OF_SCOPE z zapytaniem `site:ipo.trybunal.gov.pl`), `tk_pobierz` (dokument IPO/OTK ZU z kontrolą sygnatury, MISMATCH gdy brak).
+- Rejestracja: lex-mcp.js, instalator, manifest MCPB, test_poprawnosci (przypadek SP na żywo), dist/lex-mcp.mjs; HIERARCHIA-ZRODEL (shared 3.99.13).
+
+### 4. WERYFIKACJA
+Testy offline `sp-example/test_normalizacja.mjs`, `tk-example/test_normalizacja.mjs` (w tym formularz JSF IPO): OK. Portale niedostępne z piaskownicy — przypadki SP i TK na żywo w `test_poprawnosci.mjs` (10b, 10c).
+
+## AUDYT-2026-10-06b — konektor sn: żądania jak widżet wyszukiwarki, ponowienie po 403 (6.191)
+
+### 1. ŹRÓDŁO
+Sonda CI G22 (2026-10-06 08:21 i 08:32): sn.pl odpowiada `HTTP 403 text/html` na `snproxy searchOrzeczenia` z GitHub Actions; 07:47 ten sam kod przechodził.
+
+### 2. ZMIANA
+`sn-mcp-server.js` (i weryfikator w aplikacji): nagłówki jak widżet (Referer wyszukiwarki, `X-Requested-With`, Accept JSON, Accept-Language); po 403 jednorazowe otwarcie wyszukiwarki po ciasteczka sesji i ponowienie. Błąd 403 opisany jako ochrona przed botami sn.pl. dist/lex-mcp.mjs przebudowany.
+
+## AUDYT-2026-10-06 — TRYB STRUKTURA: orzeczenia SN — karta sprawy, właściwa baza wg sygnatury, SAOS RZĄD 3, konektor MCP sn (6.190)
+
+### 1. ŹRÓDŁO
+Zlecenie użytkownika z rozmową (wyszukanie II CSKP 89/26): model szukał sygnatury SN w CBOSA, sprawdzał stary katalog `/sites/orzecznictwo/Orzeczenia3/*.pdf` (nieczynny) i uznał brak publikacji; link `blob:https://www.sn.pl/…` od użytkownika odrzucił bez drogi dalej.
+
+### 2. USTALENIA
+- Korpus wskazywał nieczynne wejścia SN (`sn.pl/orzecznictwo/SitePages/…`) w 9 plikach; brak serwera MCP dla SN — działająca mechanika (snproxy → karta `?orzeczenie=ID`) była tylko w aplikacji.
+- SAOS figurował jako RZĄD 2A (z notą o „dwóch skalach”); użytkownik: SAOS to agregator akademicki, ranga najniższa.
+
+### 3. ZMIANA
+- HIERARCHIA-ZRODEL: wyjątek SN — źródłem jest karta sprawy; SAOS = RZĄD 3, zastępczo tylko przy awarii bazy urzędowej albo braku trwałego linku; baza wg repertorium sygnatury (II CSKP → nigdy CBOSA).
+- DOSTEP-MASZYNOWY-API, SYGNATURY (zastępuje notę F-185), KONEKTORY-REKOMENDOWANE, ORZECZENIA-OUTPUT-SCHEMA, orzeczenia-sadowe 2.24, HARD-GATES-ORZECZNICTWO (router 3.67), PORTALE-ORZECZNICZE-API: ujednolicone.
+- Nieczynne linki SN zastąpione wyszukiwarką `https://www.sn.pl/pl/wyszukiwarka-orzeczen` (analizator-przepisow 2.12, pisma-procesowe 5.37, przesluchanie 3.32, dr-10 3.51, sonda check_domeny_allowlist, przykłady narzędzi).
+- mcp-servers: nowy konektor `sn` (`sn_sprawdz_sygnature`, `sn_pobierz`) — karta jako źródło, sygnatura innego sądu → wskazanie właściwej bazy, blob:/stary PDF rozpoznane; testy offline `sn-example/test_normalizacja.mjs`, przypadek na żywo w `test_poprawnosci.mjs`; dist/lex-mcp.mjs przebudowany.
+
+### 4. WERYFIKACJA
+Testy offline konektora: OK. Sieć sn.pl z piaskownicy zablokowana — przypadek na żywo dopiero w CI.
+
+## AUDYT-2026-10-05p — TRYB STRUKTURA: dwie dziedziny DR w jednej sprawie (6.189)
+
+### 1. ŹRÓDŁO
+Zlecenie: sprawdzić wywoływanie dwóch DR, gdy sprawa tego wymaga, i właściwych skilli z routera. Próba 10 spraw dwudziedzinowych (praca+karne, wypadek drogowy, spadek+podatek, RODO w pracy, VAT+KKS, rozwód z alimentami i in.) na logice doboru z AUDYT-2026-10-05m.
+
+### 2. USTALENIA
+- „Pracodawca … podrobił mój podpis”: DR-03 bez trafienia (fraza „podrobienie podpisu” ma rdzeń „podrobien”, który nie łapie „podrobił”); sprawa karna nierozpoznana, bez kwalifikatora.
+- „Pijany kierowca … co grozi mu karnie”: sprawa karna nierozpoznana (detektor bez „karnie”, „pijany kierowca”, „pobity”, „ukradł”) — bez kwalifikatora (preferencja: Karne: +kwalifikator).
+- Moduł aktu: rozwód/alimenty → moduły KPC/adopcji zamiast mod-KRO-rodzinne; wypadek → brak modułu OC i przestępstw drogowych (wiersze map bez słów zakresu).
+
+### 3. ZMIANA
+- prawo-polskie-v2 6.44: frazy DR-03 i DR-04 (wyżej).
+- dr-02 3.64, dr-03 3.56: słowa zakresu w wierszach MAPA-AKTOW (bez numerów aktów).
+- Aplikacja: detektor sprawy karnej — „karnie”, kradzież/ukradł, pobicie/pobity, oszustwo, podrobienie, sfałszowanie, fałszerstwo, pijany/nietrzeźwy kierowca, groźba karalna (przymiotnik „karny” celowo pominięty: „adwokat z urzędu w sprawie karnej” zostaje w DR-12).
+- Testy: tests/domain-routing-multi.test.ts; routing-500 i zestaw świeży bez regresji (857/857).
+
+## AUDYT-2026-10-05o — TRYB STRUKTURA: widgety, wątki 1–5 wiadomości, etapy spraw w czacie (F-232–F-236, 6.188)
+
+### 1. ŹRÓDŁO
+Zlecenie użytkownika: sprawdzić wyświetlanie wszystkich widgetów i wywołania mechaniczne (bez pomijania istotnych elementów), 1000 testów na symulacji rozmów do 5 wiadomości użytkownika w wątku; zgłoszenia: CONTRACT_STATE_REQUIRED przy wysłaniu pliku (ChatGPT, Gemini, tryb mechaniczny), brak edycji tekstu w ręcznym OCR, kotwice przepisów w tekście czatu, to samo sprawdzenie dla analizy dowodów, pism procesowych i analizy sądowej (załączniki, wzory i reguły kancelarii).
+
+### 2. USTALENIA
+- F-232 (BŁĄD): widgety `analizator-dowodow-v3/assets/dashboard.html` i `chronologia-sprawy-v1/assets/widget-graf-przyczynowy.html` wstawiały dane do HTML bez escapowania (wykonanie skryptu z danych sprawy); dashboard, graf i oś czasu padały na brakujących polach (null), zakładka roszczeń w dashboardzie startowała pusta; oś czasu nie pokazywała `dedukacja`, `strona_dok`, autora sprzeczności; raport klienta nie pokazywał `delta.bez_zmian`.
+- F-233 (BŁĄD): kwalifikator karnomaterialny i wskazówka dziedziny (DR) liczone tylko z ostatniej wiadomości użytkownika — w dalszej turze („a jaki termin?”) sprawa karna traciła PROFIL PEŁNY i `mod-KK-kwalifikator-karnomaterialny`, a sprawa bez nazwy dziedziny w nowej wiadomości traciła wskazówkę DR (symulacja: 320 tur na 590).
+- F-234 (BŁĄD): workflow umowy i pisma procesowego wymagały stanu sprawy, którego UI nie zakładało (CONTRACT_STATE_REQUIRED, PROCESS_PLEADING_STATE_REQUIRED); plik .docx pozwu/apelacji generowany wprost blokowała bramka G39H (PROCESS_STATE_CONTEXT_MISSING) także po przejściu pipeline'u.
+- F-235 (BŁĄD): zakończona analiza dowodów zwracała 500 (ORDERED_WORKFLOW_ALREADY_COMPLETE bez mapowania); zakończone analiza sądowa, umowa i pismo FINAL nie miały w UI drogi do nowego etapu.
+- F-236 (LUKA): domyślny wzór kancelarii dołączany tylko przy czasowniku redakcji w bieżącej wiadomości (etap pipeline'u „kontynuuj” bez wzoru); know-how kancelarii przy pisaniu pisma tylko po ręcznym zaznaczeniu.
+
+### 3. ZMIANA
+- Widgety: escapowanie danych, wartości domyślne pól, obsługa zdarzeń bez `onclick` z danych, brakujące pola widoczne. Wersje: analizator-dowodow-v3, chronologia-sprawy-v1, raport-klienta-v1.
+- Runtime: sprawa karna i dziedzina z całego wątku użytkownika dla tury dalszej (`threadUserText`); `sendPrompt` widgetu tylko po geście użytkownika.
+- Pismo procesowe: plik renderowany wyłącznie z pipeline'u sprawy (wiązanie render-only, inaczej 409 PROCESS_PLEADING_PIPELINE_REQUIRED i przejście do pipeline'u w czacie); UI wstrzymuje wiadomość, uruchamia pipeline (z potwierdzaniem etapów albo automatycznie) i wysyła ją ponownie; to samo dla trybu umowy; „Rozpocznij nowy etap” dla zakończonych workflow; ORDERED_WORKFLOW_* jako 409 z nazwą workflow.
+- Pisma: wzór domyślny także na etapach pipeline'u (przedmiot z wątku); know-how kancelarii dołączane przy redakcji dokumentu, gdy przestrzeń kancelarii istnieje. Załączniki sprawy bez zmian — trafiają do kontekstu każdego trybu.
+- Czat: przepis zweryfikowany (VER) w tekście jest linkiem do strony artykułu w źródle; znaczniki VER za nagłówkiem tabeli nie tworzą pustej kolumny. Ręczny OCR: „Edytuj tekst” strony (ponowne wykrycie danych osobowych).
+
+### 4. WERYFIKACJA
+Symulacja 1000 wątków (2999 tur, 1–5 wiadomości) przez SafeSessionExecutor: R-1…R-5, kwalifikator i PROFIL PEŁNY w sprawie karnej, wskazówka DR, skill wykonawczy wg routera, show_widget, sekcje KOLEJNA-TURA — 0 uchybień. Widgety w Chromium: 50 wariantów danych, 0 błędów JS, 0 wykonań XSS. Runtime 2040/2040 (Node 24), lex-web 172/172.
+
+## AUDYT-2026-10-05n — TRYB STRUKTURA: paczki skilli bez plików pluginu (F-230, 6.187)
+
+### 1. ŹRÓDŁO
+Zgłoszenie użytkownika: wgranie `audyt-systemu-v4` do claude.ai odrzucone — „Umiejętność nie może zawierać manifestu wtyczki (audyt-systemu-v4/.claude-plugin/plugin.json). Usuń go lub prześlij tę zawartość jako wtyczkę.” Polecenie: naprawić i wydać wszystkie 32 skille zgodnie z ZASADĄ 7.
+
+### 2. USTALENIA
+- F-230 (BŁĄD, od AUDYT-2026-09-27e): manifest pluginu dodany dla instalacji z marketplace (`.claude-plugin/plugin.json` w 32/32 skillach, `.mcp.json` w audyt-systemu-v4) trafiał też do paczek ZIP skilli. Te same paczki służą do wgrywania skilli w claude.ai, który odrzuca skill z manifestem pluginu. Dotyczy wszystkich 32 paczek, nie tylko audytu.
+- Dwa kanały mają sprzeczne wymagania: marketplace (katalog repozytorium) potrzebuje manifestu (T38), wgrywany skill nie może go mieć.
+- `CHECKSUMS.sha256` wymieniał pliki pluginu, choć T21 pomija pliki ukryte — paczka bez manifestu miałaby martwy wpis.
+- F-231 (BŁĄD WŁASNY, AUDYT-2026-10-05l/m): sumy `shared` i `audyt-systemu-v4` przeliczone po uruchomieniu suite'u objęły lokalne artefakty `__pycache__/*.pyc` (1 + 4), których nie ma w repozytorium (`.gitignore`); te same pliki trafiły do paczek ZIP. Na `main` workflow „Repack core development ZIPs” padł po scaleniu PR #24 (martwe wpisy sum). Lokalny suite tego nie wykrył, bo artefakty istniały na dysku.
+
+### 3. ZMIANA
+- Paczka skilla = wszystkie pliki skilla bez plików kanału pluginów w korzeniu (`.claude-plugin/`, `.mcp.json`); w repozytorium zostają dla marketplace.
+- `scripts/repack_development_archives.py`, `scripts/verify_development_archives.py`, workflow `repack-core-development-zips.yml`, T34 (`check_archiwa_repo.py`), `dostarcz_skill.sh`: wykluczenie i liczenie plików bez nich; T34 i weryfikator zgłaszają plik pluginu w paczce.
+- `CHECKSUMS.sha256` 32/32: usunięte wpisy `./.claude-plugin/plugin.json` (32) i `./.mcp.json` (1); pozostałe sumy bez zmian. Wersje 31 skilli bez podbicia (treść bez zmian; zmiana wyłącznie w manifeście sum).
+- ZASADA 7: akapit o plikach kanału pluginów.
+- F-231: wpisy `__pycache__` usunięte z sum `shared` i `audyt-systemu-v4`; `repack_development_archives.py` pomija `__pycache__`, weryfikator paczek zgłasza artefakt w ZIP-ie. Sumy przeliczać wyłącznie na drzewie bez artefaktów.
+
+### 4. WYDANIE (ZASADA 7)
+32 osobne paczki z `dostarcz_skill.sh`: dla każdej liczba plików oryginał (bez plików pluginu) = kopia = ZIP, rozpakowanie do świeżej kopii i `diff -r` z drzewem = pusty, brak `.claude-plugin` i `.mcp.json` w żadnej paczce.
+
+## AUDYT-2026-10-05m — TRYB STRUKTURA: dobór DR na 500 pytaniach i na zestawie świeżym (6.186)
+
+### 1. ŹRÓDŁO
+Zlecenie: test doboru DR na 500 przykładach — sprawy, w których aplikacja musi sama dobrać DR (413, każdy z DR-01–DR-16), zlecenia skilla wykonawczego wymagające też DR (67) i pytania bez DR (20). Po strojeniu: 113 nowych pytań napisanych po zmianach (zestaw świeży, miara uogólnienia).
+
+### 2. USTALENIA
+- Wynik przed zmianą: 383/500 (76,6%); pytania nieprawne z DR: 8/20.
+- BŁĄD (aplikacja): frazy routingu traciły słowa z listy pomijanych — „prawo właściwe” było puste, „sąd pracy” = każda „praca”.
+- BŁĄD (aplikacja): zapasowe dopasowanie po mapach aktów wskazywało dziedzinę z jednego słowa albo z dwóch wariantów jednego słowa („pozwolenie” → Prawo farmaceutyczne); liczby lat trafiały w numery aktów UE („mundial w 2022” → DR-10).
+- BŁĄD (aplikacja): ogólne słowa ważyły tyle co specyficzne („odszkodowanie” = „mobbing”); sprawa karna zawsze przed dziedziną własną („mandat posła po skazaniu” → DR-03).
+- BŁĄD (korpus, AUDYT-2026-10-05l): zbyt ogólne „Hasła spraw” w mod-RODO-DSAR („administrator nie odpowiada”) — fałszywe trafienia; poprawione.
+- BŁĄD (macierz): „skarga do WSA na decyzję Prezesa UODO” → schemat SPK pisma prostego; „odwołanie do KIO” bez skilla wykonawczego.
+- Luki słownictwa routingu błyskawicznego w DR-01, 05, 07, 08, 09, 10, 12, 13, 14, 15, 16.
+
+### 3. ZMIANA
+- Aplikacja: słowa fraz bez listy pomijanych; dwa różne słowa pytania w zapasowym dopasowaniu; bez lat; słowo z map aktów czterech i więcej dziedzin waży pół; sprawa karna na drugim miejscu, gdy inna dziedzina ma frazę dwuwyrazową; pytanie o ocenę („oceń szanse skargi do WSA”) nie trafia do pisma.
+- prawo-polskie-v2 6.43, prawny-router-v3 3.66, shared 3.99.11 (ACTIVATION-MATRIX), DR-11 3.23.
+- Test: tests/routing-500.test.ts (fixtures routing-domains-500.json i routing-domains-holdout.json); przypadki „znany_blad” jawnie oznaczone, każdy inny musi przejść.
+
+### 4. WYNIK
+- Zestaw 500: 486/500 (97,2%); pytania nieprawne 20/20 bez DR. Zestaw strojony — wynik dopasowania, nie uogólnienia.
+- Zestaw świeży 113 (bez strojenia słownictwa; jedna poprawka mechaniki znaleziona na nim): 80/113 trafnych (71%), 19 bez podpowiedzi DR (dziedzinę wybiera model), 14 ze złą dziedziną (12%), pytania nieprawne 12/12 bez DR.
+- Wniosek: routing słownikowy ma granicę ok. 70% na nowych sformułowaniach; podpowiedź DR pozostaje wskazówką, decyzję podejmuje model.
+
+## AUDYT-2026-10-05l — TRYB STRUKTURA: przekazywanie spraw do dziedziny (DR), modułu aktu i skilla wykonawczego (6.185)
+
+### 1. ŹRÓDŁO
+Zlecenie: zbadać routing do właściwego modułu DR i skilla wykonawczego, osobno sprawy RODO (DR-11), dla każdego DR i każdego skilla wykonawczego. Audyt dynamiczny: 144 pytania w języku klienta (każdy z 16 DR, z oczekiwanym modułem) i 56 pytań dla 12 skilli wykonawczych; wynik przed zmianą: 40/142 DR i 6/54 skilli wykonawczych źle.
+
+### 2. USTALENIA
+- BŁĄD (routing błyskawiczny prawo-polskie-v2): brak słów, którymi klienci opisują sprawy (RODO: monitoring wizyjny, IOD, rejestr czynności, powierzenie, wizerunek, spam, cookies; karne: pobicie, kradzież, jazda po alkoholu; praca: mobbing, L4, nadgodziny; rodzinne: alimenty, rozwód, zachowek). Bez trafienia aplikacja zgadywała dziedzinę z map aktów („imprezie” → imprezy masowe, „firmie” → VAT).
+- BŁĄD (aplikacja): dopasowanie słów bez fleksji („danych osobowych” nie pasowało do „dane osobowe”; „powierzenia” pasowało do „powiat”); numery norm („ISO 27001”) wycinane; zapasowa druga dziedzina z jednego wspólnego słowa.
+- BŁĄD (aplikacja, Karne: +kwalifikator): sprawa karna opisana potocznie (pobicie, kradzież, jazda po alkoholu, mandat, stalking, śledztwo) nie była rozpoznawana jako karna — bez kwalifikatora i profilu PEŁNY.
+- BŁĄD (moduły DR): kolumna „Akt / zakres” map aktów nazywa akty, nie sprawy; moduł właściwy dla sprawy nie był wskazywany (np. „nie usuwa moich danych” → nie DSAR).
+- BŁĄD (router KROK 2): „odwołanie od wypowiedzenia / od decyzji ZUS” bez skilla wykonawczego; „policz termin na apelację” → pisma-procesowe; „na umowie zlecenie” → analizator-umow; „SMS-y” w opowieści o stalkingu → analizator-dowodow; „moje dane osobowe” traktowane jak „moje pismo” (sprawdzenie własnego pisma).
+
+### 3. ZMIANA
+- prawo-polskie-v2 6.42: routing błyskawiczny rozszerzony dla DR-01–DR-16.
+- prawny-router-v3 3.65: frazy [3] i [6]; reguły „na umowie …” → [10] i maile/SMS/nagrania tylko przy pytaniu o dowód.
+- Linia „**Hasła spraw:**” w nagłówkach modułów (aplikacja dobiera po niej moduł; resolver mechaniczny MAPA-AKTOW jej nie czyta, więc nie wymusza wczytania): DR-01 3.16, DR-02 3.63, DR-03 3.55, DR-05 3.32, DR-06 3.96, DR-07 3.14, DR-08 3.16, DR-11 3.22. Treść prawna bez zmian.
+- Aplikacja: rdzenie bez końcówek fleksyjnych, waga fraz wielowyrazowych, numery norm, sprawa karna → DR-03 na pierwszym miejscu, potoczne sygnały spraw karnych; stały test regresji (tests/routing-corpus.test.ts, 202 przypadki).
+- Wynik po zmianie: 144/144 DR, 56/56 skilli wykonawczych.
+
+## AUDYT-2026-10-05k — TRYB STRUKTURA: ścieżki przekazywania spraw i wydawanie modułów (6.184)
+
+### 1. ŹRÓDŁO
+Zlecenie: zbadać ścieżki przekazywania spraw i czy skille i moduły są prawidłowo wydawane. Audyt statyczny (routing [1]–[11], macierz aktywacji, kombinacje, kontrakty i mapy modułów 12 skilli wykonawczych) i dynamiczny (15 przebiegów aplikacji, w tym przekazania „Następny etap pipeline'u”).
+
+### 2. USTALENIA
+- Routing, macierz i kombinacje: wszystkie wskazane skille istnieją; przekazania wczytują właściwy skill wykonawczy z modułami; brak nieudanych odczytów.
+- BŁĄD (aplikacja): mapa modułów rozpoznawała ścieżki innych skilli tylko z wersją w nazwie (…-v3/), więc moduł skilla dziedzinowego (dr-02-…/modules/mod-ustawa-kredyt-konsumencki-SKD.md), który pisma-proste (schemat SPM) i pisma-procesowe (pozew SKD) każą wczytać NAJPIERW, nie był wydawany.
+- BŁĄD (routing): „oceń szanse”, „szanse wygrania”, „przeanalizuj akta” nie prowadziły do analiza-sadowa-v6 (odpowiedź bez skilla wykonawczego).
+
+### 3. ZMIANA
+- Aplikacja: mapa modułów rozpoznaje ścieżki dr-NN-…/modules|references/; test regresji.
+- pisma-procesowe-v3 5.36: warunek „gdy sankcja kredytu darmowego” przy odwołaniu do modułu SKD (bez niego moduł wczytywałby się przy każdym pozwie o zapłatę).
+- shared 3.99.10 (ACTIVATION-MATRIX) i router 3.64 (KROK 2 [2]): nowe frazy kategorii [2].
+
+## AUDYT-2026-10-05j — TRYB STRUKTURA: etapy późniejszych tur w przesłuchaniu świadków i analizie sądowej (6.183)
+
+### 1. ŹRÓDŁO
+Etap mechanizacji E5. Oba skille pracują wieloturowo z obowiązkową pauzą: przesłuchanie — CHECKPOINT-W2 przed W3; analiza sądowa — każde przejście i raport końcowy to osobna wiadomość. Sekcje etapów po pauzie trafiały do modelu już w pierwszej turze.
+
+### 2. ZMIANA
+- przesluchanie-swiadkow-v2-min90 3.31: `lex:wczytaj-gdy: KOLEJNA-TURA` przed SELF-CHECK-PRZED-W3 oraz ETAP W3, W4, W5, W6. Pierwsza tura: 84 908 → 64 758 znaków (−24%).
+- analiza-sadowa-v6 6.15: ten sam znacznik przed Przejściem III, Przejściem IV, FORMAT RAPORTU KOŃCOWEGO i SEKWENCJA END-TO-END. Pierwsza tura: 38 322 → 24 499 znaków (−36%).
+- Od drugiej tury wątku sekcje wracają w całości (mechanizm jak w pisma-procesowe-v3). Treść reguł bez zmian.
+
+## AUDYT-2026-10-05i — TRYB STRUKTURA: rejestr kroków, profil i kanon źródeł wykonywane przez aplikację (6.182)
+
+### 1. ŹRÓDŁO
+Etapy mechanizacji E2/E3. Pomiar promptu dla pytania „różnice 233, 234 i 238 KK” (profil PEŁNY): 259 923 znaków; HIERARCHIA-ZRODEL 32,7 tys., MOD-STEP-TRACKER 11,2 tys., PROFIL-LEKKI 9,6 tys. Rejestr kroków, profil ścieżki, ślad KROK 3A i odczyt ELI z kolejnością E-1…E-5 wykonuje aplikacja.
+
+### 2. ZMIANA
+- shared 3.99.9: HIERARCHIA-ZRODEL — KANON KOLEJNOŚCI i REALIA DOSTĘPNOŚCI RZĘDU 1 (WERYFIKACJA-ELI; nagłówek REALIA scalony w jedną linię); MOD-STEP-TRACKER — FAZA 0 i FAZA 1 (REJESTR-KROKOW). FAZA 2–3 (raport pominięć, raport przed .docx) zostają u modelu.
+- prawny-router-v3 3.63: PROFIL-LEKKI — „PO CO ISTNIEJE” (HISTORIA), „DEKLARACJA PROFILU”, „KIEDY PROFIL LEKKI JEST ZAKAZANY” (PROFIL).
+- Aplikacja: czwarty zakaz profilu LEKKIEGO (błąd odczytu zasobu rdzenia) — zasób niewczytany jest nazwany modelowi przed odpowiedzią i w odpowiedzi (⛔ TRYB ZDEGRADOWANY — nie wczytano: …).
+- Wynik pomiaru: 245 841 znaków (−14 082, −5,4%).
+- Nie oznaczono: wyzwalaczy CN/WYJ/REM (sekcje zawierają reguły kolejności bramek i zawężenia ≥6 jednostek), ZNACZNIK OBOWIĄZKOWY (📚 dla RZĘDU 2B/3 stawia model).
+
 ## AUDYT-2026-10-05h — TRYB STRUKTURA: widgety zasilane danymi w pozostałych skillach (6.181)
 
 ### 1. ŹRÓDŁO
