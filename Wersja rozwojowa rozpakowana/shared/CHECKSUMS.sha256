@@ -1,3 +1,4 @@
+60ccf34b5b408542f31ed158756e2a5f766f663f14f3b510becdce4c920d34ec  ./.claude-plugin/plugin.json
 502ff7c1c59883b64f0ce626080430b9c6711851be08eb2547adbd1007fec874  ./ACTIVATION-MATRIX.md
 913fb9f6704c699488f283f32c460c4a22a986c11ceed4bec152e1ca4a8dc3e5  ./AUDIT-TRAIL-SPEC.md
 4c19f5d20c47b4037a30b79c523e08eacd32c964a85fc0422a64fc8951f0e53a  ./AUDYT-KONCOWY.md
@@ -175,5 +176,5 @@ ae96d0ed93846aa8fd71bcdd92d27fa2b31ec87050aec41bd05782562ca37372  ./tools/router
 eacbfc82c6ea6d31722a4804754ef29aca93dfc6d106b08055c9ce2d9412312b  ./tools/test_adapter_krs_vat.py
 f8672a6f2a5e8aea61b036bb8405d0a362fcaafa5c3fc8487b43f82e79b4ca35  ./tools/test_eli_art_extract.py
 2870bac23fa28452da2d55637f4e74e820321260bbd5c517e96df4822e80bacf  ./tools/test_mcp_protocol.py
-104e964e530f3e97a949b1afa52c9698ced87a4a9db4979f3156ab8eaf25afeb  ./tools/test_walidator_cytowan.py
+1ac52408552178788fa5f6ac8bee0291888f7ed715c0c561ae562dc3722f49ba  ./tools/test_walidator_cytowan.py
 237144004f93e428315c18414af6b05d05a99ac1cfcb933b806694805d768734  ./tools/walidator_cytowan.py

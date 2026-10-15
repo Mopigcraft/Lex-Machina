@@ -57,6 +57,9 @@ import argparse
 import os
 import re
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 KLUCZE = ("modules", "references", "scripts", "widgets")
 EXCLUDE_NAMES = {"__pycache__", "CHECKSUMS.sha256"}
@@ -123,7 +126,7 @@ def pliki_katalogu(katalog):
         for n in names:
             if n.startswith(".") or n in EXCLUDE_NAMES or n.endswith(EXCLUDE_SUFFIX):
                 continue
-            out.append(os.path.relpath(os.path.join(base, n), katalog))
+            out.append(os.path.relpath(os.path.join(base, n), katalog).replace(os.sep, "/"))
     return sorted(out)
 
 

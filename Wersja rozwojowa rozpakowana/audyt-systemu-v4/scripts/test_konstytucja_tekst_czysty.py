@@ -31,6 +31,9 @@ import re
 import shutil
 import subprocess
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 JS_REL = "mcp-servers/isap-eli-example/isap-eli-mcp-server.js"
 NODE_PROBE = r"""
@@ -104,7 +107,8 @@ def main() -> int:
     # Hak ładowania podstawia za KAŻDY pakiet zewnętrzny zaślepkę (uniwersalny Proxy), więc
     # sprawdzana jest prawdziwa funkcja z niezmienionego pliku serwera, offline.
     r = subprocess.run([node, "--import", ZASLEPKI_PAKIETOW, "--input-type=module", "-e", NODE_PROBE],
-                       cwd=str(audyt / "mcp-servers"), capture_output=True, text=True, timeout=60)
+                       cwd=str(audyt / "mcp-servers"), capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", timeout=60)
     if r.returncode != 0:
         bledy.append("node: wykonanie wybierzTekstCzysty nie powiodło się: {}".format(
             (r.stderr or r.stdout)[-400:]))

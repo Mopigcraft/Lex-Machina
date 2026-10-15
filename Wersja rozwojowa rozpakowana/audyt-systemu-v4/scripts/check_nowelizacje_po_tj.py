@@ -50,6 +50,9 @@ import os
 import re
 import sys
 import urllib.request
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 ELI_BASE = "https://api.sejm.gov.pl/eli/acts"
 DZU_RE = re.compile(r"Dz\.\s?U\.\s*(?:z\s*)?(\d{4})\s*(?:r\.\s*)?poz\.\s*(\d+)")

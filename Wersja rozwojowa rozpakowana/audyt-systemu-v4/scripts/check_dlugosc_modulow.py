@@ -42,6 +42,9 @@ Kod wyjścia: 0 = brak naruszeń progu, 1 = wykryto plik >1000 linii.
 import os
 import re
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 NIE_MODUL = re.compile(r'^(README|INDEX|CHANGELOG|HISTORIA-ZMIAN-PLIKOW)\.md$', re.I)
 
@@ -79,7 +82,7 @@ def zbierz(katalog):
                 continue
             sciezka = os.path.join(root, nazwa)
             n = policz_linie(sciezka)
-            rel = os.path.relpath(sciezka, katalog)
+            rel = os.path.relpath(sciezka, katalog).replace(os.sep, '/')
             if nazwa in WYKLUCZONE_NAZWY or nazwa.startswith(WYKLUCZONE_PREFIKSY):
                 if n > PROG_WARN:
                     pominiete.append((n, rel))

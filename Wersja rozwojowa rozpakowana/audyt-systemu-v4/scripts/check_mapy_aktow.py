@@ -19,6 +19,9 @@ Kontrole (dla każdego `dr-*/MAPA-AKTOW.md`; dla `prawo-polskie-v2/ROUTING-MAP.m
 Offline, deterministyczny. Kod wyjścia 1 przy błędzie A, B lub C.
 """
 import argparse, glob, os, re, sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 def cells(line):
     s = line.strip()
@@ -103,7 +106,7 @@ def main():
             for x in cross: msgs.append(f'  ℹ️  odesłanie międzydziedzinowe: {x}')
         err += e
         tag = '✅' if e == 0 else '⛔'
-        print(f'{tag} {os.path.relpath(path, root)}: tabel {len(tabs)}, błędów {e}')
+        print(f'{tag} {os.path.relpath(path, root).replace(os.sep, "/")}: tabel {len(tabs)}, błędów {e}')
         for m in msgs: print(m)
     print(f'Odesłania międzydziedzinowe (informacyjnie): {cross_total}')
     print('WYNIK T45: ' + ('✅ PASS' if err == 0 else f'❌ FAIL — {err} błędów (mapa nieczytelna dla parsera albo niekompletna)'))

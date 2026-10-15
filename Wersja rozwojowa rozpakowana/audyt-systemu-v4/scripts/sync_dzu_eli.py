@@ -15,6 +15,9 @@ import sys
 import urllib.request
 from datetime import date, datetime
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 ELI_BASE_URL = "https://api.sejm.gov.pl/eli/acts/DU"
 TIMEOUT_S = 60

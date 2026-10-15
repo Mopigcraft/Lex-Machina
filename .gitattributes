@@ -1,3 +1,13 @@
+# Końce linii: zawsze LF w repozytorium i w kopii roboczej, także na Windows.
+# Bez tego Git for Windows (core.autocrlf=true) zamienia LF na CRLF przy checkout
+# i psuje wszystkie sumy w CHECKSUMS.sha256 / PORTABILITY-MANIFEST.md.
+* text=auto eol=lf
 
 # Preserve official PDF bytes, including older ASCII-encoded PDFs.
 *.pdf binary
+*.zip binary
+*.docx binary
+*.odt binary
+*.png binary
+*.jpg binary
+*.node binary

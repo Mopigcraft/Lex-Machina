@@ -10,6 +10,9 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -25,12 +28,16 @@ def run_script(name: str, args: list[str]) -> tuple[int | None, str]:
     path = SCRIPT_DIR / name
     if not path.exists():
         return None, f"SKRYPT NIEOBECNY: {name}"
+    env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
     result = subprocess.run(
         [sys.executable, str(path)] + args,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
+        env=env,
     )
-    return result.returncode, result.stdout + result.stderr
+    return result.returncode, (result.stdout or "") + (result.stderr or "")
 
 
 def sekcja(tytul: str):

@@ -23,6 +23,9 @@ import re
 import sys
 import argparse
 from datetime import date
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 WZORZEC_NAZWY_MAPY = re.compile(r"mapa_dzu_(\d{4}-\d{2}-\d{2})\.md")

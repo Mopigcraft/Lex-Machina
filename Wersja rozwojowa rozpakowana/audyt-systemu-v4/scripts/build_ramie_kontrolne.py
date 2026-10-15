@@ -63,6 +63,9 @@ import os
 import shutil
 import subprocess
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 REJESTR_DOMYSLNY = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -327,7 +330,7 @@ def main():
                 if not nazwa.endswith(".md"):
                     continue
                 sciezka = os.path.join(korzen, nazwa)
-                rel = os.path.relpath(sciezka, out)
+                rel = os.path.relpath(sciezka, out).replace(os.sep, "/")
                 if any(pom in rel or rel.endswith(pom) for pom in pomijane):
                     continue
                 if rel in dopuszczone:
@@ -354,7 +357,8 @@ def main():
     ci = os.path.join(out, "audyt-systemu-v4", "scripts", "ci_check_shared.py")
     if os.path.exists(ci):
         r = subprocess.run([sys.executable, ci, "--repo-root", out],
-                           capture_output=True, text=True)
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           env={**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"})
         ogon = [l for l in r.stdout.strip().split("\n") if l.startswith("WYNIK")]
         print("   ci_check_shared:", ogon[0] if ogon else f"kod {r.returncode}")
         if r.returncode != 0:

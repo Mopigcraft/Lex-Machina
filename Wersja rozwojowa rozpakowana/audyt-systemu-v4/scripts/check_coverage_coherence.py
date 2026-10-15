@@ -17,6 +17,9 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 MOD = re.compile(r"(dr-\d{2}-[^\s|)]+/modules/(mod-[A-Za-z0-9_-]+)\.md)")
 MOD_NAME = re.compile(r"(?<![\w-])(mod-[A-Za-z0-9_-]+)(?![\w-])")

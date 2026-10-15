@@ -52,6 +52,9 @@ import os
 import re
 import sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # "Dz.U. 2023 poz. 1939", "Dz. U. z 2023 r. poz. 1939", "Dz.U. 2023.1939"
 RE_POZ = re.compile(

@@ -23,7 +23,11 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 SCRIPTS = Path(__file__).resolve().parent
 ARCHIWA = "WERSJA ROZWOJOWA"
@@ -62,6 +66,21 @@ def _plugin_version(path: Path):
     path.write_text(re.sub(r'"version":\s*"[^"]+"', '"version": "0.0.1"', s, count=1), encoding="utf-8")
 
 
+def _zip_shared_jesli_brak_archiwow(R: Path):
+    """T34 porównuje drzewo z paczkami ZIP. Gdy repozytorium ich nie trzyma (budowane przy wydaniu),
+    kopia dostaje paczkę `shared` zbudowaną z czystego drzewa — dopiero potem następuje mutacja."""
+    arch = R.parent / ARCHIWA
+    if arch.is_dir():
+        return
+    arch.mkdir()
+    cel = R / "shared"
+    with zipfile.ZipFile(arch / "shared.zip", "w") as zf:
+        for p in sorted(cel.rglob("*")):
+            rel = p.relative_to(cel)
+            if p.is_file() and not rel.parts[0].startswith(".") and "__pycache__" not in rel.parts:
+                zf.write(p, "shared/" + rel.as_posix())
+
+
 def _drop_table_separator(path: Path):
     """Usuwa pierwszy wiersz separatora tabeli Markdown — tabela przestaje być tabelą dla GFM."""
     linie = path.read_text(encoding="utf-8").splitlines(keepends=True)
@@ -92,8 +111,8 @@ MUTACJE = [
     ("T29", "check_oplaty_mapa.py", lambda R: ["--katalog", R], "brak satelity TABELE-OPLAT",
      lambda R: (R / "shared/oplaty/05-sprawy-karne.md").unlink()),
     ("T34", "check_archiwa_repo.py", lambda R: ["--repo-root", R], "drzewo różne od paczki ZIP",
-     lambda R: (R / "shared/DISCLAIMER.md").write_text(
-         (R / "shared/DISCLAIMER.md").read_text(encoding="utf-8") + "\nMUTACJA\n", encoding="utf-8")),
+     lambda R: (_zip_shared_jesli_brak_archiwow(R), (R / "shared/DISCLAIMER.md").write_text(
+         (R / "shared/DISCLAIMER.md").read_text(encoding="utf-8") + "\nMUTACJA\n", encoding="utf-8"))),
     ("T35", "check_wejscie_dokumentu.py", lambda R: ["--repo-root", R], "konsument bez wywołania MOD-WEJSCIE-DOKUMENTU",
      lambda R: (R / "pisma-proste-v2/SKILL.md").write_text(
          (R / "pisma-proste-v2/SKILL.md").read_text(encoding="utf-8").replace("MOD-WEJSCIE-DOKUMENTU", "MOD-XXX"), encoding="utf-8")),
@@ -163,9 +182,10 @@ MUTACJE = [
 def uruchom(R: Path, skrypt: str, args: list[str]) -> tuple[int, str]:
     """Skrypt z KOPII (mutacja może dotyczyć samego skryptu albo modułu, który importuje)."""
     env = {k: v for k, v in os.environ.items() if k != "LEX_LIVE"}
-    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1", PYTHONIOENCODING="utf-8")
     r = subprocess.run([sys.executable, str(R / "audyt-systemu-v4" / "scripts" / skrypt), *args],
-                       capture_output=True, text=True, env=env, timeout=900, cwd=str(R))
+                       capture_output=True, text=True, encoding="utf-8", errors="replace",
+                       env=env, timeout=900, cwd=str(R))
     return r.returncode, (r.stdout + r.stderr)
 
 

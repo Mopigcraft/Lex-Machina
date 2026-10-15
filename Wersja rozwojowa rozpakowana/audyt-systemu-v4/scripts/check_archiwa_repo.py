@@ -21,11 +21,14 @@ CO SPRAWDZA (dla każdego ZIP-a w katalogu paczek)
   E. katalog skilla w drzewie bez paczki = WARN (nie FAIL).
 
 Katalog paczek: --archiwa albo automatycznie `../WERSJA ROZWOJOWA` względem drzewa.
-Brak katalogu paczek = PASS informacyjny (host bez układu repozytorium).
+Brak katalogu paczek = SKIP/PASS informacyjny (archiwa ZIP budowane przy wydaniu, nie trzymane w repozytorium).
 Offline. Kod: 0 zgodne, 1 rozbieżność, 2 błąd wejścia. --selftest: 4 przypadki.
 """
 import argparse, os, shutil, sys, tempfile, zipfile
 from pathlib import Path, PurePosixPath
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 POMIN = {"__pycache__", ".pytest_cache"}
 
@@ -127,7 +130,7 @@ def main() -> int:
     if not drzewo.is_dir():
         print(f"BŁĄD: brak drzewa {drzewo}"); return 2
     if not archiwa.is_dir():
-        print(f"INFO: brak katalogu paczek ({archiwa}) — układ inny niż repozytorium; PASS informacyjny.")
+        print(f"SKIP: brak katalogu paczek ({archiwa}) — archiwa ZIP budowane przy wydaniu (CI); PASS informacyjny.")
         return 0
     bledy, ostrz, spr = sprawdz(drzewo, archiwa)
     print(f"T34: drzewo {drzewo.name} ↔ paczki {archiwa.name}: sprawdzonych skilli {spr}")

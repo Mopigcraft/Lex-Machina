@@ -152,7 +152,7 @@ class CorpusTest(unittest.TestCase):
     def test_command_works_outside_skill_directory(self):
         import subprocess,os
         with tempfile.TemporaryDirectory() as cwd:
-            p=subprocess.run([sys.executable,str(insolvency.ROOT/'scripts/prrestr.py'),'article','211b'],cwd=cwd,capture_output=True,text=True,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
+            p=subprocess.run([sys.executable,str(insolvency.ROOT/'scripts/prrestr.py'),'article','211b'],cwd=cwd,capture_output=True,text=True,encoding='utf-8',errors='replace',env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','PYTHONUTF8':'1','PYTHONIOENCODING':'utf-8'})
         self.assertEqual(p.returncode,0,p.stderr);self.assertEqual(json.loads(p.stdout)['id'],'211b')
 
 if __name__=='__main__':

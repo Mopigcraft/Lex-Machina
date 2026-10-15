@@ -62,8 +62,10 @@ def verify(archives, unpacked):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--repo-root', type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument('--archives', type=Path,
+                        help='directory with built ZIPs (default: <repo-root>/dist-zips)')
     args = parser.parse_args()
-    result = verify(args.repo_root / 'WERSJA ROZWOJOWA',
+    result = verify(args.archives or args.repo_root / 'dist-zips',
                     args.repo_root / 'Wersja rozwojowa rozpakowana')
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 1 if result['errors'] else 0

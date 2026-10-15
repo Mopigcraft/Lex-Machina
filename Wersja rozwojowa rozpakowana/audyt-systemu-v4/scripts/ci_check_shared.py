@@ -17,6 +17,9 @@ import os
 import re
 import sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # Obsługujemy stary zapis absolutny i nowe, zwykłe ścieżki względne po `view`.
 VIEW_ABS_PATTERN = re.compile(r"view\s+(/\S+?\.md)\b")

@@ -77,6 +77,9 @@ import sys
 import time
 import urllib.request
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 API = "https://api.sejm.gov.pl/eli/acts/DU/{rok}/{poz}"
 
@@ -183,7 +186,7 @@ def zbierz(root: Path):
                 if any(p > (rok, poz) for p in pary):
                     odsiane += 1
                     continue
-                rel = str(sciezka.relative_to(root))
+                rel = sciezka.relative_to(root).as_posix()
                 # ⛔ Pełna linia, nie wycinek. Pierwsza wersja zapisywała
                 #   `linia.strip()[:150]` i dopasowywała cezurę do WYCINKA —
                 #   w wierszach map cezura stoi często za 150. znakiem, więc

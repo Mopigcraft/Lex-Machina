@@ -12,6 +12,9 @@ osiągalny bezpośrednio albo przez łańcuch plików `shared`. Allowlista z uza
 Offline, deterministyczny. Kod wyjścia 1 = nieosiągalny plik spoza allowlisty.
 """
 import os, re, sys, collections
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import argparse
 ap = argparse.ArgumentParser()

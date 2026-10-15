@@ -18,6 +18,9 @@ Dwie kontrole:
 Offline, deterministyczny. Kod wyjścia: 1 przy trafieniu A lub B, 0 w przeciwnym razie.
 """
 import argparse, glob, os, re, sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 HIST = re.compile(r"(?i)poprzedn|wygas|był[aoy]?\b|zamiast|→|->|historycz|dawn|nieaktualn|"
                   r"stary|stara|zastąpi|korekt|eliminow|błędn|pułapk|podmian")

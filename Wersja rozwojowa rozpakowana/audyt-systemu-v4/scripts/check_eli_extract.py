@@ -11,6 +11,9 @@ Kod: 0 PASS, 1 FAIL, 2 brak narzędzia.
 """
 import argparse, os, subprocess, sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def main() -> int:
@@ -22,9 +25,9 @@ def main() -> int:
     if not (tools / "eli_art_extract.py").is_file() or not (tools / "test_eli_art_extract.py").is_file():
         print("❌ brak shared/tools/eli_art_extract.py lub test_eli_art_extract.py"); return 2
     env = {k: v for k, v in os.environ.items() if k != "LEX_LIVE"}
-    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1", PYTHONIOENCODING="utf-8")
     r = subprocess.run([sys.executable, "-m", "unittest", "test_eli_art_extract"], cwd=tools, env=env,
-                       capture_output=True, text=True, timeout=120)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120)
     print((r.stdout + r.stderr).strip()[-1500:])
     print(f"WYNIK: {'PASS' if r.returncode == 0 else 'FAIL'}")
     return 0 if r.returncode == 0 else 1

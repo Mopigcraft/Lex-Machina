@@ -43,6 +43,9 @@ import os
 import re
 import sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 SKIP_SKILLS = {"shared", "audyt-systemu-v4"}
 

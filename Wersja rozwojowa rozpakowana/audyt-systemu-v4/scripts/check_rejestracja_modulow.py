@@ -43,6 +43,9 @@ Kod wyjścia: 0 = brak rozbieżności, 1 = wykryto rozbieżności.
 import os
 import re
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 WZ_MODUL = re.compile(r'mod-[A-Za-z0-9_-]+')
 WZ_CHECK = re.compile(r'\[✓\][^\n]*?(mod-[A-Za-z0-9_-]+)')

@@ -58,11 +58,11 @@ class RefGraph:
         for s in self.skills:
             base = os.path.join(root, s)
             for dp, dn, fn in os.walk(base):
-                if any(x in dp + '/' for x in SKIP):
+                if any(x in dp.replace(os.sep, '/') + '/' for x in SKIP):
                     continue
                 for f in fn:
                     ap = os.path.join(dp, f)
-                    rel = os.path.relpath(ap, base)
+                    rel = os.path.relpath(ap, base).replace(os.sep, '/')
                     self.files[(s, rel)] = ap
                     if f.endswith(TXT):
                         with open(ap, encoding='utf-8', errors='replace') as h:

@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 import time
 import unicodedata
 import urllib.request
@@ -18,6 +19,10 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from datetime import date
+
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 PAIR_RE = re.compile(
     r"Dz\.\s*U\.?\s*(?:z\s*)?(?P<year>19\d{2}|20\d{2})"

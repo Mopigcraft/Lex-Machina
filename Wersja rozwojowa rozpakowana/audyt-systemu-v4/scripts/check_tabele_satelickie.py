@@ -18,6 +18,9 @@ Kod wyjścia: 1 tylko przy brakującym pliku; WARN nie blokuje (kwota bywa
 przykładem obliczeniowym — ocena ręczna).
 """
 import argparse, glob, os, re, sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 KWOTA = re.compile(r"\d[\d\s\u00a0]*(?:,\d+)?\s*(?:zł|%)")
 PODST = re.compile(r"(?i)art\.|§|zał\.|ust\.|\bpkt\b|rozp|dz\.\s*u\.|kscu|kpc|kpk|kpa|ustaw|okw|uks")

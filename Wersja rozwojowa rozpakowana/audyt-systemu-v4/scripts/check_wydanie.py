@@ -16,6 +16,9 @@ Skille bez paczki są pomijane (informacyjnie), paczki bez skilla — zgłaszane
 Offline. Kod wyjścia: 1 przy jakiejkolwiek rozbieżności, 0 gdy komplet zgodny.
 """
 import argparse, hashlib, os, sys, zipfile
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def sha(dane):

@@ -11,6 +11,9 @@ Kod: 0 PASS, 1 FAIL, 2 brak narzędzia/korpusu.
 """
 import argparse, importlib.util, os, subprocess, sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def main() -> int:
@@ -20,9 +23,9 @@ def main() -> int:
     kor = root / "analizator-umow-v1" / "benchmark" / "posiane-wady" / "umowy"
     if not (tools / "kontrakt_rachunek.py").is_file() or not (tools / "test_kontrakt_rachunek.py").is_file():
         print("❌ brak analizator-umow-v1/scripts/kontrakt_rachunek.py lub testu"); return 2
-    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1", "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
     r = subprocess.run([sys.executable, "-m", "unittest", "test_kontrakt_rachunek"], cwd=tools, env=env,
-                       capture_output=True, text=True, timeout=120)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120)
     print((r.stdout + r.stderr).strip()[-600:])
     ok = r.returncode == 0
     if not kor.is_dir():

@@ -1,3 +1,4 @@
+7d9c2a43260edeee1820890eaf1d62ccfd5e655f74d3133b14567fc565aa1004  ./.claude-plugin/plugin.json
 f47a08645edca7d50ae2e4f3f43135bbe60f4f0b7f50338831bcfa9289f7807e  ./MAPA-AKTOW.md
 5b3fd066e29140dac6a2b9b19f0a2044684dc05b0d859a55d1fff628edf26916  ./MAPA-POKRYCIA.md
 cd7bd68c282c1dd8fc5b99072282ebc1b74eddbaf3985b53ebb69ec554af1413  ./PORTABILITY-MANIFEST.md
@@ -148,5 +149,5 @@ f4d3d58353d81f3c160d00f6e1e4153bff264ee72fc6af606ce0890a2f3c3dc2  ./scripts/buil
 0bfac400bc59be45ddc38aa81039484a3f98ed9eb5951c35b5a299a758b26661  ./scripts/insolvency.py
 05aabeee6a918d1d80b25df51e4aac6a40657c1daf364ed0a477a0b8c32e62f9  ./scripts/prrestr.py
 c23b9e0a6672dfda7682bc62f0ab8103a6700b0b1f90fa36d50db73e33bcf5d3  ./scripts/prup.py
-73f9278b5f02a41346defd2f53d7283b75319e3239a90327cc0ce76924a72041  ./scripts/test_insolvency.py
+a224104ad31570d77f6245bb266ca2f65e5c6e7aeb00f8e06a1cb1473a3183aa  ./scripts/test_insolvency.py
 29b0bc81589119480d579b39c7ec517f90ef0d5a5c1c0a20ddfd7a95c925b4d9  ./scripts/test_prup.py

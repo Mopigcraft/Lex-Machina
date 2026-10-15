@@ -11,6 +11,9 @@ Kod: 0 PASS/WARN, 1 FAIL.
 """
 import argparse, sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 LIMIT, OSTRZ = 200, 190
 POMIN = {"__pycache__", "node_modules", ".git"}

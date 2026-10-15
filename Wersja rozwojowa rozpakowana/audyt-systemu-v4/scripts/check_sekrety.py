@@ -16,6 +16,9 @@ Kod: 0 PASS, 1 FAIL (znaleziska), 2 błąd.
 """
 import argparse, base64, json, re, sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 POMIN_KAT = {".git", "node_modules", "__pycache__", "dist"}
 POMIN_ROZSZ = {".png", ".jpg", ".zip", ".pdf", ".mcpb", ".ico", ".woff", ".woff2"}

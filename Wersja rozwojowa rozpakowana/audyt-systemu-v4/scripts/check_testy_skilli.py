@@ -18,6 +18,9 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 POMIN = ("/node_modules/", "/mcp-servers/", "/__pycache__/", "/.git/")
 
@@ -40,14 +43,15 @@ def main() -> int:
                     or str(Path(__file__).resolve().parents[2]))
     root = Path(ap.parse_args().repo_root).resolve()
     env = {k: v for k, v in os.environ.items() if k != "LEX_LIVE"}
-    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env.update(PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1", PYTHONIOENCODING="utf-8")
     katalogi = katalogi_testow(root)
     print("TEST T48 — TESTY JEDNOSTKOWE SKILLI")
     print(f"Katalog: {root} | katalogów z testami: {len(katalogi)}")
     bledy = 0
     for k in katalogi:
         r = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", str(k), "-p", "test_*.py"],
-                           cwd=str(k), capture_output=True, text=True, env=env, timeout=600)
+                           cwd=str(k), capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           env=env, timeout=600)
         wynik = (r.stderr or r.stdout).strip().splitlines()
         ostatnia = wynik[-1] if wynik else ""
         ran = re.search(r"Ran (\d+) test", r.stderr or r.stdout)

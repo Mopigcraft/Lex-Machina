@@ -15,6 +15,9 @@ Folder zarejestrowany w YAML właściciela (np. 'references/raporty/') rejestruj
 Wynik: ORPHAN (0 odwołań), OK, INFRA. Kod wyjścia 1, gdy są sieroty spoza allowlisty.
 """
 import os, re, sys, collections
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import argparse
 ap = argparse.ArgumentParser()

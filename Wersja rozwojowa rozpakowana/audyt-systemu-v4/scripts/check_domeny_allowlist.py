@@ -64,6 +64,9 @@ import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field, asdict
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # ⛔ NIE ZMIENIAJ na łańcuch przeglądarkowy — patrz PUŁAPKA 1 w docstringu.
 # Neutralny UA jest wymogiem funkcjonalnym, nie kosmetyką.

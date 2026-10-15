@@ -1,0 +1,47 @@
+name: Release skill ZIPs
+
+# Paczki ZIP skilli nie są commitowane do repozytorium. Powstają tutaj z
+# "Wersja rozwojowa rozpakowana/" i trafiają do GitHub Release jako załączniki.
+# Wydanie: git tag v2026.10.15 && git push origin v2026.10.15
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag wydania (musi istnieć)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build and verify skill ZIPs
+        run: python3 scripts/build_skill_zips.py --out dist-zips
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          set -euo pipefail
+          cp claude_desktop_config.json dist-zips/
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist-zips/* --clobber
+          else
+            gh release create "$TAG" dist-zips/* --title "Lex Machina $TAG" --generate-notes
+          fi

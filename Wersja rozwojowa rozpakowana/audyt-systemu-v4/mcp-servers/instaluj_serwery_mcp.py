@@ -93,7 +93,8 @@ def node():
     p = shutil.which("node")
     if not p:
         raise SystemExit("⛔ Brak Node.js — zainstaluj 18+ (nodejs.org).")
-    v = subprocess.run([p, "--version"], capture_output=True, text=True).stdout.strip()
+    v = subprocess.run([p, "--version"], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace").stdout.strip()
     if not v.startswith("v") or int(v[1:].split(".")[0]) < 18:
         raise SystemExit(f"⛔ Node.js {v or '?'} — wymagany 18+.")
     return p

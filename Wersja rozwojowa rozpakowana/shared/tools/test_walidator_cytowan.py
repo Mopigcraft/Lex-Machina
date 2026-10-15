@@ -119,7 +119,9 @@ class KontrolaZapisu(unittest.TestCase):
             with open(dobrze, "w", encoding="utf-8") as f:
                 f.write("Ustawa (Dz. U. z 2025 r. poz. 869; dalej: k.p.c.); art. 130 § 1 k.p.c.")
             run = lambda doc: subprocess.run([sys.executable, skrypt, "--document", doc, "--format"],
-                                            capture_output=True, text=True)
+                                            capture_output=True, text=True,
+                                            encoding="utf-8", errors="replace",
+                                            env={**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"})
             self.assertEqual(run(zle).returncode, 3)
             self.assertEqual(run(dobrze).returncode, 0)
 

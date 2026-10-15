@@ -40,6 +40,9 @@ import os
 import random
 import re
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 WZOR_ANON = re.compile(r"^X\d{3,}\.txt$")
 PREFIKS_TMP = ".anon-tmp-"

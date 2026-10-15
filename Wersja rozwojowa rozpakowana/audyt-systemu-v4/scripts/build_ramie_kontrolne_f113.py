@@ -28,6 +28,9 @@ KODY WYJŚCIA: przekazywane bez zmian z `build_ramie_kontrolne.py`.
 import os
 import subprocess
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 UNIWERSALNY = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            "build_ramie_kontrolne.py")
@@ -46,7 +49,8 @@ def main():
 
     print("ℹ️  build_ramie_kontrolne_f113.py → nakładka na build_ramie_kontrolne.py "
           "(implementacja wspólna, mapa wycięć w REJESTR-BRAMEK-POMIAR.json)")
-    return subprocess.run([sys.executable, UNIWERSALNY] + argv).returncode
+    return subprocess.run([sys.executable, UNIWERSALNY] + argv,
+                          env={**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}).returncode
 
 
 if __name__ == "__main__":

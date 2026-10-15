@@ -8,6 +8,9 @@ from pathlib import Path
 import argparse
 import re
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 _ap = argparse.ArgumentParser()
 _ap.add_argument("--repo-root", default=None)

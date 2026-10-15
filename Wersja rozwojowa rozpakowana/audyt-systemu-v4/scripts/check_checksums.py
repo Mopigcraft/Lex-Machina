@@ -52,6 +52,9 @@ import argparse
 import hashlib
 import os
 import sys
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 EXCLUDE_DIRS = {"__pycache__", ".git", "archive"}
 EXCLUDE_SUFFIX = (".pyc", ".zip")
@@ -72,7 +75,7 @@ def normalizuj(sciezka):
     za konwencję, nie za stan plików.
     """
     sciezka = sciezka.strip().lstrip("*")
-    return os.path.normpath(sciezka)
+    return os.path.normpath(sciezka).replace(os.sep, "/")
 
 
 def skill_files(root):
@@ -82,7 +85,7 @@ def skill_files(root):
         for n in names:
             if n.startswith(".") or n.endswith(EXCLUDE_SUFFIX) or n == CHECKSUM_FILE:
                 continue
-            out.append(os.path.relpath(os.path.join(base, n), root))
+            out.append(os.path.relpath(os.path.join(base, n), root).replace(os.sep, "/"))
     return sorted(out)
 
 

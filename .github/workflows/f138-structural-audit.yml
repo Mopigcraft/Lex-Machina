@@ -4,7 +4,8 @@ on:
   pull_request:
   push:
     branches:
-      - codex/f138-current-state-cleanup-2026-08-28
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -35,11 +36,22 @@ jobs:
           python3 "$ROOT/audyt-systemu-v4/scripts/ci_check_shared.py" --repo-root "$ROOT"
           python3 "$ROOT/audyt-systemu-v4/scripts/test_f108_consistency.py"
 
+      # Manifesty CHECKSUMS.sha256 każdego skilla + próbne zbudowanie paczek ZIP
+      # (zastępuje commitowane katalogi ZIP; paczki publikuje release.yml).
+      - name: Verify checksum manifests and build skill ZIPs
+        run: python3 scripts/build_skill_zips.py --out "$RUNNER_TEMP/zips"
+
   # 2026-10-11 (AUDYT-2026-10-11b, zewnętrzne code review: „CI uruchamia garstkę skryptów”):
   # pełny zestaw regresyjny — wszystkie testy T1–T49, testy jednostkowe skilli (T48)
   # i mutacje dowodzące, że każdy bloker potrafi się nie udać (T49). Kod ≠ 0 = blocker.
+  # Windows w macierzy: odbiorcy pracują głównie na Windows (CRLF, cp1250, separator \).
   regression-suite:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    # Bez wymuszania LF w runnerze: .gitattributes (eol=lf) ma działać przy domyślnym core.autocrlf=true.
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,11 +68,11 @@ jobs:
 
       # PyYAML: T38 (manifesty pluginów); python-docx: test .docx walidatora cytowań (T48).
       - name: Install test dependencies
-        run: python3 -m pip install --disable-pip-version-check pyyaml python-docx
+        run: python -m pip install --disable-pip-version-check pyyaml python-docx
 
       - name: Run full regression suite
         shell: bash
         run: |
           set -euo pipefail
-          python3 "Wersja rozwojowa rozpakowana/audyt-systemu-v4/scripts/run_regression_suite.py" \
+          python "Wersja rozwojowa rozpakowana/audyt-systemu-v4/scripts/run_regression_suite.py" \
             --repo-root "$GITHUB_WORKSPACE/Wersja rozwojowa rozpakowana"

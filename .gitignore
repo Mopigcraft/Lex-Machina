@@ -1,1 +1,6 @@
 .claude/settings.local.json
+__pycache__/
+*.pyc
+node_modules/
+# Paczki ZIP budowane przez scripts/build_skill_zips.py (publikowane w GitHub Releases)
+dist-zips/

@@ -20,6 +20,9 @@ WYMAGA SIECI (API ELI). Wynik: kandydaci do przeglądu — status RĘCZNY.
 Kod wyjścia: 0 brak kandydatów, 1 są kandydaci, 2 brak dostępu do ELI.
 """
 import argparse, concurrent.futures as cf, glob, json, os, re, sys, unicodedata, urllib.request
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 STOP = set(("ustawa ustawy kodeks prawo rozporządzenie tekstu jednolitego sprawie ogłoszenia "
             "obwieszczenie marszałka sejmu rzeczypospolitej polskiej ministra niektórych innych "
@@ -59,7 +62,7 @@ def wiersze(root):
                 continue
             nr = set(WZ_NR.findall(c[1]))
             if len(nr) == 1:
-                yield os.path.relpath(f, root), i, nazwa, nr.pop()
+                yield os.path.relpath(f, root).replace(os.sep, "/"), i, nazwa, nr.pop()
 
 
 def tytul_eli(nr):

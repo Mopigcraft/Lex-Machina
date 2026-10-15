@@ -35,6 +35,9 @@ import sys
 from pathlib import Path
 
 from _lex_common import HIST, module_files
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # Skille jawnie WYŁĄCZONE z tego testu — nie mają struktury modules/*.md
 # zarejestrowanej w SKILL.md w ten sam sposób (np. shared/ jest biblioteką

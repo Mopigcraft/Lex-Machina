@@ -28,6 +28,12 @@ każdego przepisu i każdej sygnatury.*
 
 </div>
 
+> **Fork techniczny** projektu [michaleiatrak-star/Lex-Machina](https://github.com/michaleiatrak-star/Lex-Machina).
+> Treść skilli jest taka sama jak w oryginale. Różnice: jedno źródło skilli w repozytorium
+> (bez commitowanych ZIP-ów i kopii wersji stabilnej), paczki ZIP w
+> [GitHub Releases](https://github.com/Mopigcraft/Lex-Machina/releases), poprawne działanie
+> na Windows (końce linii LF, UTF-8, ścieżki) i testy regresyjne w CI na Ubuntu i Windows.
+
 ---
 
 ## 🎯 Czym jest Lex Machina
@@ -96,15 +102,14 @@ Ten sam zestaw skilli działa na Claude, na hostach zgodnych z OpenAI (**ChatGPT
 Codex, API, Atlas**) oraz na **Grok**, bez przepisywania metodologii, HARD GATE ani
 bramek jakości. Działanie na **Claude i ChatGPT zostało potwierdzone testami całego
 zestawu**. Wieloplatformowość nie jest już cechą wyłącznie kanału rozwojowego:
-warstwa portowalności została promowana do wersji stabilnej i w obu katalogach jest
-identyczna co do bajtu. Skille to zwykły Markdown
+warstwa portowalności została promowana do wersji stabilnej. Skille to zwykły Markdown
 czytany pod wspólnym adapterem, więc nazwy operacji odziedziczone z jednego runtime
 są traktowane jako semantyka, nie jako wymóg konkretnego API danego dostawcy.
 
 > **Grok — automatyczne pobranie z repozytorium.** Grokowi wystarczy **wskazać
 > repozytorium** (URL GitHub) i **którą wersję** ma wziąć — rozwojową
-> (`Wersja rozwojowa rozpakowana/`) albo stabilną
-> (`Wersja stabilna rozpakowana 07.10.2026/`) — obie niosą warstwę
+> (`Wersja rozwojowa rozpakowana/` na `main`) albo stabilną
+> (tag `stable-2026-10-07`, katalog `Wersja stabilna rozpakowana 07.10.2026/`) — obie niosą warstwę
 > host-neutralną. Grok pobiera i instaluje skille
 > samodzielnie, bez ręcznego wgrywania folderów. Reguły sterujące (odpowiednik
 > User Preferences) wskazujesz w jego instrukcjach/personalizacji tak samo jak na
@@ -114,7 +119,7 @@ są traktowane jako semantyka, nie jako wymóg konkretnego API danego dostawcy.
 
 | Element | Lokalizacja | Rola |
 |---|---|---|
-| Adapter runtime | [`shared/UNIVERSAL-RUNTIME-ADAPTER.md`](Wersja%20stabilna%20rozpakowana%2007.10.2026/shared/UNIVERSAL-RUNTIME-ADAPTER.md) | Jeden kontrakt wykonawczy: mapuje operacje zależne od hosta (`view`, `web_search`, `web_fetch`, `create_file`, `show_widget`) na natywne funkcje hosta lub ich odpowiedniki. |
+| Adapter runtime | [`shared/UNIVERSAL-RUNTIME-ADAPTER.md`](Wersja%20rozwojowa%20rozpakowana/shared/UNIVERSAL-RUNTIME-ADAPTER.md) | Jeden kontrakt wykonawczy: mapuje operacje zależne od hosta (`view`, `web_search`, `web_fetch`, `create_file`, `show_widget`) na natywne funkcje hosta lub ich odpowiedniki. |
 | Manifest OpenAI | `<skill>/agents/openai.yaml` | Rejestracja skilla w ekosystemie OpenAI (`products: chatgpt, codex, api, atlas`) + `allow_implicit_invocation`. |
 | Manifest integralności | `<skill>/PORTABILITY-MANIFEST.md` | Lista plików + SHA-256 — dowód, że przeniesienie między hostami jest bezstratne. |
 | Pole `compatibility:` | frontmatter `SKILL.md` | Deklaruje wymagane operacje hosta (lub równoważne wg adaptera). |
@@ -157,11 +162,10 @@ Lex-Machina/
 ├── DOKUMENTACJA-WDROZENIOWA-2026-07-13.md   ← dokumentacja wdrożeniowa systemu
 ├── claude_desktop_config.json               ← przykładowa konfiguracja konektorów MCP
 ├── benchmark/                               ← wyniki testów na bankach kazusów (per data)
-├── WERSJA STABILNA 07.10.2026/               ← skille spakowane (.zip) — wersja stabilna
-├── WERSJA ROZWOJOWA/                        ← skille spakowane (.zip) — wersja rozwojowa
-├── Wersja stabilna rozpakowana 07.10.2026/   ← źródła skilli — wersja stabilna
-│                                              (host-neutralna: Claude / OpenAI / Grok)
-└── Wersja rozwojowa rozpakowana/            ← źródła skilli — tu trafiają bieżące zmiany
+├── scripts/build_skill_zips.py              ← buduje paczki ZIP skilli (lokalnie i w CI)
+├── .github/workflows/release.yml            ← publikuje ZIP-y w GitHub Releases po tagu v*
+└── Wersja rozwojowa rozpakowana/            ← jedyne źródło skilli — tu trafiają bieżące zmiany
+                                               (wersja stabilna: tag stable-2026-10-07)
     ├── shared/                              ← bramki (PRAWO-HARDGATE, SYGNATURY,
     │   │                                      WERYFIKACJA-SLAD), UNIVERSAL-RUNTIME-ADAPTER,
     │   │                                      moduły MOD-*, definicje
@@ -188,7 +192,7 @@ Lex-Machina/
                                                (AUDIT-JOURNAL, mapy Dz.U.), scripts/, widgets/
 ```
 
-Katalog wersji stabilnej ma tę samą strukturę — łącznie z warstwą host-neutralną
+Wersja stabilna (tag `stable-2026-10-07`) ma tę samą strukturę — łącznie z warstwą host-neutralną
 (`agents/openai.yaml`, `PORTABILITY-MANIFEST.md`, adapter runtime w `shared/`).
 Każdy skill to folder z `SKILL.md` w korzeniu — wgrywa się **cały folder** skilla,
 niezależnie od hosta.
@@ -424,20 +428,30 @@ Rekomendacje: [`shared/KONEKTORY-REKOMENDOWANE.md`](Wersja%20rozwojowa%20rozpako
 <details>
 <summary><b>Krok 1 — Pobierz repozytorium</b></summary>
 
-GitHub → zielony przycisk **Code** → **Download ZIP**, albo:
+**Najprościej:** pobierz gotowe paczki `.zip` (jedna na skill) z
+[GitHub Releases](https://github.com/Mopigcraft/Lex-Machina/releases). Plik `SHA256SUMS`
+w wydaniu pozwala sprawdzić integralność.
+
+Albo sklonuj repozytorium (skille są w `Wersja rozwojowa rozpakowana/`):
 
 ```bash
-git clone https://github.com/michaleiatrak-star/Lex-Machina.git
+git clone https://github.com/Mopigcraft/Lex-Machina.git
 ```
 
-Skille do wgrania znajdziesz w katalogu wersji (rozpakowanej lub jako pojedyncze
-`.zip` w `WERSJA STABILNA …/`).
+Wersja stabilna 07.10.2026 jest pod tagiem `stable-2026-10-07`
+([przeglądaj](https://github.com/Mopigcraft/Lex-Machina/tree/stable-2026-10-07/Wersja%20stabilna%20rozpakowana%2007.10.2026)).
+
+Paczki ZIP możesz też zbudować sam (Python 3.9+):
+
+```bash
+python scripts/build_skill_zips.py --out dist-zips
+```
 </details>
 
 <details>
 <summary><b>Krok 2 — Wgraj skille do Claude AI (kolejność nie ma znaczenia)</b></summary>
 
-Claude AI → **Customize** → **wtyczki** - **Dodaj rynek** - **dodaj z repozytorium** - https://github.com/michaleiatrak-star/Lex-Machina/ (automatyczne aktualizacje) - dodaj każdy ze skili, będą aktualizować się automatycznie
+Claude AI → **Customize** → **wtyczki** - **Dodaj rynek** - **dodaj z repozytorium** - https://github.com/Mopigcraft/Lex-Machina/ (automatyczne aktualizacje) - dodaj każdy ze skili, będą aktualizować się automatycznie
 
 Metoda alternatywna (bez automatycznej aktualizacji)
 Claude AI → **Customize** → **Nowy skill** → **Wgraj skill z komputera** → wskaż **cały folder** skilla (nie pojedynczy plik `SKILL.md`).
@@ -460,14 +474,14 @@ Kolejność wgrywania:
 <summary><b>Claude Code — marketplace przypięty do tagu</b></summary>
 
 ```text
-/plugin marketplace add michaleiatrak-star/Lex-Machina#<TAG>
+/plugin marketplace add Mopigcraft/Lex-Machina#<TAG>
 /plugin install prawny-router-v3@lex-machina-legal-skills
 ```
 
 `#<TAG>` przypina katalog do wydania skilli; bez niego instalujesz bieżący `main` (HEAD).
 Zależności (`shared`, DR-01–DR-16, skille wykonawcze) instalują się razem z routerem.
 Pole `dependencies` w `marketplace.json` wymaga aktualnego Claude Code CLI (zweryfikowano na 2.1.296; starsze wersje zgłaszają `Unrecognized key 'dependencies'` — zaktualizuj CLI).
-Wersja stabilna nie ma manifestów wtyczek — instaluje się ją, kopiując foldery skilli.
+Wersja stabilna (tag `stable-2026-10-07`) nie ma manifestów wtyczek — instaluje się ją, kopiując foldery skilli.
 </details>
 
 <details>
@@ -517,7 +531,7 @@ uruchomić router, dopytać o charakter sprawy i zaproponować przewodnik.
 
 Host-neutralna jest zarówno wersja stabilna (07.10.2026), jak i rozwojowa, więc
 w ChatGPT wgrywa się **te same foldery skilli** i w **tej samej kolejności** co
-w Claude (patrz Krok 2) — z dowolnego z dwóch katalogów wersji. Każdy skill niesie
+w Claude (patrz Krok 2) — z wersji stabilnej lub rozwojowej. Każdy skill niesie
 manifest `agents/openai.yaml` (`products: chatgpt, codex, api, atlas`) rozpoznawany
 przez ekosystem OpenAI oraz wspólny [adapter runtime](#-kompatybilno%C5%9B%C4%87-llm),
 który mapuje operacje systemu na natywne funkcje ChatGPT.
@@ -554,12 +568,12 @@ Grok nie wymaga ręcznego wgrywania folderów — potrafi **sam pobrać skille z
 repozytorium**. Wystarczy:
 
 1. **Wskaż repozytorium** — podaj Grokowi adres:
-   `https://github.com/michaleiatrak-star/Lex-Machina`.
+   `https://github.com/Mopigcraft/Lex-Machina`.
 2. **Wskaż wersję** — którą gałąź/katalog ma wziąć:
 
    | Wersja | Katalog w repozytorium | Host-neutralna |
    |---|---|---|
-   | 🟢 stabilna (zalecana) | `Wersja stabilna rozpakowana 07.10.2026/` | tak |
+   | 🟢 stabilna (zalecana) | tag `stable-2026-10-07`, katalog `Wersja stabilna rozpakowana 07.10.2026/` | tak |
    | 🟠 rozwojowa | `Wersja rozwojowa rozpakowana/` | tak |
 
 3. Grok pobiera i instaluje skille automatycznie (zaczynając od `shared/`, potem
@@ -618,8 +632,13 @@ Wskazuj wprost tryb z sekcji „TRYBY WYWOŁANIA" w `audyt-systemu-v4/SKILL.md`:
 
 | Kanał | Lokalizacja | Przeznaczenie |
 |---|---|---|
-| 🟢 **Stabilna** | `WERSJA STABILNA 07.10.2026/` + katalog rozpakowany | do codziennej pracy; **wieloplatformowa** — Claude + ChatGPT/Codex/API/Atlas + Grok |
-| 🟠 **Rozwojowa** | `WERSJA ROZWOJOWA/` + `Wersja rozwojowa rozpakowana/` | nowe mechanizmy przed promocją; ta sama warstwa host-neutralna |
+| 🟢 **Stabilna** | tag `stable-2026-10-07` (katalog `Wersja stabilna rozpakowana 07.10.2026/`) | do codziennej pracy; **wieloplatformowa** — Claude + ChatGPT/Codex/API/Atlas + Grok |
+| 🟠 **Rozwojowa** | `main`, katalog `Wersja rozwojowa rozpakowana/`; paczki ZIP w [Releases](https://github.com/Mopigcraft/Lex-Machina/releases) | nowe mechanizmy przed promocją; ta sama warstwa host-neutralna |
+
+> **Wersje = tagi git, paczki = GitHub Releases.** Repozytorium nie przechowuje już
+> ZIP-ów ani kopii wersji stabilnej. Wydanie: `git tag vRRRR.MM.DD && git push origin vRRRR.MM.DD`
+> — workflow `release.yml` sprawdza `CHECKSUMS.sha256` każdego skilla, buduje ZIP-y
+> i dołącza je do wydania wraz z `SHA256SUMS`.
 
 > **Zmiana wobec poprzednich wydań:** do 21.08.2026 warstwa host-neutralna była
 > wyłączną cechą kanału rozwojowego, a wersja stabilna niosła profil wyłącznie
@@ -629,9 +648,7 @@ Wskazuj wprost tryb z sekcji „TRYBY WYWOŁANIA" w `audyt-systemu-v4/SKILL.md`:
 
 > **Wydanie stabilne 07.10.2026** — promocja całej wersji rozwojowej (32 skille, stan
 > z 7.10.2026, m.in. `audyt-systemu-v4` 6.202, `shared` 3.99.16, `prawny-router-v3` 3.67,
-> `prawo-polskie-v2` 6.45). W chwili wydania kanały stabilny i rozwojowy są identyczne;
-> ZIP-y odpowiadają katalogom rozpakowanym bajt w bajt
-> (`scripts/verify_development_archives.py`).
+> `prawo-polskie-v2` 6.45). Stan wydania zachowuje tag `stable-2026-10-07`.
 
 Każda zmiana w systemie jest odnotowana w
 [**dzienniku audytów**](Wersja%20rozwojowa%20rozpakowana/audyt-systemu-v4/references/AUDIT-JOURNAL.md)

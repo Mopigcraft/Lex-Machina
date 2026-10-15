@@ -20,6 +20,9 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def auto_root() -> Path:
@@ -73,7 +76,7 @@ def main() -> int:
         js = m.group(1) + "\nconst G=" + json.dumps(grafy) + ";\nconsole.log(JSON.stringify(G.map(g=>{const r=rozetnij(g);return wsparcie(g,r.akt);})));\n"
         with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as f:
             f.write(js); sciezka = f.name
-        wynik = subprocess.run(["node", sciezka], capture_output=True, text=True, timeout=60)
+        wynik = subprocess.run(["node", sciezka], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
         if wynik.returncode != 0:
             bledy.append("silnik JS nie uruchamia się: " + wynik.stderr.strip()[:300])
         else:
