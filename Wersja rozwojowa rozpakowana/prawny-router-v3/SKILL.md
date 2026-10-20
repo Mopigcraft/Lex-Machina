@@ -39,89 +39,17 @@ dependencies:
     - dr-14-prawo-ue-miedzynarodowe-prawa-czlowieka
     - dr-15-compliance-iso-governance-audyt
     - dr-16-pisma-strategia-dowody-orzecznictwo
-  # 3.57: pełny zestaw 31 skilli = `dependencies` wpisu routera w .claude-plugin/marketplace.json
   called_by:
     - użytkownik (punkt wejścia — brak nadrzędnego skilla)
-inputs:
-  - opis sprawy użytkownika (tekst wolny)
-  - "opcjonalnie — pliki/dowody wgrane przez użytkownika"
-  - "opcjonalnie — plik kontekstu sesji (eksport z wcześniejszej rozmowy)"
-outputs:
-  - decyzja routingu ([1]-[11]) + wywołanie właściwego skilla PRIMARY/SECONDARY/FALLBACK
-  - "finalnie — odpowiedź tekstowa, widget (show_widget) lub dokument .docx/.pdf (create_file)"
-confidence: verified-online
-  # HARD GATE wymusza web_search/web_fetch dla każdego przepisu/sygnatury —
-  # router sam nie generuje treści prawnej z pamięci, tylko orkiestruje.
-escalation:
-  - "⛔ ZANIM orzekniesz o niedostępności JAKIEGOKOLWIEK źródła w kanale kodu
-    → sprawdź kształt żądania wg shared/DOSTEP-MASZYNOWY-API.md §1
-    (neutralny User-Agent, nagłówek Accept, ścieżka robocza zamiast roota,
-    ponowienie). HTTP 502 albo 200 ze stroną zastępczą bywa skutkiem naszego
-    żądania, nie awarii serwisu — zmierzone, flagi F-151/F-157"
-  - "brak możliwości pobrania tekstu aktu z ISAP → to stan NORMALNY, nie awaria:
-    kanał maszynowy ISAP jest martwy (Imperva, pętla 302). Brzmienie weryfikuj
-    przez api.sejm.gov.pl/eli lub eli.gov.pl (ten sam publikator, RZĄD 1),
-    ISAP powołuj jako adres dla człowieka. Dalej: references/ZRODLA-AKTOW-FALLBACK.md"
-  - brak dostępu do orzeczenia.ms.gov.pl / sn.pl / nsa.gov.pl
-    → wykonaj właściwą procedurę weryfikacji orzecznictwa; jeśli brak potwierdzenia
-    po dostępnych alternatywach, oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika
-  - brak źródła dla powołania po wykorzystaniu dostępnych alternatyw
-    → oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika, nie kontynuuj cicho
-  - "sprawa transgraniczna / prawo obce → pomiń prawo-polskie-v2 i ISAP,
-    ale NIE pomijaj weryfikacji — view shared/MIEDZYNARODOWE-GATES.md +
-    shared/HIERARCHIA-ZRODEL-MIEDZYNARODOWE.md, kanał RZĘDU 1 przełączony
-    na depozytariusza/EUR-Lex/bazy organów; pozostałe zasady HG aktywne (UP-5)"
-  - użytkownik zagubiony / brak klasyfikacji → [7] FALLBACK, nie zgadywanie dziedziny
-  - "podmiot (spółka/organ/sąd) oznaczony ⬛ [DO WERYFIKACJI] i brak dostępu do
-    rejestru (KRS/CEIDG) → STOP, poinformuj użytkownika, ZAKAZ generowania
-    pisma z podmiotem w statusie ⬛. ⚠️ Wcześniej sprawdź
-    shared/DOSTEP-MASZYNOWY-API.md §4: KRS działa bez klucza przez
-    api-krs.ms.gov.pl (odpis JSON jest ZANONIMIZOWANY względem PDF),
-    a CEIDG zwraca 401 bez tokenu — to nie jest brak dostępu do rejestru"
-  - "weryfikacja rachunku kontrahenta (biała lista VAT) → ✅ OSIĄGALNA
-    maszynowo od 2026-09-13c (F-157b): wl-api.mf.gov.pl, bez klucza,
-    /api/search/nip/{NIP}?date=RRRR-MM-DD oraz /api/search/nip-bank-account/
-    {NIP}/{26_CYFR}?date=... ⛔ data = dzień transakcji, nie dzisiejszy;
-    requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry:
-    shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis 'NIEOSIĄGALNA,
-    brak zamiennika' był prawdziwy do 2026-09-04 i przestał być prawdziwy
-    bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"
-limitations:
-  - nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)
-  - jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch
-  - nie ingeruje w kontrolę jakości pipeline'u pisma-procesowe-v3 (tylko deleguje)
-required_modules:
-  - shared/MCP-INTEGRACJA.md  # opcjonalny — patrz KROK 1; tani gdy MCP niepodłączone
-  - shared/PRAWO-HARDGATE.md
-  - shared/HIERARCHIA-ZRODEL.md
-  - shared/DOSTEP-MASZYNOWY-API.md  # JAK wywołać API/serwis (nagłówki, ścieżki,
-                                    # tokeny, limity); wczytaj przy kanale kodu
-  - shared/PORTALE-BRANZOWE-RZAD-2B.md
-  - shared/MOD-STEP-TRACKER.md
-  - shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md
-  - shared/MOD-KONTEKST-SESJI.md
-  - shared/MOD-OS-CZASU-PRZESLANEK.md
-  - shared/MOD-WYJATEK-GATE.md
-  - shared/MOD-SKAN-DOWODOW-KOMPLETNY.md
-  - shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md
-  - shared/MOD-PORCJOWANIE-DOWODOW.md
-  - shared/PRE-W2-VERIFICATION-GATE.md
-  - shared/CP-GATE.md
-  - shared/DISCLAIMER.md
-  - references/KROK0A-anonimizer.md
-  - references/KROK1-detekcja.md
-  - shared/TABELE-OPLAT.md   # kolejnosc siegania po kwoty; KROK 0 = czy strona
-                            # w ogole placi (art. 94-103 KSCU)
-  - references/PROFIL-LEKKI.md
-  - references/ZRODLA-AKTOW-FALLBACK.md
-  - dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md
-  - references/AUDYT-KLUCZA-ODPOWIEDZI.md
-  - shared/MOD-CN-GATE.md
-  - shared/MOD-REM-GATE.md
-  - dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md
-changelog: |
-  Wersja bieżąca: 3.71 (2026-10-10b, AUDYT-2026-10-10b): Opis: router przy sprawach prawnych, nie przy wzmiankach prawnych w pracy nad kodem; preferencje użytkownika w zakresie sprawy prawnej; PROFIL-LEKKI 1.3 z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów, typowa sprawa ≈221 kB ≈55-60 tys.); HARD-GATES-ORZECZNICTWO i ZRODLA-AKTOW-FALLBACK bez obchodzenia WAF.
-  Pełna historia: references/CHANGELOG.md (ZASADA 15).
+required_modules: [shared/MCP-INTEGRACJA.md, shared/PRAWO-HARDGATE.md, shared/HIERARCHIA-ZRODEL.md, shared/DOSTEP-MASZYNOWY-API.md,
+  shared/PORTALE-BRANZOWE-RZAD-2B.md, shared/MOD-STEP-TRACKER.md, shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md,
+  shared/MOD-KONTEKST-SESJI.md, shared/MOD-OS-CZASU-PRZESLANEK.md, shared/MOD-WYJATEK-GATE.md,
+  shared/MOD-SKAN-DOWODOW-KOMPLETNY.md, shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md, shared/MOD-PORCJOWANIE-DOWODOW.md,
+  shared/PRE-W2-VERIFICATION-GATE.md, shared/CP-GATE.md, shared/DISCLAIMER.md, references/KROK0A-anonimizer.md,
+  references/KROK1-detekcja.md, shared/TABELE-OPLAT.md, references/PROFIL-LEKKI.md, references/ZRODLA-AKTOW-FALLBACK.md,
+  dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md,
+  references/AUDYT-KLUCZA-ODPOWIEDZI.md, shared/MOD-CN-GATE.md, shared/MOD-REM-GATE.md,
+  dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md]
 ---
 
 ## ŁADOWANE ZAWSZE — BEZWZGLĘDNIE
@@ -187,6 +115,18 @@ Zapamiętaj mapę `skill → katalog` na sesję. Nazwa skilla w odwołaniu musi 
 w `dependencies.requires`; w przeciwnym razie zgłoś błąd ścieżki.
 
 ---
+
+## ESKALACJE I OGRANICZENIA (przeniesione z frontmattera)
+
+**WCZYTAJ (obowiązkowo, fail-closed):** `view prawny-router-v3/references/ESKALACJE-I-METADANE.md` — ZANIM orzekniesz o niedostępności jakiegokolwiek źródła, przy braku dostępu do rejestru (KRS/CEIDG), sprawie transgranicznej i weryfikacji rachunku kontrahenta (zawiera też `inputs`, `outputs`, `limitations`, `required_modules` z komentarzami).
+
+- ⛔ Przed orzeczeniem o niedostępności źródła w kanale kodu: kształt żądania wg `shared/DOSTEP-MASZYNOWY-API.md` §1.
+- Brak tekstu aktu z ISAP to stan normalny: ELI (api.sejm.gov.pl/eli, eli.gov.pl); dalej `references/ZRODLA-AKTOW-FALLBACK.md`.
+- Brak źródła po wyczerpaniu alternatyw → `⚠️ [NIEWERYFIKOWANE]` i informacja dla użytkownika, bez cichej kontynuacji.
+- Sprawa transgraniczna → weryfikacja NIE jest pomijana (UP-5). Brak klasyfikacji → [7] FALLBACK.
+- Podmiot ⬛ bez dostępu do rejestru → STOP; ZAKAZ pisma z podmiotem ⬛. Biała lista VAT: maszynowo osiągalna (`shared/DOSTEP-MASZYNOWY-API.md` §4).
+- Nie zastępuje porady radcy/adwokata (`shared/DISCLAIMER.md`, KROK 7 obowiązkowy).
+
 
 # Router Prawny v3 — Spis Treści i Sekwencja Główna
 
@@ -406,111 +346,20 @@ CZY WYNIK TO PISMO [3] lub [4]?
 └── ORZECZNICTWO? → Linki do baz + cytowania → opcja "Dołącz do pisma"
 ```
 
+
+**WCZYTAJ (obowiązkowo, fail-closed):** `view prawny-router-v3/references/BRAMKI-GLOWNE.md` — PRZED wykonaniem którejkolwiek z czterech bramek poniżej (CN-GATE, bramka chronologiczna, WYJ-GATE, REM-GATE). Bez odczytu pliku bramka jest niewykonana. Wyzwalacze są mechaniczne (liczbowe), nie ocenne; polecenia „krótko" / „szybko" / „tylko odpowiedz" NIE zwalniają z bramek (przy zerze trafień blok ma jedną linię, ale musi być).
+
 **BRAMKA NORMY CENTRALNEJ** (auto, PRZED wszystkimi pozostałymi) — CN-GATE:
+wyzwalacz: odpowiedź zawiera rozstrzygnięcie, zarzut, roszczenie albo kwalifikację → `view shared/MOD-CN-GATE.md`; dla każdej osi sporu jedna jednostka redakcyjna i CN-1 (czasowy), CN-2 (podmiotowy), CN-3 (przedmiotowy). ⛔ BLOKUJĄCA: „NIE" = ZAKAZ kontynuacji na tej normie; wykonuje się PRZED OŚ-GATE i WYJ-GATE; OVERRIDE tylko wg zasad z pliku.
 
-```
-WYZWALACZ MECHANICZNY: czy odpowiedź zawiera rozstrzygnięcie, zarzut,
-  roszczenie albo kwalifikację?  TAK → view shared/MOD-CN-GATE.md
-  → dla KAŻDEJ osi sporu wskaż JEDNĄ jednostkę redakcyjną i wykonaj CN-1…CN-3:
-     CN-1 zakres CZASOWY      — czy norma obowiązywała w chwili miarodajnej
-     CN-2 zakres PODMIOTOWY   — czy obejmuje TEN podmiot (definicja, nie intuicja)
-     CN-3 zakres PRZEDMIOTOWY — czy obejmuje TEN stan (warunek wstępny katalogu)
-  ⛔ BLOKUJĄCA. „NIE" w którymkolwiek punkcie → ZAKAZ kontynuacji na tej normie.
-     Wskaż normę zastępczą i powtórz CN-1…CN-3 albo stwierdź brak podstawy.
-  ⛔ ⬛ nie jest przejściem — przenosi oś sporu do REM-GATE jako rozstrzygnięcie
-     warunkowe.
-  ⛔ OVERRIDE tylko przy normie wyższego rzędu / zwyczaju / orzecznictwie
-     POWOŁANYM I ZWERYFIKOWANYM w tej turze, z jawnym wpisem ⚠️ OVERRIDE.
-     W dziedzinach zakazujących analogii na niekorzyść adresata normy
-     (typowo prawo karne materialne, w tym karne międzynarodowe) override
-     jest ZAKAZANY bezwzględnie — wątpliwość co do zakresu rozstrzyga się
-     na korzyść osoby, wobec której normę próbuje się zastosować.
-  ⛔ Wykonuje się PRZED OŚ-GATE i WYJ-GATE — nie ma sensu ustalać wersji
-     czasowej normy, która nie ma zastosowania.
-```
-
-Luka źródłowa F-163: jednostka redakcyjna należąca do katalogu z warunkiem
-wstępnym zapisanym w nagłówku grupy (nie w samym punkcie) odczytana ze źródła
-i poprawnie zacytowana, przy pominięciu, że stan faktyczny nie spełniał tego
-warunku wstępnego. Wszystkie bramki weryfikacyjne zadziałały; zarzut oparty
-na tej normie i tak był bezpodstawny.
-
-**BRAMKA CHRONOLOGICZNA** (auto, przed KROK 4) — DWA NIEZALEŻNE TORY:
-
-```
-TOR A — OŚ-GATE (wyzwalacz MECHANICZNY, liczbowy):
-  ≥2 daty w opisie stanu faktycznego → view shared/MOD-OS-CZASU-PRZESLANEK.md
-  → wykonaj OŚ-1…OŚ-4, blok wyjściowy WIDOCZNY w odpowiedzi przed konkluzją.
-  ⛔ Warunek jest liczbowy. ZAKAZ warunku ocennego („gdy sprawa wydaje się
-     temporalna") — ocena własnej potrzeby to tryb awarii mierzony przez F-113.
-  ⛔ NIE zwalniają z wykonania polecenia „krótko" / „szybko" / „tylko odpowiedz";
-     blok ma formę skróconą (jedna linia przy zerze trafień), ale musi być.
-
-TOR B — PEŁNA CHRONOLOGIA (dotychczasowy):
-  ≥2 dokumenty wieloetapowe LUB słowa kluczowe („chronologia"/„oś czasu"/
-  „timeline") → view chronologia-sprawy-v1/SKILL.md
-```
-
-Tory są niezależne i mogą odpalić razem. TOR A działa również na materiale
-jednodokumentowym (kazus w pięciu zdaniach) — TOR B na takim materiale nie
-odpalał wcale, co było luką źródłową flagi F-142.
+**BRAMKA CHRONOLOGICZNA** (auto, przed KROK 4) — TOR A (OŚ-GATE) i TOR B:
+TOR A: ≥2 daty w stanie faktycznym → `view shared/MOD-OS-CZASU-PRZESLANEK.md`, OŚ-1…OŚ-4, blok WIDOCZNY przed konkluzją. TOR B: ≥2 dokumenty wieloetapowe lub słowa „chronologia"/„oś czasu"/„timeline" → `view chronologia-sprawy-v1/SKILL.md`. Tory niezależne.
 
 **BRAMKA WYJĄTKÓW** (auto, przed KROK 4) — WYJ-GATE:
-
-```
-WYZWALACZ MECHANICZNY: ≥1 powołany artykuł w odpowiedzi lub piśmie
-  → view shared/MOD-WYJATEK-GATE.md
-  → wykonaj S1…S4, blok WYJ-GATE WIDOCZNY przy pierwszym powołaniu aktu.
-  ⛔ Warunek jest liczbowy: CZY CYTUJESZ ARTYKUŁ? TAK → wykonaj.
-     ZAKAZ warunku ocennego („gdy przepis wygląda na powiązany") — ocena
-     własnej potrzeby to tryb awarii mierzony przez F-113.
-  ⛔ Cztery zamiatania, każde policzalne i każde obowiązkowe w bloku:
-     S1 sąsiedztwo (poprzedni/następny + WSZYSTKIE indeksy górne: art. X¹ NIE
-        jest częścią art. X + nagłówek jednostki nadrzędnej),
-     S2 krawędzie jednostki (pierwszy i ostatni artykuł działu — tam stoją
-        klauzule „nie stosuje się"),
-     S3 akty powiązane (ELI /references + pytanie zamknięte o akt sektorowy
-        dla tej kategorii strony) — lex specialis bywa w INNEJ ustawie,
-     S4 przepisy przejściowe nowelizacji ujawnionych w S1–S3.
-  ⛔ Milczenie NIE jest odpowiedzią negatywną — każda pozycja zamyka się
-     wpisem „brak" albo nazwanym skutkiem. Pominięte zamiatanie = bramka
-     niewykonana, nawet gdy wynik i tak byłby pusty.
-  ⛔ NIE zwalnia z wykonania polecenie „krótko" / „tylko odpowiedz";
-     przy zerze trafień blok ma jedną linię, ale musi być.
-```
-
-WYJ-GATE i OŚ-GATE są niezależne i zwykle odpalają razem: OŚ-GATE odpowiada,
-KIEDY i który reżim, WYJ-GATE — CO TĘ REGUŁĘ WYŁĄCZA. Luka źródłowa F-144:
-art. 770 k.c. odczytany we właściwej wersji czasowej przy pominiętym
-art. 770¹ k.c. pod następnym numerem.
+wyzwalacz: ≥1 powołany artykuł → `view shared/MOD-WYJATEK-GATE.md`, zamiatania S1 (sąsiedztwo), S2 (krawędzie jednostki), S3 (akty powiązane), S4 (przepisy przejściowe); blok WIDOCZNY przy pierwszym powołaniu aktu; każda pozycja zamknięta wpisem „brak" albo nazwanym skutkiem.
 
 **BRAMKA ŚRODKA NAPRAWCZEGO** (auto, przed oddaniem) — REM-GATE:
-
-```
-WYZWALACZ MECHANICZNY: czy oddajesz analizę, opinię, raport albo pismo?
-  TAK → view shared/MOD-REM-GATE.md → wykonaj REM-1…REM-4:
-     REM-1 ZAKAZ SIEROCEGO ODDALENIA — każde oddalone roszczenie sparowane
-           z najmocniejszą alternatywą rozwiniętą NA TĘ SAMĄ GŁĘBOKOŚĆ;
-           przy braku alternatywy wpisz LISTĘ sprawdzonych reżimów
-     REM-2 ZAKAZ NON LIQUET — ⬛ produkuje rozstrzygnięcie warunkowe
-           („jeżeli X → A, jeżeli nie-X → B", każde z podstawą i środkiem).
-           „Nie badałem w tej turze" dopuszczalne WYŁĄCZNIE jako uzupełnienie,
-           nigdy zamiast. Wyjątek: ⬛ BLOKADA DOPUSZCZALNOŚCI
-     REM-3 ZNACZNIK ≠ SIŁA — rząd źródła zmienia STATUS POWOŁANIA, nigdy
-           objętości ani stanowczości argumentu. Instrument miękki
-           argumentuje się w pełni, ze znacznikiem i z jawną mocą wiążącą
-     REM-4 BUDŻET POKRYCIA — osie sporu oznaczone PEŁNA/CIENKA/⬛;
-           nierównomierność dopuszczalna, ale MUSI być zadeklarowana
-  ⛔ Blok REM-GATE WIDOCZNY w odpowiedzi, nie w przypisie.
-  ⛔ Wykonuje się PRZED HYBRID-VALIDATION.
-  ⛔ Bramka NIE nakazuje uwzględnienia roszczenia ani kompromisu — oddalenie
-     w całości jest prawidłowe, jeżeli przeszło REM-1.
-```
-
-Luka źródłowa F-161: cały aparat optymalizuje pod „nie powołaj złego
-przepisu" i nic nie mówi o „nie zaniż środka naprawczego". Zmierzone
-w partii P4 — obszar rubryki wart 35 pkt niedopracowany, bo droga główna
-została poprawnie zamknięta.
+wyzwalacz: oddajesz analizę, opinię, raport albo pismo → `view shared/MOD-REM-GATE.md`, REM-1 (zakaz sierocego oddalenia), REM-2 (zakaz non liquet), REM-3 (znacznik ≠ siła), REM-4 (budżet pokrycia); blok WIDOCZNY w odpowiedzi; wykonuje się PRZED HYBRID-VALIDATION.
 
 ---
 

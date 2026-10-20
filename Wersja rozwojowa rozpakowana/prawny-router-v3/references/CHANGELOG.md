@@ -623,3 +623,10 @@ to narracyjne cytaty flag. Instrukcje były więc **niewidoczne z produkcji**.
 
 ⛔ Bez duplikacji: pomiar i jego dowód zostają w `audyt-systemu-v4` (T25),
 w `shared` stoi wyłącznie wyciąg operacyjny.
+
+## Wpis przeniesiony z frontmattera SKILL.md
+
+  Wersja bieżąca: 3.71 (2026-10-10b, AUDYT-2026-10-10b): Opis: router przy sprawach prawnych, nie przy wzmiankach prawnych w pracy nad kodem; preferencje użytkownika w zakresie sprawy prawnej; PROFIL-LEKKI 1.3 z kosztami zmierzonymi (rdzeń ≈103 kB ≈28 tys. tokenów, typowa sprawa ≈221 kB ≈55-60 tys.); HARD-GATES-ORZECZNICTWO i ZRODLA-AKTOW-FALLBACK bez obchodzenia WAF.
+  Pełna historia: references/CHANGELOG.md (ZASADA 15).
+
+2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 620 -> 469 linii; treść bez zmian.

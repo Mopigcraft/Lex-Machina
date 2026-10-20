@@ -2159,3 +2159,5 @@ przepisano nieaktualne moduły układu, układu częściowego, organów i wierzy
 Skorygowano reguły reformy 2025/1085, przyszłe brzmienie art. 156 PrRestr,
 odesłanie art. 266f PrUp i pozostałości dawnej upadłości układowej.
 Testy techniczne nie stanowią niezależnego audytu każdej wykładni.
+
+- 2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 1337 -> 446 linii; treść bez zmian.

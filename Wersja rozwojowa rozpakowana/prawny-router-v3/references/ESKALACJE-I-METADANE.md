@@ -1,0 +1,84 @@
+# ESKALACJE I METADANE ROUTERA (przeniesione z frontmattera SKILL.md)
+
+Odczyt OBOWIĄZKOWY przed orzeczeniem o niedostępności źródła i przy eskalacji (treść bez zmian).
+
+```yaml
+  # 3.57: pełny zestaw 31 skilli = `dependencies` wpisu routera w .claude-plugin/marketplace.json
+inputs:
+  - opis sprawy użytkownika (tekst wolny)
+  - "opcjonalnie — pliki/dowody wgrane przez użytkownika"
+  - "opcjonalnie — plik kontekstu sesji (eksport z wcześniejszej rozmowy)"
+outputs:
+  - decyzja routingu ([1]-[11]) + wywołanie właściwego skilla PRIMARY/SECONDARY/FALLBACK
+  - "finalnie — odpowiedź tekstowa, widget (show_widget) lub dokument .docx/.pdf (create_file)"
+confidence: verified-online
+  # HARD GATE wymusza web_search/web_fetch dla każdego przepisu/sygnatury —
+  # router sam nie generuje treści prawnej z pamięci, tylko orkiestruje.
+escalation:
+  - "⛔ ZANIM orzekniesz o niedostępności JAKIEGOKOLWIEK źródła w kanale kodu
+    → sprawdź kształt żądania wg shared/DOSTEP-MASZYNOWY-API.md §1
+    (neutralny User-Agent, nagłówek Accept, ścieżka robocza zamiast roota,
+    ponowienie). HTTP 502 albo 200 ze stroną zastępczą bywa skutkiem naszego
+    żądania, nie awarii serwisu — zmierzone, flagi F-151/F-157"
+  - "brak możliwości pobrania tekstu aktu z ISAP → to stan NORMALNY, nie awaria:
+    kanał maszynowy ISAP jest martwy (Imperva, pętla 302). Brzmienie weryfikuj
+    przez api.sejm.gov.pl/eli lub eli.gov.pl (ten sam publikator, RZĄD 1),
+    ISAP powołuj jako adres dla człowieka. Dalej: references/ZRODLA-AKTOW-FALLBACK.md"
+  - brak dostępu do orzeczenia.ms.gov.pl / sn.pl / nsa.gov.pl
+    → wykonaj właściwą procedurę weryfikacji orzecznictwa; jeśli brak potwierdzenia
+    po dostępnych alternatywach, oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika
+  - brak źródła dla powołania po wykorzystaniu dostępnych alternatyw
+    → oznacz ⚠️ [NIEWERYFIKOWANE] i poinformuj użytkownika, nie kontynuuj cicho
+  - "sprawa transgraniczna / prawo obce → pomiń prawo-polskie-v2 i ISAP,
+    ale NIE pomijaj weryfikacji — view shared/MIEDZYNARODOWE-GATES.md +
+    shared/HIERARCHIA-ZRODEL-MIEDZYNARODOWE.md, kanał RZĘDU 1 przełączony
+    na depozytariusza/EUR-Lex/bazy organów; pozostałe zasady HG aktywne (UP-5)"
+  - użytkownik zagubiony / brak klasyfikacji → [7] FALLBACK, nie zgadywanie dziedziny
+  - "podmiot (spółka/organ/sąd) oznaczony ⬛ [DO WERYFIKACJI] i brak dostępu do
+    rejestru (KRS/CEIDG) → STOP, poinformuj użytkownika, ZAKAZ generowania
+    pisma z podmiotem w statusie ⬛. ⚠️ Wcześniej sprawdź
+    shared/DOSTEP-MASZYNOWY-API.md §4: KRS działa bez klucza przez
+    api-krs.ms.gov.pl (odpis JSON jest ZANONIMIZOWANY względem PDF),
+    a CEIDG zwraca 401 bez tokenu — to nie jest brak dostępu do rejestru"
+  - "weryfikacja rachunku kontrahenta (biała lista VAT) → ✅ OSIĄGALNA
+    maszynowo od 2026-09-13c (F-157b): wl-api.mf.gov.pl, bez klucza,
+    /api/search/nip/{NIP}?date=RRRR-MM-DD oraz /api/search/nip-bank-account/
+    {NIP}/{26_CYFR}?date=... ⛔ data = dzień transakcji, nie dzisiejszy;
+    requestId z odpowiedzi zapisz do śladu weryfikacji. Parametry:
+    shared/DOSTEP-MASZYNOWY-API.md §4. ⚠️ Poprzedni zapis 'NIEOSIĄGALNA,
+    brak zamiennika' był prawdziwy do 2026-09-04 i przestał być prawdziwy
+    bez zmiany w tym pliku — statusy osiągalności odtwarzaj testem T25"
+limitations:
+  - nie zastępuje porady radcy prawnego/adwokata — patrz shared/DISCLAIMER.md (KROK 7, obowiązkowy)
+  - jakość i czas odpowiedzi zależą od dostępności i jakości web_search/web_fetch
+  - nie ingeruje w kontrolę jakości pipeline'u pisma-procesowe-v3 (tylko deleguje)
+required_modules:
+  - shared/MCP-INTEGRACJA.md  # opcjonalny — patrz KROK 1; tani gdy MCP niepodłączone
+  - shared/PRAWO-HARDGATE.md
+  - shared/HIERARCHIA-ZRODEL.md
+  - shared/DOSTEP-MASZYNOWY-API.md  # JAK wywołać API/serwis (nagłówki, ścieżki,
+                                    # tokeny, limity); wczytaj przy kanale kodu
+  - shared/PORTALE-BRANZOWE-RZAD-2B.md
+  - shared/MOD-STEP-TRACKER.md
+  - shared/MOD-REJESTR-POKRYCIA-JEDNOSTEK.md
+  - shared/MOD-KONTEKST-SESJI.md
+  - shared/MOD-OS-CZASU-PRZESLANEK.md
+  - shared/MOD-WYJATEK-GATE.md
+  - shared/MOD-SKAN-DOWODOW-KOMPLETNY.md
+  - shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md
+  - shared/MOD-PORCJOWANIE-DOWODOW.md
+  - shared/PRE-W2-VERIFICATION-GATE.md
+  - shared/CP-GATE.md
+  - shared/DISCLAIMER.md
+  - references/KROK0A-anonimizer.md
+  - references/KROK1-detekcja.md
+  - shared/TABELE-OPLAT.md   # kolejnosc siegania po kwoty; KROK 0 = czy strona
+                            # w ogole placi (art. 94-103 KSCU)
+  - references/PROFIL-LEKKI.md
+  - references/ZRODLA-AKTOW-FALLBACK.md
+  - dr-16-pisma-strategia-dowody-orzecznictwo/modules/mod-narzedzie-kontroler-kompletnosci.md
+  - references/AUDYT-KLUCZA-ODPOWIEDZI.md
+  - shared/MOD-CN-GATE.md
+  - shared/MOD-REM-GATE.md
+  - dr-03-prawo-karne-wykroczenia-egzekucja/modules/mod-KK-kwalifikator-karnomaterialny.md
+```

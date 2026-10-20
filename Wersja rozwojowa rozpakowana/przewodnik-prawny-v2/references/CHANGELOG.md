@@ -11,3 +11,5 @@
 > Lokalizacja kanoniczna historii wersji (ZASADA 15). Plik założony 2026-08-23i;
 > wersje wcześniejsze nieodtworzone — ślad w audyt-systemu-v4/references/AUDIT-JOURNAL.md.
 
+
+2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 889 -> 472 linii; treść bez zmian.

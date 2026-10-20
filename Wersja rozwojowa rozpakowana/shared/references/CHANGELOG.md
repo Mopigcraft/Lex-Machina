@@ -1631,3 +1631,16 @@ zwolnienie ma być wnioskowane.
 
 Do reguły kolejności dopisany **KROK 0: czy strona w ogóle płaci** — przed
 sięgnięciem po jakąkolwiek tabelę.
+
+## Przeniesione z frontmattera SKILL.md (2026-10-20 refaktor, verbatim)
+
+  3.99.32 (2026-10-12b, AUDYT-2026-10-12b): ISAP-METRYKI-AKTOW, LEGAL-REGISTRY, terminy.md: UPEA t.j. 2026/1311 (⏳ 2026/1003 — art. 17 § 1a, od 28.10.2026), ochrona przyrody t.j. 2026/1315, megaustawa t.j. 2026/562, zmiany z 2026/815 (KSC, PKE, Prawo wodne, ochrona ludności); orka-bas-leksykon: metryki obrony Ojczyzny i UDP.
+  3.99.31 (2026-10-12a, AUDYT-2026-10-12a): walidator_cytowan.py na konsoli Windows (cp1250) zwraca kod 3, nie UnicodeEncodeError; agenci: liczba zmian po t.j. i zapis dziennika, PDF tylko w katalogu tymczasowym, walidator w recenzji, zapis orzeczenia z datą słownie (uwagi #109, #110).
+  3.99.29 (2026-10-10c, AUDYT-2026-10-10c): DOSTEP-MASZYNOWY-API: konektor SN otwiera przeglądarkę użytkownika (Edge/Chrome), weryfikację sn.pl przechodzi człowiek, bez podmiany User-Agenta.
+  3.99.22 (2026-10-08): usunięto archiwum tools/mcp-servers/mcp-servers-examples.zip (serwery MCP żyją w audyt-systemu-v4/mcp-servers/); CHECKSUMS bez wpisu
+  3.99.21 (2026-10-07): CBOSA-ADAPTER 1.2 — sekcja „powiązane” poza kandydatami, etykieta pola w zagnieżdżonej tabeli (PR #84)
+  3.99.20 (2026-10-07): walidator_cytowan z PR #95 — zgodność po pełnym identyfikatorze (Dz.U. rok+pozycja/ELI/WDU, sygnatura całością, artykuł z § i kodeksem) zamiast samych liczb; domena po hoście, https także w result_urls (zgł. #89)
+  3.99.19 (2026-10-07): walidator_cytowan — domena urzędowa po hoście URL-a, liczby cytatu jako całe liczby i wszystkie naraz (zgł. #89); plugin.json zsynchronizowany
+  3.99.18 (2026-10-07): CBOSA-ADAPTER — pola „sąd" i „data orzeczenia" w dokumencie są BEST-EFFORT (null + brak_metadanych), wymagane pozostają tylko zamknięty BODY/HTML, sygnatura i sentencja; twardy wymóg sądu/daty dawał fałszywe OUT_OF_SCOPE dla realnych orzeczeń (zgł. 2026-10-07)
+
+- 2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 283 -> 276 linii; treść bez zmian.

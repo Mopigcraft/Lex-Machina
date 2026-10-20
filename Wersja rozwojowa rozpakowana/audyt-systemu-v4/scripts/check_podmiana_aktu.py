@@ -20,6 +20,9 @@ WYMAGA SIECI (API ELI). Wynik: kandydaci do przeglądu — status RĘCZNY.
 Kod wyjścia: 0 brak kandydatów, 1 są kandydaci, 2 brak dostępu do ELI.
 """
 import argparse, concurrent.futures as cf, glob, json, os, re, sys, unicodedata, urllib.request
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _lex_common import routing_files
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -48,7 +51,7 @@ def aliasy(root):
 
 
 def wiersze(root):
-    pliki = [os.path.join(root, "prawo-polskie-v2", "ROUTING-MAP.md")] + \
+    pliki = [str(p) for p in routing_files(os.path.join(root, "prawo-polskie-v2", "ROUTING-MAP.md"))] + \
         sorted(glob.glob(os.path.join(root, "*", "MAPA-AKTOW.md")))
     for f in pliki:
         for i, l in enumerate(open(f, encoding="utf-8"), 1):

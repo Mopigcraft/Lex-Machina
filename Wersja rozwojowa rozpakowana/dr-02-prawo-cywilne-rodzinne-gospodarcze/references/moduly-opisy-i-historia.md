@@ -1,0 +1,420 @@
+# Opisy i historia modułów — dr-02-prawo-cywilne-rodzinne-gospodarcze
+
+Przeniesione ze SKILL.md (verbatim). Lista routingu modułów pozostaje w SKILL.md.
+
+**KOREKTA LICZNIKA 2026-08-14d:** poprzednia wartość („43” przy 42 modułach na dysku) była ZAWYŻONA O 1 JUŻ PRZED dodaniem mod-KPC-nieproces-czesc-ogolna — wykryte przy mechanicznej kontroli dysk/checklista. Po dodaniu nowego modułu rzeczywisty stan to 43 moduły i 43 wpisy [✓], zero modułów-widm.
+
+**NAPRAWA 2026-08-14c:** dodano `mod-KPC-prawomocnosc-granice-
+apelacji.md` — zamyka część F-65: prawomocność orzeczeń (365-366) i
+granice apelacji (378, 380-386), dotąd bez podstawy prawnej mimo że
+engine appellate-v8 z nich operacyjnie korzystał. PRZY OKAZJI
+zweryfikowano: "deklaracja bez pokrycia" ws. sprzeciwu od referendarza
+okazała się fałszywym alarmem — treść istnieje w pisma-proste-v2.
+
+**NAPRAWA 2026-08-14b:** dodano `mod-KSH-organy-spolki-zoo.md` — zamyka
+rdzeń F-68: organy sp. z o.o. (art. 201-254), najwyższy priorytet z
+raportu KSH, najpopularniejsza forma spółki w praktyce.
+
+**NAPRAWA 2026-08-14:** dodano `mod-PrRestr-dzial-VI-uklad.md` — zamyka
+rdzeń F-69: Dział VI Prawa restrukturyzacyjnego (Układ, art. 150-179)
+nie miał ani jednego numeru artykułu w systemie. Pełny opis:
+`audyt-systemu-v4/references/AUDIT-JOURNAL.md`.
+
+**NAPRAWA 2026-08-13b:** dodano `mod-ustawa-ochrona-praw-lokatorow-
+najem-eksmisja.md` — wypełnienie luki strukturalnej wykrytej w audycie
+zewnętrznym (standardowa procedura eksmisji dla 3 rodzajów najmu, dotąd
+bez żadnego dedykowanego modułu). Jednocześnie uzupełniono treść
+`mod-KRO-opieka-i-kuratela.md` (Dział I rozdz. III-IV + Dział II —
+wcześniej oznaczone "punkt startowy", teraz pełne opracowanie art.
+165-177 KRO). Pełny opis: `AUDIT-JOURNAL.md`, wpis
+AUDYT-2026-08-13-DR02-WYPELNIENIE-LUK.
+
+**NAPRAWA 2026-08-13:** poprzedni licznik "38 łącznie" już zliczał plik
+`mod-KRO-opieka-i-kuratela.md` fizycznie na dysku, ale sam moduł nie był
+wpisany do checklisty `[✓]` poniżej ani do `MAPA-AKTOW.md` — niespójność
+wykryta w audycie zewnętrznym (nie przez `audyt-systemu-v4`), naprawiona
+w tej sesji zgodnie z ZASADĄ 7 (kompletność dostawy).
+
+**Aktualizacja 2026-08-12 (NOWY MODUŁ):** `mod-KRO-opieka-i-kuratela.md`
+— Tytuł III KRO (art. 145-184), dotąd CAŁKOWICIE nieobecny —
+ODRĘBNY od pieczy zastępczej (inna ustawa). Obejmuje: opiekę nad
+małoletnim (hierarchia wyboru opiekuna art. 149, wymóg zezwolenia
+sądu art. 156), opiekę nad ubezwłasnowolnionym całkowicie, oraz
+SIEDEM rodzajów kurateli (art. 178-184, w tym rzadko omawiany
+⭐⭐⭐ kurator dla dziecka poczętego art. 182, i kurator osoby
+nieobecnej art. 184). Rozgraniczenie od kuratora sądowego
+(ustawa z 2001 — inny zawód/funkcja).
+
+  [✓] NOWY  mod-KRO-opieka-i-kuratela
+              (dodany 2026-08-12 — NAPRAWA 2026-08-13: moduł istniał jako
+               plik i był opisany w prozie powyżej, ale brakowało go w tej
+               checkliście i w MAPA-AKTOW.md — status "widmowy", wykryty i
+               zamknięty w ramach naprawy dokumentacji. Tytuł III KRO
+               [art. 145-184]: opieka nad małoletnim [Dział I, hierarchia
+               wyboru opiekuna art. 149, wymóg zezwolenia sądu art. 156],
+               opieka nad ubezwłasnowolnionym całkowicie [Dział II, art.
+               175-177 — treść SZCZEGÓŁOWA celowo NIE zbadana w tej
+               transzy, oznaczona jako punkt startowy], siedem rodzajów
+               kurateli [Dział III, art. 178-184, w tym kurator dla
+               dziecka poczętego art. 182 i kurator osoby nieobecnej art.
+               184]. ✅ UZUPEŁNIONE 2026-08-13b: Dział I rozdz. III-IV
+               [art. 165-174, nadzór nad opiekunem, obowiązek
+               sprawozdawczy roczny, zwolnienie opiekuna, rachunek
+               końcowy] oraz Dział II [art. 175-177, odesłanie do
+               Działu I, hierarchia opiekuna art. 176, ustanie z mocy
+               prawa] — wcześniej oznaczone "punkt startowy", teraz
+               pełne opracowanie. ⚠️ ROZGRANICZENIE: NIE dubluje mod-ubezwlasnowolnienie-
+               opieka-kuratela.md [ten ostatni pokrywa PROCEDURĘ
+               ubezwłasnowolnienia z KC/KPC oraz hierarchię opiekunów
+               z art. 176 KRO w PEŁNYM opracowaniu] — mod-KRO-opieka-i-
+               kuratela.md jest szerszym opracowaniem STRUKTURY całego
+               Tytułu III KRO i explicite odsyła do tamtego modułu przy
+               Dziale II, bez powielania treści. Rozgraniczenie także od
+               mod-piecza-zastepcza-rodzina-zastepcza.md [odrębna ustawa,
+               nie KRO] — zaznaczone już w treści modułu.)
+
+  [✓] NOWY  mod-ustawa-ochrona-praw-lokatorow-najem-eksmisja
+              (dodany 2026-08-13 — naprawa luki strukturalnej: pełna
+               regulacja najmu zwykłego/okazjonalnego/instytucjonalnego,
+               trzy różne limity kaucji [12x zwykły, 6x okazjonalny/
+               instytucjonalny — POPRAWKA względem wcześniejszej
+               uproszczonej wzmianki w mod-KW], art. 16 okres ochronny
+               1.11-31.03 i jego wyjątki, art. 1046 §5¹ KPC, art. 678
+               KC. Rozgraniczone od "dzikiego lokatora" [już pokryte w
+               mod-KC-cywilne-zobowiazania-odpowiedzialnosc, bez
+               duplikacji])
+
+  [✓] NOWY  mod-KW-ksiega-wieczysta-zakup-nieruchomosci
+              (dodany 2026-08-12, na żądanie użytkownika — dotąd
+               CAŁKOWICIE nieobecny temat: rękojmia wiary publicznej
+               ksiąg wieczystych (art. 5-9 KWiH), struktura 4 działów,
+               mechanizm wzmianki, przedawnienie roszczeń z najmu
+               art. 677/118 KC. Zbadany na podstawie materiałów
+               zewnętrznej kancelarii marketingowej — TRAKTOWANYCH
+               wyłącznie jako lista tematów, NIE źródło prawa —
+               wszystko zweryfikowane niezależnie.)
+
+  [✓] NOWY  mod-ustawa-frankowa-2026-procedura
+              (dodany 2026-08-07, na żądanie użytkownika — ustawa z
+               29.05.2026, weszła w życie 7.08.2026, łapie sprawy w
+               toku, posiedzenia niejawne fakultatywne, decyzja
+               każdorazowo sędziego referenta)
+
+  [✓] NOWY  mod-sklad-sadu-liczba-sedziow
+              (dodany 2026-08-07, na żądanie użytkownika — pełne
+               zestawienie składów wieloosobowych KPC/KPK, w tym
+               JEDYNY stały skład 5-osobowy: apelacja/kasacja od
+               wyroku dożywocia, art. 30 §2 KPK)
+
+  [✓] NOWY  mod-liczba-pelnomocnikow-strona-samodzielna
+              (dodany 2026-08-05, na żądanie użytkownika — KPC bez
+               limitu liczby pełnomocników [niezależnie od szczebla
+               sądu], KPK max 3 obrońców, strona samodzielna od
+               reformy 2005 r. — osłabione pouczenia sądu)
+
+  [✓] NOWY  mod-parabanki-chwilowki-lombardy-lichwa
+              (dodany 2026-08-05, na żądanie użytkownika — parabanki
+               bez definicji prawnej, nadzór KNF od 1.01.2024, MPKK
+               art. 36a ukk, ⚡ nowa ustawa lombardowa/projekt, lichwa
+               art. 304 KK trzy typy + wyzysk art. 388 KC)
+
+  [✓] NOWY  mod-pies-droga-rowerowa-odpowiedzialnosc
+              (dodany 2026-08-04, na żądanie użytkownika — art. 431
+               KC, odpowiedzialność właściciela psa za kolizję na
+               drodze rowerowej niezależnie od smyczy, przyczynienie
+               się rowerzysty, zasady pierwszeństwa C-13/C-16 —
+               patrz WARN-OTWARTE.md F-15 dla nierozstrzygniętej
+               rozbieżności źródeł co do jednego aspektu)
+
+  [✓] NOWY  mod-ustawa-kredyt-konsumencki-SKD
+              (dodany 2026-08-04, Reguła 7 audyt-systemu-v4, na wniosek
+               użytkownika: Sankcja Kredytu Darmowego, art. 45 u.k.k.
+               — katalog naruszeń art. 30/29/31-33/33a/36a-36c, spór
+               o "wykonanie umowy" art. 45 ust. 5 [TSUE C-744/24,
+               C-828/25 w toku], procedura 2-etapowa oświadczenie+pozew,
+               integracja z pisma-proste-v2 [SPM], analizator-umow-v1
+               [J4] i analizator-dowodow-v3 [MX KREDYT-SKD]. AUDYT
+               DODATKOWY: naprawiono phantom mapping w ROUTING-MAP.md —
+               "Ustawa o kredycie konsumenckim" wskazywała błędnie na
+               mod-ustawa-deweloperska)
+
+  [✓] OK    mod-KC-cywilne-zobowiazania-odpowiedzialnosc
+              (✅ PODZIELONY 2026-08-20 — naprawa F-78, priorytet 9
+               [1395 linii, urosło z pierwotnych 1036 przy skanie F-78]:
+               plik pod NIEZMIENIONĄ nazwą stał się indeksatorem [183
+               linie, zachowuje CORE/INTAKE/PROCEDURA stosowane zawsze],
+               treść 22 sekcji przeniesiona do 8 plików w podkatalogu
+               `kc-zobowiazania/` [max 329 linii/plik: Aneks D
+               służebności]. Zweryfikowano 100% integralność [22
+               nagłówki = 25 oryginału minus 3 pozostające w indeksie].
+               Naprawiono 1 odesłanie cross-file [bezumowne korzystanie
+               → osobny plik po podziale])
+              (✅ ROZBUDOWANO 2026-08-20 — sekcja 8, skarga pauliańska:
+               dodano 5 zweryfikowanych orzeczeń SN 2021-2025 na
+               podstawie materiału Wolters Kluwer, każde potwierdzone
+               niezależnie w 3+ źródłach [Rząd 2] przed wpisaniem: III
+               CZP 9/24 [model bilansowy, hipoteka NIE wyklucza skargi],
+               I CSK 3618/23 [wielokrotne rozporządzenia], III CZP 60/19
+               [REWOLUCJA — wyrok pauliański jako tytuł egzekucyjny
+               przeciwko osobie trzeciej wprost, zmiana redakcji
+               sentencji], III CZP 32/22 [osłabienie pozycji wobec
+               wierzycieli hipotecznych osoby trzeciej], III CZP 84/22
+               [legitymacja wierzyciela mimo upadłości dłużnika —
+               konkurencja z syndykiem]. ⚠️ 3 pozycje z materiału
+               źródłowego jawnie NIE dopisane — niezweryfikowane
+               niezależnie w tej sesji [I CSK 1119/23, V CSK 13/18, V
+               CSK 321/15] — plus art. 13f KSCU potwierdzony, ale nie
+               zintegrowany z regułami kosztów w tym module)
+
+  [✓] OK    mod-KC-spadki
+              (⭐ PODZIELONY 2026-08-21, ZASADA 13 / F-105 — 1036 l. przekraczało
+               próg; plik zachowuje nazwę jako indeksator, zostaje z dziedziczeniem
+               ustawowym, formami testamentu, przyjęciem/odrzuceniem i STRATEGIĄ)
+
+  [✓] NOWY  mod-KC-spadki-zachowek-dzial-rozrzadzenia
+              (wydzielony 2026-08-21 — zachowek [991-1011], dział spadku
+               [1035-1046 KC + 680-689 KPC], zapis zwykły i windykacyjny,
+               polecenie, wykonawca testamentu, wydziedziczenie, niegodność)
+
+  [✓] NOWY  mod-KC-spadki-dlugi-umowy-transgraniczne
+              (wydzielony 2026-08-21 — odpowiedzialność za długi [1030-1034³],
+               umowy o spadek i zrzeczenie [1047-1057], gmina/Skarb Państwa [935],
+               spadki transgraniczne i EPS, gospodarstwa rolne, spis inwentarza)
+              (v2.0, rozbudowane 2026-07-19: zapis zwykły/windykacyjny,
+               polecenie testamentowe, wykonawca testamentu,
+               wydziedziczenie [odróżnione od niegodności dziedziczenia],
+               pełna odpowiedzialność za długi spadkowe, zrzeczenie się
+               dziedziczenia, BRAK SPADKOBIERCÓW — dziedziczenie przez
+               gminę/Skarb Państwa art. 935 KC [odpowiedź na pytanie
+               użytkownika]; spadki transgraniczne/EPS i dziedziczenie
+               gospodarstw rolnych oznaczone jako punkt startowy)
+
+  [✓] OK    mod-KRO-rodzinne
+              (✅ PODZIELONY 2026-08-20 — naprawa F-78, priorytet 6
+               [1647 linii]: plik pod NIEZMIENIONĄ nazwą stał się
+               indeksatorem [110 linii, zachowuje ALERT LEGISLACYJNY +
+               FAZĘ 0 + TRYBY KWALIFIKATOR stosowane zawsze], treść 32
+               sekcji przeniesiona do 8 plików w podkatalogu
+               `kro-rodzinne/` [max 341 linii/plik], pogrupowanych
+               tematycznie: małżeństwo/ustrój majątkowy, rozwód/
+               separacja/eksmisja, podział majątku, alimenty [5
+               kategorii razem], pochodzenie dziecka [macierzyństwo/
+               ojcostwo/surogacja razem], rodzice-dzieci/władza/OZSS,
+               procedura/dowody/zmiana danych, referencje/strategia.
+               Zweryfikowano 100% integralność [32 nagłówki = 35
+               oryginału minus 3 pozostające w indeksie]. Naprawiono
+               przy okazji: 1 odesłanie cross-file [POKREWIEŃSTWO →
+               OBOWIĄZEK ALIMENTACYJNY] i 1 PRZEDTEM ISTNIEJĄCĄ
+               nieścisłość nazwy sekcji [odesłanie do "OPŁATY SĄDOWE"
+               zamiast właściwej "KALKULATOR" — treść była zawsze w tym
+               samym pliku, więc lokalizacja nie była błędna, tylko
+               nazwa])
+              (rozbudowany 2026-07-19: dodano EKSMISJĘ MAŁŻONKA [art. 58
+               §2-4, z zastrzeżeniem SN że nie zastępuje podziału
+               majątku], OBOWIĄZEK ALIMENTACYJNY szerszego kręgu
+               [dziadkowie-wnuki, rodzeństwo, zasada pomocniczości],
+               SUROGACJĘ [zasada mater semper certa est, szara strefa
+               prawna], KONKUBINAT [praktyczne braki i narzędzia
+               ochrony], ZMIANĘ IMIENIA I NAZWISKA [ustawa 2008,
+               odrębna od art. 59 KRO])
+
+  [✓] OK    mod-ubezwlasnowolnienie-opieka-kuratela
+              (dodany 2026-07-19: ubezwłasnowolnienie całkowite/
+               częściowe [art. 13/16 KC], procedura, hierarchia
+               opiekunów [art. 176 KRO], SYTUACJA BRAKU RODZINY —
+               mechanizm przerzucenia poszukiwania opiekuna na OPS/MOPS
+               [stały nabór kandydatów], kuratela dla osoby
+               niepełnosprawnej art. 183 KRO jako instytucja odrębna.
+               Odpowiedź na szczegółowe pytanie użytkownika)
+
+  [✓] OK    mod-KRO-zawarcie-malzenstwa-bigamia-transgraniczne
+              (rozbudowany 2026-07-19: dodano sekcje SEPARACJA
+               [art. 61¹-61⁶, różnice od rozwodu — rozkład tylko
+               zupełny nie trwały, brak zakazu ponownego małżeństwa
+               NIE działa — działa ODWROTNIE], USTRÓJ MAJĄTKOWY
+               MAŁŻEŃSKI/INTERCYZA [art. 31-54, katalog zamknięty
+               ustrojów], USTALENIE OJCOSTWA [uznanie + sądowe,
+               odrębne od zaprzeczenia, + zapowiedziana reforma 2026
+               domniemania z art. 62] — w pliku mod-KRO-rodzinne.md)
+
+  [✓] OK    mod-KRO-przysposobienie-adopcja-miedzynarodowa
+              (nadrobienie zaległości w SKILL.md — moduł już istniał:
+               przysposobienie krajowe [3 rodzaje: pełne/niepełne/
+               całkowite], przysposobienie międzynarodowe wg Konwencji
+               haskiej 1993 [zasada subsydiarności, oba kierunki —
+               cudzoziemiec w Polsce / Polacy za granicą], pasierb
+               transgraniczny)
+
+  [✓] OK    mod-piecza-zastepcza-rodzina-zastepcza
+              (dodany 2026-07-19: piecza zastępcza jako instytucja
+               ODRĘBNA od przysposobienia [opieka czasowa, więź prawna
+               z rodziną biologiczną trwa], rodzaje [spokrewniona —
+               "adopcja przez rodzinę" w potocznym rozumieniu,
+               niezawodowa, zawodowa w 3 wariantach, rodzinny dom
+               dziecka], procedura umieszczenia, zasada nierozdzielania
+               rodzeństwa nawet transgranicznie. Odpowiedź na pytanie
+               użytkownika o "opiekę zastępczą")
+              (dodany 2026-07-19: zawarcie małżeństwa [forma cywilna/
+               konkordatowa, przeszkody małżeńskie], bigamia [pełne
+               opracowanie cywilne + karne, konwalidacja], małżeństwo
+               zagraniczne [locus regit actum, transkrypcja, klauzula
+               porządku publicznego], bigamia zagraniczna w kraju
+               dopuszczającym, małżeństwo jednopłciowe [PRZEŁOMOWY
+               wyrok TSUE C-713/23 z 25.11.2025 + NSA z 20.03.2026 —
+               obowiązek transkrypcji dla par UE, temat żywy/sporny
+               politycznie]. Odpowiedź na pytanie użytkownika)
+              (v1.1.0 2026-07-02: +mediacja rozwodowa art.436/445² KPC,
+               +OZSS rozszerzone, +świadkowie w sprawach rozwodowych —
+               pointer do shared/MOD-ATAK-NA-SWIADKA.md, bez duplikacji)
+
+  [✓] NOWY  mod-KSH-organy-spolki-zoo
+              (dodany 2026-08-14 — naprawa F-68: KSH Tytuł III, Dział
+               I, Rozdz. 3, art. 201-254. Zarząd [201-211 — dwie
+               funkcje: prowadzenie spraw + reprezentacja, zakaz
+               ograniczenia reprezentacji wobec osób trzecich art.
+               204 §2, konflikt interesów art. 209], zgromadzenie
+               wspólników [227-254 — tryb obiegowy, kompetencje
+               zastrzeżone art. 228/absolutorium, progi uchwał 229/
+               230, zwyczajne vs nadzwyczajne, zastępcze zwołanie
+               przez radę nadzorczą art. 235 §2]. Rozgraniczone od
+               mod-KSH-spolki-handlowe [art. 299, zaskarżanie uchwał
+               — NIE duplikować])
+              (rozbudowany 2026-07-19: KONTROLA PRZEDSIĘBIORCY [Rozdział
+               5 Prawa przedsiębiorców — zawiadomienie 7-30 dni, sprzeciw
+               3 dni robocze, zakaz podwójnej kontroli] + REGLAMENTACJA
+               DZIAŁALNOŚCI [koncesja/zezwolenie/wpis do rejestru
+               regulowanego — z kluczową różnicą: koncesja jest UZNANIOWA,
+               pozostałe dwie NIE])
+
+  [✓] OK    mod-prawo-wekslowe-czekowe
+              (dodany 2026-07-19: struktura Prawa wekslowego/czekowego
+               1936, elementy konieczne weksla własnego/trasowanego,
+               weksel in blanco i deklaracja wekslowa [ciężar dowodu na
+               dłużniku], indos, awal, protest, TRZY różne terminy
+               przedawnienia wg adresata roszczenia, różnice weksel/czek.
+               Odpowiedź na audyt pokrycia prawa gospodarczego)
+
+  [✓] OK    mod-wekslowe-kontrola-przedsiebiorcy-koncesje
+              (dodany 2026-07-19: Prawo wekslowe/czekowe 1936
+               [essentialia negotii, indos, aval, protest, weksel in
+               blanco], kontrola przedsiębiorcy [Rozdział 5 Prawa
+               przedsiębiorców — terminy 7-30 dni, katalog wyjątków,
+               książka kontroli, sprzeciw], działalność regulowana/
+               koncesjonowana [3 poziomy reglamentacji, zasada
+               subsydiarności koncesji]. Odpowiedź na audyt pokrycia
+               prawa gospodarczego)
+
+  [✓] OK    mod-KSH-wrogie-przejecie-obrona-bialy-rycerz
+              (dodany 2026-07-18: brak definicji ustawowej "wrogiego
+               przejęcia" — termin ekonomiczny; techniki obrony
+               prewencyjne (zapisy statutowe, akcje nieme/uprzywilejowane,
+               złote spadochrony) i reaktywne (biały rycerz — z
+               zastrzeżeniem że to wciąż przejęcie, tylko friendly;
+               zatruta pigułka, MBO). Odpowiedź na pytanie użytkownika)
+
+  [✓] NOWY  mod-KSH-spolki-osobowe-rada-nadzorcza
+              (dodany 2026-08-20 — naprawa F-68: spółki osobowe [art.
+               22-124] i rada nadzorcza sp. z o.o. [art. 212-226],
+               dotąd opisane wyłącznie 1-wierszową tabelą bez podstawy
+               prawnej. Spółka jawna: odpowiedzialność solidarno-
+               subsydiarna [art. 22, 31], prowadzenie spraw vs
+               reprezentacja [art. 37-47, rozróżnienie wewnętrzne/
+               zewnętrzne], zakaz konkurencji [art. 56-57], rozwiązanie
+               i wystąpienie wspólnika [art. 58-66, mechanizm przejęcia
+               majątku przy 2 wspólnikach]. Spółka komandytowa: dwie
+               role wspólników [art. 102], odesłanie do spółki jawnej
+               [art. 103], sankcja firmy za nazwisko komandytariusza
+               [art. 104], suma komandytowa i wolność w granicach
+               wkładu [art. 111-112], komandytariusz WYŁĄCZNIE jako
+               pełnomocnik + sankcja art. 118 §2. Rada nadzorcza sp.
+               z o.o.: próg obligatoryjności 500k zł/25 wspólników
+               [art. 213], zakaz łączenia funkcji, zakaz wiążących
+               poleceń zarządowi [art. 219 §2], rozszerzenie uprawnień
+               i zawieszenie członka zarządu [art. 220]. ⚠️
+               [NIEWERYFIKOWANE RZĄD 1] większość treści)
+
+  [✓] NOWY  mod-ustawa-pomoc-ratowanie-restrukturyzacja-przedsiebiorcow
+              (dodany 2026-08-20 — naprawa F-98: ustawa z 16.07.2020
+               [Dz.U. 2020 poz. 1298], akt CAŁKOWICIE nieobecny w
+               systemie mimo bezpośredniego związku z Działem V PrRestr
+               [art. 50 tej ustawy uchyla dawny art. 139a PrRestr].
+               5 rozdziałów, art. 1-53: pomoc na ratowanie [pożyczka,
+               oprocentowanie stopa bazowa KE +4pp], tymczasowe wsparcie
+               restrukturyzacyjne [WYŁĄCZNIE MŚP, eskalacja do 18 mies.],
+               pomoc na restrukturyzację [formy debt-to-equity, limit
+               wynagrodzeń zarządu 400% średniej, odesłanie wprost do
+               art. 145 PrRestr]. ⚠️ [NIEWERYFIKOWANE RZĄD 1] — ISAP
+               niedostępny, treść oparta na 4 zgodnych źródłach RZĄD 2/3.
+               ⚠️ Numer aktualnego t.j. NIE potwierdzony)
+
+  [✓] NOWY  mod-ustawa-doradca-restrukturyzacyjny-zawod
+              (Dz.U. 2022 poz. 1007 [licencja, sprawdź nowszy t.j.] +
+               Pr. upadłościowe Dz.U. 2026 poz. 913 art. 157 + Pr.
+               restrukturyzacyjne Dz.U. 2022 poz. 2309 [sprawdź nowszy] +
+               nowelizacja Dz.U. 2025 poz. 1085; zawód regulowany —
+               licencja MS, BEZ samorządu/izby; syndyk/nadzorca/zarządca
+               jako posiadacz jednej licencji; rozgraniczenie od
+               mod-PrUpad-upadlosc-restrukturyzacja — status osoby vs
+               przebieg postępowania)
+
+  [✓] NOWY  mod-KPC-nieproces-czesc-ogolna
+              (dodany 2026-08-14d — naprawa F-65, CZĘŚĆ II: PIERWSZY
+               moduł KSIĘGI II KPC w systemie — dotąd cała Księga II
+               nie miała żadnego pokrycia. Tytuł I, art. 506-525:
+               wszczęcie na wniosek [506], właściwość rzeczowa — sądy
+               rejonowe [507], WAŻNE: WŁAŚCIWOŚĆ MIEJSCOWA WYŁĄCZNA
+               wg miejsca zamieszkania WNIOSKODAWCY [508 par. 1 —
+               ODWROTNIE niż w procesie, gdzie decyduje pozwany],
+               przekazanie sprawy [508 par. 2], ZAINTERESOWANY vs
+               UCZESTNIK [510 — rdzeń konstrukcyjny nieprocesu:
+               obowiązek wezwania przez sąd, zażalenie na odmowę
+               dopuszczenia, kurator z urzędu], wymogi wniosku [511 —
+               jak pozew, ale zamiast pozwanego wymienia się
+               zainteresowanych], odrębności dowodowe (przesłuchanie
+               bez przyrzeczenia, pod nieobecność uczestników),
+               apelacja vs zażalenie [518 — kryterium ISTOTY SPRAWY],
+               skarga kasacyjna [519(1) — katalog CZĘŚCIOWY].
+               UWAGA: źródło Rzędu 2 (5 niezależnych serwisów),
+               znacznik [ZALECANA WERYFIKACJA RZĄD 1]; jednostki, których
+               NUMERU nie odczytano, oznaczone w module jako [NR ?].
+               v1.0.0 = TYLKO część ogólna — sprawy spadkowe, rzeczowe,
+               wieczystoksięgowe i ubezwłasnowolnienie NADAL NIEPOKRYTE)
+
+  [✓] NOWY  mod-KPC-prawomocnosc-granice-apelacji
+              (dodany 2026-08-14 — naprawa F-65: prawomocność orzeczeń
+               [363-366 — formalna vs materialna, tryb stwierdzenia,
+               moc wiążąca, powaga rzeczy osądzonej z dwoma
+               ograniczeniami przedmiotowym/podmiotowym] i granice
+               apelacji [378, 380-386 — związanie granicami
+               zaskarżenia, apelacja pełna art. 382, zakaz
+               reformationis in peius art. 384 z niuansami dla
+               postępowania nieprocesowego]. Weryfikacja: "deklaracja
+               bez pokrycia" ws. sprzeciwu od referendarza okazała
+               się fałszywym alarmem, treść realnie istnieje w
+               pisma-proste-v2/references/SPH-inne.md)
+
+  [✓] OK    mod-rzeczy-znalezione-zasiedzenie
+              (dodany 2026-07-18: ustawa o rzeczach znalezionych 2015
+               [obowiązki znalazcy, znaleźne 1/10 wartości, nabycie
+               własności po roku/2 latach, kategorie szczególne — broń,
+               wojskowe, zabytki]; PEŁNE opracowanie zasiedzenia [art.
+               172-176 KC — zastępuje dotychczasowy 5-linijkowy szkielet
+               w ANEKS D mod-KC-cywilne-zobowiazania]: kryteria dobrej/
+               złej wiary, doliczanie posiadania poprzednika, ograniczenie
+               rolne 300 ha, pułapka współwłasności SN IV CSK 117/12;
+               potwierdzenie że przywłaszczenie mienia [karne] już dobrze
+               pokryte — bez duplikacji)
+              (dodany 2026-07-18: podstawa konstytucyjna art. 216 ust. 3
+               [ustawa + ważny interes społeczny], monopol na gry
+               hazardowe [Totalizator Sportowy], operator wyznaczony
+               [Poczta Polska] — w tym WAŻNE ZNALEZISKO: sporna,
+               wielokrotnie nowelizowana kwestia art. 165 §2 KPC dot.
+               skutku nadania pisma procesowego u różnych operatorów
+               pocztowych, ostrzeżenie dodane też w pisma-procesowe-v3.
+               Komplementarny do mod-ustawa-UOKIK — monopol PAŃSTWOWY
+               [celowy, ustawowy] vs pozycja dominująca [rynkowa])
+              (dodany 2026-07-18: rozgraniczenie od UZNK — struktura
+               rynku [monopol, pozycja dominująca, koncentracje] vs
+               uczciwość praktyk. Kontrola koncentracji z mocy ustawy,
+               3 rodzaje decyzji Prezesa UOKiK, kary i program leniency.
+               Odpowiedź na pytanie o "kwestie monopoli")

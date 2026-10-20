@@ -12,6 +12,9 @@ from pathlib import Path
 import re
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _lex_common import read_routing
+
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -101,7 +104,7 @@ def main():
     for label, path in [('SKILL', dr/'SKILL.md'), ('mapa aktów', dr/'MAPA-AKTOW.md'),
                         ('mapa pokrycia', dr/'MAPA-POKRYCIA.md'), ('routing', pp/'ROUTING-MAP.md'),
                         ('RATE-COMPLETENESS', shared/'RATE-COMPLETENESS.md')]:
-        check('rejestracja: '+label, MODULE in path.read_text())
+        check('rejestracja: '+label, MODULE in (read_routing(path) if path.name == 'ROUTING-MAP.md' else path.read_text()))
     check('historia nieudawana', 'Nie potwierdzono jednak pełnego rejestru zmian' in content)
     check('13 sekcji wykonawczych', len(re.findall(r'^## \d+\.', content, re.M)) == 13)
     check('limit modułu', len(content.splitlines()) <= 1000)

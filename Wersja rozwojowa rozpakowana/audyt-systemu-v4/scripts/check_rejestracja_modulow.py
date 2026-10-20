@@ -43,6 +43,9 @@ Kod wyjścia: 0 = brak rozbieżności, 1 = wykryto rozbieżności.
 import os
 import re
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _lex_common import read_routing
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -121,7 +124,7 @@ def inwentarz_globalny(baza):
 
 def main(baza):
     globalne = inwentarz_globalny(baza)
-    routing = czytaj(os.path.join(baza, 'prawo-polskie-v2', 'ROUTING-MAP.md'))
+    routing = read_routing(os.path.join(baza, 'prawo-polskie-v2', 'ROUTING-MAP.md'))  # indeks + routing/*.md
     sekcje = sekcje_routing_map(routing)
     if not sekcje:
         print('OSTRZEŻENIE: nie znaleziono ROUTING-MAP.md — kontrola 4 pominięta\n')

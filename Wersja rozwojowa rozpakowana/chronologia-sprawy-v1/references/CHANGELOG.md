@@ -1,5 +1,7 @@
 # CHANGELOG — chronologia-sprawy-v1
 
+- 2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 857 -> 475 linii; treść bez zmian.
+
 - 1.17 (2026-10-05o, AUDYT-2026-10-05o): graf i oś czasu: escapowanie, wartości domyślne, brakujące pola widoczne (F-232)
 
 - 1.16 (2026-10-05d, AUDYT-2026-10-05d): Szablony `assets/widget-timeline.html` (SAMPLE_DATA) i `assets/widget-graf-przyczynowy.html` (GRAF): literał danych poprzedzony komentarzem `lex:dane`. Host obsługujący show_widget z polem `data` (Lex Machina) wstawia dane sam i dokłada pasek eksportu (oś czasu; graf zachowuje własny pasek MOD-WIDGET-IO), więc model przekazuje tylko dane zamiast przepisywać szablon. Na innych hostach bez zmian.

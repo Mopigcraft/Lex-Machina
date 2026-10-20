@@ -1,5 +1,7 @@
 # CHANGELOG — analiza-sadowa-v6
 
+2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 869 -> 430 linii; treść bez zmian.
+
 - 6.16 (2026-10-10b, AUDYT-2026-10-10b): Ścieżki katalogu wyjściowego neutralne względem hosta; sekwencja wyszukiwania orzeczeń zgodna z Fazą 1-0.
 
 - 6.15 (2026-10-05j, AUDYT-2026-10-05j): Etap KOLEJNA-TURA: Przejście III, Przejście IV, format raportu końcowego i sekwencja po raporcie (każde przejście to osobna wiadomość) dołączane od drugiej tury wątku. Treść bez zmian.

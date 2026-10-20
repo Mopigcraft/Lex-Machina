@@ -46,7 +46,7 @@ view prawny-router-v3/references/JUDICIARY-LEGAL-STANDARD.md            (ustrój
 ## DELEGACJA DO ROUTERÓW DZIEDZINOWYCH
 
 Dla prawa polskiego router używa najpierw:
-- `prawo-polskie-v2/ROUTING-MAP.md`
+- `prawo-polskie-v2/ROUTING-MAP.md` (indeks; potem obowiązkowo `prawo-polskie-v2/routing/DR-xx.md` wskazanej dziedziny)
 - `DR-01–DR-16`
 
 Nie kieruj spraw bezpośrednio do pojedynczych modułów `prawo-polskie-v2`,

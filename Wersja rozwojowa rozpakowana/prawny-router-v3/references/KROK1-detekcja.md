@@ -131,7 +131,7 @@ V1 — Zidentyfikuj ustawy (KK, KPC, KW, KC, KP, KPA, ustawa szczególna)
 V2 — Klasyfikacja dziedzinowa i wczytanie skilla (obowiązkowe)
   KROK PODSTAWOWY (zawsze):
   view prawo-polskie-v2/SKILL.md
-  → ROUTING-MAP wskaże właściwy DR-skill (DR-01…DR-16) i moduł aktu (lazy loading).
+  → ROUTING-MAP (indeks) wskaże DR, a `prawo-polskie-v2/routing/DR-xx.md` właściwy DR-skill (DR-01…DR-16) i moduł aktu (lazy loading).
 
   SKRÓTY ZWERYFIKOWANE — dla 16 dziedzin istnieją oznaczone moduły "wejściowe"
   (tag [XX] w nagłówku). Jeśli sprawa jednoznacznie dotyczy jednej z nich, można
@@ -239,6 +239,7 @@ Nowe moduły postępowań publicznoprawnych:
 
 ```text
 view prawo-polskie-v2/ROUTING-MAP.md
+view prawo-polskie-v2/routing/DR-02.md   # przykład: plik DR wskazanego w indeksie, przed podaniem aktu/Dz.U.
 ```
 
 ## STANDARD KOMPLETNOŚCI PRAWA POLSKIEGO

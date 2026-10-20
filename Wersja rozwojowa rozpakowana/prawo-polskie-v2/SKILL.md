@@ -26,6 +26,7 @@ changelog: |
 Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Routing DR-01–DR-16 i decyzja o nieduplikowaniu treści prawnej pozostają bez zmian.
 
 1. `view prawo-polskie-v2/ROUTING-MAP.md` oznacza świeży odczyt lokalnego `ROUTING-MAP.md` tego skilla. Literalna ścieżka `/mnt/skills/user` nie jest wymagana.
+   Od 2026-10-20 `ROUTING-MAP.md` jest indeksem; `view prawo-polskie-v2/routing/DR-01.md` (itd.) oznacza odczyt sekcji DR z tego samego skilla. Literalna ścieżka `/mnt/skills/user` nie jest wymagana.
 2. `view <skill>/...` oznacza aktywację/odczyt wskazanego osobnego skilla przez mechanizm bieżącego hosta. Nie kopiuj DR-skilli ani `shared` do tej paczki.
 3. `view shared/<plik>` oznacza świeży odczyt z kanonicznego skilla `shared`; brak obowiązkowego zasobu = fail-closed, nie substytucja pamięcią modelu.
 4. `web_search` / `web_fetch` oznaczają świeżą weryfikację online przez dostępne narzędzie hosta. Dla `ROUTING-MAP.md` zachowaj istniejący reżim weryfikacji numerów Dz.U. i statusów.
@@ -100,6 +101,14 @@ Nie ładuj wszystkich DR-skills naraz. Wczytaj JEDEN pasujący.
 view prawo-polskie-v2/ROUTING-MAP.md
 ```
 
+`ROUTING-MAP.md` to **indeks** (reguły, tabela statusu, protokół integracji, tabela sekcja → plik). Tabele aktów leżą w `routing/`:
+
+1. Wczytaj `ROUTING-MAP.md` (indeks) i wybierz DR (tabela „Routing błyskawiczny” poniżej).
+2. **WCZYTAJ (obowiązkowo, fail-closed):** `view prawo-polskie-v2/routing/DR-01.md` … `DR-16.md` — plik właściwego DR (dla spraw na styku — dwa pliki) **przed** wskazaniem jakiegokolwiek aktu, numeru Dz.U. lub modułu. Bez tego pliku nie nazywaj aktu ani Dz.U.
+3. Wg potrzeby: `prawo-polskie-v2/routing/ORKA-BAS.md` (definicje ministerialne, przy analizie definicji legalnej), `prawo-polskie-v2/routing/SKILLE-WYKONAWCZE.md` (akty powołane w skillach wykonawczych i `shared`), `prawo-polskie-v2/routing/MONITORING.md` (akty ⏳/⚡ — przed stosowaniem aktu z vacatio legis).
+
+Pliki: `routing/DR-01.md` … `routing/DR-16.md`, `routing/ORKA-BAS.md`, `routing/SKILLE-WYKONAWCZE.md`, `routing/MONITORING.md`.
+
 ## Routing błyskawiczny
 
 | Fraza / temat sprawy | DR-skill |
@@ -144,6 +153,7 @@ view dr-[XX]-[Nazwa]/modules/mod-[akt].md
 DR-XX/MAPA-AKTOW.md         ← źródło prawdy dla danej dziedziny
         ↓  pull przy audycie DZU
 ROUTING-MAP.md               ← centralna mapa wszystkich 16 DR
+routing/DR-01…DR-16.md, ORKA-BAS.md, SKILLE-WYKONAWCZE.md, MONITORING.md ← tabele (od 2026-10-20; ROUTING-MAP.md = indeks)
         ↓  porównanie (FAZA 3 audytu)
 audyt-systemu-v4/references/mapa_dzu_*.md  ← rejestr Dz.U.
 ```
@@ -153,8 +163,10 @@ audyt-systemu-v4/references/mapa_dzu_*.md  ← rejestr Dz.U.
 1. Wczytaj zmieniony `dr-XX/MAPA-AKTOW.md`
 2. Porównaj z odpowiednią sekcją `ROUTING-MAP.md`
 3. Uzupełnij rozbieżności — nowe akty, zmienione t.j., nowe statusy
+   (po podziale 2026-10-20: sekcje `## DR-NN` leżą w `routing/DR-01.md` … `routing/DR-16.md`, licznik TABELA STATUSU w indeksie `ROUTING-MAP.md`, MONITORING w `routing/MONITORING.md`)
 4. Zaktualizuj liczniki w tabeli TABELA STATUSU
 5. Wpis z vacatio legis → dodaj do sekcji MONITORING na końcu ROUTING-MAP.md
+   (od 2026-10-20 ta sekcja to `routing/MONITORING.md`)
 6. Wywołaj `audyt-systemu-v4` TRYB DZU — zweryfikuje `mapa_dzu_*.md`
 
 ### Akty oczekujące (MONITORING) — reguły

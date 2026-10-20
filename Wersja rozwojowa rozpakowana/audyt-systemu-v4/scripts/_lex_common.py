@@ -36,6 +36,45 @@ DIRTOK = re.compile(r'[A-Za-z0-9_\-\./]+/')
 IDENT = re.compile(r'[-_0-9]')
 
 
+def routing_files(map_path):
+    """ROUTING-MAP.md (indeks) + routing/*.md w kolejności odesłań z indeksu (potem reszta alfabetycznie).
+
+    Od 2026-10-20 ROUTING-MAP.md to mały indeks; sekcje DR-NN, ORKA-BAS, SKILLE-WYKONAWCZE
+    i MONITORING leżą w prawo-polskie-v2/routing/. Parsery czytają indeks + te pliki.
+    """
+    from pathlib import Path
+    mp = Path(map_path)
+    out = [mp]
+    rdir = mp.parent / 'routing'
+    if rdir.is_dir():
+        try:
+            idx = mp.read_text(encoding='utf-8', errors='replace')
+        except OSError:
+            idx = ''
+        names = []
+        for m in re.finditer(r'routing/([A-Za-z0-9_\-]+\.md)', idx):
+            if m.group(1) in names:
+                continue
+            if not (rdir / m.group(1)).is_file():
+                # fail-closed: brak pliku z indeksu nie może wyglądać jak „mniej aktów”
+                raise FileNotFoundError(f'{mp.name} odsyła do brakującego routing/{m.group(1)}')
+            names.append(m.group(1))
+        names += sorted(p.name for p in rdir.glob('*.md') if p.name not in names)
+        out += [rdir / n for n in names]
+    return out
+
+
+def read_routing(map_path):
+    """Pełny tekst mapy routingu: indeks + routing/*.md (sklejone w kolejności indeksu)."""
+    parts = []
+    for p in routing_files(map_path):
+        try:
+            parts.append(p.read_text(encoding='utf-8', errors='replace'))
+        except OSError:
+            pass
+    return chr(10).join(parts)
+
+
 def skills(root):
     return sorted(d for d in os.listdir(root) if os.path.isfile(os.path.join(root, d, 'SKILL.md')))
 

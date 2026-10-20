@@ -36,3 +36,5 @@
   wariantu); rozszerzenie zakładki Ryzyka o sekcję Priorytety sprawy (aspekty
   główne/poboczne + metody badawcze z MOD-PRIORYTETY-ASPEKTOW); nowe pola
   blueprintu: `priorytetyAspektow`, `historiaStrategii`.
+
+- 2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 638 -> 367 linii; treść bez zmian.

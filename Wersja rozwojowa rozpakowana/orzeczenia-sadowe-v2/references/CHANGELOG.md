@@ -1,5 +1,7 @@
 # CHANGELOG — orzeczenia-sadowe-v2
 
+2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 1275 -> 394 linii; treść bez zmian.
+
 - 2.32 (2026-10-13e, AUDYT-2026-10-13e): Faza 1-Z pkt 7–8 — teza tylko ze stanowiska właściwego organu (nie zarzut, wniosek, stanowisko wnioskodawcy, zdanie odrębne); określenie sprawy z metryki porównywane z pytaniem przed lekturą tekstu, przy liście kandydatów odsiew po przedmiocie. Opis kontroli aplikacji: role fragmentów, przypięte określenie sprawy, korekta tylko przy NO_MATCH lub twierdzeniu nie w pełni wspartym, CASE_COURT_ATTRIBUTION. Kalibracja 1000 przypadków: trafność decyzji o korekcie 0,993, pominięte korekty 0.
 
 - 2.31 (2026-10-13d, AUDYT-2026-10-13d): Faza 1-Z — kontrola zgodności trafienia z pytaniem przed prezentacją: tożsamość i przedmiot sprawy z pobranego tekstu, treść orzeczenia tylko z dokumentu, każde kryterium pytania osobno, brak trafień = wprost (bez dopasowania zastępczego przy dopytaniu), zakaz zapowiedzi zamiast wyniku, analiza błędu z rejestru aplikacji; opis kontroli aplikacji: leksykalnej (CASE_CONTENT_GROUNDING) i znaczeniowej (CASE_SEMANTIC_CHECK — orzeczenia, interpretacje, TK/KIO/TSUE/UODO/ETPC, przepisy z ELI). ⛔ Klasa błędu z aplikacji 0.1.27: II SAB/Po 175/26 (informacja publiczna) podany jako orzeczenie o halucynacjach AI pełnomocnika.

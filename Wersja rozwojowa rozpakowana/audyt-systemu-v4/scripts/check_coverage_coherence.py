@@ -17,6 +17,8 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+
+from _lex_common import read_routing
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -89,7 +91,7 @@ def main(root: Path) -> int:
             problems.append(f"BRAK REJESTRU: {rel}")
     if len(drs) != 16:
         problems.append(f"LICZBA DR: {len(drs)} (oczekiwane 16)")
-    routing = read(root / "prawo-polskie-v2" / "ROUTING-MAP.md")
+    routing = read_routing(root / "prawo-polskie-v2" / "ROUTING-MAP.md")  # indeks + routing/*.md
     for full, _name in MOD.findall(routing):
         if not (root / full).exists():
             problems.append(f"BROKEN ROUTING PATH: {full}")

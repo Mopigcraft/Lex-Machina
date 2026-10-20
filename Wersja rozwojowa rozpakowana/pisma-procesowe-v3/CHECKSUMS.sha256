@@ -1,6 +1,6 @@
 8e0e8572a8aeaa775b31d8304d5cd731c60f18220901a00c803cd210e5519c2b  ./.claude-plugin/plugin.json
 789013820fcc56822f435daedb3b28dcdeb18cd0b867b54c198dcbac0a9c3894  ./PORTABILITY-MANIFEST.md
-de63b01f7f2f0fb7de573c740bb7cb56795b8fe7e2412a4d4c5401e5f2533efc  ./SKILL.md
+c52ec15e12280d0ccb40fe176a2006aa6605d9f18c571dddd91ddf24eec1a881  ./SKILL.md
 77bd8aa3589ce547a73e788411f728ca29eeaf434ba184afa457d4121a718b39  ./agents/openai.yaml
 49315dda7125ec5fc77ef5f2b96126d8b2121c6e72944b4702972e90f321d3ee  ./assets/icon.svg
 24aeef45d1ac550fcc48717deed6ac3904192dc3635519731430d48709ead40e  ./modules/MOD-ADMIN.md
@@ -24,7 +24,7 @@ f161dff0901ea5e5b5e097e61c2b3b3578b9715b0ddcb9ba241f9de8f83c90cc  ./modules/MOD-
 73c594e935fa0e57c848f1d69291f524d585215cfe16a1798b755f4c711c69bf  ./modules/MOD-STRESS-TEST.md
 f34f85adf8fdae3823931760917b0716fa16f196fa6ca7328d0d9446c2ef1246  ./modules/MOD-SZABLONY.md
 aab06de6474e0a91f59e802e090f5ba402123049e26458b0637109501f9dde67  ./references/AUTOMAT-STANOW.md
-b9f605c9430d7a821e9dd90791af4e1769374dc54b4b16dfa56a615998ad89e3  ./references/CHANGELOG.md
+8f72fba17e281756e9aff7ec80fddd5c8bf47d6d1b2cd2914ebad4712f31fa36  ./references/CHANGELOG.md
 3c3bc87292e646ce9ff137fecd989e7130ef3fae93ceca1d0090ebfd427e5d93  ./references/DODATKI.md
 522bb82f8bc1671c031fef7c2e11c4c226723e2f454acc9cfd2f2f7573dedd49  ./references/HISTORIA-ZMIAN-PLIKOW.md
 2645a900a3985caff239636104eade50ae7650433b6dc834ccdbfca3ee8498b9  ./references/MODULY-MAPA.md
@@ -33,6 +33,7 @@ d2ab390a8f0ed12592d6c8c47652a499a406499e41415514047554f83a5cb229  ./references/W
 f4bde3fd7f98d6d511c5def5d2d7f6100ab074727f396589916513068840071f  ./references/W2-SZCZEGOLY.md
 7fe2ef7a84d6284ea2b542b85eb402f1d3e909577c7358bda5cf863d2c2e9660  ./references/W3-PODMIOT-GATE.md
 3f8bdc04ec2d896ba3f78e4dad8fb845b478e7b4d82e90dbbfb9ab2f9195ed0c  ./references/W3-WERYFIKACJA.md
+6641109672ff022116254a391cd05c980e2f16d5ae08ba99cef1320dd6d576a9  ./references/bramki-startowe.md
 63452d484401f3866bd4b00b51432f7e72221331aae7b73d688270daf636b3c9  ./references/checklists/formal-validator.md
 1403cea37494e5ac11092b993277ec5e3689c59f3d58c0a6e20269cf4049604c  ./references/checklists/opponent-pleading-audit-checklist-v9.md
 bcb15aa4cfcbf227a834601816a5b4c83860588e451085cebcef7dfa8f9876e1  ./references/engines/admin-pleading-engine-v8.md
@@ -49,5 +50,9 @@ dc2ede3afbaf9e77689af2da37b8bc11fa53bc140847309dba40a4634a3c477e  ./references/e
 ddb8236184fc8e5827ac02d8a1d7cfe1c1b2b7f60f562d8879216f6de75f07a0  ./references/engines/strategic-theory-collapse-engine-v10.md
 de2b571c2f03ff432fc0076d99d1ddc409c8ea65745b83dfa56761a7ce679433  ./references/engines/theory-of-case-engine.md
 5dde69b7044cd544148fccd41e3329a0c89f7e130eaa22bc4a33a9c71241f70f  ./references/engines/timeline-conflict-engine-v10.md
+f045f61b16043af70976335070ad17a7480a4b35c5f4aabfefc1d1674ba9f398  ./references/etap-w1-przed-rama.md
+bce86afda05daf77c36cdf81fabf6fe5810ae1e678a16182b81e7a4d5e1fece1  ./references/etap-w2.md
+54f16d28443b7a383e2961f5186bc7fff01c0738e3df7e8b421fcb7d4fade2b6  ./references/etap-w3-hard-gate.md
+cd67a78ab3937c3239332eabdaa945d398866e5ec5aff2ce14fad4497ca18a96  ./references/krok-0-routing.md
 2a4fecf74fa5c91bfdb0cc41b9348a118429c76ed8ac32472b16108b39298576  ./references/templates/odpowiedz-na-pozew-expert-template.md
 20e6ca73a625d34e4a7ca8e4989ce9175fd94bfeb0e87980bab0ae8a549a4fd5  ./references/templates/pozew-expert-template.md

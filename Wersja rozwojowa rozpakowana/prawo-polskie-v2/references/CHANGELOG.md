@@ -1,5 +1,7 @@
 # CHANGELOG — prawo-polskie-v2
 
+- 2026-10-20 refaktor: progressive disclosure — szczegóły przeniesione do routing/ (DR-01..DR-16, ORKA-BAS, SKILLE-WYKONAWCZE, MONITORING), ROUTING-MAP.md 947 -> 139 linii (232937 -> 10224 B, indeks); treść bez zmian.
+
 - 6.61 (2026-10-12c, AUDYT-2026-10-12c): ⛔ KOREKTA błędu z 12b: t.j. UPEA Dz.U. 2026 poz. 1311 OBEJMUJE zm. 2026/1003 (obwieszczenie pkt 1 ppkt 3; art. 17 § 1a w dwóch brzmieniach — do 27.10.2026 i od 28.10.2026, odnośniki 13–14); wpisy „⏳ po t.j.: 2026/1003” usunięte. Obwieszczenia 1311 i 1315 odczytane z ELI (text.pdf, 2026-10-12). ROUTING-MAP wiersze UPEA.
 
 - 6.60 (2026-10-12b, AUDYT-2026-10-12b): ROUTING-MAP: UPEA t.j. 2026/1311 (⏳ 2026/1003 od 28.10.2026), ochrona przyrody t.j. 2026/1315; zmiany po t.j. z 2026/815 przy 20 aktach (Policja, SG, ŻW, SOP, obrona Ojczyzny, ochrona ludności, śpbp, ppoż., KSC, PKE, megaustawa, Prawo wodne, odpady, kontrola inwestycji); rzeczy znalezione — 2026/184 (od 19.05.2026, art. 187 KC: 6 miesięcy / rok). ELI 2026-10-12.

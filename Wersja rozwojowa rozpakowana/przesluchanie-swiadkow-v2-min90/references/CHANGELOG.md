@@ -8,6 +8,8 @@
 > potrzebujesz historii konkretnej naprawy (SKILL.md trzyma tylko krótkie
 > podsumowanie bieżącej wersji jako kontekst).
 
+- 2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 1786 -> 369 linii; treść bez zmian.
+
 - 3.32 (2026-10-06): PRAWO-HARDGATE-WITNESS: sn.pl wyszukiwarka-orzeczen, link = karta
 
 - 3.31 (2026-10-05j, AUDYT-2026-10-05j): Etap KOLEJNA-TURA: SELF-CHECK-PRZED-W3 i etapy W3–W6 (po obowiązkowej pauzie CHECKPOINT-W2) dołączane od drugiej tury wątku. Treść bez zmian.
@@ -58,3 +60,29 @@
 
 - 3.1: KROK 0 — wczytanie kontekstu sprawy z KROK 3B analizator-dowodow-v3 lub z pliku kontekstu sesji (MOD-KONTEKST-SESJI §4 TRYB IMPORT); mapowanie aspektów głównych/pobocznych → tezy; zatwierdzone dowody → blok B pytań; ostrzeżenia krzyżowe (HARDGATE-SD-01/02) → blok E (tematy zakazane z uzasadnieniem); wyniki MET-ACH/CA/NET/COMP/FTL → blok D (sprzeczności/ looping); chronologia wstępna → materiał do loopingu dat
 
+## Frontmatter - fragmenty przeniesione z SKILL.md (refaktor 2026-10-20, dosłownie)
+
+```yaml
+    - MOD-ATAK-NA-SWIADKA   # źródło siatki pojęć dla FUNDAMENT-A w BLOKU A
+                            # (SW-P1 relacja, SW-P3 źródło wiedzy, SW-A1 interes,
+                            # SW-A6 upływ czasu) — dodane 2026-08-23g, flaga F-122
+  required_gates:
+    - SD-VER-GATE-WITNESS
+    - PRAWO-HARDGATE
+    - PRIOR-TESTIMONY-GATE
+    - WITNESS-TYPE-GATE
+    - INTAKE-COMPLETENESS-GATE
+    - QUESTION-ADMISSIBILITY-GATE
+    - WITNESS-SCORING
+    - WITNESS-INTELLIGENCE
+    - FACT-EVIDENCE-MAPPING
+    - MODEL-SELECTION-GATE
+    - CROSS-EXAMINATION-GATE
+    - TEXT-FIRST-UI-GATE
+    - HARDGATE-SD-01
+    - HARDGATE-SD-02
+    - RZ-SHOW-GATE
+    - STEP-TRACKER-WITNESS
+    - PRZESLANKI-GATE
+    - FORMALNA-ZGODNOSC-GATE
+```

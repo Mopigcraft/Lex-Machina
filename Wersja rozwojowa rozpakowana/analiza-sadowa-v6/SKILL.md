@@ -190,361 +190,38 @@ Moduły specjalne: błędy pełnomocnika, groźba bezprawna, nagrania, terminy, 
 > cytacie; WD-3 (każdy obszar kontroli jawnie zamknięty) — przed prezentacją wyniku.
 > ⛔ Treść reguł NIE jest tu kopiowana (F-115, F-200) — obecność wywołania pilnuje T35.
 
-### ⛔ BRAMKI TOWARZYSZĄCE (dodane 2026-08-23, F-109)
-
-Hard gate wyżej kontroluje, CZY przepis został zweryfikowany. Poniższe dwie
-kontrolują, CZY ten przepis w ogóle powinien się w analizie znaleźć oraz czy
-liczba jest kompletna. Wykonuj je w PRZEJŚCIU IV (4A, pytania P6–P7):
-
-```
-□ [ANTY-FASADA + AF-6] Wykonaj self-check antyfasadowy z modułu kanonicznego:
-    view shared/SELF-CHECK-ANTY-FASADA.md
-  ⛔ Treść listy NIE jest tu kopiowana (F-115, 2026-08-23i). Poprzednia kopia
-    miała 1 z 2 pozycji: gdy F-117 dodała AF-6 do źródła, kopie nie zostały
-    zaktualizowane. Jedno miejsce prawdy = jedno miejsce aktualizacji.
-□ [DOMAIN-LOCK] Odpowiedź/pismo zawiera przepis SPOZA dziedziny wiodącej
-  (KK/KKS/KW/KPK/KPW przy torze cywilnym, pracowniczym lub administracyjnym —
-  albo odwrotnie)? NIE → OK. TAK → (a) konkretny FAKT wypełniający znamię,
-  nie skojarzenie tematyczne? (b) właściwy DR wczytany w TEJ odpowiedzi?
-  (c) przepis przeszedł PRAWO-HARDGATE w TEJ odpowiedzi? Którekolwiek NIE →
-  ⛔ USUŃ powołanie.  → `view shared/DOMAIN-LOCK.md`
-□ [RATE-COMPLETENESS] Występują odsetki / waloryzacja / wskaźnik zmienny
-  w czasie? NIE → OK. TAK → przedział zapisany + reżim rozstrzygnięty
-  (KC vs transakcje handlowe) + szereg podokresów BEZ LUK + znacznik na
-  KAŻDYM wierszu? NIE → nie podawaj kwoty łącznej, pokaż tabelę z ⬛.
-  → `view shared/RATE-COMPLETENESS.md`
-□ [STATUSY] Każdy przepis ma znacznik z ZAMKNIĘTEJ hierarchii czterech:
-  ✅ [VER] · 🟨 [KOTWICA-URZĘDOWA] · ⚠️ [NIEWERYFIKOWANE] · ⬛ [DO UZUPEŁNIENIA]?
-  Etykieta spoza tej listy = naruszenie hard gate (PRAWO-HARDGATE v2.5).
-```
-
+### ⛔ BRAMKI TOWARZYSZĄCE
+Cztery kontrole wykonywane w PRZEJŚCIU IV (4A, pytania P6–P7): ANTY-FASADA + AF-6, DOMAIN-LOCK, RATE-COMPLETENESS, STATUSY przepisów (zamknięta hierarchia czterech znaczników). Naruszenie = usuń powołanie / nie podawaj kwoty.
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/bramki-towarzyszace.md — MUSI być przeczytany przed Przejściem IV (pytania P6–P7).
 ---
 
 ### PRZEJŚCIE I — MAPOWANIE FAKTYCZNE
 **Cel: Wyłącznie bezsporny stan faktyczny. Zero oceny. Zero prawa.**
-
-> **CLAIM-VALIDATION przed mapowaniem:**
-> `view shared/CLAIM-VALIDATION.md`
-> Twierdzenia strony nieznajdujące oparcia w dostarczonych dokumentach → oznacz
-> `[⛔ NIEUDOWODNIONE]`; nie wpisuj do Mapy Faktycznej jako faktów.
-> Twierdzenia strony sprzeczne z dokumentami → oznacz `[⛔ SPRZECZNE]`;
-> wpisz do Mapy to co faktycznie wynika z materiału (nie wersję strony).
-
-Rejestruj WYŁĄCZNIE:
-- daty zdarzeń (chronologia bezwzględna — co do dnia)
-- kwoty, liczby, okresy (co do grosza, co do dnia)
-- podmioty i ich role (kto, w jakiej roli, w jakim momencie)
-- treść dokumentów (co dokument stwierdza dosłownie — nie co znaczy)
-- sekwencję czynności (kto co zrobił, kiedy, w jakiej kolejności)
-
-ZAKAZ w Przejściu I:
-- oceniania wiarygodności stron
-- interpretowania intencji lub motywów
-- stosowania przepisów prawa
-- formułowania wniosków prawnych
-- używania słów: naruszył, bezprawnie, celowo, oszukał
-
-Format wyniku:
-```
-MAPA FAKTYCZNA
-CHRONOLOGIA: [DD.MM.RRRR] → [zdarzenie dosłowne] → [podmiot] → [dokument/strona]
-PODMIOTY:    [nazwa] → [rola] → [relacja procesowa]
-KWOTY/DATY:  [pozycja] → [kwota lub data] → [dokument źródłowy]
-DOKUMENTY:   [nazwa] → [data] → [autor] → [treść kluczowa dosłownie]
-```
-
-PUNKT STOP przed Przejściem II:
-Czy Mapa Faktyczna zawiera ocenę prawną lub interpretację intencji?
-TAK → usuń, zastąp suchym opisem. NIE → przejdź dalej.
-
-> ⚑ KONIEC WIADOMOŚCI 1 — wyślij tę wiadomość. Przejście II w kolejnej wiadomości.
-
+CLAIM-VALIDATION przed mapowaniem (`[⛔ NIEUDOWODNIONE]`, `[⛔ SPRZECZNE]`), mapa faktów z odesłaniami do dokumentów; wysyłane jako OSOBNA WIADOMOŚĆ.
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/przejscie-1-2-fakty-kwalifikacja.md — przed wykonaniem Przejścia I.
 ---
 
 ### PRZEJŚCIE II — KWALIFIKACJA PRAWNA
 **Cel: Przypisanie faktów z Mapy Faktycznej do norm prawnych. Żadne nowe fakty nie powstają.**
-
-> ⚠️ REGUŁA BEZWZGLĘDNA — WERYFIKACJA w ELI (RZĄD 1) PRZED MACIERZĄ:
-> Przed wpisaniem JAKIEJKOLWIEK normy do macierzy fakt-norma Claude MUSI:
-> 1. Wywołać web_search z zapytaniem o treść konkretnego przepisu (eli.gov.pl / lexlege.pl / arslege.pl)
-> 2. Odczytać aktualną treść przepisu z wyników
-> 3. Dopiero wtedy wpisać normę do macierzy
->
-> ZAKAZ: Pisanie norm z pamięci bez uprzedniego web_search jest bezwzględnie zakazane.
-> Każdy przepis w macierzy musi mieć potwierdzenie z live-search w tej samej sesji.
-> Jeśli web_search nie zwróci treści przepisu — oznaczyć jako NIEWERYFIKOWALNY i nie stosować.
->
-> MINIMUM: Dla każdej ustawy (KP, KC, KPC, KK, KPK) — co najmniej jeden web_search
-> przed pierwszą normą z tej ustawy. Przy kolejnych przepisach z tej samej ustawy
-> wystarczy web_search jeśli zachodzi wątpliwość co do brzmienia lub aktualności.
-
-Sekwencja obowiązkowa:
-1. Pobierz fakty WYŁĄCZNIE z Mapy Faktycznej (Przejście I)
-2. Dla każdego faktu: web_search → odczytaj przepis → wpisz do macierzy
-3. Każde znamię ustawowe = osobna linia
-4. Oznacz: SPEŁNIONE / NIESPEŁNIONE / WĄTPLIWE / BRAK DANYCH
-5. Macierz fakt-norma (format poniżej)
-6. Fakty bez normy → "procesowo neutralne"
-7. Dwie wykluczające się kwalifikacje tej samej kwoty → uruchom MOD-D
-
-Format macierzy:
-```
-MACIERZ FAKT-NORMA
-Fakt nr | Norma (art. X ustawy Y) [zweryfikowano: URL] | Znamię | Status | Uwaga
-
-ZNAMIONA SPORNE:    [znamię] → [co jest potrzebne do wykazania]
-ZNAMIONA NIESPORNE: [znamię] → [dokument potwierdzający]
-FAKTY NEUTRALNE:    [fakt] → [dlaczego bez normy]
-```
-
-PUNKT STOP przed Przejściem III:
-Czy każda norma pochodzi z ELI (RZĄD 1, kanon E-1…E-5) / oficjalnego źródła ZWERYFIKOWANEGO web_search w tej sesji?
-Czy żaden wniosek nie opiera się na fakcie spoza Mapy Faktycznej?
-TAK do obu → przejdź dalej. NIE → uzupełnij brakujące web_search przed przejściem dalej.
-
-> ⚑ KONIEC WIADOMOŚCI 2 — wyślij tę wiadomość. Przejście III w kolejnej wiadomości.
-
+REGUŁA BEZWZGLĘDNA: weryfikacja każdej normy w ELI (RZĄD 1) PRZED macierzą fakt-norma; hard gate z PRAWO-HARDGATE.
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/przejscie-1-2-fakty-kwalifikacja.md — przed wykonaniem Przejścia II.
 ---
 
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ### PRZEJŚCIE III — ANALIZA ADVERSARIALNA + WERYFIKACJA PIERWSZA
 **Cel: Analiza z trzech perspektyw + pierwsze ponowne przeczytanie dokumentów źródłowych.**
-
-#### 3A. Trzy perspektywy
-
-A. Perspektywa sędziego
-- Co sąd zobaczy czytając pisma po raz pierwszy?
-- Które twierdzenia są udowodnione, które gołosłowne?
-- Gdzie ciężar dowodu (art. 6 KC / art. 232 KPC)?
-- Które fakty sąd uzna za niesporne bez dowodu?
-
-B. Perspektywa pełnomocnika strony przeciwnej
-- Jakie zarzuty procesowe wobec naszych pism?
-- Które fakty naszej narracji są wewnętrznie sprzeczne?
-- Gdzie nasze dowody są najsłabsze lub brakuje ich?
-- Jakie kontrargumenty merytoryczne są najsilniejsze?
-
-C. Perspektywa własnego pełnomocnika
-- Które roszczenia/zarzuty mają najsilniejsze podstawy?
-- Co wzmocnić przed następnym pismem?
-- Jakie dowody są niezbędne a jeszcze nie złożone?
-- Czy taktyka jest spójna z teorią sprawy?
-
-#### 3B. Moduły V10 — obowiązkowe
-
-```
-V10-1 CONTRADICTION INTELLIGENCE
-  Sprzeczności WEWNĄTRZ pism tej samej strony
-  Format: [Pismo A, data, str.X] vs [Pismo B, data, str.Y] → [opis sprzeczności]
-
-V10-2 SELF-DESTRUCTIVE ADMISSIONS
-  Test: "Czy to zdanie w piśmie PRZECIWNIKA szkodzi mojemu klientowi?"
-  TAK → przyznanie szkodliwe
-  Format: [Pismo, data, str.X] → [treść] → [dlaczego szkodliwe] → [waga: Krytyczna/Wysoka/Średnia]
-
-V10-3 TIMELINE CONFLICT
-  Konflikty chronologiczne między dokumentami
-  Zestawiaj daty z Mapy Faktycznej z twierdzeniami w pismach
-  Format: [Data wg dok.A] vs [Data wg pisma B] → [opis konfliktu]
-
-V10-4 CROSS-PLEADING CONSISTENCY
-  Spójność twierdzeń TEJ SAMEJ strony między pismami
-  Format: [Twierdzenie w piśmie DD.MM.RRRR] vs [Twierdzenie w piśmie DD.MM.RRRR]
-
-V10-5 STRATEGIC THEORY COLLAPSE
-  Czy teoria sprawy strony jest wewnętrznie spójna?
-  Format: [Teza 1] + [Teza 2] → [dlaczego się wykluczają] → [skutek procesowy]
-
-V10-6 JUDICIAL CREDIBILITY SIMULATION
-  Symulacja oceny wiarygodności przez sąd
-  Format: [strona] → [ocena 1-10] → [uzasadnienie: ton / rzeczowość / spójność]
-```
-
-#### 3C. WERYFIKACJA PIERWSZA — ponowne przeczytanie dokumentów
-
-> To jest PIERWSZE z dwóch obowiązkowych przeczytań weryfikacyjnych.
-> Cel: skonfrontowanie wniosków z Przejść I-III z dokumentami źródłowymi.
-
-> ⚠️ REGUŁA BEZWZGLĘDNA — MECHANIZM PONOWNEGO CZYTANIA:
-> "Ponowne przeczytanie" NIE oznacza odwołania się do zawartości kontekstu.
-> Oznacza jawne wywołanie view na każdy plik źródłowy, który zawiera dowód
-> podlegający weryfikacji w danym kroku.
->
-> PRZED krokiem W1: wywołaj view na każdy dokument/upload wymieniony w Mapie Faktycznej
->   dla co najmniej 3 faktów kluczowych (tych o największym wpływie na predykcję).
-> PRZED krokiem W2: wywołaj view na fragment pisma procesowego zawierający
->   każdą sprzeczność V10-1 i V10-2 o wadze KRYTYCZNA lub WYSOKA.
->
-> ZAKAZ: Opisywanie "ponownego przeczytania" bez uprzedniego wywołania view
->   jest bezwzględnie zakazane. Jeśli view nie jest możliwy (plik niedostępny)
->   — oznaczyć fakt jako NIEZWERYFIKOWANY i obniżyć poziom pewności do WĄTPLIWY.
->
-> FORMAT OBOWIĄZKOWY przed każdym krokiem W:
->   [view: {katalog załączników hosta}/{plik}, strony {X}-{Y}]
->   (claude.ai: /mnt/user-data/uploads/; UNIVERSAL-RUNTIME-ADAPTER §4)
->   → co odczytano / potwierdzono / skorygowano
-
-```
-WERYFIKACJA PIERWSZA — PROTOKÓŁ
-
-Krok W1: Fakty kluczowe — view + drugie przeczytanie
-  OBOWIĄZEK: view na dokumenty źródłowe dla min. 3 faktów kluczowych
-  [ ] Czy każdy fakt z Mapy Faktycznej rzeczywiście wynika z dokumentu?
-  [ ] Czy data / kwota / podmiot odczytane dokładnie (nie przybliżone)?
-  [ ] Czy żaden fakt nie pominięty ze względu na wygodę narracyjną?
-
-Krok W2: Sprzeczności V10 — view + weryfikacja
-  OBOWIĄZEK: view na pisma zawierające sprzeczności KRYTYCZNE i WYSOKIE
-  [ ] Czy sprzeczność rzeczywiście istnieje czy to błąd odczytu?
-  [ ] Czy oba pisma przeczytane w całości (nie tylko fragment)?
-  [ ] Czy kontekst zmienia ocenę sprzeczności?
-
-Krok W3: Przyznania V10-2 — weryfikacja
-  [ ] Czy przyznanie jest samooskarżające czy neutralne w kontekście?
-  [ ] Czy strona miała alternatywne wyjaśnienie w tym samym piśmie?
-
-Krok W4: Lista korekt:
-  [nr] → [korekta] → [zmiana w ustaleniach]
-
-STATUS WERYFIKACJI PIERWSZEJ: UKOŃCZONA / WYMAGA UZUPEŁNIENIA
-```
-
-Format wyniku Przejścia III:
-```
-RAPORT ADVERSARIALNY + WERYFIKACJA PIERWSZA
-Perspektywa sędziego:    [...]
-Perspektywa przeciwnika: [...]
-Perspektywa własna:      [...]
-V10-1 Sprzeczności:      [lista z numeracją, pismem, stroną]
-V10-2 Przyznania:        [lista z wagą]
-V10-3 Konflikty chron.:  [lista]
-V10-5 Teoria spójna?:    [TAK/NIE + uzasadnienie]
-V10-6 Wiarygodność:      [tabela stron]
-WERYFIKACJA PIERWSZA:    [korekty / STATUS]
-```
-
-PUNKT STOP przed Przejściem IV:
-Czy Weryfikacja Pierwsza ma status UKOŃCZONA? TAK → przejdź. NIE → zakończ weryfikację.
-
-> ⚑ KONIEC WIADOMOŚCI 3 — wyślij tę wiadomość. Przejście IV w kolejnej wiadomości.
-
+- 3A. Trzy perspektywy (sędzia, strona, przeciwnik).
+- 3B. Moduły V10 — obowiązkowe (V10-1 CONTRADICTION INTELLIGENCE i pozostałe).
+- 3C. WERYFIKACJA PIERWSZA — jawne `view` na dokumenty źródłowe (min. 3 fakty kluczowe), konfrontacja wniosków I–III.
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/przejscie-3-adversarialna.md — przed wykonaniem Przejścia III.
 ---
 
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ### PRZEJŚCIE IV — AUTOKOREKTA + WERYFIKACJA OSTATECZNA
 **Cel: Spójność I-III + drugie i ostatnie obowiązkowe przeczytanie weryfikacyjne.**
-
-#### 4A. Pięć pytań autokorekty P1-P5
-
-```
-P1. ZAKORZENIENIE
-    Czy każdy wniosek prawny z II wynika z konkretnego faktu z I?
-    NIE → usuń lub wskaż lukę dowodową.
-
-P2. IZOLACJA
-    Czy ocena prawna z II nie zanieczyszcza ustaleń faktycznych z I?
-    TAK (zanieczyszczenie) → wróć do I i oczyść mapę.
-
-P3. SYMETRIA
-    Czy w III przeanalizowano słabości OBU stron z równą starannością?
-    NIE → uzupełnij słabiej opracowaną stronę.
-
-P4. SPÓJNOŚĆ NARRACYJNA
-    Czy teoria sprawy z III jest spójna z chronologią z I?
-    NIE → zidentyfikuj punkt sprzeczności, wyjaśnij lub skoryguj.
-
-P5. POZIOMY PEWNOŚCI
-    Czy każdy wniosek ma oznaczony poziom: PEWNE/PRAWDOPODOBNE/WĄTPLIWE/SPEKULATYWNE?
-    NIE → dodaj oznaczenia przed raportem.
-
-P6. IZOLACJA DZIEDZINOWA  (DOMAIN-LOCK, dodane 2026-08-23 — F-109)
-    Czy w raporcie jest kwalifikacja spoza dziedziny wiodącej sprawy?
-    TAK → czy opiera się na KONKRETNYM fakcie z PRZEJŚCIA I, a nie na
-          skojarzeniu tematycznym (dług→oszustwo, konflikt→znęcanie)?
-    NIE → ⛔ usuń kwalifikację. Sygnalizacja wątku bez podstawy faktycznej
-          wyłącznie opisowo, BEZ numeru artykułu (DL-5).
-    → view shared/DOMAIN-LOCK.md
-
-P7. KOMPLETNOŚĆ SZEREGU  (RATE-COMPLETENESS, dodane 2026-08-23 — F-109)
-    Czy predykcja §9 lub wyliczenie roszczenia opiera się na odsetkach /
-    waloryzacji / wskaźniku zmiennym w czasie?
-    TAK → czy szereg podokresów pokrywa cały przedział BEZ LUK, z rozdzielonym
-          reżimem i znacznikiem na każdym wierszu?
-    NIE → ⛔ nie podawaj kwoty łącznej; tabela z jawnymi ⬛.
-    → view shared/RATE-COMPLETENESS.md
-```
-
-#### 4B. WERYFIKACJA OSTATECZNA — ponowne przeczytanie dokumentów
-
-> To jest DRUGIE i ostatnie obowiązkowe przeczytanie weryfikacyjne.
-> Cel: niezależna kontrola raportu końcowego przed jego wydaniem.
-> Różnica od Weryfikacji Pierwszej: skupia się na kompletności i spójności
-> całego raportu, nie tylko poszczególnych ustaleń.
-
-> ⚠️ REGUŁA BEZWZGLĘDNA — MECHANIZM PONOWNEGO CZYTANIA:
-> Identyczna reguła jak w Weryfikacji Pierwszej — obowiązkowe wywołanie view.
->
-> PRZED krokiem O1: wywołaj view na każdy dokument zawierający dowód
->   wpływający na predykcję §9 raportu końcowego — dla każdego wariantu
->   predykcji osobno (wariant główny + alternatywny).
-> PRZED krokiem O2: wywołaj view na fragmenty pism procesowych zawierające
->   każde przyznanie V10-2 o wadze KRYTYCZNA — sprawdź pełny akapit.
->
-> ZAKAZ: Opisywanie "ponownego przeczytania" bez uprzedniego wywołania view
->   jest bezwzględnie zakazane. Identyczne konsekwencje jak w Weryfikacji Pierwszej.
->
-> FORMAT OBOWIĄZKOWY przed każdym krokiem O:
->   [view: {katalog załączników hosta}/{plik}, strony {X}-{Y}]
->   (claude.ai: /mnt/user-data/uploads/; UNIVERSAL-RUNTIME-ADAPTER §4)
->   → co odczytano / potwierdzono / skorygowano
-
-```
-WERYFIKACJA OSTATECZNA — PROTOKÓŁ
-
-Krok O1: Dowody kluczowe — view + drugie przeczytanie
-  OBOWIĄZEK: view na dokumenty zawierające dowody wpływające na predykcję §9
-  [ ] Wróć do każdego dowodu wpływającego na predykcję (§9 raportu)
-  [ ] Czy dowód odczytany w pełnym kontekście dokumentu?
-  [ ] Czy nie istnieje fragment tego samego dokumentu przeczący ustaleniu
-      — pominięty w Przejściu I?
-
-Krok O2: Pisma procesowe — view + drugie przeczytanie
-  OBOWIĄZEK: view na akapity zawierające przyznania KRYTYCZNE (V10-2)
-  [ ] Wróć do każdego pisma, z którego pochodzi ustalenie kluczowe
-  [ ] Czy nie pominięto fragmentów pasujących do sprzeczności V10?
-  [ ] Czy każde przyznanie V10-2 odczytane w pełnym akapicie (nie wyrwane)?
-
-Krok O3: Spójność raportu
-  [ ] Czy Executive Summary zgodne z §1-§11?
-  [ ] Czy predykcja §9 zakorzeniona w faktach z I (nie interpretacjach z III)?
-  [ ] Czy rekomendacje §10 wynikają z §4-§6?
-
-Krok O4: Luki i braki
-  [ ] Jakich dokumentów/dowodów brakuje?
-  [ ] Jakie fakty pozostają niewyjaśnione po obu weryfikacjach?
-  [ ] Czy braki wpływają na predykcję?
-
-Krok O5: Lista korekt:
-  [nr] → [korekta] → [wpływ na raport]
-
-STATUS WERYFIKACJI OSTATECZNEJ: UKOŃCZONA / WYMAGA UZUPEŁNIENIA
-```
-
-Format wyniku Przejścia IV:
-```
-AUTOKOREKTA + WERYFIKACJA OSTATECZNA
-P1 ✓/✗ | P2 ✓/✗ | P3 ✓/✗ | P4 ✓/✗ | P5 ✓/✗
-WERYFIKACJA OSTATECZNA: [korekty O1-O4 / STATUS]
-Luki nierozwiązane:     [lista lub "brak"]
-GATE: RAPORT KOŃCOWY ZATWIERDZONY: TAK / NIE [blokada jeśli NIE]
-```
-
-> HARD GATE: Raport końcowy §1-§11 można wygenerować WYŁĄCZNIE po:
-> (1) ukończeniu Weryfikacji Pierwszej (Przejście III) i
-> (2) ukończeniu Weryfikacji Ostatecznej (Przejście IV) z GATE: ZATWIERDZONE TAK.
-
-> ⚑ KONIEC WIADOMOŚCI 4 — wyślij tę wiadomość. Raport końcowy §1-§11 w kolejnej wiadomości.
-
+- 4A. Pięć pytań autokorekty P1-P5 (+ P6–P7: bramki towarzyszące).
+- 4B. WERYFIKACJA OSTATECZNA — ponowne przeczytanie dokumentów, kontrola kompletności i spójności raportu; GATE: ZATWIERDZONE przed raportem końcowym.
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/przejscie-4-autokorekta.md — przed wykonaniem Przejścia IV.
 ---
 
 ## TRYBY PRACY
@@ -667,130 +344,12 @@ A+F łącznie: audyt dwustronny. B+D: często w sporach pracowniczych.
 
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ## FORMAT RAPORTU KOŃCOWEGO
-
-```
-RAPORT ANALITYCZNY — [Sygnatura / Sprawa]
-Data: [DD.MM.RRRR] | Postępowanie: [rodzaj] | Etap: [etap]
-
-EXECUTIVE SUMMARY
-[3 zdania: prognoza + kluczowy czynnik decydujący + główna rekomendacja]
-
-─── WYNIKI MODELU CZTEROPRZEBIEGOWEGO ─────────────────────────────────
-
-PRZEJŚCIE I — MAPA FAKTYCZNA
-  Chronologia: [zdarzenia z datami i dokumentami]
-  Podmioty: [lista z rolami]
-  Kwoty/daty: [rejestr]
-
-PRZEJŚCIE II — MACIERZ FAKT-NORMA
-  [tabela: fakt → norma (ELI) → znamię → status]
-  Sporne: [...] | Niesporne: [...]
-
-PRZEJŚCIE III — RAPORT ADVERSARIALNY
-  Perspektywa sędziego: [...]
-  Perspektywa przeciwnika: [...]
-  Perspektywa własna: [...]
-  V10 Sprzeczności: [lista]
-  V10 Przyznania: [lista z wagą]
-  WERYFIKACJA PIERWSZA: [korekty / STATUS: UKOŃCZONA]
-
-PRZEJŚCIE IV — AUTOKOREKTA
-  P1 ✓/✗ | P2 ✓/✗ | P3 ✓/✗ | P4 ✓/✗ | P5 ✓/✗
-  WERYFIKACJA OSTATECZNA: [korekty / STATUS: UKOŃCZONA]
-  GATE: ZATWIERDZONE TAK
-
-─── RAPORT §1-§11 ──────────────────────────────────────────────────────
-
-§1.  KWALIFIKACJA PRAWNA I ZNAMIONA
-     Przepis: [pełna treść z ELI (RZĄD 1)]
-     Znamiona: [każde oddzielnie — sporne vs niesporne]
-
-§2.  ORZECZNICTWO
-     [Sąd, DD.MM.RRRR, sygnatura, URL] — [teza max 14 słów]
-     [max 3 orzeczenia, zweryfikowane oficjalnie]
-
-§3.  STRONA PODMIOTOWA
-     Zamiar: [z min. 3 elementów materiału]
-     Forma winy: [zamiar bezpośredni/ewentualny/kierunkowy/nieumyślność]
-     Alternatywne wyjaśnienie: [TAK/NIE + uzasadnienie]
-
-§4.  OCENA MATERIAŁU DOWODOWEGO
-     Poziom A: [...] | B: [...] | C: [...] | D: [...]
-     Siła łączna: [0-10] | Luki: [...]
-
-§5.  SŁABOŚCI STRON
-     Powód/Oskarżyciel: [twierdzenia bez dowodu, sprzeczności, interes]
-     Pozwany/Obrona:    [milczenie, sprzeczności z dokumentami]
-
-§6.  TEST IN DUBIO
-     Znamię 1 [nazwa]: PEWNE / WĄTPLIWE / NIEPEWNE → [skutek]
-     [każde znamię osobno]
-     Konkluzja: [wynik]
-
-§7.  SYGNAŁY PROCEDURALNE
-     [sygnał]: Interpretacja A [...] | Interpretacja B [...]
-
-§8.  MODUŁY SPECJALISTYCZNE (tylko aktywne)
-     [Moduł X]: [ustalenia kluczowe]
-
-§9.  PREDYKCJA ROZSTRZYGNIĘCIA
-     Wariant główny:       [wynik] [%] — [uzasadnienie] — pewność: [PEWNE/PRAWDOPODOBNE]
-     Wariant alternatywny: [wynik] [%] — [warunek zmiany]
-     Kluczowy czynnik:     [co zdecyduje]
-
-§10. REKOMENDACJE PROCESOWE
-     1. [działanie + podstawa prawna + pilność]
-     2. [...] 3. [...]
-
-§11. AUTOKOREKTA (skrót z Przejścia IV)
-     P1 ✓ | P2 ✓ | P3 ✓ | P4 ✓ | P5 ✓
-     Weryfikacja Pierwsza:    UKOŃCZONA
-     Weryfikacja Ostateczna:  UKOŃCZONA
-     GATE:                    ZATWIERDZONE TAK
-```
-
----
-
+Struktura raportu (executive summary, ocena szans, §1–§11); raport końcowy dopiero po GATE: ZATWIERDZONE TAK; osobna wiadomość.
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/raport-koncowy.md — przed wydaniem raportu końcowego.
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ## SEKWENCJA END-TO-END — PO RAPORCIE KOŃCOWYM
-
-> KOLEJNOŚĆ JEST BEZWZGLĘDNA. Każdy krok w osobnej wiadomości.
-
-```
-WIADOMOŚĆ 6 — WIDGET RAPORTU SYTUACYJNEGO [OBOWIĄZKOWY]
-
-Wykonaj natychmiast po §11 raportu końcowego, bez pytania o zgodę.
-
-SEKWENCJA:
-  1. view shared/raport-sytuacyjny-integracja.md
-     (tylko jeśli nie wczytano w tej sesji)
-
-  2. Zbuduj blueprint JSON ze schematu w raport-sytuacyjny-v2/SKILL.md
-     → dane wyłącznie z rozmowy / dokumentów; pola nieznane → null
-     → tryb: "A" (po pełnej analizie)
-
-  3. show_widget(path="raport-sytuacyjny-v2/assets/widget-raport-sytuacyjny.html",
-                 data=BLUEPRINT) — bez kodu; host wstawia dane i pasek IO.
-     Host bez pola `data`: raport-sytuacyjny-v2/SKILL.md § WIDGET — WYKONANIE BEZ POLA `data`.
-
-  Poprzedź widgetem komunikat:
-  "Poniżej aktualny raport sytuacyjny sprawy —
-   możesz uzupełnić brakujące dane lub skorygować automatycznie rozpoznane informacje."
-
-WYJĄTEK: pomiń wiadomość 6 tylko gdy użytkownik zadał jedno pytanie
-         bez dokumentów i bez stanu faktycznego sprawy.
-
----
-
-WIADOMOŚĆ 7 — OFERTA PISMA PROCESOWEGO
-
-Po widgecie (lub gdy wyjątek powyżej — bezpośrednio po raporcie):
-
-  LAIK:    "Czy chcesz żebym napisał pismo na podstawie tej analizy?"
-  PRAWNIK: "Czy wygenerować dokument procesowy? (.docx / .pdf)"
-  → TAK → prawny-router-v3 → pisma-procesowe-v3 lub pisma-proste-v2
-```
-
+WIADOMOŚĆ 6 — WIDGET RAPORTU SYTUACYJNEGO [OBOWIĄZKOWY], WIADOMOŚĆ 7 — OFERTA PISMA PROCESOWEGO (każda w osobnej wiadomości).
+**WCZYTAJ (obowiązkowo, fail-closed):** view analiza-sadowa-v6/references/raport-koncowy.md — przed wykonaniem sekwencji po raporcie.
 ---
 
 ## TERMINY PROCESOWE — TABELA SZYBKIEGO DOSTĘPU
@@ -835,6 +394,8 @@ Procedura: references/orzecznictwo.md
 | Mapa całego skilla | references/BLUEPRINT-SCHEMA.md |
 | Widget | show_widget HTML vanilla JS — TYLKO na żądanie |
 | Sprawa ≥10 dokumentów (model kontynentalny) | PRZEBIEG-1-ekstrakcja.md → PRZEBIEG-2-strukturalna.md → PRZEBIEG-3-predykcja.md |
+
+Przejścia I-IV, bramki towarzyszące i raport końcowy: treść w `references/przejscie-1-2-fakty-kwalifikacja.md`, `przejscie-3-adversarialna.md`, `przejscie-4-autokorekta.md`, `bramki-towarzyszace.md`, `raport-koncowy.md` — wczytuj według instrukcji WCZYTAJ przy każdym kroku (wiersz „wbudowane w SKILL.md" wyżej dotyczy szkieletu kroków).
 
 ---
 

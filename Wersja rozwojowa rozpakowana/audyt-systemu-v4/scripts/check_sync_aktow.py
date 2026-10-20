@@ -52,6 +52,9 @@ import os
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _lex_common import read_routing, routing_files
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -185,10 +188,10 @@ def main():
     for d in sorted(root.glob("*/MAPA-AKTOW.md")):
         lokalne[d.parent.name] = zbierz(d)
 
-    zb_routing = zbierz(routing)
+    zb_routing = set().union(*(zbierz(p) for p in routing_files(routing)))  # indeks + routing/*.md
     zb_routing_luzne = {
         numer(m.group(1), m.group(2))
-        for m in RE_POZ_LUZNA.finditer(routing.read_text(encoding="utf-8", errors="replace"))
+        for m in RE_POZ_LUZNA.finditer(read_routing(routing))
     }
     zb_mapa = zbierz_mape_dzu(mapa_dzu)
     zb_lokalne = set().union(*lokalne.values()) if lokalne else set()

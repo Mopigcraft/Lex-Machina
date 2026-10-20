@@ -153,7 +153,7 @@ błąd systemu (m.in. mod-KRO-przysposobienie, mod-PrRestr-dzial-V).
 
 □ dr-XX/SKILL.md                     — wpis w spisie modułów
 □ dr-XX/MAPA-AKTOW.md                — wiersz akt → moduł → status
-□ prawo-polskie-v2/ROUTING-MAP.md    — wpis routingowy
+□ prawo-polskie-v2/routing/DR-XX.md  — wpis routingowy (ROUTING-MAP.md to indeks; tabela skrócona tylko przy zmianie statusu DR)
 □ dr-XX/MAPA-POKRYCIA.md             — tabela z G-3 z uaktualnionymi statusami
    (plik nie istnieje w tym DR → utwórz wg formatu F-83)
 □ audyt-systemu-v4/references/AUDIT-JOURNAL.md — wpis AUDYT-RRRR-MM-DD

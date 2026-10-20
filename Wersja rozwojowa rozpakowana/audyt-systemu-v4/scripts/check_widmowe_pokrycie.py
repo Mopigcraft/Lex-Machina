@@ -16,6 +16,9 @@ current-state, moduły przekrojowe) wychodzą zawsze — oceniaj ręcznie. Statu
 w SKRYPTY-RECZNE.md. Kod wyjścia: 0 zawsze (test nie blokuje).
 """
 import argparse, os, re, sys, unicodedata
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _lex_common import routing_files
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -27,7 +30,8 @@ STOP = set(("ustawa ustawy ustawie ustaw kodeks prawo przepisy niektórych innyc
 def kandydaci(root):
     rm = os.path.join(root, "prawo-polskie-v2", "ROUTING-MAP.md")
     wynik, n = [], 0
-    for i, l in enumerate(open(rm, encoding="utf-8"), 1):
+    linie = [(i, l) for rf in routing_files(rm) for i, l in enumerate(open(rf, encoding="utf-8"), 1)]  # indeks + routing/*.md
+    for i, l in linie:
         if not l.startswith("|"):
             continue
         cells = [c.strip() for c in l.strip().strip("|").split("|")]

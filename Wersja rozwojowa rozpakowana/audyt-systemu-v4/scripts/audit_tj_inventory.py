@@ -20,6 +20,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from datetime import date
 
+from _lex_common import routing_files
+
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -154,7 +156,8 @@ def iter_md_files(root: Path, mode: str):
         return
     if mode == "maps":
         yield from root.rglob("MAPA-AKTOW.md")
-        yield from root.rglob("ROUTING-MAP.md")
+        for rm in root.rglob("ROUTING-MAP.md"):
+            yield from routing_files(rm)   # indeks + routing/*.md (podział 2026-10-20)
         return
     # Operacyjna treść skilli: bez dzienników, map historycznych i raportów.
     for path in root.rglob("*.md"):
@@ -163,7 +166,7 @@ def iter_md_files(root: Path, mode: str):
             continue
         if path.name == "SKILL.md" or "modules" in rel.parts or path.name in {
             "MAPA-AKTOW.md", "ROUTING-MAP.md"
-        }:
+        } or (path.parent.name == "routing" and (path.parent.parent / "ROUTING-MAP.md").is_file()):
             yield path
 
 

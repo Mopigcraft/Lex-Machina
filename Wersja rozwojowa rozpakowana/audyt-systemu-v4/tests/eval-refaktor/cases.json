@@ -1,0 +1,1614 @@
+{
+ "_instructions": {
+  "cel": "Behawioralna kontrola refaktoru skilli (progressive disclosure): czy agent pracujący WYŁĄCZNIE na plikach skilla zna ten sam PROCES co przed refaktorem. Pytania dotyczą procesu (kroki, bramki, pliki, pytania do użytkownika), NIE odpowiedzi prawnych. Pole `expected` wyprowadzono z BAZOWEGO (sprzed refaktoru) SKILL.md; nazwy nagłówków bazy podano w tekście punktów.",
+  "evaluator_agent": [
+   "1. Uruchom evaluator osobno dla wariantu BASE i wariantu NOWEGO (świeży kontekst, bez wiedzy o drugim wariancie).",
+   "2. Daj agentowi dostęp tylko do plików jednego skilla (+ shared/ w danym wariancie) i NIE podawaj pola `expected` ani `must_not`.",
+   "3. Przeczytaj <skill>/SKILL.md w całości. Dalsze pliki czytaj WYŁĄCZNIE wtedy, gdy SKILL.md wprost każe (`view <skill>/references/...`); nie przeszukuj katalogu i nie otwieraj plików z własnej inicjatywy.",
+   "4. Dla każdego case: przyjmij `scenario` jako wiadomość użytkownika i NIE wykonuj zadania; odpowiedz na `probes[].q` jako opis tego, co skill każe zrobić (kolejność kroków, bramki, pliki, pytania).",
+   "5. Zapisz odpowiedzi oraz listę plików faktycznie otwartych (do oceny kosztu kontekstu i poprawności wskazówek view)."
+  ],
+  "judge": [
+   "1. Dla każdego probe oceń odpowiedź względem `expected`: każdy punkt = obecny (1) / nieobecny (0). Punkt obecny, gdy odpowiedź zawiera jego sens (nazwa bramki/kroku/pliku i funkcja); parafraza dopuszczalna, ogólnik nie.",
+   "2. `must_not`: każde naruszenie = twarda porażka probe (0 pkt) i osobna flaga VIOLATION.",
+   "3. Wynik probe = suma punktów / liczba punktów; wynik skilla = średnia ważona liczbą punktów po wszystkich probe wszystkich scenariuszy skilla (w %).",
+   "4. Próg zaliczenia skilla: wynik_NOWY >= wynik_BASE - 5 punktów procentowych ORAZ 0 naruszeń `must_not` w wariancie NOWYM (naruszenia obecne także w BASE raportować osobno).",
+   "5. Dodatkowo raportuj: punkty obecne w BASE a nieobecne w NOWYM (lista regresji) i odwrotnie; oraz pliki otwarte przez agenta (nowy wariant powinien otwierać mniej niż jeden wielki SKILL.md przy aktywacji, a każdy plik wskazany przez `view` ma istnieć)."
+  ],
+  "uwagi": [
+   "Pytania nie wymagają znajomości prawa. Punkty `expected` cytują nazwy bramek i plików z bazy; po refaktorze nazwy bramek muszą pozostać w SKILL.md (R2), a treść etapu może być w references/ i być osiągalna przez `view`.",
+   "Scenariusze są realistyczne, ale dane wymyślone; nie zawierają danych osobowych."
+  ]
+ },
+ "cases": [
+  {
+   "id": "RF-PRZES-1",
+   "skill": "przesluchanie-swiadkow-v2-min90",
+   "scenario": "Pełnomocnik pracownika w sprawie o przywrócenie do pracy wgrywa trzy duże zeskanowane PDF-y z aktami osobowymi (ok. 130 stron), protokół rozprawy i prosi: „przygotuj pytania do świadka — dyrektor generalna pozwanej spółki”. Nie podaje tez dowodowych.",
+   "probes": [
+    {
+     "q": "Wymień w kolejności kroki i bramki, które wykonasz, zanim padnie pierwsze pytanie dla świadka.",
+     "expected": [
+      "HARD GATE zakaz cytowania prawa z pamięci (view shared/PRAWO-HARDGATE.md) i bramka [WEJŚCIE-DOKUMENTU] (shared/MOD-WEJSCIE-DOKUMENTU.md: WD-1/WD-2/WD-3) przy dostarczonych aktach",
+      "KROK PRE-W1a — SD-VER: kompletność skanowania dowodów (shared/MOD-SKAN-DOWODOW-KOMPLETNY.md: SD-GATE-0, SD-INW, SD-READ, SD-VER) z jawnym OCR skanów strona po stronie",
+      "KROK PRE-W1a.4 — RZ-SHOW-ZAWSZE: lista plików ze statusami (SPRAWDZONY/CZĘŚCIOWO/NIESPRAWDZONY/NIE DOTYCZY) i pytanie, czy sprawdzić pozostałe",
+      "KROK PRE-W1 — WITNESS INTELLIGENCE (references/WITNESS-INTELLIGENCE.md), potem opcjonalny KROK 0 (kontekst sprawy), potem ETAP W1 INTAKE, ETAP W2, CHECKPOINT-W2, dopiero potem ETAP W3 pytania"
+     ],
+     "must_not": [
+      "przechodzi od razu do generowania pytań",
+      "pomija odczyt skanów ze względu na rozmiar plików"
+     ]
+    },
+    {
+     "q": "Które pliki (references/ i shared/) wczytujesz i w którym momencie?",
+     "expected": [
+      "shared/PRAWO-HARDGATE.md na początku (przed jakimkolwiek przepisem)",
+      "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md i shared/MOD-STEP-TRACKER.md w KROK PRE-W1a (SD-VER i rejestr kroków SW-*)",
+      "shared/MOD-REJESTR-ZALACZNIKOW-CHECKPOINT.md FAZA 2 (RZ-SHOW) w KROK PRE-W1a.4",
+      "references/WITNESS-INTELLIGENCE.md w KROK PRE-W1; references/QUESTION-ADMISSIBILITY-GATE.md dopiero w ETAP W3"
+     ],
+     "must_not": [
+      "wczytuje wszystkie references naraz na starcie bez wyzwalacza"
+     ]
+    },
+    {
+     "q": "Które twarde bramki mogą zablokować wyjście w tej sprawie?",
+     "expected": [
+      "SD-VER musi mieć status KOMPLET dla wszystkich dokumentów, inaczej brak wejścia do profilu świadka, W1, W2 i W3 (HARD GATE)",
+      "RZ-SHOW-ZAWSZE: przy pozycjach NIESPRAWDZONY/CZĘŚCIOWO obowiązkowe pytanie i brak tez W2 oraz pytań W3, dopóki użytkownik nie zdecyduje",
+      "CHECKPOINT-W2: pytania W3 dopiero w osobnej wiadomości po potwierdzeniu tez, modelu i chronologii (bez wyjątków)",
+      "TEZY-DOWODY-SWIADEK-GATE i WITNESS-SCOPE-LOCK przed W2"
+     ],
+     "must_not": [
+      "twierdzi, że pytania można wygenerować w tej samej wiadomości co tezy W2"
+     ]
+    },
+    {
+     "q": "O co zapytasz użytkownika w pierwszej kolejności i czego nie zapytasz?",
+     "expected": [
+      "TEZY-DOWODY-SWIADEK-GATE: maks. 3 tezy do wykazania, posiadane dowody, kim jest świadek i w jakiej roli — pytania tylko o to, co nie wynika jednoznacznie z materiałów",
+      "WITNESS-SCOPE-LOCK: zamknięta lista świadków; gdy materiały wspominają kilka osób i brak jednoznacznego wskazania — zapytać wprost, które mają być przesłuchiwane",
+      "Zasada ekstrakcji W1: dane dostępne w dokumentach ekstrahuje samodzielnie, nie pyta o nie"
+     ],
+     "must_not": [
+      "pyta o dane, które są w dostarczonych aktach",
+      "dodaje drugiego reprezentanta pozwanej jako świadka bez potwierdzenia"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-PRZES-2",
+   "skill": "przesluchanie-swiadkow-v2-min90",
+   "scenario": "Użytkownik wkleja gotowy blok 12 pytań do świadka z poprzedniej sesji i prosi: „oceń i popraw”. Po tygodniu wraca z poprawioną, pełną wersją zestawu, w której dwa bloki mają zdublowaną numerację.",
+   "probes": [
+    {
+     "q": "Jak postąpisz z gotowym blokiem pytań — jakie bramki i w jakiej kolejności?",
+     "expected": [
+      "IMPORTED-QUESTIONS-GATE: dla każdego pytania najpierw rekonstrukcja tezy jednym zdaniem („To pytanie ma wykazać, że...”); brak możliwości rekonstrukcji = pytanie podejrzane (BLOK E lub pytanie o cel)",
+      "Dopiero potem QUESTION-ADMISSIBILITY-GATE (FPW-1/2/3, WHY-GATE, SAFE-Q) do treści pytania; GATE-DEFAULT-NOW — bramki stosowane od pierwszej wersji, nie na prośbę o ocenę",
+      "Nie ocenia samej poprawności gramatyczno-taktycznej (otwarte/zamknięte, sugestywne) bez kroków 1-2"
+     ],
+     "must_not": [
+      "ocenia pytania wyłącznie pod kątem formy bez rekonstrukcji tezy"
+     ]
+    },
+    {
+     "q": "Co zrobisz z nadesłaną poprawioną wersją zestawu?",
+     "expected": [
+      "REVISION-DIFF-CHECK: zestawienie z ostatnią wersją zaakceptowaną w rozmowie i trzy kategorie NAPRAWIONE / REGRESJA / NOWE",
+      "Priorytet uwagi: REGRESJA > NOWE > przypomnienie NAPRAWIONYCH jednym zdaniem",
+      "Nie analizuje zestawu od zera"
+     ],
+     "must_not": [
+      "analizuje każdą wersję od zera"
+     ]
+    },
+    {
+     "q": "Co zrobisz z zdublowaną numeracją pytań?",
+     "expected": [
+      "AUTO-RENUMBER-OFFER: nie poprzestaje na zasygnalizowaniu — proponuje i, jeśli użytkownik nie zastrzeże inaczej, wykonuje przenumerowanie na jedną ciągłą sekwencję przez wszystkie bloki",
+      "Zachowuje przypisanie pytań do bloków tematycznych, unikalny numer globalny"
+     ],
+     "must_not": [
+      "tylko wskazuje problem numeracji bez propozycji przenumerowania"
+     ]
+    },
+    {
+     "q": "Jakie pliki wczytujesz i które bramki mogą zablokować ocenę?",
+     "expected": [
+      "references/QUESTION-ADMISSIBILITY-GATE.md (pełna procedura FPW) przy ocenie pytań",
+      "FACT-CROSS-CHECK-GATE: FPW-1 zestawiony z treścią źródłowego dokumentu; brak dokumentu = ⚠️ NIEZWERYFIKOWANE i pytanie o dokument",
+      "Zakaz oceniania pytania dostarczonego gotowe bez rekonstrukcji tezy (sekcja Zakaz, IMPORTED-QUESTIONS-GATE)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-PRZES-3",
+   "skill": "przesluchanie-swiadkow-v2-min90",
+   "scenario": "Sprawa cywilna o zapłatę. Użytkownik chce pytań do świadka, który już składał zeznania w innym postępowaniu, ale nie ma przy sobie protokołu. Pisze też: „przygotuj od razu pytania, nie czekaj na moje uwagi”.",
+   "probes": [
+    {
+     "q": "Jak zareagujesz na brak protokołu wcześniejszych zeznań świadka?",
+     "expected": [
+      "PRIOR-TESTIMONY-GATE: komunikat GATE o świadku z wcześniejszymi zeznaniami i prośba o wgranie protokołu/deklaracji",
+      "Bez dokumentu nie przechodzi do W2; jeśli użytkownik nie może go dostarczyć — odnotowuje brak i redukuje zakres W3 (BLOK D, pytania na sprzeczności, niedostępny; zaznaczone w W2)",
+      "Po otrzymaniu dokumentu sam ekstrahuje twierdzenia, daty, miejsca, osoby i sformułowania rozbieżne"
+     ],
+     "must_not": [
+      "buduje pytania na sprzeczności bez dokumentu zeznań"
+     ]
+    },
+    {
+     "q": "Czy wygenerujesz pytania W3 od razu, skoro użytkownik o to prosi?",
+     "expected": [
+      "Nie — CHECKPOINT-W2 (reguła dwóch wiadomości, BEZ WYJĄTKÓW; wyjątek dla żądania natychmiastowych pytań został usunięty w audycie 3.16)",
+      "Wiadomość 1: W2 (tezy, model, scoring, chronologia) i pytanie o akceptację; wiadomość 2: W3 po osobnym potwierdzeniu tez, modelu ORAZ chronologii",
+      "SELF-CHECK-PRZED-W3 na starcie wiadomości z W3"
+     ],
+     "must_not": [
+      "generuje W3 w tej samej turze co W2"
+     ]
+    },
+    {
+     "q": "Co zrobisz, gdy protokół z wcześniejszego przesłuchiwania tego świadka będzie dostępny?",
+     "expected": [
+      "TRANSCRIPT-MINING-GATE: wydobyć fakty przyznane, sprzeczności (kandydaci do BLOKU D), pytania wcześniej zadane i uchylone przez sąd z powodem uchylenia, fakty ustalone przez sąd w protokole",
+      "Nowe pytania o tej samej naturze i ryzyku uchylenia oznaczyć ostrzeżeniem"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie twarde bramki i pliki dotyczą tego żądania?",
+     "expected": [
+      "CHECKPOINT-W2 (stop po W2) i SELF-CHECK-PRZED-W3 (ponowne wczytanie/potwierdzenie przed pytaniami)",
+      "Pełny pipeline W1 → W2 → W3: skill nie generuje pytań bez przejścia wszystkich etapów (sekcja Cel)",
+      "references/QUESTION-ADMISSIBILITY-GATE.md w W3 (FPW, WHY-GATE, SAFE-Q stosowane od pierwszej wersji)"
+     ],
+     "must_not": [
+      "pomija CHECKPOINT-W2, bo użytkownik wyraźnie żąda natychmiastowych pytań"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-AUDYT-1",
+   "skill": "audyt-systemu-v4",
+   "scenario": "Użytkownik pisze tylko: „przeprowadź audyt systemu”, bez wskazania zakresu.",
+   "probes": [
+    {
+     "q": "Jakie kroki wykonasz po tym poleceniu, w kolejności?",
+     "expected": [
+      "TRYB INTERAKTYWNY (domyślny): FAZA 0 → FAZA 0B (widget menu wyboru) → czekaj na wybór → uruchom tylko wskazane fazy/moduły",
+      "FAZA 0 — WCZYTANIE REFERENCES (ZAWSZE PIERWSZE): WARN-OTWARTE.md, CHECKLIST-DEDUP.md i aktualna mapa mapa_dzu_YYYY-MM-DD.md (najpóźniejsza data)",
+      "FAZA 0B: show_widget(path=\"audyt-systemu-v4/widgets/WIDGET-MENU.md\"), nie przepisywać kodu JSX; bez wyboru nie startuje faz"
+     ],
+     "must_not": [
+      "uruchamia pełny audyt bez menu wyboru"
+     ]
+    },
+    {
+     "q": "Które pliki czytasz w FAZIE 0 i czego nie wolno ci wczytać?",
+     "expected": [
+      "references/WARN-OTWARTE.md, references/CHECKLIST-DEDUP.md, najnowszy references/mapa_dzu_*.md wybrany dynamicznie (data nie wpisana na stałe)",
+      "Nie wczytuje całego AUDIT-JOURNAL.md (ok. 71 tys. linii) — tylko najnowszy wpis/fragment wg procedury grep/sed",
+      "Brak jakiegokolwiek pliku mapa_dzu_YYYY-MM-DD.md lub błąd odczytu najnowszego = CRIT i STOP"
+     ],
+     "must_not": [
+      "wczytuje cały AUDIT-JOURNAL.md"
+     ]
+    },
+    {
+     "q": "Które twarde zasady mogą zablokować lub unieważnić wynik audytu?",
+     "expected": [
+      "ZASADA KRYTYCZNA 4: CRIT blokuje skill; ZASADA 2: każdy audyt kończy się aktualizacją AUDIT-JOURNAL.md (FAZA 7A obowiązkowa)",
+      "ZASADA 1: nigdy cytować przepisów/sygnatur z pamięci — tylko ELI (RZĄD 1) i oficjalne źródła",
+      "ZASADA 12: FAZA 3E (treść merytoryczna modułów) obowiązkowa po wykryciu zmiany statusu aktu; zamknięcie FAZA 3 bez 3E = CRIT",
+      "ZASADA KOMPLETNOŚCI OUTPUTU (OUTPUT-COMPLETENESS): naprawa dostarczana jako kompletny skill, naruszenie = CRIT"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "O co zapytasz użytkownika na początku?",
+     "expected": [
+      "O zakres audytu przez widget menu wielokrotnego wyboru (FAZA 0B) — tylko gdy zakres nie został sprecyzowany",
+      "Gdy użytkownik poda tryb lub zakres, pomija widget i przechodzi do właściwej fazy"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-AUDYT-2",
+   "skill": "audyt-systemu-v4",
+   "scenario": "Użytkownik: „sprawdź mapę Dz.U. — czy jakieś teksty jednolite się zmieniły?”",
+   "probes": [
+    {
+     "q": "Który tryb wywołania obowiązuje i jakie fazy uruchomisz?",
+     "expected": [
+      "TRYB DZU: FAZA 0 + FAZA 3 (3A + 3B + 3C + 3D) + FAZA 3E automatycznie, jeśli 3A–3D wykryły zmianę + FAZA 7A + 7B",
+      "FAZA 3 zawiera m.in. 3-PULL (synchronizacja DR-MAPA-AKTOW → ROUTING-MAP → mapa_dzu), 3A nowe t.j., 3B statusy, 3D akty oczekujące (MONITORING), 3C rozporządzenia do weryfikacji"
+     ],
+     "must_not": [
+      "wykonuje pełny audyt FAZY 0–7 bez potrzeby"
+     ]
+    },
+    {
+     "q": "Skąd bierzesz informacje o numerach i statusach aktów i czego robić nie wolno?",
+     "expected": [
+      "Wyłącznie z potwierdzonych zmian online — ELI (RZĄD 1) i oficjalne źródła (ZASADA 1 i 3); nie spekuluje",
+      "ZASADA 8 w odniesieniu do mapy: weryfikować NUMER niezależnie od zgodności NAZWY aktu"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Czy po zmianie statusu aktu możesz uznać audyt za zakończony po FAZIE 3?",
+     "expected": [
+      "Nie — ZASADA 12: FAZA 3E (MOD-TRESC-MERYTORYCZNA) jest odrębnym obowiązkowym zakresem uruchamianym automatycznie; aktualizacja numeru/statusu nie jest sprawdzeniem treści modułu",
+      "Naruszenie (zamknięcie FAZA 3 bez 3E mimo zmiany) = CRIT"
+     ],
+     "must_not": [
+      "uznaje aktualizację samego numeru t.j. za sprawdzenie treści modułów"
+     ]
+    },
+    {
+     "q": "Jakie pliki zaktualizujesz na końcu?",
+     "expected": [
+      "FAZA 7A: AUDIT-JOURNAL.md (obowiązkowo) oraz 7B: nowy mapa_dzu_YYYY-MM-DD.md; 7C WARN-OTWARTE.md warunkowo (ZASADA 10)",
+      "Raport według szablonu z AUDIT-JOURNAL.md (FAZA 6, sekcje 1–6 z 4C treść merytoryczna)"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-AUDYT-3",
+   "skill": "audyt-systemu-v4",
+   "scenario": "Użytkownik: „audytuj przesluchanie-swiadkow-v2-min90 — czy bramki jakości faktycznie działają domyślnie?”",
+   "probes": [
+    {
+     "q": "Który tryb i jaki zakres faz wybierasz?",
+     "expected": [
+      "TRYB TARGETED: FAZA 0 + FAZY 1–5 tylko dla wskazanego skilla + FAZA 6 (skrócony raport) + FAZA 7A",
+      "ZASADA 11: zakres audytu obejmuje wszystkie skille prawne, także proceduralne — przedmiotem jest poprawność i domyślne stosowanie wbudowanych bramek jakości, wpis w AUDIT-JOURNAL z oznaczeniem skilla proceduralnego"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jak będzie liczony wynik skilla i jakie są progi?",
+     "expected": [
+      "FAZA 5 — SCORING 0–10: brak błędów CRIT 40%, spójność zależności 25%, description w limicie 10%, czystość kodu 15%, HARDGATE obecny (router) 10%",
+      "Wynik < 6.0 = skill wymaga naprawy przed użyciem; ≥ 8.0 = zielony"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co dostarczysz po naprawie skilla i dlaczego?",
+     "expected": [
+      "Kompletny skill ze wszystkimi plikami i podfolderami, nie sam zmieniony plik (ZASADA KOMPLETNOŚCI OUTPUTU — PRE-DELIVERY-COMPLETENESS-CHECK)",
+      "SKILL_SOURCE = repozytorium (main), nigdy kopia zainstalowana w hoście (F-221/F-223); różnicę liczby plików trzeba uzasadnić"
+     ],
+     "must_not": [
+      "dostarcza pojedynczy zmieniony plik"
+     ]
+    },
+    {
+     "q": "Jakie reguły dotyczą CRIT i WARN w wyniku audytu?",
+     "expected": [
+      "CRIT blokuje skill (nie używaj skilla z otwartym CRIT); WARN nie blokuje, ale musi trafić do references/WARN-OTWARTE.md i zostać zamknięty w przyszłym audycie (ZASADA 10)",
+      "Moduły czystości działają zachowawczo — w razie wątpliwości zostaw (ZASADA 6)"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-ORZ-1",
+   "skill": "orzeczenia-sadowe-v2",
+   "scenario": "Pełnomocnik pracownika: „Znajdź orzecznictwo SN na poparcie tezy, że rozwiązanie umowy w trybie art. 52 KP było nieuzasadnione. Reprezentuję pracownika.”",
+   "probes": [
+    {
+     "q": "Wymień w kolejności kroki sekwencji działania, które wykonasz.",
+     "expected": [
+      "Sekwencja działania (zawsze w tej kolejności): 1 widget interaktywny, 2 profil ryzyka (Faza 0-A), 3 przesłanki i zakres (Faza 0-B), 4 oczekiwany kierunek rozstrzygnięcia (Faza 0-C)",
+      "5 wyszukiwanie (Faza 1, 1-L; pełnotekstowo 1-T przy dosłownej tezie), 6 kierunek przeciwny (Faza 1-D) z kontrolą zgodności (Faza 1-Z) przed prezentacją, 7 kategoryzacja i alerty (Faza 2, BILANS), 8 aktualność linii (Faza 3)",
+      "9 PLAN MINIMUM (Zasada 11), 10 raport końcowy (Faza 4), 11 ponowne wyświetlenie widgetu z kompletnymi danymi"
+     ],
+     "must_not": [
+      "pomija wyszukanie kierunku przeciwnego"
+     ]
+    },
+    {
+     "q": "Co zawiera i ile razy wyświetlasz widget?",
+     "expected": [
+      "Widget (assets/widget-orzeczenia.html lub references/widget.md) z 5 zakładkami: Profil ryzyka, Przesłanki, Orzeczenia, Alerty, Raport; przełącznik LAIK/PRAWNIK",
+      "Wywoływany dwukrotnie: przed wyszukiwaniem (dane Fazy 0-A i 0-B, komunikat o trwającym wyszukiwaniu) i po wyszukiwaniu z kompletnymi danymi",
+      "Przed show_widget obowiązkowy shared/MOD-WIDGET-IO.md (pasek IO)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie twarde zasady mogą zablokować powołanie orzeczenia lub zmusić do ujawnienia niekorzystnego bilansu?",
+     "expected": [
+      "Zasada 1: PERMANENT GATE zakaz cytowania z pamięci przez całą rozmowę; każde powołanie sygnatury to osobny web_search/web_fetch w tej odpowiedzi; V-SYG-1..4 z shared/SYGNATURY.md",
+      "Zasada 2: cztery elementy (sygnatura, data, sąd, URL) — brak któregokolwiek = błąd krytyczny; Zasada 2A: treść zweryfikowana gradientem GRAD-1..4 gdy orzeczenie ma poprzeć tezę",
+      "Zasada 10: gdy liczba orzeczeń przeciwnych >= zgodnych lub >= 50% w Kat. 1–2 — alert 🔴 BILANS NIEKORZYSTNY jako pierwszy alert",
+      "Zasada 11: PLAN MINIMUM 5 wspierających + 5 linii przeciwnej, każde z przesłankami rozstrzygnięcia (przy przeciwnych dodatkowo czynnik odróżniający); brak 5 podaje się wprost bez uzupełniania niedopasowanymi"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "O co zapytasz lub co ustalisz przed wyszukiwaniem?",
+     "expected": [
+      "Faza 0-C: strona/interes (tu pracownik), oczekiwany kierunek rozstrzygnięcia i kierunek przeciwny (do testu równoważnego)",
+      "Faza 0-B: rodzaj postępowania, kluczowy przepis (art. 52 KP), przesłanki z ciężarem dowodu, 3–7 fraz do wyszukiwania; Faza 0-A: profil ryzyka w wariantach LAIK/PRAWNIK"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-ORZ-2",
+   "skill": "orzeczenia-sadowe-v2",
+   "scenario": "Użytkownik prosi o „wyrok polskiego sądu, w którym pełnomocnik zawodowy powołał się na wymyślone przez AI orzeczenie” i dopytuje: „a drugi, inny wyrok?”",
+   "probes": [
+    {
+     "q": "Jakie kontrole wykonujesz przed zaprezentowaniem każdego trafienia?",
+     "expected": [
+      "Faza 1-Z: tożsamość z pobranego tekstu (sąd, sygnatura, data, forma, przedmiot) — sama zgodność sygnatury nie potwierdza tematu",
+      "Treść opisu wyłącznie z odczytanej metryki/sentencji/uzasadnienia; każde kryterium pytania osobno (np. AI, pełnomocnik zawodowy, sąd inny niż SN); częściowe spełnienie opisać jako częściowe",
+      "Stanowisko organu, nie strony (nie zarzut skargi ani zdanie odrębne); określenie sprawy z metryki porównać z pytaniem przed lekturą uzasadnienia"
+     ],
+     "must_not": [
+      "opisuje orzeczenie pojęciami z pytania, których nie ma w pobranym dokumencie"
+     ]
+    },
+    {
+     "q": "Co zrobisz, jeśli nie znajdziesz orzeczenia spełniającego kryteria, a użytkownik prosi o „inny wyrok”?",
+     "expected": [
+      "Brak trafień wprost: „nie znalazłem orzeczenia spełniającego te kryteria” plus co sprawdzono (OUT_OF_SCOPE, nie dowód braku)",
+      "Ponowna prośba o inny wyrok nie uzasadnia dopasowania zastępczego"
+     ],
+     "must_not": [
+      "podaje orzeczenie niespełniające kryteriów jako zastępcze trafienie"
+     ]
+    },
+    {
+     "q": "Czy możesz napisać „szukam teraz…” i zakończyć odpowiedź?",
+     "expected": [
+      "Nie — zapowiedź bez wyniku w tej samej odpowiedzi jest zakazana (Faza 1-Z pkt 5); wykonaj wyszukiwanie narzędziami i podaj wynik albo brak trafień"
+     ],
+     "must_not": [
+      "kończy odpowiedź zapowiedzią wyszukiwania"
+     ]
+    },
+    {
+     "q": "Z jakich źródeł i plików korzystasz i w jakiej kolejności?",
+     "expected": [
+      "Faza 1-0 kolejność odkrywania; portale Tier 1–3 (orzeczenia.ms.gov.pl, sn.pl, nsa.gov.pl; SAOS/CBOSA, Faza 1-T), shared/MCP-INTEGRACJA.md KROK 1 przed web_search (MCP-FIRST gdy podłączony)",
+      "Przed cytowaniem V-SYG z shared/SYGNATURY.md i SELF-CHECK ANTY-FASADA (shared/SELF-CHECK-ANTY-FASADA.md) przed wysłaniem"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-ORZ-3",
+   "skill": "orzeczenia-sadowe-v2",
+   "scenario": "Użytkownik podaje sygnaturę „II PK 123/22” i pyta neutralnie: „sprawdź to orzeczenie i podaj tezę”. Po chwili narzędzia wyszukiwania przestają działać.",
+   "probes": [
+    {
+     "q": "Czy wykonasz Fazę 0-C i Fazę 1-D przy takim pytaniu?",
+     "expected": [
+      "Pytanie neutralne (brak interesu strony): pomija profil oczekiwanego rozstrzygnięcia i Fazę 1-D; kategoryzuje wg Fazy 2 (Kat. 3A/3B linia większościowa/mniejszościowa)",
+      "Plan minimum stosowany analogicznie do Kat. 3A i 3B (Zasada 11 pkt 6)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co musi mieć orzeczenie, żeby je powołać, i co jeśli ma poprzeć tezę?",
+     "expected": [
+      "Zasada 2: sygnatura, data, sąd (z izbą), URL do oryginału w oficjalnym portalu; Zasada 3 limit cytatu do 30 słów; Zasada 4 link wyłącznie do oryginału",
+      "Zasada 2A: cztery elementy potwierdzają istnienie, nie treść — przy poparciu tezy wymagany poziom TREŚĆ (shared/WERYFIKACJA-SLAD.md GRAD-1..4)",
+      "Zasada 2B (pinpoint): lokalizacja cytatu w źródle (strona, teza/punkt, sekcja albo opis miejsca)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Jak postąpisz, gdy web_search/web_fetch zwracają błąd?",
+     "expected": [
+      "Faza 1-F FALLBACK F-1/F-2: poinformować o niedostępności, rejestry urzędowe działają dalej, przejść do kolejnego portalu; po wyczerpaniu Tier 1–3 status „Brak potwierdzenia URL”",
+      "NIE powoływać bez potwierdzonego URL; zaoferować opis instytucji bez konkretnych sygnatur; F-3 płatna baza: „Dostęp płatny — nie cytuję.”, trop niepotwierdzony zostaje ⚠️ [NIEWERYFIKOWANE]"
+     ],
+     "must_not": [
+      "podaje tezę orzeczenia z pamięci, gdy narzędzia nie działają"
+     ]
+    },
+    {
+     "q": "Które bramki muszą zostać wykonane przed wysłaniem odpowiedzi?",
+     "expected": [
+      "V-SYG-0 (Faza 1-S kontrola istnienia sygnatury) i V-SYG-1..4 z shared/SYGNATURY.md; Faza 1-Z (kontrola zgodności trafienia z pytaniem)",
+      "SELF-CHECK ANTY-FASADA (shared/SELF-CHECK-ANTY-FASADA.md): brak deklaracji „zweryfikowano”, daty weryfikacji lub URL bez wywołania narzędzia w tej odpowiedzi"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-DOW-1",
+   "skill": "analizator-dowodow-v3",
+   "scenario": "Użytkownik wgrywa ZIP z 20 plikami (maile, PDF-y skanów, arkusz XLSX z kilkoma zakładkami) w sprawie pracowniczej i prosi: „oceń dowody i wskaż luki”.",
+   "probes": [
+    {
+     "q": "Wymień w kolejności kroki i bramki przed jakąkolwiek oceną dowodów.",
+     "expected": [
+      "HARD GATE zakaz cytowania prawa z pamięci i bramka [WEJŚCIE-DOKUMENTU]; KROK 0 — BLOKADA WSTĘPNA (czy to umowa/OWU — wtedy przekierowanie do analizator-umow-v1); KROK 0a — wykrycie trybu MODE",
+      "KROK 0b — SKAN KOMPLETNOŚCI PLIKÓW (HARD GATE): SD-GATE-0, SD-INW (ZIP = zawartość), SD-READ (każda strona i zakładka), SD-VER; BLOK-C-FSL przy ≥1 tezie dowodowej",
+      "KROK 0c — ST-INIT: rejestr kroków (MOD-STEP-TRACKER) po SD-VER KOMPLET, KROK 1 intake i widget kreator, KROK 2 centralny router (BLOK A..G), potem KROK 3 moduły MD/MP i KROK 4 dashboard"
+     ],
+     "must_not": [
+      "przechodzi do oceny dowodów przed SD-VER = KOMPLET"
+     ]
+    },
+    {
+     "q": "Jak wpłynie liczba plików na dalszy przebieg?",
+     "expected": [
+      "BLOK B5 — PORCJOWANIE (HARD GATE gdy materiał duży): shared/MOD-PORCJOWANIE-DOWODOW.md PD0; ≥16 plików = STATUS WYMAGANE: PD1 podział na partie, PD2 plan dla użytkownika, STOP do zatwierdzenia planu",
+      "Partie z checkpointami (PD4), wznawianie przez wgranie „# CHECKPOINT ANALIZY” (PD5), synteza finalna PD6"
+     ],
+     "must_not": [
+      "analizuje wszystkie 20 plików naraz bez planu partii"
+     ]
+    },
+    {
+     "q": "Które pliki shared/ wczytujesz i kiedy?",
+     "expected": [
+      "shared/PRAWO-HARDGATE.md przed przepisem; shared/MOD-WEJSCIE-DOKUMENTU.md przy dostarczonym materiale",
+      "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md w KROK 0b; shared/MOD-STEP-TRACKER.md w KROK 0c; shared/MOD-FSL-DOKUMENTY.md w BLOK-C-FSL; shared/MOD-PORCJOWANIE-DOWODOW.md w BLOK B5",
+      "Moduły MD/MP tylko te, które wynikają z odpowiedzi TAK w KROK 2 (nic więcej)"
+     ],
+     "must_not": [
+      "wczytuje wszystkie moduły MD/MP z góry"
+     ]
+    },
+    {
+     "q": "Co zablokuje wyjście i o co zapytasz najpierw?",
+     "expected": [
+      "SD-VER niekompletny, luka FSL 🔴 (decyzja a/b/c/d), brak zatwierdzonego planu partii; ST-REPORT: przy ≥1 „⚠️ POMINIĘTY” raport pominięć i czekanie na decyzję przed dashboardem",
+      "Pierwszy kontakt z użytkownikiem: widget kreator (KROK 1: tryb postępowania, opis materiału, format wyjścia DASHBOARD/NARR/OBA/INLINE)"
+     ],
+     "must_not": [
+      "generuje dashboard bez wyświetlenia stanu rejestru kroków"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-DOW-2",
+   "skill": "analizator-dowodow-v3",
+   "scenario": "Użytkownik wgrywa dwa pisma procesowe tej samej strony z różnych dat i prosi o wykrycie zmian twierdzeń oraz ocenę mocnych i słabych stron.",
+   "probes": [
+    {
+     "q": "Który tryb pracy i które bloki routera obowiązują?",
+     "expected": [
+      "KROK 0a — MODE addytywny: sygnał A (≥2 pisma procesowe tego samego autora z różnych dat) — tryb porównawczy jednej strony",
+      "KROK 2: A2=TAK uruchamia BLOK D (analiza pism) oraz obowiązkowe BLOK G (rejestr stron/świadków) i BLOK J (lapsusy autorskie [LAPSUS])"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co musisz zapisać jawnie, zanim odpowiesz na pytania D1–D6?",
+     "expected": [
+      "BLOK D0 — TEZA-GATE (obowiązkowe): zrekonstruować jednym zdaniem per strona tezę centralną — czego strona żąda i na jakiej podstawie — i zapisać w odpowiedzi",
+      "Kilka wątków = osobna teza per wątek; spór dwustronny = teza każdej strony osobno"
+     ],
+     "must_not": [
+      "ocenia argumenty na podstawie tonu lub objętości bez rekonstrukcji tezy"
+     ]
+    },
+    {
+     "q": "Jak śledzisz, czy żaden obowiązkowy blok nie został pominięty?",
+     "expected": [
+      "KROK 0c — ST-INIT: rejestr z pozycjami AD-KROK0..AD-KROK4, AD-BLOKG, AD-BLOKJ, AD-BLOKH",
+      "Pominięty blok = status „⚠️ POMINIĘTY” z powodem; ST-REPORT przed dashboardem/raportem; ZAKAZ raportu końcowego bez stanu rejestru"
+     ],
+     "must_not": [
+      "cicho pomija BLOK G lub J"
+     ]
+    },
+    {
+     "q": "Co jest domyślnym formatem wyniku i kiedy dodasz wersję szczegółową?",
+     "expected": [
+      "Domyślnie dashboard interaktywny (C3, B1=TAK) bez pytania o format",
+      "MD-NARR (plik .md) tylko na wyraźne żądanie (C4), jako dodatek do dashboardu, nigdy domyślnie"
+     ],
+     "must_not": [
+      "generuje MD-NARR domyślnie"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-DOW-3",
+   "skill": "analizator-dowodow-v3",
+   "scenario": "Użytkownik pisze: „w załączeniu wszystkie dowody, przeanalizuj” — ale plików nie wgrał. W drugiej wiadomości wkleja umowę najmu i pyta „czy mogę ją podpisać”.",
+   "probes": [
+    {
+     "q": "Co zrobisz po pierwszej wiadomości?",
+     "expected": [
+      "SD-GATE-0: wzmianka o załącznikach bez wgranego pliku = STOP; komunikat „Wskazujesz na dokumenty, ale nie wykryłem żadnego pliku. Wgraj materiały przed analizą.”",
+      "Czeka; nie przechodzi do KROK 1"
+     ],
+     "must_not": [
+      "analizuje na podstawie samego opisu bez plików"
+     ]
+    },
+    {
+     "q": "Jak potraktujesz drugą wiadomość z umową najmu?",
+     "expected": [
+      "KROK 0 — BLOKADA WSTĘPNA: materiał to umowa/OWU/regulamin i nie jest jednym z wielu dowodów w sprawie sądowej → STOP, przekierowanie do analizator-umow-v1, nie kontynuuje"
+     ],
+     "must_not": [
+      "analizuje klauzule umowy w tym skillu"
+     ]
+    },
+    {
+     "q": "Jakie bramki dotyczą cytowania przepisów w odpowiedzi?",
+     "expected": [
+      "HARD GATE zakaz cytowania prawa i orzeczeń z pamięci (view shared/PRAWO-HARDGATE.md)",
+      "BRAMKI TOWARZYSZĄCE przed raportem/widgetem: ANTY-FASADA, DOMAIN-LOCK, RATE-COMPLETENESS, STATUSY (zamknięta hierarchia czterech znaczników)",
+      "Wskazanie dziedziny przez MX nie jest podstawą faktyczną — nią jest dowód"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Kiedy dołączysz analizę terminów i raport końcowy?",
+     "expected": [
+      "C2: data doręczenia/ogłoszenia lub inna data krytyczna w materiale → dodaj MD5; C3: potrzebny raport końcowy → MD6, domyślnie dashboard",
+      "Terminy procesowe i hierarchia orzecznictwa z plików kanonicznych shared/terminy.md i shared/ORZECZENIA-HIERARCHIA.md, bez równoległej kopii"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-PRZEW-1",
+   "skill": "przewodnik-prawny-v2",
+   "scenario": "Laik pisze: „Dostałem nakaz zapłaty z sądu, nie wiem co robić, boję się.” Nie podaje daty ani niczego więcej.",
+   "probes": [
+    {
+     "q": "Jaką ścieżkę wybierasz i co robisz jako pierwsze?",
+     "expected": [
+      "Rozpoznanie trybu: decyzja/wyrok/nakaz → KROK B + KROK G (termin zawity PIERWSZY); tryb PROWADZENIE-LAIK",
+      "KROK G: przed podaniem terminu view shared/PRAWO-HARDGATE.md i shared/terminy.md; pierwsze pytanie o datę doręczenia (stempel pocztowy lub potwierdzenie odbioru)",
+      "Nie analizuje treści dokumentu, dopóki nie wie, czy termin nie minął (B.1)"
+     ],
+     "must_not": [
+      "zaczyna od wyjaśniania treści nakazu przed ustaleniem terminu"
+     ]
+    },
+    {
+     "q": "Jakie reguły dotyczą stylu i liczby pytań w tej rozmowie?",
+     "expected": [
+      "Zasada 0 — MONITOR JĘZYKA LAIKA aktywny przez całą sesję: żadnych sygnatur przepisów (art., §, KC, KPC, Dz.U.) bez wyjaśnienia po ludzku w tej samej wiadomości",
+      "Tryb PROWADZENIE → tylko jedno pytanie na wiadomość (SELF-CHECK PRZED KAŻDĄ ODPOWIEDZIĄ)"
+     ],
+     "must_not": [
+      "zadaje kilka pytań naraz",
+      "używa żargonu bez przekładu"
+     ]
+    },
+    {
+     "q": "Co dodajesz po wyjaśnieniu wyniku i co jest ostatnim elementem odpowiedzi z analizą?",
+     "expected": [
+      "KROK H — tłumaczenie wyników innych skilli (w trybie LAIK), KROK I — opcje po każdej analizie z konsekwencjami",
+      "Disclaimer jako ostatni element odpowiedzi z analizą (shared/DISCLAIMER.md)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Które self-checki i pliki shared/ wykonujesz przed wysłaniem?",
+     "expected": [
+      "SELF-CHECK PRZED KAŻDĄ ODPOWIEDZIĄ: monitor języka, tryb wejścia, KROK G pierwszy przy dokumencie z datą, wywołanie skilla przez view (nie z pamięci)",
+      "shared/SELF-CHECK-ANTY-FASADA.md, DOMAIN-LOCK (shared/DOMAIN-LOCK.md), RATE-COMPLETENESS (shared/RATE-COMPLETENESS.md), STATUSY (cztery znaczniki)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-PRZEW-2",
+   "skill": "przewodnik-prawny-v2",
+   "scenario": "Użytkownik: „Mam pytanie — czy właściciel może mi podnieść czynsz w trakcie umowy na czas określony? Mam jeszcze parę pytań.”",
+   "probes": [
+    {
+     "q": "Który tryb uruchamiasz i jak wygląda protokół odpowiedzi?",
+     "expected": [
+      "Tryb Q&A (KROK Q): wejście Q.1, protokół odpowiedzi Q.2, weryfikacja online przy każdej odpowiedzi Q.3, przejście z Q&A do działania Q.4, pamięć sesji Q.5",
+      "Każdy przepis/termin weryfikowany online (ELI/orzecznictwo), nie z pamięci"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Jak zachowasz się po serii pytań?",
+     "expected": [
+      "Q.4: po zakończeniu pomaga zdecydować, co zrobić; fakty zebrane w Q&A przekazuje do PRIMARY skilla",
+      "W KROK I używa sygnału Q&A („❓ Masz pytanie...”)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie reguły stylu obowiązują, jeśli użytkownik jest laikiem?",
+     "expected": [
+      "Zasada 0 monitor języka laika; odpowiedzi prostym językiem; przetłumaczenie wyniku przez KROK H",
+      "Historia pytań zachowana w sesji (Q.5)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie pliki czytasz i co może zablokować odpowiedź?",
+     "expected": [
+      "shared/PRAWO-HARDGATE.md przed każdym przepisem; shared/terminy.md przy terminach",
+      "Self-check: wykryty tryb wejścia, weryfikacja online każdego przepisu w Q&A, disclaimer jako ostatni element"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-PRZEW-3",
+   "skill": "przewodnik-prawny-v2",
+   "scenario": "Prawnik pisze: „Co potrafi ten system? Jak działa analizator dowodów — opisz mechanizm techniczny.”",
+   "probes": [
+    {
+     "q": "Jaki tryb rozpoznajesz i dokąd kierujesz?",
+     "expected": [
+      "Sygnał „jak mogę przeanalizować dowody / jak działa analizator” → MENU-PRAWNIK → KROK M z opisem technicznym mechanizmu",
+      "KROK M — MENU MOŻLIWOŚCI SYSTEMU: view przewodnik-prawny-v2/references/KROK-M.md"
+     ],
+     "must_not": [
+      "odsyła do innego skilla bez opisu mechanizmu"
+     ]
+    },
+    {
+     "q": "Co zrobisz przed wywołaniem skilla w trybie MENU?",
+     "expected": [
+      "Wyjaśnia mechanizm skilla przed wywołaniem (SELF-CHECK: tryb MENU)",
+      "Wywołuje skill przez view, nie z pamięci; mapa wywołań (MAPA WYWOŁAŃ — PEŁNA) wskazuje PRIMARY/SECONDARY"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Czy uprościsz język?",
+     "expected": [
+      "Nie w trybie PRAWNIK — bez upraszczania, z terminologią; Zasada 0 dotyczy tylko trybu LAIK",
+      "Flaga SUROWA-ANALIZA (references/TRYB-SUROWA-ANALIZA.md) włączana frazami typu „surowa analiza”, „bez interpretacji” w dowolnym momencie"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie zakończenie odpowiedzi jest wymagane?",
+     "expected": [
+      "KROK I — opcje po analizie; disclaimer jako ostatni element, jeśli odpowiedź zawiera analizę",
+      "Self-check antyfasadowy z shared/SELF-CHECK-ANTY-FASADA.md przed wysłaniem"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-PISMA-1",
+   "skill": "pisma-procesowe-v3",
+   "scenario": "Użytkownik wgrywa umowę i cztery maile i prosi: „napisz pozew o zapłatę 80 tys. zł z odsetkami; mam też swoje wcześniejsze pismo do pozwanego”. Dodaje: „szybko, bez pytań”.",
+   "probes": [
+    {
+     "q": "Co robisz jako absolutnie pierwsze, zanim zaczniesz routing i W1?",
+     "expected": [
+      "HARD GATE ZERO: view pisma-procesowe-v3/references/AUTOMAT-STANOW.md (STAN 0–3, ZAKAZY 1–13, mapa checkpointów); NIE rozpoczyna pracy bez wczytania",
+      "HARD GATE WARUNKOWY (CG-GATE): jednorazowa informacja przed startem o wieloetapowym pipeline i jawności każdego pominięcia oraz wczytanie checklisty; HARD GATE STEP-DISCLOSURE: ST-INIT (rejestr kroków, shared/MOD-STEP-TRACKER.md)",
+      "HARD GATE MRG: przed każdą odpowiedzią i każdym [CP] fizyczne view shared/CP-GATE.md i shared/MOD-STEP-TRACKER.md"
+     ],
+     "must_not": [
+      "pomija wczytanie AUTOMAT-STANOW.md, bo użytkownik prosi o szybkość"
+     ]
+    },
+    {
+     "q": "Wymień w kolejności etapy i bramki aż do pliku .docx.",
+     "expected": [
+      "KROK 0 ROUTING (Test A redakcja, Test B pismo proste, Test C intake) → WIADOMOŚĆ 1 rama i strategia (W1.1–W1.6, CLAIM-VALIDATION, FSL dokumentów) → STOP do zatwierdzenia",
+      "PRE-W2-VERIFICATION-GATE (shared/PRE-W2-VERIFICATION-GATE.md: sąd, dane pozwanego, KRS/NIP przez web_search/web_fetch) → WIADOMOŚĆ 2 projekt pisma (MOD-ATAK-NA-DRAFT) → WIADOMOŚĆ 3 weryfikacja ze źródeł",
+      "W3.0 PODMIOT-GATE (references/W3-PODMIOT-GATE.md), W3.1–W3.7 (references/W3-WERYFIKACJA.md), ST-FINAL; .docx dopiero po zamknięciu W3"
+     ],
+     "must_not": [
+      "generuje .docx po W2"
+     ]
+    },
+    {
+     "q": "Co wolno wpisać do W2 i do W1 w zakresie przepisów i orzeczeń?",
+     "expected": [
+      "ZASADA IZOLACJI: W2 nie może zawierać pełnego oznaczenia Dz.U. ani sygnatury orzeczenia; orzeczenia jako placeholder [ORZECZENIE: opis → W3]; przepisy jako ⚠️ [WERYFIKACJA W3]",
+      "W1: nie redaguje treści pisma, nie podaje pełnych numerów Dz.U. ani sygnatur; dane podmiotów oznaczone ⚠️POD, nie z pamięci"
+     ],
+     "must_not": [
+      "wpisuje do W2 sygnaturę orzeczenia z pamięci"
+     ]
+    },
+    {
+     "q": "O co zapytasz w intake?",
+     "expected": [
+      "Test C: typ pisma, dziedzina, strony, etap (sygnatura), cel, materiały — brakujące dane jednym pytaniem zbiorczym; przy lukach shared/INTAKE-GAP.md",
+      "Po W1 czeka na wyraźną zgodę („tak”/„dalej”/„redaguj”/„ok”) przed W2"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-PISMA-2",
+   "skill": "pisma-procesowe-v3",
+   "scenario": "Użytkownik wkleja gotowe pismo do sądu i prosi: „skróć o połowę i zrób ton bardziej stanowczy, niczego nie dodawaj”.",
+   "probes": [
+    {
+     "q": "Którą ścieżkę wybierasz i czy uruchamiasz W1–W3?",
+     "expected": [
+      "KROK 0 Test A (redakcja istniejącego pisma): gotowa treść + żądanie dotyczy formy/stylu/długości/tonu + brak nowej argumentacji → modules/MOD-REDAKCJA.md",
+      "Nie wykonuje W1-W2-W3 i nie sprawdza Testu B/C; Test A ma priorytet"
+     ],
+     "must_not": [
+      "uruchamia pełny model trzech wiadomości"
+     ]
+    },
+    {
+     "q": "Co byłoby sygnałem, że to nie jest czysta redakcja?",
+     "expected": [
+      "Prośba o dodanie nowych przepisów, orzeczeń lub zarzutów albo zmiana argumentacji — wtedy Test A nie zachodzi i trzeba przejść do dalszych testów",
+      "Sygnały redakcji: „popraw to pismo”, „zredaguj”, „skróć”, „wzmocnij ton”, „sprawdź i popraw” po raporcie KROK F przewodnika"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie twarde bramki obowiązują mimo trybu redakcji?",
+     "expected": [
+      "HARD GATE ZERO (AUTOMAT-STANOW) i wymóg ujawniania pominiętych kroków (STEP-DISCLOSURE); MRG przed odpowiedzią w pipeline pisma",
+      "Nie dodaje cytowań z pamięci (shared/PRAWO-HARDGATE.md)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Jakie pliki wczytujesz?",
+     "expected": [
+      "references/AUTOMAT-STANOW.md, modules/MOD-REDAKCJA.md, ewentualnie references/SELF-CHECK-PISMA.md przed odpowiedzią w pipeline pisma"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-PISMA-3",
+   "skill": "pisma-procesowe-v3",
+   "scenario": "Użytkownik: „Napisz sprzeciw od nakazu zapłaty — nakaz dostałem tydzień temu, kwestionuję całość roszczenia.”",
+   "probes": [
+    {
+     "q": "Jak zakwalifikujesz to żądanie w KROK 0?",
+     "expected": [
+      "Test A nie (nie jest to redakcja gotowego pisma); Test B: pismo proste = jedno żądanie + jedna podstawa prawna + pozycja z katalogu (sprzeciw od nakazu art. 505 § 1 KPC)",
+      "TAK na wszystkie 3 → nie pisze pisma, proponuje pisma-proste-v2 komunikatem REDUKCJA DO pisma-proste-v2 i pyta o zgodę na przełączenie"
+     ],
+     "must_not": [
+      "od razu uruchamia W1 bez testu B"
+     ]
+    },
+    {
+     "q": "Kiedy zamiast tego uruchomisz pełny model trzech wiadomości?",
+     "expected": [
+      "Gdy którykolwiek warunek Testu B nie jest spełniony (np. wiele wątków lub podstaw) → Test C i W1-W2-W3",
+      "Wyjście pisma zawsze .docx po W3 i ST-FINAL"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co jest wymagane w W3 przed finalnym pismem?",
+     "expected": [
+      "W3.0 PODMIOT-GATE, weryfikacja przepisów z ELI (RZĄD 1) przez web_fetch dla każdego ⚠️, orzeczenia: sygnatura + teza + URL ze źródła, MOD-WALIDACJA, HYBRID-VALIDATION",
+      "references/W3-WERYFIKACJA.md zawiera szczegóły W3.1–W3.7"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Jakie bramki muszą być wykonane przed present_files?",
+     "expected": [
+      "MRG (view CP-GATE.md i MOD-STEP-TRACKER.md) i ST-FINAL: pełny rejestr kroków; DRAFT niezweryfikowany → raport pominięć i decyzja użytkownika",
+      "SELF-CHECK PRZED KAŻDĄ ODPOWIEDZIĄ (references/SELF-CHECK-PISMA.md)"
+     ],
+     "must_not": [
+      "wywołuje present_files bez wyświetlenia rejestru kroków"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-SAD-1",
+   "skill": "analiza-sadowa-v6",
+   "scenario": "Użytkownik wgrywa wyrok sądu rejonowego, apelację przeciwnika i protokół rozprawy (PDF-y, jeden skan) i prosi: „oceń moje szanse w apelacji”.",
+   "probes": [
+    {
+     "q": "Wymień w kolejności kroki i wiadomości, które wykonasz.",
+     "expected": [
+      "KROK 0 — SKAN KOMPLETNOŚCI PLIKÓW (HARD GATE) jako absolutnie pierwszy: SD-GATE-0, SD-INW, SD-READ (każda strona, protokół: każde zdanie zeznań osobny wpis SD-FAKTY), SD-VER, SD-GATE-4; dopiero potem KOMUNIKAT STARTOWY",
+      "Model czteroprzebiegowy, każde przejście OSOBNĄ WIADOMOŚCIĄ: 1 Przejście I mapowanie faktyczne, 2 Przejście II kwalifikacja prawna (macierz fakt-norma, normy z ELI), 3 Przejście III analiza adversarialna + WERYFIKACJA PIERWSZA, 4 Przejście IV autokorekta P1-P5 + WERYFIKACJA OSTATECZNA i GATE",
+      "5 raport końcowy §1-§11 tylko po GATE ZATWIERDZONE TAK, 6 widget Raportu Sytuacyjnego v2 (obowiązkowy), 7 oferta pisma procesowego"
+     ],
+     "must_not": [
+      "łączy kilka przejść w jednej wiadomości"
+     ]
+    },
+    {
+     "q": "Które twarde bramki mogą zablokować wyjście?",
+     "expected": [
+      "SD-VER ≠ KOMPLET blokuje Przejście I i komunikat startowy (SD-GATE-4)",
+      "HARD GATE zakaz cytowania prawa i orzeczeń z pamięci (shared/PRAWO-HARDGATE.md), BRAMKI TOWARZYSZĄCE (ANTY-FASADA, DOMAIN-LOCK, RATE-COMPLETENESS, STATUSY) w Przejściu IV (4A, pytania P6–P7)",
+      "GATE po Przejściu IV: raport końcowy tylko po ZATWIERDZONE TAK"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Co dzieje się w Przejściu IV i co jest po raporcie końcowym?",
+     "expected": [
+      "Przejście IV: pięć pytań autokorekty P1-P5 (m.in. zakorzenienie, izolacja, symetria) i WERYFIKACJA OSTATECZNA (O1-O5)",
+      "Po §11: wiadomość 6 widget raportu sytuacyjnego (shared/raport-sytuacyjny-integracja.md, show_widget z raport-sytuacyjny-v2/assets/widget-raport-sytuacyjny.html) bez pytania o zgodę; wiadomość 7: pytanie o napisanie pisma (→ prawny-router-v3 → pisma-procesowe-v3 lub pisma-proste-v2)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie pliki wczytujesz i kiedy?",
+     "expected": [
+      "shared/MOD-SKAN-DOWODOW-KOMPLETNY.md na początku; shared/CLAIM-VALIDATION.md przed mapowaniem faktycznym (Przejście I)",
+      "references/filtry-analityczne.md (Filtry #2 #4 #8 #9), references/MOD-{litera}.md tylko pasujące moduły, references/orzecznictwo.md; zgodnie z tabelą KIEDY WCZYTAĆ REFERENCES/"
+     ],
+     "must_not": [
+      "wczytuje wszystkie moduły MOD-A..F niezależnie od sprawy"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-SAD-2",
+   "skill": "analiza-sadowa-v6",
+   "scenario": "Użytkownik wgrywa dwa pisma procesowe adwokata strony przeciwnej oraz własne pismo i prosi o audyt błędów pełnomocników po obu stronach; w materiałach jest też nagranie rozmowy.",
+   "probes": [
+    {
+     "q": "Które moduły specjalistyczne uruchomisz?",
+     "expected": [
+      "MOD-A (≥2 pisma procesowe tej samej strony — błędy pełnomocnika przeciwnika) i MOD-F (audyt pism własnego pełnomocnika); A+F łącznie = audyt dwustronny",
+      "MOD-C (nagranie audio/video w sprawie); moduły z references/MOD-{litera}.md tylko pasujące"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie filtry obowiązują poza przejściami I–IV?",
+     "expected": [
+      "KROK 1 — Filtry #2 (orzecznictwo oficjalne), #4 (kontekst: spór czy czyn zabroniony), #8 (test in dubio, art. 5 § 2 KPK, OBOWIĄZKOWY), #9 (sygnały proceduralne — dwie interpretacje) z references/filtry-analityczne.md",
+      "Pozostałe filtry (#1 #3 #5 #6 #7 #10 #11) absorbowane przez Przejścia I-IV"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Czy pokażesz widget interaktywny?",
+     "expected": [
+      "TRYB B (widget) TYLKO na jawne żądanie użytkownika; ZAKAZ AUTOŁADOWANIA JSX; domyślnie TRYB A analiza tekstowa",
+      "Wyjątek: widget Raportu Sytuacyjnego v2 po raporcie końcowym jest obowiązkowy (wiadomość 6)"
+     ],
+     "must_not": [
+      "autoładuje widget JSX bez żądania"
+     ]
+    },
+    {
+     "q": "Jak postąpisz z orzecznictwem i dużą liczbą dokumentów?",
+     "expected": [
+      "KROK 3 orzecznictwo online (references/orzecznictwo.md), nigdy z pamięci; sygnatury weryfikowane przez ELI/portale oficjalne",
+      "Sprawa ≥10 dokumentów (model kontynentalny): PRZEBIEG-1-ekstrakcja.md → PRZEBIEG-2-strukturalna.md → PRZEBIEG-3-predykcja.md"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-SAD-3",
+   "skill": "analiza-sadowa-v6",
+   "scenario": "Użytkownik pisze bez plików: „czy w sprawie o mobbing wyrok SN przyznaje zadośćuczynienie? podaj sygnaturę” i dodaje: „oceń szanse mojej sprawy”.",
+   "probes": [
+    {
+     "q": "Co zrobisz z prośbą o sygnaturę wyroku SN?",
+     "expected": [
+      "HARD GATE zakaz cytowania prawa i orzeczeń z pamięci; sygnaturę wolno podać tylko po weryfikacji online w oficjalnych portalach (references/orzecznictwo.md; zasady cytowania orzecznictwa)",
+      "Jeśli źródło niedostępne — ⚠️ [NIEWERYFIKOWANE] i kontynuacja bez treści"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Czy uruchomisz pełny model czteroprzebiegowy, skoro użytkownik nie wgrał żadnych dokumentów?",
+     "expected": [
+      "KROK 0 — SKAN KOMPLETNOŚCI jest pierwszym krokiem; SD-GATE-0 zatrzymuje, gdy jest wzmianka o aktach/pismach bez wgranego pliku — i prosi o ich wgranie przed komunikatem startowym",
+      "Wyjątek od wiadomości 6 (widget raportu sytuacyjnego): pomijana tylko gdy użytkownik zadał jedno pytanie bez dokumentów i bez stanu faktycznego sprawy"
+     ],
+     "must_not": [
+      "generuje pełny raport §1-§11 bez mapy faktycznej z dokumentów"
+     ]
+    },
+    {
+     "q": "Jak rozgraniczasz kompetencje z analizator-dowodow-v3?",
+     "expected": [
+      "analiza-sadowa-v6 jest PRIMARY dla executive summary szans w sprawie i audytu błędów pełnomocnika; analizator-dowodow-v3 dla głębokiej analizy dowodowej wieloplikowej",
+      "Terminy i hierarchia orzecznictwa z wspólnych plików shared (shared/terminy.md, shared/ORZECZENIA-HIERARCHIA.md)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie zasady nadrzędne zastosujesz do oceny szans?",
+     "expected": [
+      "REGUŁY NADRZĘDNE: zamiar przed skutkiem (strona podmiotowa przed przedmiotową), izolacja przejść faktycznego i prawnego",
+      "Filtr #6 symetria słabości OBU stron; Filtr #11 autokorekta P1-P5 przed prognozą"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-CHR-1",
+   "skill": "chronologia-sprawy-v1",
+   "scenario": "Użytkownik wgrywa pozew, wyrok, protokół rozprawy, umowę i korespondencję mailową (razem 6 dokumentów) i prosi: „ułóż chronologię sprawy i pokaż sprzeczności dat”.",
+   "probes": [
+    {
+     "q": "Co robisz jako pierwszy krok i jakie kroki następują w TRYBIE A?",
+     "expected": [
+      "KOMUNIKAT STARTOWY jako PIERWSZY krok (zakaz pomijania)",
+      "TRYB A: A1 wczytaj references/ekstrakcja-zdarzen.md, A2 inwentaryzacja dokumentów (DOK-01, DOK-02...), A3 wątki prawne (W1, W2...), A4 FAZA EKSTRAKCJI per dokument, A5 references/sprzecznosci-dat.md i INDEKS SPRZECZNOŚCI, A6 raport chronologiczny (oś per wątek, widok zbiorczy, fakty bezsporne, indeks sprzeczności), A7 propozycja widgetu"
+     ],
+     "must_not": [
+      "pomija komunikat startowy"
+     ]
+    },
+    {
+     "q": "Które bramki muszą zostać wykonane przed lub w trakcie ekstrakcji?",
+     "expected": [
+      "SD-GATE — skan kompletności dokumentów (shared/MOD-SKAN-DOWODOW-KOMPLETNY.md, FAZA 1-3) przed sekwencją dla każdego dokumentu; status SD-VER wpisany do sekcji INWENTARYZACJA DOKUMENTÓW raportu",
+      "OŚ-GATE: wyzwalacz mechaniczny ≥2 daty w materiale → shared/MOD-OS-CZASU-PRZESLANEK.md (OŚ-1 po ekstrakcji, OŚ-2..4 przed formatowaniem raportu; blok przed wnioskami); sprzeczności dat do references/sprzecznosci-dat.md",
+      "HARD GATE zakaz cytowania prawa z pamięci i WEJŚCIE-DOKUMENTU"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Jak klasyfikujesz pewność zdarzeń i co zapisujesz per dokument?",
+     "expected": [
+      "Cztery klasy pewności: [BEZSPORNE], [PEWNE], [WYDEDUKOWANE], [SPORNE]",
+      "Per dokument: typ, identyfikator DOK-nn, wszystkie daty jawne z numerem strony, daty ukryte zakotwiczone, zdarzenie, klasa pewności, PROWENIENCJA (typ_zrodla, dok_id, strona_dok, autor_twierdzenia), przypisanie do wątku prawnego"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Czy pokażesz od razu widget osi czasu?",
+     "expected": [
+      "Nie — ZAKAZ autoładowania widget-timeline.html; widget (TRYB B) tylko na jawne żądanie („widget”, „pokaż oś czasu”); w A7 tylko propozycja przy ≥5 zdarzeniach, ≥2 wątkach lub potrzebie eksportu"
+     ],
+     "must_not": [
+      "autoładuje widget bez żądania"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-CHR-2",
+   "skill": "chronologia-sprawy-v1",
+   "scenario": "W materiałach (arkusz, maile, zeznania) pojawiają się zaliczki, zwroty, kary umowne i opłaty w różnych kwotach; użytkownik prosi o chronologię z rozliczeniami.",
+   "probes": [
+    {
+     "q": "Jaką bramkę uruchamia wzmianka o kwotach pieniężnych?",
+     "expected": [
+      "KROK-FIN-GATE (3B KORELACJA FINANSOWA MIĘDZY DOKUMENTAMI, obowiązkowa): nie wolno zamknąć FAZY EKSTRAKCJI, jeśli występuje ≥1 wzmianka o kwocie, a rekord FINANSE nie został wypełniony i skorelowany",
+      "Dotyczy także dokumentów nieformalnych (wiadomości, arkusze)"
+     ],
+     "must_not": [
+      "traktuje kwotę jako zwykły szczegół zdarzenia"
+     ]
+    },
+    {
+     "q": "Jakie pola ma rekord FINANSE?",
+     "expected": [
+      "kwota (liczba + waluta), tytuł, płatnik, odbiorca, termin (null gdy brak, nie domyślać się), status (ZAPŁACONE/DO_ZAPŁATY/ZALEGŁE/SPORNE_CZY_ZWRÓCONE/NIEZNANY), dok_id, strona_dok, powiązane_osoby"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie kroki obejmuje korelacja finansowa?",
+     "expected": [
+      "KROK-FIN-1 inwentaryzacja kwot per dokument, KROK-FIN-2 zestawienie krzyżowe (tabela rekoncyliacji), KROK-FIN-3 identyfikacja osób przy danych szczątkowych, KROK-FIN-4 eksport",
+      "SELF-CHECK uzupełniający do sekcji SELF-CHECK głównej"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie pozostałe bramki i self-checki obowiązują?",
+     "expected": [
+      "SD-GATE i OŚ-GATE (≥2 daty); HARD GATE zakaz cytowania prawa z pamięci; SELF-CHECK (przed każdą odpowiedzią) i SELF-CHECK ANTY-FASADA (shared/SELF-CHECK-ANTY-FASADA.md)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-CHR-3",
+   "skill": "chronologia-sprawy-v1",
+   "scenario": "Użytkownik po ułożeniu osi czasu pyta: „co z czego wynika? co jeśli opóźnienie dostawy się nie utrzyma? pokaż zależności” — oś ma dwa wątki ze wspólnymi węzłami.",
+   "probes": [
+    {
+     "q": "Który tryb uruchamiasz i jaki jest warunek wstępny?",
+     "expected": [
+      "TRYB C — Graf przyczynowy (zależności zdarzeń, wpływ wzajemny, „co jeśli”), od v1.13",
+      "KROK C1: oś czasu z TRYBU A (zdarzenia z polem id Z-nnn); bez osi czasu TRYB C nie rusza"
+     ],
+     "must_not": [
+      "buduje graf bez uprzedniej osi czasu"
+     ]
+    },
+    {
+     "q": "Jakie kroki wykonasz w TRYBIE C?",
+     "expected": [
+      "C2 view shared/MOD-GRAF-PRZYCZYNOWY.md (krawędzie, dowód połączenia, bramy I/LUB, wersja przeciwnika jako OSLABIA/PRZERYWA); C3 raport python3 shared/tools/graf_przyczynowy.py graf.json albo model ręcznie z jawnym rachunkiem",
+      "C4 widget assets/widget-graf-przyczynowy.html z paskiem MOD-WIDGET-IO; C5 ogniwa krytyczne i flagi (post hoc, csqn, art. 361 § 1/362/441 KC, art. 2 KK) do raportu końcowego; liczby z zastrzeżeniem założeń"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie reguły dotyczą prawa przywołanego w uzasadnieniu przyczynowości?",
+     "expected": [
+      "HARD GATE zakaz cytowania prawa i orzeczeń z pamięci (shared/PRAWO-HARDGATE.md); przepisy z art. 361/362/441 KC weryfikowane online",
+      "Moduł shared nie jest źródłem prawa (OŚ-GATE: tablice CHWIL OCENY wskazują, gdzie patrzeć)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Co dalej z wynikiem?",
+     "expected": [
+      "EKSPORT DO PISMA PROCESOWEGO i INTEGRACJA Z INNYMI SKILLAMI (np. pisma-procesowe-v3); disclaimer na końcu"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-ROUT-1",
+   "skill": "prawny-router-v3",
+   "scenario": "Użytkownik wgrywa wyrok sądu rejonowego i pisze: „przegrałem, czy mam szanse w apelacji?”.",
+   "probes": [
+    {
+     "q": "Co jest ładowane zawsze, bezwzględnie, w każdej sprawie prawnej, i w jakiej kolejności?",
+     "expected": [
+      "ŁADOWANE ZAWSZE: 1 shared/PRAWO-HARDGATE.md, 2 references/KROK0A-anonimizer.md, 3 references/KROK1-detekcja.md (oraz shared/MOD-WEJSCIE-DOKUMENTU.md przy dostarczonym dokumencie), 4 routing [1]–[11] i ślad KROKU 3A",
+      "5 przy pierwszym URL shared/HIERARCHIA-ZRODEL.md (RZĄD 1/2A/2B/3) i references/ZRODLA-AKTOW-FALLBACK.md; 6 przed wysłaniem references/SELF-CHECK.md i VER-GRAIN; 7 disclaimer shared/DISCLAIMER.md jako ostatni element"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Wymień kroki SEKWENCJI GŁÓWNEJ przed analizą.",
+     "expected": [
+      "KROK 0 (HG-ACTIVE), KROK 0-ST (ST-INIT, shared/MOD-STEP-TRACKER.md), KROK 0A anonimizer (bramka twarda; decyzja_sesji ≠ null), KROK 0B kontekst sesji (gdy wklejony)",
+      "KROK 0C przy plikach najpierw shared/MOD-SKAN-DOWODOW-KOMPLETNY.md i pełny SD-VER (po raporcie zakończ turę; duże materiały także MOD-PORCJOWANIE-DOWODOW), KROK 0D status podmiotów ⬛",
+      "KROK 1 detekcja trybu, KROK 2 routing [1]–[11], KROK 3 PRIMARY→SECONDARY→FALLBACK, KROK 3A ślad routingu, KROK 4 analiza"
+     ],
+     "must_not": [
+      "pomija KROK 0A i przechodzi do routingu"
+     ]
+    },
+    {
+     "q": "Dokąd skieruje routing i jak wygląda ślad routingu?",
+     "expected": [
+      "[2] AKTA / WYROK / ANALIZA SZANS: PRIMARY analiza-sadowa-v6, SECONDARY analizator-dowodow-v3 i orzeczenia-sadowe-v2, FALLBACK przewodnik-prawny-v2",
+      "KROK 3A obowiązkowy blok: TRYB, PRIMARY z ROUTER-WCZYTANY, SECONDARY, ODRZUCONE z powodem, PROFIL, ODROCZONE, WERSJA ROUTERA, RESOLVER; gdy ROUTER-WCZYTANY: NIE → nagłówek TRYB ZDEGRADOWANY"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie twarde preferencje i bramki obowiązują w całej sprawie?",
+     "expected": [
+      "UP-1 router v3 zawsze pierwszy; UP-2 ELI pierwszy (kanon E-1…E-5), nigdy z pamięci; UP-4 HYBRID-VALIDATION przed każdym .docx; UP-6 CN-GATE przed analizą (shared/MOD-CN-GATE.md) i REM-GATE przed oddaniem (shared/MOD-REM-GATE.md)",
+      "Brak obowiązkowego odczytu lub źródła → ⛔ TRYB ZDEGRADOWANY i ⚠️ [NIEWERYFIKOWANE]; zakaz cichego użycia pamięci modelu"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-ROUT-2",
+   "skill": "prawny-router-v3",
+   "scenario": "Użytkownik: „napisz mi sprzeciw od nakazu zapłaty, dostałem go tydzień temu”.",
+   "probes": [
+    {
+     "q": "Który routing wybierzesz i co jest wyjściem?",
+     "expected": [
+      "[4] PISMO PROSTE (1 wątek, 1 podstawa prawna): PRIMARY pisma-proste-v2; nie używać gdy >1 wątek → [3] pisma-procesowe-v3; wyjście obowiązkowo .docx",
+      "Przy odpowiedzi na wezwanie sądu R-3.54-b: odczyt treści wezwania przed decyzją PRIMARY/ODRZUCONE"
+     ],
+     "must_not": [
+      "kieruje do pisma-procesowe-v3 bez wskazania powodu"
+     ]
+    },
+    {
+     "q": "Jakie bramki obowiązują przed oddaniem pliku .docx?",
+     "expected": [
+      "UP-4 HYBRID-VALIDATION przed każdym .docx; KROK 6-ST — ST-FINAL (blokujący): przed present_files pełny REJESTR KROKÓW (FAZA 3 MOD-STEP-TRACKER); DRAFT — NIEZWERYFIKOWANY → raport pominięć i decyzja a/b",
+      "Polecenia „dalej”/„generuj” nie zwalniają z ST-FINAL; REM-GATE przed oddaniem; disclaimer ostatni"
+     ],
+     "must_not": [
+      "wywołuje present_files bez ST-FINAL"
+     ]
+    },
+    {
+     "q": "Jak router traktuje termin w sprawie nakazu?",
+     "expected": [
+      "Router nie jest bazą prawa materialnego — tylko orkiestruje; termin i przepisy weryfikowane przez ELI (UP-2), shared/terminy.md; przy dokumencie z datą obowiązuje weryfikacja przed podaniem",
+      "Zasada odciążenia routera: nie dubluje treści modułów dziedzinowych"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Co jest ładowane zawsze na początku?",
+     "expected": [
+      "shared/PRAWO-HARDGATE.md, references/KROK0A-anonimizer.md (zamknięcie bramki anonimizera), references/KROK1-detekcja.md; PROFIL-LEKKI: rdzeń R-1…R-5 nieredukowalny, pozostałe zasoby na wyzwalacz mechaniczny"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-ROUT-3",
+   "skill": "prawny-router-v3",
+   "scenario": "Użytkownik wkleja cudzą opinię prawną z innego narzędzia AI i prosi: „porównaj z kluczem odpowiedzi i sprawdź, co jest nie tak”.",
+   "probes": [
+    {
+     "q": "Który routing i jaki obowiązkowy protokół?",
+     "expected": [
+      "[11] WERYFIKACJA CUDZEGO MATERIAŁU PRAWNEGO: PRIMARY analizator-przepisow-v2; SECONDARY właściwy dr-XX domeny i orzeczenia-sadowe-v2 gdy materiał powołuje sygnatury; FALLBACK przewodnik-prawny-v2",
+      "OBOWIĄZKOWO view references/AUDYT-KLUCZA-ODPOWIEDZI.md i protokół K0–K6 przed werdyktem porównawczym; materiał wejściowy to hipoteza do sprawdzenia"
+     ],
+     "must_not": [
+      "wydaje werdykt bez protokołu K0–K6"
+     ]
+    },
+    {
+     "q": "Co zrobisz z przepisami i sygnaturami z cudzej opinii?",
+     "expected": [
+      "Każde powołanie weryfikowane online (UP-2, ELI RZĄD 1), nie zakładane jako poprawne; bramka [WEJŚCIE-DOKUMENTU] — cytat z materiału musi dosłownie w nim występować (WD-2)",
+      "Brak weryfikacji → ⚠️ [NIEWERYFIKOWANE]"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Którymi bramkami obejmiesz każdą sprawę niezależnie od jurysdykcji?",
+     "expected": [
+      "UP-6: CN-GATE przed analizą i REM-GATE przed oddaniem, bez podmiany i wyjątku jurysdykcyjnego (UP-5 podmienia tylko OŚ-GATE i WYJ-GATE dla prawa zagranicznego)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jak router pokaże swoje decyzje?",
+     "expected": [
+      "KROK 3A ślad routingu (PRIMARY, SECONDARY, ODRZUCONE z powodem, PROFIL, ODROCZONE, WERSJA ROUTERA, RESOLVER); przy nakładaniu skilli shared/ACTIVATION-MATRIX.md"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-PP-1",
+   "skill": "prawo-polskie-v2",
+   "scenario": "Router (prawny-router-v3, KROK 1B) przekazuje sprawę: pracownik skarży się, że szef nie płaci nadgodzin i mobbinguje go od pół roku.",
+   "probes": [
+    {
+     "q": "Co robisz po wczytaniu tego skilla, w kolejności?",
+     "expected": [
+      "Ten skill jest wywoływany dopiero z prawny-router-v3 (KROK 1B); wywołany bezpośrednio = naruszenie UP-1, najpierw wczytać prawny-router-v3/SKILL.md",
+      "Routing błyskawiczny po frazach (nadgodziny, mobbing) → dr-04-Prawo-Pracy-ZUS-Swiadczenia; view prawo-polskie-v2/ROUTING-MAP.md dla map aktów",
+      "Jak wywołać DR-skill: view dr-[XX]-[Nazwa]/SKILL.md, następnie view dr-[XX]-[Nazwa]/modules/mod-[akt].md"
+     ],
+     "must_not": [
+      "wczytuje wszystkie DR-skille naraz"
+     ]
+    },
+    {
+     "q": "Ile DR-skilli wczytujesz i które pliki?",
+     "expected": [
+      "Wczytuje JEDEN pasujący DR-skill (Nie ładuj wszystkich DR-skills naraz)",
+      "ROUTING-MAP.md — sekcja DR-04 (Prawo Pracy, ZUS, Świadczenia Społeczne) wskazuje moduł aktu; potem moduł z dr-04"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Czy ten skill podlega PRAWO-HARDGATE i co z ROUTING-MAP?",
+     "expected": [
+      "SKILL.md: NIE — czysta fasada routingu, bramka odpala się w DR-skillu; ROUTING-MAP.md: TAK w zakresie ograniczonym (reżim mapy: audyt-systemu-v4 FAZA 3 A–D + ZASADA 8 numer niezależnie od nazwy + REGUŁA 3 HARDGATE-AUDYT)",
+      "Wyzwalacz zmiany decyzji: twierdzenie o treści prawa (przesłanka, termin, właściwość sądu, skutek) w którymkolwiek pliku skilla → PRAWO-HARDGATE obowiązkowe"
+     ],
+     "must_not": [
+      "twierdzi, że fasada podaje przesłanki lub terminy"
+     ]
+    },
+    {
+     "q": "Jak weryfikujesz teksty aktów i orzeczenia?",
+     "expected": [
+      "Teksty aktów kanon E-1…E-5 (shared/HIERARCHIA-ZRODEL.md): E-1 api.sejm.gov.pl/eli lub eli.gov.pl; E-2 ISAP jako adres dla człowieka; E-3 LEX/Legalis; E-4 ArsLege; prawo UE eur-lex.europa.eu; orzeczenia portale sądowe",
+      "Numeru Dz.U. nie przepisuje się z mapy bez odczytu w źródle"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-PP-2",
+   "skill": "prawo-polskie-v2",
+   "scenario": "Sprawa wielodziedzinowa: użytkownik kupił mieszkanie od dewelopera z wadami, pyta o podatek PCC i kredyt hipoteczny, a bank żąda wskazania beneficjenta rzeczywistego.",
+   "probes": [
+    {
+     "q": "Jak wybierzesz DR-skille przy kilku dziedzinach?",
+     "expected": [
+      "Routing błyskawiczny: deweloper, wady, hipoteka → dr-02-Prawo-Cywilne-Rodzinne-Gospodarcze; PCC/podatek → dr-06-Podatki-Finanse-Publiczne-AML",
+      "Nie ładuje wszystkich DR naraz; wczytuje pasujące po kolei, każdy z własnymi modułami aktów, wskazanymi przez ROUTING-MAP.md"
+     ],
+     "must_not": [
+      "wczytuje wszystkie 16 DR-skilli"
+     ]
+    },
+    {
+     "q": "Które sekcje ROUTING-MAP.md są istotne?",
+     "expected": [
+      "DR-02 (m.in. ustawa deweloperska) i DR-06 (PCC i podatek od spadków i darowizn); mapa ma też sekcję TABELA STATUSU i MONITORING akty oczekujące na końcu"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co jest ostatnim elementem trasy?",
+     "expected": [
+      "Zasada: prawny-router-v3 → KROK 1B → prawo-polskie-v2 (routing) → DR-skill właściwy → moduł aktu prawnego (np. modules/mod-...md)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie weryfikacje obowiązują przy podawaniu numerów Dz.U. z mapy?",
+     "expected": [
+      "ROUTING-MAP nigdy nie jest źródłem weryfikacji — każdy numer rozstrzyga się osobno w ELI (kolejność aktualizacji rejestrów: moduł DR → MAPA-AKTOW → ROUTING-MAP → mapa_dzu)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-PP-3",
+   "skill": "prawo-polskie-v2",
+   "scenario": "Opiekun systemu: „dodałem w dr-03 nowy moduł o czynnym żalu i zmieniłem status jednego aktu na wejście w życie za 60 dni — zaktualizuj mapy”.",
+   "probes": [
+    {
+     "q": "Jakie kroki wykonujesz w protokole integracji DR → prawo-polskie → audyt?",
+     "expected": [
+      "1 wczytaj zmieniony dr-XX/MAPA-AKTOW.md, 2 porównaj z sekcją ROUTING-MAP.md, 3 uzupełnij rozbieżności, 4 zaktualizuj liczniki TABELA STATUSU, 5 wpis z vacatio legis do sekcji MONITORING na końcu ROUTING-MAP.md, 6 wywołaj audyt-systemu-v4 TRYB DZU",
+      "Przepływ pull: DR-XX/MAPA-AKTOW.md (źródło prawdy) → ROUTING-MAP.md → audyt (FAZA 3) → mapa_dzu_*.md"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jaki status nadasz aktowi wchodzącemu za 60 dni?",
+     "expected": [
+      "Wejście w ciągu 90 dni od daty audytu → ⚡ WCHODZI (priorytetowa aktualizacja modułu); nowy Dz.U. z vacatio legis → ⏳ OCZEKUJE w tabeli DR i w MONITORING",
+      "Po wejściu w życie ⏳→✅ OK, usunięcie z MONITORING i aktualizacja mapa_dzu; uchylony przed wejściem → ❌ i wpis w AUDIT-JOURNAL"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Czy numer przepisany z MAPA-AKTOW możesz wpisać do ROUTING-MAP bez sprawdzenia?",
+     "expected": [
+      "Nie — numer wpisany bez weryfikacji w Rzędzie 1/2 (ELI) narusza reżim mapy (ZASADA 8, F-82); rozstrzygnięcie w ELI, dopiero potem propagacja",
+      "Kolejność: rozstrzygnij w źródle urzędowym → zamknij pozycje w mapie → jeden zweryfikowany numer → wyrównaj moduły DR"
+     ],
+     "must_not": [
+      "przepisuje numer Dz.U. z mapy lokalnej bez weryfikacji w ELI"
+     ]
+    },
+    {
+     "q": "Które pliki skilla wczytujesz?",
+     "expected": [
+      "dr-03/MAPA-AKTOW.md, prawo-polskie-v2/ROUTING-MAP.md (sekcja DR-03 oraz MONITORING i TABELA STATUSU), audyt-systemu-v4/references/mapa_dzu_*.md przez TRYB DZU"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-DR06-1",
+   "skill": "dr-06-podatki-finanse-publiczne-aml",
+   "scenario": "Użytkownik: „Wynajmuję mieszkanie. Ryczałt czy skala podatkowa? Ile wyjdzie podatku od 4000 zł czynszu miesięcznie?”",
+   "probes": [
+    {
+     "q": "Jakie kroki i bramki wykonasz, zanim podasz stawkę lub kwotę?",
+     "expected": [
+      "HARD GATE zakaz cytowania z pamięci: weryfikacja aktualnego brzmienia aktu w ELI (RZĄD 1), interpretacje/objaśnienia w podatki.gov.pl (EUREKA), orzecznictwo w orzeczenia.nsa.gov.pl; nigdy stawki, progu, kwoty, terminu z pamięci modelu",
+      "Stawki, kwoty wolne i progi zawsze weryfikować przed podaniem (zmieniane co roku); treść modułu lokalnego jest tylko punktem startu",
+      "SELF-CHECK ANTY-FASADA (shared/SELF-CHECK-ANTY-FASADA.md) przed wysłaniem; disclaimer shared/DISCLAIMER.md jako ostatni element"
+     ],
+     "must_not": [
+      "podaje stawkę ryczałtu lub próg PIT z pamięci"
+     ]
+    },
+    {
+     "q": "Które moduły i pliki wczytasz?",
+     "expected": [
+      "Moduły z modules/: mod-ustawa-ryczalt-przychody.md i mod-PIT-podatek-dochodowy-fizyczne.md (oraz mod-interpretacje-definicje-podatkowe.md wg potrzeby) przez view dr-06-.../modules/[nazwa].md",
+      "Lazy loading definicji: shared/definicje/DEF-PODATKOWE.md; lokalna mapa aktów MAPA-AKTOW.md i references/BAZA-AKTOW-OKOLOPODATKOWYCH.md jako rejestry pomocnicze (kierunek, nie weryfikacja)"
+     ],
+     "must_not": [
+      "wczytuje wszystkie 47 modułów"
+     ]
+    },
+    {
+     "q": "Czy ten skill jest punktem wejścia i jakie są zasady architektury?",
+     "expected": [
+      "Wchodzi z prawo-polskie-v2 → ROUTING-MAP.md → ten skill (po prawny-router-v3)",
+      "Jeden moduł = jeden akt prawny (tekst jednolity Dz.U.); źródło podstawowe ELI (RZĄD 1), ISAP tylko dla człowieka, LEX/Legalis potem ArsLege gdy RZĄD 1 niedostępny"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co zrobisz, jeśli ELI jest niedostępny?",
+     "expected": [
+      "Niedostępność ELI (oba kanały) nie zwalnia z oznaczenia, tylko je wymusza (⚠️ [NIEWERYFIKOWANE]); niedostępność ISAP to stan normalny; wyzwalaczem anty-fasady jest brak wywołania narzędzia w tej odpowiedzi"
+     ],
+     "must_not": [
+      "oznacza przepis jako zweryfikowany bez wywołania narzędzia"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "RF-DR06-2",
+   "skill": "dr-06-podatki-finanse-publiczne-aml",
+   "scenario": "Przedsiębiorca dostał wezwanie do stawienia się na czynności sprawdzające w urzędzie skarbowym i zawiadomienie o kontroli celno-skarbowej.",
+   "probes": [
+    {
+     "q": "Które moduły obsługują tę sprawę?",
+     "expected": [
+      "mod-OP-czynnosci-sprawdzajace-dzial-V, mod-OP-kontrola-podatkowa-dzial-VI, mod-KAS-kontrola-celno-skarbowa; ewentualnie mod-OP-ordynacja-podatkowa i mod-OP-dzial-IV-rozdzial-11-dowody (dowody w postępowaniu podatkowym)"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jak zweryfikujesz terminy i sankcje?",
+     "expected": [
+      "HARD GATE: terminy, sankcje i interpretacje z ELI (RZĄD 1), podatki.gov.pl/EUREKA i orzecznictwa NSA; nie z pamięci",
+      "Prawo podatkowe zmienia się wielokrotnie w roku — sama treść modułu to punkt startu"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Dokąd skierujesz dalej, jeśli dojdzie do sporu?",
+     "expected": [
+      "Powiązania zewnętrzne: KPA przez dr-05 → mod-KPA; wychodzi do pisma-procesowe-v3 / analiza-sadowa-v6 / orzeczenia-sadowe-v2; orzecznictwo NSA orzeczenia.nsa.gov.pl"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie elementy kończą odpowiedź?",
+     "expected": [
+      "Disclaimer z shared/DISCLAIMER.md jako ostatni element (wariant PRAWNIK techniczny lub LAIK uproszczony wg trybu); SELF-CHECK ANTY-FASADA przed wysłaniem"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-DR06-3",
+   "skill": "dr-06-podatki-finanse-publiczne-aml",
+   "scenario": "Bank żąda od właściciela spółki oświadczenia o beneficjencie rzeczywistym; użytkownik pyta, czy to to samo co „rzeczywisty właściciel” w CIT i KSH.",
+   "probes": [
+    {
+     "q": "Jakie definicje i moduły wczytasz?",
+     "expected": [
+      "shared/definicje/DEF-INTERES-WLASNY-WYLACZENIA.md: rzeczywisty beneficjent/UBO (AML art. 2 ust. 2 pkt 1, próg 25%, CRBR) z alertem o 3 RÓŻNYCH definicjach rzeczywistego właściciela (AML, CIT-WHT art. 4a pkt 29, KSH art. 4 § 1 pkt 4)",
+      "mod-ustawa-AML-instytucje-obowiazkowe.md; wg potrzeby shared/ORKA-BAS-LEKSYKON.md (definicje wspomagające)"
+     ],
+     "must_not": [
+      "utożsamia trzy definicje rzeczywistego właściciela"
+     ]
+    },
+    {
+     "q": "Jak podasz próg i wysokość kary?",
+     "expected": [
+      "Próg i kara tylko po weryfikacji w ELI (RZĄD 1) w tej odpowiedzi — HARD GATE; liczby z definicji w pliku to wskazówka, nie weryfikacja"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Co jeśli użytkownik zacytuje nowelizację o rzekomych zmianach przedawnienia lub ugodzie podatkowej?",
+     "expected": [
+      "Twierdzenie niepotwierdzone (BAS-W32): przed powołaniem wskazać pozycję Dz.U. z odczytu treści; opis zamiaru legislacyjnego to nie stan prawa"
+     ],
+     "must_not": [
+      "potwierdza nowelizację bez odczytu źródła"
+     ]
+    },
+    {
+     "q": "Z jakim skillem współpracuje ten skill?",
+     "expected": [
+      "Wchodzi z prawo-polskie-v2 → ROUTING-MAP; wychodzi do pisma-procesowe-v3 / analiza-sadowa-v6 / orzeczenia-sadowe-v2; weryfikacja ELI RZĄD 1; disclaimer ostatni"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-DR02-1",
+   "skill": "dr-02-prawo-cywilne-rodzinne-gospodarcze",
+   "scenario": "Po śmierci ojca jest testament, w którym cały majątek dostał jeden z braci; drugi brat pyta o zachowek i terminy.",
+   "probes": [
+    {
+     "q": "Jakie bramki wykonasz przed podaniem artykułu lub terminu?",
+     "expected": [
+      "HARD GATE zakaz cytowania z pamięci: brzmienie i Dz.U. w ELI (RZĄD 1), orzeczenia w oficjalnych portalach; view shared/PRAWO-HARDGATE.md PRZED pierwszym przepisem w każdej odpowiedzi",
+      "SELF-CHECK ANTY-FASADA (shared/SELF-CHECK-ANTY-FASADA.md); niedostępność ELI wymusza oznaczenie ⚠️ [NIEWERYFIKOWANE]"
+     ],
+     "must_not": [
+      "podaje termin zachowku z pamięci"
+     ]
+    },
+    {
+     "q": "Które moduły wczytasz?",
+     "expected": [
+      "mod-KC-spadki-zachowek-dzial-rozrzadzenia.md i mod-KC-spadki.md (oraz wg potrzeby mod-KC-spadki-dlugi-umowy-transgraniczne.md); view dr-02-.../modules/[nazwa].md",
+      "Lazy-loading definicji z shared/definicje/ (np. DEF-PROCEDURA.md: termin zawity vs przedawnienie)"
+     ],
+     "must_not": [
+      "wczytuje wszystkie 85 modułów"
+     ]
+    },
+    {
+     "q": "Jaka jest zasada architektury i jak skill jest wywoływany?",
+     "expected": [
+      "Jeden moduł = jeden akt prawny (tekst jednolity Dz.U.); ten sam akt nie może pokrywać dwóch DR-skills",
+      "Wchodzi z prawo-polskie-v2 → ROUTING-MAP.md; „Jak wywołać”: view dr-02-.../modules/[nazwa-modulu].md; lokalna MAPA-AKTOW.md"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Co kończy odpowiedź?",
+     "expected": [
+      "Disclaimer (shared/DISCLAIMER.md) jako ostatni element; wariant PRAWNIK lub LAIK wg trybu"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-DR02-2",
+   "skill": "dr-02-prawo-cywilne-rodzinne-gospodarcze",
+   "scenario": "Konsument spłaca kredyt we frankach szwajcarskich; pyta, czy skorzystać z ustawy frankowej z 2026 r. i jak wyglądałaby procedura.",
+   "probes": [
+    {
+     "q": "Które moduły są właściwe?",
+     "expected": [
+      "mod-KC-kredyty-frankowe.md i mod-ustawa-frankowa-2026-procedura.md; ewentualnie mod-KC-konsumenckie.md i mod-ustawa-kredyt-konsumencki-SKD.md"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jak potraktujesz informacje o ustawie z 2026 r.?",
+     "expected": [
+      "Weryfikacja aktualnego brzmienia i statusu (wejście w życie, t.j.) w ELI (RZĄD 1) przed podaniem; zakaz opisywania z pamięci",
+      "Mapa aktów: lokalna MAPA-AKTOW.md i ROUTING-MAP.md rozstrzygają „gdzie jest akt”, nie kompletność pokrycia treściowego (MAPA-POKRYCIA)"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    },
+    {
+     "q": "Czy do wyceny roszczeń wolno podać liczby z pamięci?",
+     "expected": [
+      "Nie — HARD GATE; kwoty, terminy i sygnatury tylko po weryfikacji w tej odpowiedzi; orzecznictwo z oficjalnych portali"
+     ],
+     "must_not": [
+      "podaje przeliczenia lub sygnatury wyroków TSUE/SN z pamięci"
+     ]
+    },
+    {
+     "q": "Co jeszcze wczytasz z shared/?",
+     "expected": [
+      "Definicje shared/definicje/ lazy (DEF-PODMIOTY-WLASNOSC.md: konsument/przedsiębiorca), shared/ORKA-BAS-LEKSYKON.md wg potrzeby; shared/PRAWO-HARDGATE.md przed pierwszym przepisem"
+     ],
+     "must_not": []
+    }
+   ]
+  },
+  {
+   "id": "RF-DR02-3",
+   "skill": "dr-02-prawo-cywilne-rodzinne-gospodarcze",
+   "scenario": "Osoba fizyczna zadłużona na kilkaset tysięcy złotych pyta o upadłość konsumencką i o to, czy może ją ogłosić po darowiźnie sprzed dwóch lat.",
+   "probes": [
+    {
+     "q": "Jakie jest wejście operacyjne do upadłości i restrukturyzacji?",
+     "expected": [
+      "Sekcja „Upadłość i restrukturyzacja — wejście operacyjne”: modules/mod-PrUpad-zrodla-i-wersje.md (upadłość), modules/mod-PrRestr-zrodla-i-wersje.md (restrukturyzacja)",
+      "Pełne korpusy references/prup/, references/prrestr/; katalog nagłówków references/insolvency/katalog.md; wersje i przepisy przejściowe references/insolvency/wersje-i-przepisy-przejsciowe.md"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jakie moduły szczegółowe możesz dobrać?",
+     "expected": [
+      "mod-PrUpad-konsument-workflow.md, mod-PrUpad-skutki-masa-bezskutecznosc.md (bezskuteczność czynności, m.in. darowizny), mod-PrUpad-wniosek-ogloszenie.md, mod-PrUpad-zakonczenie-zakaz-karne.md"
+     ],
+     "must_not": []
+    },
+    {
+     "q": "Jak podejdziesz do wersji przepisów i dat?",
+     "expected": [
+      "Dobiera prawo do dat i faktów konkretnej sprawy (wersje i przepisy przejściowe); dostęp do całego tekstu i procedur nie jest deklaracją pełnego komentarza orzeczniczego",
+      "scripts/insolvency.py coverage sprawdza integralność i pełność routingu; testy scripts/test_prup.py, scripts/test_insolvency.py"
+     ],
+     "must_not": [
+      "twierdzi, że skill zawiera kompletny komentarz orzeczniczy"
+     ]
+    },
+    {
+     "q": "Jakie bramki obowiązują przy podawaniu przepisów?",
+     "expected": [
+      "HARD GATE zakaz cytowania z pamięci (ELI RZĄD 1, view shared/PRAWO-HARDGATE.md), SELF-CHECK ANTY-FASADA, disclaimer jako ostatni element"
+     ],
+     "must_not": [
+      "podaje przepis, artykuł lub sygnaturę z pamięci modelu bez weryfikacji w tej odpowiedzi"
+     ]
+    }
+   ]
+  }
+ ]
+}

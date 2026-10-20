@@ -62,6 +62,9 @@ import os
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _lex_common import read_routing
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -178,7 +181,7 @@ def main():
         print(f"BŁĄD: nie znaleziono głównej mapy {main_map}")
         sys.exit(2)
 
-    main_text = main_map.read_text(encoding="utf-8", errors="strict")
+    main_text = read_routing(main_map)  # indeks + routing/*.md (strict utf-8 niżej nie jest wymagany)
     main_pairs = extract_act_dzu_pairs(main_text)
 
     # Próg podobieństwa Jaccarda dla uznania dwóch prefiksów za "TEN SAM akt"

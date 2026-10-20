@@ -115,166 +115,27 @@ Materiał to: umowa / OWU / porozumienie / regulamin / ugoda kontraktowa
 ```
 
 ---
-
 ## KROK 0a — WYKRYCIE TRYBU PRACY (MODE) — addytywny, auto-detect
 
-```
-Analizuj materiał i ustal MODE przed uruchomieniem routera.
-MODE jest addytywny — może rozszerzyć się w trakcie sesji.
+Przed routerem ustal MODE: A (≥2 pisma jednej strony), B (pisma dwóch stron), C (materiał źródłowy bez pism strony przeciwnej); tryby są addytywne (A+B, B+C), dane nigdy nie są kasowane przy rozszerzeniu. Brak sygnału -> widget-kreator STEP 1.5. Plik zawiera tabelę zakładek obligatoryjnych per tryb i badge trybu w dashboardzie.
 
-──────────────────────────────────────────────────────────────
-SYGNAŁY TRYBU — sprawdzaj w tej kolejności:
-──────────────────────────────────────────────────────────────
-
-SYGNAŁ A — tryb porównawczy jednej strony:
-  → ≥2 pisma procesowe TEGO SAMEGO autora / tej samej strony z różnych dat
-  → słowa kluczowe: "odpowiedź na pozew" + "pismo procesowe" od tego samego pełnomocnika
-  → wynik: MODE=A (obligatoryjne: Nazewnictwo, Historia narracji, INTRA)
-  → LAPSUS szczególnie istotny: błędy autorskie wynikające z wielokrotnego pisania
-
-SYGNAŁ B — tryb dwustronny:
-  → pisma od CO NAJMNIEJ dwóch różnych stron procesowych
-  → słowa kluczowe: "pozew" + "odpowiedź", "apelacja" + "odpowiedź na apelację"
-  → wynik: MODE=B (obligatoryjne: DIS, Fakty bezsporne, CROSS)
-
-SYGNAŁ C — tryb przygotowawczy:
-  → dokumenty źródłowe BEZ pism procesowych drugiej strony
-  → słowa kluczowe: "przygotowuję pozew", "piszę wezwanie", "co mam do dyspozycji"
-  → wynik: MODE=C (obligatoryjne: Scoring dowodów, Przesłanki i luki, Roszczenia)
-
-TRYBY WIELOKROTNE — addytywność:
-  → Materiał może spełniać kilka sygnałów jednocześnie → ustaw wszystkie aktywne tryby
-  → Inicjalnie ustaw tryb dominujący; przy dołączeniu nowych pism auto-rozszerz
-  → MODE=A+B: jest materiał jednej strony (kilka pism) + odpowiedź drugiej
-  → MODE=B+C: jest pozew własny + odpowiedź pozwanej → pełna analiza dwustronna
-    z planowaniem dalszych kroków
-  → Nigdy nie kasuj danych przy rozszerzeniu MODE — tablice są addytywne
-
-BRAK SYGNAŁU:
-  → Uruchom widget-kreator STEP 1.5 — zapytaj użytkownika
-  → Zaproponuj tryb na podstawie opisu sprawy
-
-──────────────────────────────────────────────────────────────
-ZAKŁADKI OBLIGATORYJNE PER TRYB:
-──────────────────────────────────────────────────────────────
-
-| Zakładka dashboardu          | MODE A | MODE B | MODE C |
-|------------------------------|--------|--------|--------|
-| Strony i świadkowie          |  ✅    |  ✅    |  ✅    |
-| Tożsamość IDENT              |  ✅    |  ✅    |  ✅    |
-| Lapsusy autorskie [LAPSUS]   |  ✅    |  ✅    |  🔷    |
-| Nazewnictwo procesowe        |  ✅    |  🔷    |  ❌    |
-| Historia narracji [A-only]   |  ✅    |  ❌    |  ❌    |
-| Sprzeczności INTRA           |  ✅    |  🔷    |  ❌    |
-| Sprzeczności CROSS           |  ❌    |  ✅    |  ❌    |
-| Kwestie sporne DIS           |  ❌    |  ✅    |  ❌    |
-| Fakty bezsporne              |  ❌    |  ✅    |  ❌    |
-| Rejestr dowodów / scoring    |  🔷    |  🔷    |  ✅    |
-| Roszczenia i podstawy [C]    |  ❌    |  ❌    |  ✅    |
-| Przesłanki i luki            |  🔷    |  ✅    |  ✅    |
-| Terminy procesowe            |  🔷    |  🔷    |  🔷    |
-| Raport + Eksport             |  ✅    |  ✅    |  ✅    |
-
-✅ = obligatoryjna  🔷 = opcjonalna (jeśli materiał zawiera)  ❌ = nieaktywna
-
-──────────────────────────────────────────────────────────────
-BADGE TRYBU W DASHBOARDZIE:
-──────────────────────────────────────────────────────────────
-Nagłówek dashboardu zawiera badge aktywnego trybu:
-  [MODE A: Analiza jednej strony] [MODE B: Dwustronny] [MODE C: Przygotowanie]
-  lub kombinacje: [MODE A+B] [MODE B+C]
-Przycisk: "＋ Dodaj pisma drugiej strony →" gdy MODE=A → auto-rozszerz do A+B
-Przycisk: "＋ Dodaj własne pisma →" gdy MODE=B → auto-rozszerz do A+B
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-0a-0c-tryb-skan-rejestr.md` — sekcja KROK 0a, przed ustaleniem MODE.
 
 ---
 
 ## KROK 0b — SKAN KOMPLETNOŚCI PLIKÓW ⛔ HARD GATE
 
-```
-Wykonaj PRZED KROK 1. Mechanizm współdzielony z pisma-procesowe-v3 i analiza-sadowa-v6.
+Wykonaj PRZED KROK 1 (`shared/MOD-SKAN-DOWODOW-KOMPLETNY.md`): SD-GATE-0 (wzmianka o załącznikach bez pliku = STOP), SD-INW (inwentarz, ZIP = zawartość), SD-READ (każda strona/zakładka/obraz, zakaz pominięcia), SD-VER (wszystkie D[id] = ODCZYTANE, inaczej powrót do SD-READ). Potem BLOK-C-FSL (MOD-FSL-DOKUMENTY, gdy ≥1 teza dowodowa): FSL-D-INIT, FSL-D-SCAN, FSL-D-ORPHAN, FSL-D-REPORT; luka 🔴 = STOP; zakaz przejścia do MD1/BLOK-A bez FSL-D-REPORT.
 
-view /mnt/skills/user/shared/MOD-SKAN-DOWODOW-KOMPLETNY.md → wykonaj sekwencję:
-
-SD-GATE-0: Czy w wiadomości wzmianka o załącznikach/dowodach/aktach BEZ wgranego pliku?
-  TAK → ⛔ STOP. Wyświetl: "Wskazujesz na dokumenty, ale nie wykryłem żadnego pliku.
-         Wgraj materiały przed analizą." Czekaj. Nie przechodzij do KROK 1.
-
-SD-INW: Zinwentaryzuj WSZYSTKIE pliki (ZIP = zawartość, nie kontener).
-  Zbuduj SD-REJ z każdym plikiem D[id] i liczbą stron/zakładek.
-
-SD-READ: Per każdy D[id] — właściwa metoda per typ:
-  PDF-skan    → pdftoppm -r 120 per KAŻDA strona → view
-  PDF-tekst   → pdftotext; jeśli pusty → rasteryzacja
-  XLSX        → openpyxl: KAŻDA zakładka
-  ODT-obrazy  → zipfile Pictures/* → view per obraz
-  JPG/PNG     → view bezpośrednio
-  DOCX        → zipfile word/document.xml
-  ⛔ ZAKAZ POMINIĘCIA STRONY / ZAKŁADKI / OBRAZU
-
-SD-VER: Wszystkie D[id] = ✅ ODCZYTANE?
-  NIE → wróć do SD-READ. Nie przechodzij do KROK 1.
-
-Wyniki SD-READ → SD-FAKTY[D[id]] zasilają BLOK A i BLOK B.
-Protokoły sądowe: KAŻDE zdanie zeznań świadka → osobny wpis SD-FAKTY.
-
-⛔ BLOK-C-FSL: PO SD-VER, PRZED KROK 1 — gdy ≥1 teza dowodowa:
-  view /mnt/skills/user/shared/MOD-FSL-DOKUMENTY.md
-  → FSL-D-INIT (macierz T[n])
-  → FSL-D-SCAN per każda teza: rozłóż na twierdzenia atomowe TC[n,k];
-    per każde TC: przeszukaj WSZYSTKIE D[id] z SD-FAKTY (zakaz wnioskowania z nazwy pliku);
-    klasyfikuj ✅/⚠️/⬛ (🔴/🟠/🟡)
-  → FSL-D-ORPHAN: D[id] z 0 przypisań = kandydaci na nowe tezy
-  → FSL-D-REPORT: macierz + luki per klasa
-  → Luka 🔴 = STOP (decyzja a/b/c/d); luka 🟠 = kontynuuj z żądaniem ewentualnym
-  ⛔ ZAKAZ przejścia do MD1/BLOK-A bez FSL-D-REPORT
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-0a-0c-tryb-skan-rejestr.md` — sekcja KROK 0b MUSI być przeczytana przed wykonaniem bramki.
 
 ---
 
 ## KROK 0c — ST-INIT: REJESTR KROKÓW (MOD-STEP-TRACKER) ⛔ OBOWIĄZKOWE
 
-> Dodano w audycie 5.13.0. Przyczyna: skill miał już poprawnie wpiętą bramkę
-> DOWODOWĄ (SD-VER w KROK 0b), ale brakowało mu bramki PROCEDURALNEJ —
-> żaden mechanizm nie raportował użytkownikowi, gdy w wieloetapowym routerze
-> (KROK 2 → BLOK A-J → KROK 3) pominięto blok, który powinien być obowiązkowy
-> (np. BLOK G/J przy A2=TAK). Ten sam typ luki naprawiono już wcześniej w
-> `pisma-procesowe-v3` i `przesluchanie-swiadkow-v2-min90` (audyt 3.13) —
-> tutaj stosujemy identyczny mechanizm.
+Wykonaj PO KROK 0b (SD-VER = KOMPLET), PRZED KROK 1: ST-INIT (`shared/MOD-STEP-TRACKER.md`) z pozycjami AD-KROK0, AD-KROK0a, AD-KROK0b, AD-KROK1, AD-KROK2, AD-BLOKG, AD-BLOKJ, AD-BLOKH, AD-KROK3, AD-KROK4. Pominięty krok obowiązkowy = status „⚠️ POMINIĘTY” z powodem. ST-REPORT przed KROK 4 lub raportem MD-NARR; ⛔ ZAKAZ dashboardu/raportu bez wyświetlenia stanu REJESTRU (ST-FINAL).
 
-```
-Wykonaj PO KROK 0b (SD-VER = KOMPLET), PRZED KROK 1.
-
-ST-INIT: view /mnt/skills/user/shared/MOD-STEP-TRACKER.md (jeśli REJESTR
-jeszcze nie zainicjowany w tej sesji) → zainicjuj z pozycjami dedykowanymi
-temu skillowi:
-
-  "AD-KROK0"  — KROK 0 blokada wstępna (przekierowanie do analizator-umow?)
-  "AD-KROK0a" — KROK 0a wykrycie trybu MODE (A/B/C)
-  "AD-KROK0b" — KROK 0b SD-VER skan kompletności plików (już HARD GATE)
-  "AD-KROK1"  — KROK 1 intake i widget-kreator
-  "AD-KROK2"  — KROK 2 centralny router (BLOK A-F diagnostyka)
-  "AD-BLOKG"  — BLOK G rejestr stron/świadków (OBOWIĄZKOWY gdy A2=TAK)
-  "AD-BLOKJ"  — BLOK J lapsusy autorskie [LAPSUS] (OBOWIĄZKOWY gdy A2=TAK)
-  "AD-BLOKH"  — BLOK H kwestie sporne DIS (gdy D3=TAK lub D4=TAK)
-  "AD-KROK3"  — KROK 3 wykonanie modułów MD/MP z listy KROK 2
-  "AD-KROK4"  — KROK 4 dashboard (gdy B1=TAK)
-
-Każdy krok/BLOK oznaczony jako obowiązkowy w KROK 2 (np. "TAK → dodaj: X"),
-który ostatecznie nie zostanie wykonany, musi zmienić status na
-"⚠️ POMINIĘTY" z powodem — NIE wolno cicho pominąć bloku diagnostycznie
-wymaganego i przejść dalej bez odnotowania.
-
-ST-REPORT: przed KROK 4 (dashboard) lub przed dostarczeniem raportu MD-NARR
-— jeśli REJESTR zawiera ≥1 "⚠️ POMINIĘTY" — wyświetl raport pominięć
-(format z shared/MOD-STEP-TRACKER.md FAZA 2) i czekaj na decyzję użytkownika
-(a: kontynuuj mimo braków / b: wykonaj brakujące kroki), zanim wywołasz
-show_widget/present_files.
-
-⛔ ZAKAZ: generowanie dashboardu lub raportu końcowego bez wyświetlenia
-stanu REJESTRU (pełny ✅ lub z jawnym ⚠️ POMINIĘTY) — patrz FAZA 3
-ST-FINAL w shared/MOD-STEP-TRACKER.md.
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-0a-0c-tryb-skan-rejestr.md` — sekcja KROK 0c MUSI być przeczytana przed ST-INIT.
 
 ---
 
@@ -310,348 +171,78 @@ Po zebraniu danych przejdź do KROK 2.
 Odpowiedz na każde pytanie diagnostyczne (TAK/NIE/?) na podstawie materiału.
 Każde TAK dodaje moduły do listy do wczytania. Na końcu wczytujesz TYLKO
 moduły z tej listy — nic więcej.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-2-router.md` — przed odpowiedzią na pytania diagnostyczne A1-F2 (pełne pytania i listy modułów do dodania; plik zawiera BLOK A, B, B5, C, D0, D, E, F, G tryb minimalny). BLOK G/J/H i BLOK I mają osobne pliki wskazane niżej.
 
 ---
 
 ### BLOK A — Charakter materiału
 
-```
-A1. Materiał zawiera dowody do oceny (dokumenty, nagrania, maile, zeznania)?
-    TAK → dodaj: MD1, MD2
-
-A2. Materiał zawiera pisma procesowe, akta lub narrację stron?
-    TAK → dodaj: MP0, MP1
-
-A3. Tylko pytanie o termin procesowy (bez analizy dowodów)?
-    TAK → dodaj: MD5 · STOP (pomiń pozostałe bloki)
-```
-
----
+A1 dowody do oceny -> MD1, MD2; A2 pisma/akta/narracja -> MP0, MP1; A3 tylko termin procesowy -> MD5 i STOP.
 
 ### BLOK B — Liczba i typ dokumentów
 
-```
-B1. Liczba dokumentów ≥ 3 LUB sprawa złożona wielowątkowa?
-    TAK → dodaj: FAZA2-dashboard
-
-B2. Liczba dokumentów ≥ 2?
-    TAK → dodaj: MD3c (sprzeczności między dokumentami) [obowiązkowy]
-        → wykonaj też MD3a KROK 0 (skan błędów dat i nazw) jako pierwszy krok
-          analizy, niezależnie od tego czy B4=TAK — MD3a KROK 0 jest lekki
-          (kilka punktów kontrolnych) i zapobiega błędom propagowanym dalej
-
-B3. Materiał zawiera nagranie LUB wątpliwość co do legalności dowodu?
-    TAK → dodaj: MD3b (walidacja prawna, zakazy dowodowe, art. 267 KK)
-
-B4. Dokument może mieć wady formalne (kopia bez poświadczenia, brak pieczęci,
-    brak podpisu, skan bez oryginału)?
-    TAK → dodaj: MD3a (pełna walidacja formalna, wszystkie punkty)
-```
-
----
+B1 ≥3 dok. lub sprawa złożona -> FAZA2-dashboard; B2 ≥2 dok. -> MD3c (+ MD3a KROK 0); B3 nagranie/legalność dowodu -> MD3b; B4 wady formalne -> MD3a.
 
 ### BLOK B5 — PORCJOWANIE (⛔ HARD GATE gdy materiał duży)
 
-```
-Po SD-VER (KROK 0b) — PRZED MD1-ekstrakcją:
-  view /mnt/skills/user/shared/MOD-PORCJOWANIE-DOWODOW.md → wykonaj PD0.
-
-  STATUS BEZPIECZNY  (≤5 plików i ≤100 KB):
-    → kontynuuj BLOK C i MD1 normalnie bez podziału.
-
-  STATUS OSTRZEŻENIE (6–15 plików lub 100–400 KB):
-    → PD1 (podział na partie) → PD2 (plan dla użytkownika) → STOP.
-    → Czekaj na zatwierdzenie planu przed analizą.
-
-  STATUS WYMAGANE    (≥16 plików lub >400 KB):
-    → ⛔ HARD GATE — nie rozpoczynaj MD1 bez zatwierdzonego planu partii.
-    → PD1 → PD2 → STOP → po zatwierdzeniu: MD1/MD2/MD3 per partia.
-
-  STATUS KRYTYCZNE   (≥30 plików lub >800 KB):
-    → ⛔ HARD GATE BEZWZGLĘDNY — max 3–4 pliki per partia.
-    → Każda partia kończy się PD4 (checkpoint) → present_files.
-    → Użytkownik wznawia przez wgranie checkpointu (PD5).
-
-  Trigger wznawiania: plik "# CHECKPOINT ANALIZY" wgrany przez użytkownika
-    → PD5 (parsuj checkpoint, odtwórz stan) → kontynuuj od właściwej partii.
-
-  W każdej partii: kroki MD1/MD2/MD3 wykonuj per plik z bieżącej partii.
-  Akumuluj wyniki w STAN_PARTII (PD3.3 z MOD-PORCJOWANIE-DOWODOW).
-  Po ostatniej partii: PD6 (synteza finalna) → zasilenie MD4/MD5/MD6.
-```
-
----
+Po SD-VER, PRZED MD1: `shared/MOD-PORCJOWANIE-DOWODOW.md`, PD0 -> status BEZPIECZNY / OSTRZEŻENIE / WYMAGANE / KRYTYCZNE; plan partii (PD1, PD2) wymaga zatwierdzenia użytkownika, checkpointy PD4/PD5, synteza PD6. Sekcja BLOK B5 w `krok-2-router.md` MUSI być przeczytana przed wykonaniem bramki.
 
 ### BLOK C — Zakres analizy dowodowej
 
-```
-C1. Użytkownik pyta o luki w materiale / brakujące dowody / pokrycie przesłanek?
-    TAK → dodaj: MD4
-
-C2. W materiale pada data doręczenia, ogłoszenia wyroku lub inna data krytyczna?
-    TAK → dodaj: MD5
-
-C3. Potrzebny raport końcowy / podsumowanie dowodowe?
-    TAK → dodaj: MD6
-    DOMYŚLNY format wyjścia = dashboard interaktywny (FAZA 2 / KROK 4).
-    Dashboard jest wzorcowym formatem raportu — generuj go zawsze gdy B1=TAK,
-    bez pytania o format.
-
-C4. Użytkownik prosi WYRAŹNIE o wersję szczegółową / dokument / plik / "jak
-    LexAlpha" / ciągły tekst z nawigacją po sekcjach LUB chce przekazać analizę
-    osobie trzeciej jako dokument?
-    TAK → dodaj: MD-NARR jako DODATEK do dashboardu (nie zamiast).
-    MD-NARR to wersja szczegółowa — generowana TYLKO na wyraźne żądanie,
-    nigdy domyślnie. Jeśli C3=TAK i C4=NIE → tylko dashboard.
-    Jeśli C4=TAK → wygeneruj dashboard (jeśli jeszcze nie istnieje w tej
-    rozmowie) + MD-NARR, w tej kolejności.
-```
-
----
+C1 luki/pokrycie -> MD4; C2 data krytyczna -> MD5; C3 raport końcowy -> MD6 (domyślnie dashboard); C4 wyraźna prośba o wersję szczegółową -> MD-NARR jako DODATEK (nigdy domyślnie).
 
 ### BLOK D0 — TEZA-GATE (obowiązkowe, PRZED D1-D6 — naprawa F-7/ZASADA 11)
 
-```
-⛔ Zanim odpowiesz na pytania D1-D6, zrekonstruuj JEDNYM ZDANIEM per strona
-tezę centralną wynikającą z materiału: czego strona żąda/twierdzi i na
-jakiej podstawie. Zapisz to jawnie w odpowiedzi — nie tylko w rozumowaniu
-wewnętrznym.
-
-Powód: bez tego punktu odniesienia ocena mocnych/słabych stron (D2), analiza
-prawna per roszczenie (D4) czy raport końcowy (D5) mogą oceniać argumenty
-w oderwaniu od tego, co pismo FAKTYCZNIE twierdzi — ryzykując ocenę
-powierzchowną (np. na podstawie tonu czy objętości argumentacji, nie jej
-rzeczywistego związku z tezą) lub pominięcie, że pismo broni innej tezy niż
-się wydaje z pierwszego wrażenia.
-
-Jeśli materiał zawiera kilka wątków/roszczeń → osobna teza per wątek, nie
-jedna uśredniona. Jeśli strony są >1 (spór dwustronny) → teza każdej strony
-osobno, nawet jeśli są sprzeczne.
-
-To nie zastępuje D1 (kolizje narracyjne) ani MP2 (ocena prawna) — to punkt
-odniesienia, do którego D1-D6 się odnoszą.
-```
-
----
+⛔ Przed D1-D6 zapisz jawnie jednym zdaniem tezę centralną każdej strony (osobno per wątek). Sekcja BLOK D0 w `krok-2-router.md` MUSI być przeczytana przed D1-D6.
 
 ### BLOK D — Zakres analizy pism (tylko jeśli A2=TAK)
 
-```
-D1. Materiał zawiera twierdzenia stron, narrację, sprzeczne wersje zdarzeń?
-    TAK → dodaj: MP3 (kolizje i sprzeczności narracyjne)
-
-D2. Użytkownik pyta o mocne/słabe strony, pozycję procesową, szanse?
-    TAK → dodaj: MP4
-
-D3. Użytkownik pyta o strategię ataku / obrony / riposty LUB sprawa
-    ma wyraźnego przeciwnika procesowego?
-    TAK → dodaj: MP5
-
-D4. Potrzebna ocena prawna per roszczenie/zarzut, ciężar dowodu, znamiona?
-    TAK → dodaj: MP2
-    (UWAGA: MP2 zawiera katalog dziedzinowy — wczytaj MX przed MP2)
-
-D5. Potrzebny raport końcowy z predykcją i rekomendacjami?
-    TAK → dodaj: MP7
-
-D6. Potrzebna matryca dowodowa (admissibility, chain of custody)?
-    TAK → dodaj: MP8
-```
-
----
+D1 narracje/sprzeczne wersje -> MP3; D2 mocne/słabe strony -> MP4; D3 strategia ataku/obrony -> MP5; D4 ocena prawna per roszczenie -> MP2 (najpierw MX); D5 raport z predykcją -> MP7; D6 matryca dowodowa -> MP8.
 
 ### BLOK E — Moduły specjalistyczne (wczytuj TYLKO gdy sygnał obecny)
 
-```
-E1. Pytanie o „logikę zdarzeń" / „co z czego wynika" / „narrację procesową"
-    / „powiązanie faktów" / łańcuchy przyczynowe LUB sprawa złożona ≥2 dok.?
-    TAK → dodaj: MP13 (synteza faktyczna — 442 linie, wczytuj świadomie)
-    + gdy łańcuchy się rozgałęziają/zbiegają, jest przyczynienie, kilku sprawców, wzajemny wpływ
-      albo pytanie „co jeśli” → MP13 §13.2a → shared/MOD-GRAF-PRZYCZYNOWY.md (od 5.16.18)
-
-E2. Podejrzenie manipulacji, ukrytych motywacji, kłamstwa, zaplanowanego działania
-    LUB sprawa karna LUB użytkownik pyta o profilowanie / zachowanie stron?
-    TAK → dodaj: MP6 (techniki śledcze — 457 linii, wczytuj świadomie)
-
-E3. Materiał dotyczy RODO, monitoringu pracownika, danych osobowych,
-    dostępu do kont/urządzeń, art. 267 KK?
-    TAK → dodaj: MP11
-
-E4. Użytkownik pyta o koszty sądowe, opłacalność postępowania, próg ekonomiczny?
-    TAK → dodaj: MP10
-
-E5. W materiale pada wiele dat krytycznych / terminów sądowych do śledzenia?
-    TAK → dodaj: MP12
-
-E6. Konieczna kontrola jakości / audyt antyhalucynacyjny analizy?
-    TAK → dodaj: MP9
-```
-
----
+E1 logika zdarzeń/łańcuchy przyczynowe -> MP13; E2 manipulacja/sprawa karna/profilowanie -> MP6; E3 RODO/monitoring/art. 267 KK -> MP11; E4 koszty -> MP10; E5 wiele terminów -> MP12; E6 kontrola jakości -> MP9.
 
 ### BLOK F — Wykrywanie dziedzin prawa
 
-```
-F1. Analiza dotyczy oceny prawnej (D4=TAK) LUB sprawa obejmuje wiele reżimów
-    prawnych LUB użytkownik pyta o dziedziny prawa?
-    TAK → wczytaj MX przed MP2
-         view /mnt/skills/user/analizator-dowodow-v3/modules/MX-dziedziny.md
-         Wynik MX uzupełni moduły specjalistyczne (np. MP11 dla RODO/CYBER,
-         MP6 dla [KARNE-ZN], MD3b dla [PRAC-ROZW]).
-
-F2. MX wykrył dziedzinę karną [KARNE-ZN]?
-    TAK → aktywuj kwalifikator: prawo-polskie-v2 (rozbicie na znamiona)
-```
-
----
+F1 ocena prawna/wiele reżimów -> wczytaj `modules/MX-dziedziny.md` przed MP2; F2 dziedzina karna [KARNE-ZN] -> prawo-polskie-v2.
 
 ### BLOK G — Tryb minimalny (kiedy NIE wczytywać modułów P)
 
-```
-Jeśli użytkownik zadaje JEDNO konkretne pytanie (np. „czy ten dowód jest silny",
-„ile mam czasu na apelację", „co znaczy ten zapis") i NIE prosi o pełną analizę:
-→ odpowiedz inline bez wczytywania modułów
-→ wczytaj maksymalnie 1–2 moduły jeśli niezbędne do precyzyjnej odpowiedzi
-→ NIE uruchamiaj dashboardu ani MP7/MD6
+Jedno konkretne pytanie bez prośby o pełną analizę -> odpowiedź inline, maks. 1-2 moduły, bez dashboardu i MP7/MD6.
 
 ---
 
 ## BLOK G — Rejestr stron, świadków i osób trzecich (ZAWSZE przy A2=TAK)
 
-```
-G1. Materiał zawiera pisma procesowe, akta lub dokumenty z udziałem osób?
-    TAK → wykonaj BLOK-STRONY przed MD3c:
+G1 karta każdej osoby/podmiotu (BLOK-STRONY, przed MD3c, alerty IDENT); G2 pisma jednej strony -> BLOK-NAZW (kontrola nazewnictwa wg `shared/NAZEWNICTWO-STRON.md`, alerty NZ-N).
 
-    BLOK-STRONY — dla każdej osoby/podmiotu utwórz kartę:
-    - Imię i nazwisko / nazwa (DOSŁOWNIE jak w dokumencie — nie normalizuj)
-    - Rola procesowa: Powód / Pozwany / Pełnomocnik / Świadek / Biegły / Osoba trzecia / Organ
-    - Status procesowy: strona czynna / bierna / świadek wnioskowany / świadek wzywany / organ
-    - Umocowanie: pełnomocnictwo (data, zakres) / organ statutowy / brak danych
-    - Dane kontaktowe / adres doręczeń (jeśli znane z materiału)
-    - Alerty IDENT: jeśli ta sama osoba pojawia się pod różnymi zapisami → od razu
-      przekaż do MD3c jako kandydat [DOUBT][IDENT] / [CROSS][IDENT]
-    - Znaczenie dla sprawy: kluczowe / pomocnicze / tło
-
-    Format karty w dashboardzie: zakładka "Strony i świadkowie"
-    Kategorie kolorystyczne: Powód (niebieski) / Pozwana (bursztynowy) / Świadek (fioletowy) / Inne (szary)
-
-G2. Materiał zawiera pisma jednej strony (analiza wyłącznie pism Pozwanej lub Powoda)?
-    TAK → dodaj: BLOK-NAZW (kontrola nazewnictwa procesowego)
-
-    Wczytaj tabelę nazewnictwa dla trybu sprawy:
-    view /mnt/skills/user/shared/NAZEWNICTWO-STRON.md
-    → Tabela T1 (cywilne procesowe), T2 (nieprocesowe), T3 (karne), T4 (wykroczenia)
-       T5 (KPA), T6 (PPSA/WSA), T7 (pracownicze), T8 (egzekucja), T9 (zabezpieczenie)
-       T10 (rodzinne)
-    → Wymogi formalne: W1-W7 (art. 126 KPC, 187 KPC, 511 KPC, 57 PPSA i in.)
-    → Wzory nagłówków: N1-N7 (pozew, odpowiedź, wniosek, skarga WSA, zawiadomienie, wezwanie)
-    → Reguły C1 (test rodzaju gramatycznego) i C2 (test kompletności podmiotów)
-
-    BLOK-NAZW — sprawdź konsekwentność nazewnictwa w pismach:
-    [ ] Czy autor pisma konsekwentnie używa "Powód" / "Pozwany" / "Pozwana" (odpowiedni rodzaj)?
-    [ ] Czy przez zamienne użycie zaimków ("on", "ona") podmiot zdania może być niejednoznaczny?
-    [ ] Czy kwalifikacje prawne tej samej osoby/kwoty są spójne między pismami (np. "zaliczka"
-        vs "nienależnie pobrane" to dwie różne kwalifikacje tej samej kwoty — wzajemnie sprzeczne)?
-    [ ] Czy autor pisma odpiera twierdzenie, które strona przeciwna nigdy nie postawiła
-        (sygnalizując tym Sądowi argument, który chce zneutralizować)?
-    [ ] Czy wniosek o przesłuchanie / pominięcie dotyczy właściwej osoby / właściwej roli procesowej?
-    [ ] Czy strona pozwana jest konsekwentnie opisywana jako spółka / osoba fizyczna zgodnie z KRS?
-
-    Format alertów: NZ-1, NZ-2... z cytatem, problemem, skutkiem i rekomendacją
-    Renderuj w dashboardzie jako zakładka "Nazewnictwo procesowe"
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-2-bloki-g-j-h.md` — sekcja BLOK G (rejestr), przed wykonaniem BLOK-STRONY / BLOK-NAZW.
 
 ---
 
 ## BLOK J — Lapsusy autorskie [LAPSUS] (ZAWSZE przy A2=TAK, gdy autor pisma znany)
 
-```
-Wczytaj moduł przed wykonaniem:
-view /mnt/skills/user/analizator-dowodow-v3/modules/MOD-LAPSUS-AUDYT.md
-    view /mnt/skills/user/shared/NAZEWNICTWO-STRON.md
-    (tabele T1-T10 wymagane dla KROK L0 i KROK L1 w MOD-LAPSUS-AUDYT)
+Protokół L0-L5 i 22 typy lapsusów w 4 kategoriach (`modules/MOD-LAPSUS-AUDYT.md` + `shared/NAZEWNICTWO-STRON.md`); wynik -> tablica lapsusy[] w KROK 4.
 
-Moduł zawiera pełny protokół L0-L5 + 22 typy lapsusów w 4 kategoriach:
-  Kategoria I  — Podmiot: [LA-RODZAJ][LA-PODMIOT][LA-PODMIOT-POWTORZONY]
-                           [LA-NAZWA-PODMIOT][LA-OSOBA-MYLONA]
-  Kategoria II — Kwalifikacja: [LA-KWALIF][LA-KWALIFIKACJA-PRAWNA]
-                                [LA-KWALIFIKACJA-TECHNICZNA][LA-LEGAL][LA-BRAK-KONKRETYZACJI]
-  Kategoria III— Logika: [INTRA-SAMOOBALA][LA-PRZYZNANIE-KORZYSTNE][LA-TEZA-DOWODOWA]
-                          [LA-INTENCJA][LA-NARR][LA-ZAKRES-DOWODOWY]
-  Kategoria IV — Dokument: [LA-KOSZTY][LA-DATA][LA-DATA-PRZYSZLA][LA-KWOTA]
-                             [LA-KWOTA-SLOWNIE-CYFRAMI][LA-ODRECZNIE][LA-CHRONOLOGIA]
-                             [LA-MIESIAC][LA-PODMIOT-ROLA][LA-SYGNATURA]
-
-Pole wzorzec karty LA: SZABLON | JEDNOSTKOWY | SYSTEMOWY
-  SYSTEMOWY → KROK L5: tabela wzorca dla Sądu (gdy ≥2 błędy tego samego typu)
-
-Wynik → tablica lapsusy[] w KROK 4 (dashboard, zakładka "Lapsusy")
-Eksport: JSON + MD + CSV
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-2-bloki-g-j-h.md` — sekcja BLOK J, przed wykonaniem (plik nakazuje wczytanie modułu MOD-LAPSUS-AUDYT).
 
 ---
 
 ## BLOK H — Kwestie sporne DIS z drill-down (gdy D4=TAK lub D3=TAK)
 
-```
-H1. Sprawa zawiera zidentyfikowane roszczenia / zarzuty / przedmioty sporu?
-    TAK → wykonaj BLOK-DIS dla każdej kwestii spornej:
+H1 BLOK-DIS: rekord per kwestia sporna (fakty bezsporne, stanowiska stron, przepisy z etykietą HARDGATE, rekomendacje, priorytet KRYTYCZNA/ISTOTNA/POBOCZNA).
 
-    BLOK-DIS — dla każdej kwestii spornej (DIS01, DIS02...) utwórz rekord:
-    - Tytuł kwestii
-    - Fakty bezsporne / common ground (co obie strony de facto przyznają)
-    - Stanowisko Powoda (z materiału lub "nieznane — brak pisma Powoda")
-    - Stanowisko Pozwanej
-    - Stosowne przepisy prawne:
-      ⛔ HARDGATE: każdy przepis musi mieć etykietę "wymaga weryfikacji w ELI (RZĄD 1)"
-      Nie cytuj treści przepisu z pamięci — tylko art. + ustawa + oznaczenie HARDGATE
-    - Rekomendacje procesowe: konkretne wnioski, żądania, argumenty
-    - Przycisk drill-down: "Głębsza analiza DIS-XX ↗" → sendPrompt
-
-    Format w dashboardzie: zakładka "Kwestie sporne DIS" z accordion (kliknij → rozwiń)
-    Priorytet kwestii: KRYTYCZNA (blokuje główne roszczenie) / ISTOTNA / POBOCZNA
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-2-bloki-g-j-h.md` — sekcja BLOK H, przed wykonaniem BLOK-DIS.
 
 ---
 
 <!-- lex:wykonuje-aplikacja: WIDGET-DANE -->
 ## BLOK I — Import / Eksport raportu
 
-```
-I0. MOD-WIDGET-IO (OBOWIĄZKOWE — wczytaj przed wygenerowaniem dashboardu):
-    view /mnt/skills/user/shared/MOD-WIDGET-IO.md
-    → wbuduj pasek IO w nagłówek dashboardu (powyżej zakładek)
-    → IO_SKILL_ID='analizator-dowodow-v3', IO_CASE_ID=CASE_ID
-    → matryca: Export JSON ✅ MD ✅ CSV ✅ | Import JSON ✅
-    → ioGetState(): { evidence, contradictions, persons, nazewnictwo,
-                      dis_items, coverage_data, gaps, recs, lapsus }
-    → ioSetState(s): odtwórz dashboard z wczytanego JSON (wszystkie zakładki)
+I0 MOD-WIDGET-IO (OBOWIĄZKOWE przed wygenerowaniem dashboardu, `shared/MOD-WIDGET-IO.md`); I1 przyciski eksportu JSON / MD / CSV w nagłówku dashboardu.
 
-I1. Dashboard wygenerowany (B1=TAK i KROK 4 wykonany)?
-    TAK → dodaj przyciski eksportu do dashboardu:
-
-    EKSPORT-JSON: serializacja tablic evidence[], contradictions[], persons[], nazewnictwo[],
-                  dis_items[], coverage_data[], gaps[], recs[] do pliku .json
-                  → Blob + URL.createObjectURL + link.click()
-
-    EKSPORT-MD:   generowanie raportu Markdown z sekcjami:
-                  # Analiza dowodów — [sygnatura] — [data]
-                  ## Strony i świadkowie
-                  ## Rejestr dowodów
-                  ## Sprzeczności INTRA / CROSS / IDENT
-                  ## Nazewnictwo procesowe
-                  ## Kwestie sporne DIS
-                  ## Pokrycie przesłanek i luki
-                  ## Rekomendacje procesowe
-                  Każdy przepis → ⚠ [WYMAGA WERYFIKACJI RZĄD 1]
-
-    EKSPORT-CSV:  tabela evidence[] jako CSV (id, nazwa, typ, poziom, score, alerty, opis)
-
-    Pozycja przycisków: pasek eksportu w nagłówku dashboardu (obok przycisku "Sporządź pismo")
-    Ikony: JSON=💾  MD=📄  CSV=📊
-```
-
----
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-4-blok-i-io.md` — przed wygenerowaniem dashboardu (KROK 4).
 
 ---
 
@@ -685,55 +276,9 @@ Po ustaleniu listy modułów z KROK 2:
 
 ## KROK 3B — SYNTEZA: ASPEKTY → PRZEPISY → SELEKCJA DOWODÓW (naprawa audytu 2026-07-12c)
 
-> ⛔ Ten krok istniał wcześniej pod nazwą „KROK 4a" (z podkrokami 4a.1–4a.6),
-> zanim analizator-dowodow-v3 został przebudowany na router KROK 2/3/4
-> (MD/MP-moduły). Nazwa „KROK 4a" **nie istnieje już w tym pliku**, ale
-> pozostała rozsiana po innych skillach (`przesluchanie-swiadkow-v2-min90`,
-> `pisma-procesowe-v3/references/W1-SZCZEGOLY.md`, `shared/MOD-KONTEKST-SESJI.md`,
-> `shared/MOD-MAPA-PRZEPISOW.md`, `shared/MOD-SELEKCJA-DOWODOW.md`,
-> `shared/MOD-PRIORYTETY-ASPEKTOW.md`, `prawny-router-v3/SKILL.md`,
-> `audyt-systemu-v4/references/CHECKLIST-DEDUP.md`) jako odwołanie do
-> punktu, który przestał istnieć pod tą nazwą. **KROK 3B to ten sam punkt
-> integracji, odtworzony pod nazwą zgodną z aktualną strukturą** —
-> wykonywany PO zakończeniu KROK 3 (a w nim: po MD6/MP7), PRZED KROK 4
-> (dashboard), niezależnie od tego czy B1=TAK (dashboard jest opcjonalny,
-> KROK 3B nie jest).
+Wykonywany PO KROK 3 (po MD6/MP7), PRZED KROK 4, niezależnie od B1: KROK 3B.1 aspekty główne/poboczne (`shared/MOD-PRIORYTETY-ASPEKTOW.md`), KROK 3B.2 mapowanie na przepisy (`shared/MOD-MAPA-PRZEPISOW.md`, bez ELI), KROK 3B.3 selekcja dowodów (`shared/MOD-SELEKCJA-DOWODOW.md`, HARDGATE-SD-01/02), KROK 3B.4 eksport pakietu `kontekst_sprawy`. Dawny „KROK 4a” = KROK 3B.
 
-```
-KROK 3B.1 — ASPEKTY GŁÓWNE/POBOCZNE:
-  view /mnt/skills/user/shared/MOD-PRIORYTETY-ASPEKTOW.md
-  Wykonaj checklistę klasyfikacji/priorytetyzacji na podstawie wyniku KROK 3
-  (w tym MD6/MP7) → wynik: aspekty_glowne[], aspekty_poboczne[]
-
-KROK 3B.2 — MAPOWANIE NA PRZEPISY (dawne "KROK 4a.3"):
-  view /mnt/skills/user/shared/MOD-MAPA-PRZEPISOW.md
-  Zmapuj aspekty z KROK 3B.1 na przepisy kandydujące (oznaczenia
-  ⚠️ [akt] art. [X] (NIEWERYFIKOWANE) — bez wywoływania ELI/ISAP na tym etapie)
-  → wynik: mapa_przepisow{}
-
-KROK 3B.3 — SELEKCJA DOWODÓW (dawne "KROK 4a.5"):
-  view /mnt/skills/user/shared/MOD-SELEKCJA-DOWODOW.md
-  Na podstawie mapa_przepisow{} z KROK 3B.2 dobierz dowody do każdej tezy,
-  oznacz ryzyko krzyżowe (HARDGATE-SD-01/02 z tego modułu obowiązują)
-  → wynik: selekcja_dowodow{}, ostrzezenia_krzyzowe[]
-
-KROK 3B.4 — EKSPORT PAKIETU KONTEKSTU:
-  Złóż wynik w jeden obiekt do przekazania dalej (do pisma-procesowe-v3 W1.3,
-  przesluchanie-swiadkow-v2-min90 KROK 0, MOD-KONTEKST-SESJI EXPORT):
-    kontekst_sprawy = {
-      aspekty_glowne, aspekty_poboczne,   ← KROK 3B.1
-      mapa_przepisow,                       ← KROK 3B.2
-      selekcja_dowodow,                     ← KROK 3B.3
-      ostrzezenia_krzyzowe,                 ← KROK 3B.3
-      wyniki_metod,                         ← BLOK E2a-j / MD-moduły metod (streszczenia)
-      chronologia_wstepna                   ← TYLKO jeśli chronologia-sprawy-v1 wykonana osobno
-    }
-```
-
-**Uwaga zgodności wstecznej:** wszystkie zewnętrzne odwołania do „KROK 4a" /
-„KROK 4a.3" / „KROK 4a.5" w innych skillach zostały w tym samym audycie
-zaktualizowane odpowiednio do „KROK 3B" / „KROK 3B.2" / „KROK 3B.3" — patrz
-`audyt-systemu-v4/references/AUDIT-JOURNAL.md`, wpis AUDYT-2026-07-12c.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/krok-3b-synteza.md` — przed wykonaniem KROK 3B (pełna procedura i struktura kontekst_sprawy).
 
 ---
 
@@ -820,49 +365,9 @@ bez wersji przeciwnika · raport bez testu spójności (MP13 §13.7) gdy MP13 ak
 
 ## REGUŁA PRECYZJI DETALU — obowiązkowa przy każdej analizie
 
-### §P1 — Sprzeczności wewnątrz jednej strony (INTRA-CONTRA)
+§P1 INTRA-CONTRA (porównuj twierdzenia tej samej strony pismo po piśmie); §P2 checklist precyzji detalu (8 punktów) przed każdą zakładką „Sprzeczności”; §P3 format w dashboardzie: typy INTRA / CROSS / LEG / DOUBT i cztery obowiązkowe elementy każdej INTRA-CONTRA (dwa cytaty z lokalizacją, rozbieżność, rekomendacja).
 
-Przy analizie wielodokumentowej każda strona może zmienić narrację między pismami.
-Obowiązek: porównywać twierdzenia tej samej strony **pismo po piśmie**, nie tylko
-twierdzenia stron między sobą. Sprzeczność wewnętrzna = zmiana wersji przez tę
-samą stronę w różnych dokumentach/terminach.
-
-Przykład kanoniczny (sprawa [SYGN-SPRAWY]):
-- Odp. na pozew (kwiecień 2025): konto = `[E-MAIL-POWODA]`
-  → Pozwana kwalifikuje jako konto pracownicze na domenie [DOMENA-POZWANEJ].
-- Pismo procesowe (czerwiec 2025): „Powód stworzył PRYWATNEGO maila z dopiskiem
-  @[DOMENA-POZWANEJ]" → Pozwana zmienia kwalifikację na prywatne konto Powoda.
-- WYNIK: dwie wykluczające się charakterystyki tego samego konta w dwóch pismach
-  tej samej strony → INTRA-CONTRA klasy KRYTYCZNEJ.
-
-### §P2 — Checklist precyzji detalu
-
-Przed wygenerowaniem każdej zakładki „Sprzeczności" wykonaj:
-
-```
-[ ] Czy ta sama strona zmienia opis faktyczny między pismami?
-[ ] Czy daty w dokumentach są spójne (np. data podpisania vs data odbioru)?
-[ ] Czy kwoty są identyczne we wszystkich dokumentach (np. 1 000 zł vs 1 060 zł)?
-[ ] Czy nazwy własne (adresy e-mail, nazwy firm, imiona) są identyczne wszędzie?
-[ ] Czy kwalifikacja prawna faktu jest spójna (np. zaliczka vs nienależne środki)?
-[ ] Czy domena/serwer konta mailowego jest spójna z jego kwalifikacją jako służbowe?
-[ ] Czy chronologia zdarzeń jest możliwa (daty → terminy → działania)?
-[ ] Czy twierdzenia o świadkach są spójne (rola, zależność, adres doręczeń)?
-```
-
-### §P3 — Format INTRA-CONTRA w dashboardzie
-
-Sprzeczności wewnętrzne oznaczać typem `intra` (dedykowany typ — nie `inter`):
-- `[INTRA]` — `type:'intra'` — zmiana narracji tej samej strony
-- `[CROSS]` — `type:'inter'` — sprzeczność między twierdzeniami różnych stron
-- `[LEG]`   — `type:'legal'` — sprzeczność z przepisem prawa
-- `[DOUBT]` — `type:'doubt'` — wątpliwość nierozstrzygnięta
-
-Każda INTRA-CONTRA musi zawierać:
-1. Cytat z dokumentu pierwszego (z lokalizacją: str./data pisma)
-2. Cytat z dokumentu drugiego (z lokalizacją: str./data pisma)
-3. Konkretną rozbieżność (co dokładnie się zmienia: słowo, liczba, kwalifikacja)
-4. Rekomendację procesową: jak atakować tę sprzeczność na rozprawie
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/regula-precyzji-detalu.md` — przed wygenerowaniem zakładki „Sprzeczności”.
 
 ---
 
@@ -897,268 +402,41 @@ Przy analizie pism przeciwnika obowiązkowo uruchom moduły V10:
 Hard gate: nie przygotowuj repliki, odpowiedzi, apelacji ani zażalenia bez sprawdzenia, czy przeciwnik nie zawarł w swoich pismach twierdzeń wzajemnie sprzecznych, dorozumianych przyznań albo twierdzeń szkodliwych dla własnej teorii sprawy.
 
 ---
-
 ## BLOK-KONSEKWENCJE — warstwa skutków prawnych tezy
 
-> **Trigger:** ZAWSZE po ustaleniu tez procesowych (MODE A/B/C).
-> **Cel:** każda teza musi generować ≥2 automatyczne skutki prawne.
-> **Zasada:** bez tej warstwy pismo broni tez, ale nie buduje strategii.
-> **Źródło:** DTA W6 (warstwa konsekwencji).
+ZAWSZE po ustaleniu tez: KROK KC1 skutek bezpośredni, KC2 skutek pośredni, KC3 skutek strategiczny; ≥2 konsekwencje per teza, inaczej blok niekompletny; dashboard: tablica consequences[].
 
-Dla każdej tezy T-X z dashboardu wykonaj trzy kroki:
-
-```
-KROK KC1 — Skutek bezpośredni:
-  "Co ta teza UDOWADNIA w sensie prawnym?"
-  → wskaż normę prawną którą teza realizuje (z W1.4 / ELI RZĄD 1 ⚠ HARDGATE)
-  → format: C-X.1: [skutek] → [norma]
-
-KROK KC2 — Skutek pośredni:
-  "Jakie INNE ROSZCZENIA lub ARGUMENTY wzmacnia udowodnienie tej tezy?"
-  → myśl o tezie jako środku do celu, nie celu samym w sobie
-  → format: C-X.2: [skutek wtórny] → [roszczenie / argument]
-
-KROK KC3 — Skutek strategiczny (gdy nieoczywisty):
-  "Jak udowodnienie tej tezy ZMIENIA pozycję procesową?"
-  → wpływ na ciężar dowodu, zakres pism, orzecznictwo, ugodę
-  → format: C-X.3: [zmiana pozycji] (opcjonalny)
-```
-
-Przykład (sprawa pracownicza — wzorzec [SYGN-SPRAWY]):
-
-```
-T-1: Ciągłość stosunku pracy / tożsamość pracodawcy rzeczywistego
-  C-1.1: Pracodawca rzeczywisty = [SPÓŁKA-B] → żądanie zapłaty od [SPÓŁKA-B] (art. 22 §1 KP)
-  C-1.2: Ciągłość umów = czwarta umowa terminowa → art. 25¹ KP (bezterminowa)
-  C-1.3: Obciąża [SPÓŁKA-B] całością roszczeń: wynagrodzenie, PFRON, gotowość
-
-T-2: Gotowość do pracy — niedopuszczenie po stronie pracodawcy
-  C-2.1: Prawo do wynagrodzenia za przestój (art. 81 §1 KP) od daty niedopuszczenia
-  C-2.2: Przelicza ciężar dowodu — pracodawca musi wykazać brak gotowości powoda
-  C-2.3: Wzmacnia T-1: osobisty akt Prezesa = organ z art. 31 KP → tożsamość podmiotu
-```
-
-**Zasada:** Bez ≥2 konsekwencji per teza → BLOK-KONSEKWENCJE niekompletny.
-Teza bez konsekwencji nie trafia do W1.3 pisma-procesowe-v3 jako GOTOWA.
-
-**Integracja:**
-- Konsekwencje C-X.1 → sekcja petitum pisma (co żądamy i od kogo)
-- Konsekwencje C-X.2 → sekcja uzasadnienia (alternatywne podstawy)
-- Konsekwencje C-X.3 → W2.1 MOD-TIMING / MOD-STRATEGIA-WYBOR
-
-**Dashboard:** nowa tablica `consequences[]` per teza (id tezy, C-X.1, C-X.2, C-X.3, norma).
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/blok-konsekwencje.md` — przed wykonaniem BLOK-KONSEKWENCJE.
 
 ## BLOK-ATAK-NA-DOWOD — Atak na dowód jako obiekt procesowy
 
-> **Trigger:** gdy w sprawie są dowody przeciwnika (MP5 perspektywa = TAK)
->   LUB gdy BLOK-PROWENIENCJA wykrył P! (alert autentyczności/custody)
-> **Plik kanoniczny:** `view /mnt/skills/user/shared/MOD-ATAK-NA-DOWOD.md`
-> **Cel:** systematyczna analiza 12 wektorów ataku na dowody przeciwnika
->   + procedura obrony własnych dowodów przed tymi samymi atakami.
+Gdy są dowody przeciwnika (MP5 perspektywa = TAK) lub BLOK-PROWENIENCJA wykrył P!: 12 wektorów AD-1..AD-12, procedura ADIS-1..5 (ofensywna) i SHIELD (obronna); plik kanoniczny `shared/MOD-ATAK-NA-DOWOD.md`.
 
-```
-12 WEKTORÓW ATAKU (AD-1..AD-12) — skrót (szczegóły w MOD-ATAK-NA-DOWOD.md):
-  [AD-1]  Autentyczność: metadane, podpis, fałszerstwo, deepfake
-  [AD-2]  Łańcuch przechowywania (custody): przerwy, dostęp, integralność
-  [AD-3]  Relewantność: fakt bez znaczenia / już udowodniony (art. 227 KPC)
-  [AD-4]  Forma: kopia bez oryginału / bez poświadczenia (art. 129 §1 KPC)
-  [AD-5]  Zakaz ustawowy: nagrania (art. 168a KPK), tajemnica, RODO, art. 174 KPK
-  [AD-6]  Wiarygodność treści: retrospektywne, interes autora, sprzeczność
-  [AD-7]  Zakres wniosku: nieokreślony, nieprzydatny (art. 235¹ KPC)
-  [AD-8]  Prekluzja: spóźniony (art. 235² KPC / art. 170 §1 pkt 5-6 KPK)
-  [AD-9]  Kontrdowód aktywny: KD-1 dokument, KD-2 biegły, KD-3 świadek...
-  [AD-10] Dowody elektroniczne: brak metadanych, hash, kontekst, AI/deepfake
-  [AD-11] Jednostronny ex parte: wytworzony przez stronę na potrzeby sporu
-  [AD-12] Systemowy: sprzeczność, cherry-picking, koordynacja, luki
-
-PROCEDURA ADIS (ofensywna — atakowanie dowodów przeciwnika):
-  ADIS-1 → inwentaryzacja dowodów przeciwnika
-  ADIS-2 → screening AD-1..AD-12 per dowód
-  ADIS-3 → priorytety 🔴/🟠/🟡/🟢
-  ADIS-4 → instrument procesowy (wniosek o oddalenie / biegły / oryginał)
-  ADIS-5 → sekcja w piśmie "ZARZUTY CO DO MATERIAŁU DOWODOWEGO"
-
-PROCEDURA SHIELD (obronna — szczepienie własnych dowodów):
-  S Secure → oryginał + metadane + hash
-  H Harden → triangulacja ≥2 klas (P+ z MOD-PROWENIENCJA)
-  I Integrate → każdy dowód = konkretna przesłanka art. X §Y
-  E Enumerate → wszystkie dowody w pozwie / odpowiedzi (prekluzja)
-  L Link → chronologia MP3 + wyjaśnienie pozornych sprzeczności
-  D Document → proweniencja per dowód (MOD-PROWENIENCJA §PR1)
-
-INTEGRACJA:
-  P! z BLOK-PROWENIENCJA → automatycznie AD-1 + AD-2
-  [ZAW] proweniencja → AD-11 + AD-12 SY-3
-  MP5 §5.2 "typ: dowodowe" → rozwiń na AD-X z siłą N/10
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/blok-atak-negacja-proweniencja.md` — sekcja BLOK-ATAK-NA-DOWOD.
 
 ---
 
 ## BLOK-NEGACJA — Siła dowodów, techniki negacji i odporność pisma
 
-> **Trigger:** ZAWSZE — automatyczny dla każdej sprawy z ≥1 dowodem i ≥1 tezą.
-> **Plik kanoniczny:** `view /mnt/skills/user/shared/MOD-NEGACJA-DOWODOW.md`
-> **Cel:** ocenić siłę każdego dowodu wobec technik negacji przeciwnika,
-> zidentyfikować milczące przyznania i zbudować odporne pismo.
+ZAWSZE przy ≥1 dowodzie i ≥1 tezie (`shared/MOD-NEGACJA-DOWODOW.md`): BLOK N1 ciężar dowodu, N2 odporność dowodów klas A-G, 12 technik negacji N1-N12, N4 milczenie jako przyznanie, procedura NG1-NG6.
 
-```
-BLOK N1 — CIĘŻAR DOWODU (per teza T-X):
-  KR1: kto wywodzi skutki z faktu? → ten ma ciężar (art. 6 KC)
-  KR2: czy istnieje przepis odwracający ciężar?
-       OD-1 mobbing | OD-2 dyskryminacja | OD-3 dyscyplinarne
-       OD-4 wypowiedzenie | OD-5 wypadek | OD-6 probatio diabolica
-  KR3: czy fakt jest negatywny? → rozważ art. 231 KPC
-  KR4: co wystarczy do SPEŁNIENIA ciężaru przez nas?
-  KR5: co wystarczy przeciwnikowi do ZNIWECZENIA?
-
-BLOK N2 — ODPORNOŚĆ DOWODÓW (per klasa A-G):
-  A (urz.) → obalenie: wymaga klasy A lub G + dowód błędu/fałszu
-  B (pryw.) → obalenie: żądanie oryginału + twierdzenie o przeróbce
-  C (koresp.) → obalenie: zaprzeczenie + wniosek o metadane
-  D (świad. bezp.) → obalenie: motyw stronniczości + zeznanie przeciwne
-  E (świad. pośr.) → samo wskazanie pośredniości obniża do 1/10
-  F (strona) → zaprzeczenie strony p. rodzi sprzeczność (art. 233 §1)
-  G (biegły) → obalenie: atak na metodologię + wniosek o 2. biegłego
-
-12 TECHNIK NEGACJI (N1-N12) — pełna taksonomia w MOD-NEGACJA-DOWODOW.md:
-  [N1]  Gołosłowne zaprzeczenie
-  [N2]  Twierdzenie o nieistnieniu faktu pozytywnego
-  [N3]  Twierdzenie o nieistnieniu elementu prawnego
-  [N4]  Ogólnikowe zaprzeczenie "wszystkiemu"
-  [N5]  Atak na autentyczność dokumentu
-  [N6]  Odmowa przedłożenia dokumentu (art. 233 §2 KPC)
-  [N7]  Zarzut braku formy / wadliwości formalnej
-  [N8]  Atak na wiarygodność świadka
-  [N9]  Zarzut prekluzji dowodowej
-  [N10] Cherry-picking — selektywne cytowanie (MAN-05)
-  [N11] Antycypacja zarzutu / immunizacja twierdzenia
-  [N12] Zniszczenie lub ukrycie dowodu (spoliation / art. 233 §2)
-
-BLOK N4 — MILCZENIE JAKO PRZYZNANIE:
-  Per każde kluczowe twierdzenie faktyczne:
-    M1: czy pismo przeciwnika odnosi się wprost? → NIE → M2
-    M2: czy objęte ogólnym zaprzeczeniem? → jeśli nie → PRZYZ-MIL
-    M3: waga: H (kluczowe) / M (istotne) / L (poboczne)
-    M4: formularz: "T-X pozostaje niezaprzeczone. Art. 230 KPC."
-  Rejestr [PRZYZ-MIL-H/M/L] → sekcja "Fakty bezsporne" pisma.
-
-PROCEDURA NG1-NG6:
-  NG1 mapowanie ciężaru → NG2 odporność → NG3 prognoza N1-N12
-  → NG4 milczenie → NG5 raport BLOK-NEGACJA → NG6 integracja pipeline
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/blok-atak-negacja-proweniencja.md` — sekcja BLOK-NEGACJA.
 
 ---
 
 ## BLOK-PROWENIENCJA — Wykrywanie wspólnego pochodzenia dowodów
 
-> **Trigger OBOWIĄZKOWY:**
->   ≥3 dowodów klasy C lub D (korespondencja, zeznania)
->   LUB ≥2 świadkowie z tego samego miejsca pracy / działu
->   LUB DTA-ID-MODE aktywny (≥5 plików)
-> **Trigger na żądanie:** "sprawdź czy z jednego systemu", "czy zeznania skoordynowane",
->   "skąd pochodzi", "czy ten sam autor", "proweniencja"
-> **Plik kanoniczny:** `view /mnt/skills/user/shared/MOD-PROWENIENCJA-DOWODOW.md`
-> **Cel:** wykryć wspólne źródło ≥2 pozornie niezależnych dowodów i ocenić konsekwencje.
+Obowiązkowo przy ≥3 dowodach klasy C/D, ≥2 świadkach z jednego miejsca pracy lub aktywnym DTA-ID-MODE (`shared/MOD-PROWENIENCJA-DOWODOW.md`): 7 typów proweniencji, klasy P+/P-/P0/P!, procedura PR1-PR5.
 
-```
-7 TYPÓW PROWENIENCJI (pełna taksonomia w MOD-PROWENIENCJA-DOWODOW.md):
-
-  [SYS]   Wspólny system IT  — format/numeracja/metadane systemowe identyczne
-  [KOM]   Wspólny komunikator — ten sam nadawca/odbiorca/wątek/kanał
-  [ZAW]   Wspólne środowisko zawodowe — ten sam pracodawca/dział/przełożony
-  [AUT]   Wspólny autor — metadane, nawyki typograficzne, identyczne błędy
-  [URZ]   Wspólne urządzenie — EXIF, adres IP, artefakty skanera
-  [LIN]   Podobieństwo tekstu — identyczne zdania, schematy, błędy merytoryczne
-  [CHAIN] Wspólny custody — stemple, braki numeracji, kolejność skanowania
-
-4 KLASY KONSEKWENCJI:
-
-  P+  Wzmacniająca: wspólne niezależne źródło → fakt awansuje do BEZSPORNE/PEWNE
-  P-  Osłabiająca:  pozorna niezależność → oba dokumenty traktuj jak jeden
-  P0  Neutralna:    wspólne źródło znane obu stronom, bez wpływu na siłę
-  P!  Alert:        nieoczekiwane wspólne źródło → [H-PROW] + wniosek dowodowy
-
-PROCEDURA (szczegółowa w MOD-PROWENIENCJA-DOWODOW.md §PR1-PR5):
-  PR1 Inwentaryzacja proweniencyjna (autor/system/kanał per dowód)
-  PR2 Skan par (Di, Dj) pod wszystkie 7 typów
-  PR3 Klasyfikacja P+/P-/P0/P!
-  PR4 Raport proweniencji (klastry + fakty awansowane/zdegradowane + alerty P!)
-  PR5 Integracja: → DTA-ID-MODE → macierz D×T → BLOK-KONSEKWENCJE
-
-INTEGRACJA Z PIPELINE:
-  Fakty awansowane P+ → BEZSPORNE w BLOK-KONSEKWENCJE C-X.1
-  Alerty P! → wnioski dowodowe art. 248 KPC / biegły art. 278 KPC
-  Obniżona wiarygodność P- → RS (ryzyko sporności) w macierzy D×T
-  Hipotezy [H-PROW] → MP6-sledczy §6.12 lista pytań śledczych
-```
-
----
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/blok-atak-negacja-proweniencja.md` — sekcja BLOK-PROWENIENCJA.
 
 ---
 
 ## DTA-ID-MODE — Numeracja krzyżowa D/F/T (tryb dużych spraw)
-> **Trigger opcjonalny:** na żądanie użytkownika przy każdej sprawie.
-> **Cel:** cross-referencja Dowód → Fakt → Teza w raportach i pismach.
-> **Źródło:** DTA Warstwa 1–5 (identyfikacja + ekstrakcja + numeracja).
 
-```
-FORMAT IDENTYFIKATORÓW:
+Identyfikatory D-NNN (dowód), F-NNN (fakt, bez wniosków), T-NN (teza); obowiązkowy przy ≥5 plikach lub ≥5 tezach lub TRYB ETAPOWY; procedura KROK DTA-1..DTA-4.
 
-  D-NNN  = Dowód (dokument / plik)
-    Format: D-[numer trzycyfrowy]
-    Przykład: D-001 = Pracownicy13_08_2024.xlsx
-              D-002 = Protokół rozprawy 27.01.2026
-
-  F-NNN  = Fakt (wyekstrahowany z dowodu — TYLKO opis zdarzenia, NIE wniosek)
-    Format: F-[numer trzycyfrowy]
-    Zasada DTA W2: F-NNN zawiera WYŁĄCZNIE fakty, NIGDY wnioski prawne.
-    Przykład: F-101 = "Arkusze [SPÓŁKA-A] i [SPÓŁKA-B] w jednym pliku XLS"
-              F-102 = "Numeracja pracowników ciągła — brak resetu po 1.07.2023"
-    ⛔ ZAKAZ: F-101 = "Spółki stanowią jeden organizm" → to wniosek, nie fakt → [LA-WNIOSEK-W-FAKCIE]
-
-  T-NN   = Teza procesowa (wniosek prawny z faktów)
-    Format: T-[numer dwucyfrowy]
-    Przykład: T-01 = "[SPÓŁKA-A] i [SPÓŁKA-B] korzystały ze wspólnego systemu kadrowego"
-              T-02 = "Powód manifestował gotowość do pracy"
-
-CROSS-REFERENCE w raportach i pismach:
-  "Jak wynika z D-001 (xlsx), fakt F-102 (ciągła numeracja) potwierdza T-01."
-  "D-007 (RCS Park 21.03.2026) → F-301 (osobiste żądanie zaprzestania kontaktu) → T-02 + T-05"
-```
-
-```
-KIEDY AKTYWOWAĆ DTA-ID-MODE:
-
-  ⛔ OBOWIĄZKOWY (auto-trigger):
-     ≥5 plików dostarczonych przez użytkownika
-     LUB ≥5 tez w CLAIM-VALIDATION
-     LUB TRYB ETAPOWY (>30 plików — HARD GATE z MOD-PORCJOWANIA)
-
-  Opcjonalny (na żądanie):
-     Użytkownik mówi: "numeruj", "D-NNN", "DTA", "cross-reference"
-
-  Nieaktywny (domyślny dla małych spraw):
-     <5 plików i <5 tez → używaj Lp. (prostsze, wystarczające)
-```
-
-```
-PROCEDURA INICJALIZACJI DTA-ID-MODE:
-
-KROK DTA-1: Utwórz rejestr D-NNN
-  D-001: [nazwa pliku] | [typ wg MT1.2 DOK-URZ/DOK-PRY/etc.] | [klasa A-G z DOWODY-METODOLOGIA §5]
-  D-002: ...
-
-KROK DTA-2: Ekstrakcja faktów F-NNN per dowód
-  Dla D-001: wylistuj fakty F-101, F-102, F-103...
-  Zasada: jeden fakt = jedno zdanie opisowe zdarzenia/stanu (bez ocen prawnych)
-
-KROK DTA-3: Budowanie tez T-NN z faktów
-  T-01 wynika z: F-101, F-102, F-103 (D-001), F-205 (D-002)
-  T-02 wynika z: F-301 (D-007), F-302 (D-008), F-303 (D-018)
-
-KROK DTA-4: Zasilenie macierzy D×T (MOD-MACIERZ-DOWOD-TEZA)
-  Macierz używa D-NNN zamiast D1/D2 → pełna cross-referencja
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view analizator-dowodow-v3/references/dta-id-mode.md` — przed aktywacją DTA-ID-MODE.
 
 ---
 

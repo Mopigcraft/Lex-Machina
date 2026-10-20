@@ -19,6 +19,9 @@ Kontrole (dla każdego `dr-*/MAPA-AKTOW.md`; dla `prawo-polskie-v2/ROUTING-MAP.m
 Offline, deterministyczny. Kod wyjścia 1 przy błędzie A, B lub C.
 """
 import argparse, glob, os, re, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _lex_common import routing_files
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -77,14 +80,15 @@ def main():
         print('  ⛔ brak prawo-polskie-v2/ROUTING-MAP.md'); err += 1
     if len(files) != 16:
         print(f'  ⛔ map dr-*/MAPA-AKTOW.md: {len(files)} (oczekiwane 16)'); err += 1
-    for path in files + ([rm] if os.path.exists(rm) else []):
+    rm_all = [str(p) for p in routing_files(rm)] if os.path.exists(rm) else []  # indeks + routing/*.md
+    for path in files + rm_all:
         skill = os.path.relpath(path, root).split(os.sep)[0]
         tabs, orphan = tables(path)
         bad = [(n, len(h), len(c)) for _, h, rows in tabs for n, c in rows if len(c) != len(h)]
         msgs = [f'  ⛔ A: L{n} — wiersz poza tabelą (brak nagłówka/separatora): {l[:80]}' for n, l in orphan[:5]]
         msgs += [f'  ⛔ A: L{n} — {c} komórek przy nagłówku {h}' for n, h, c in bad[:5]]
         e = len(orphan) + len(bad)
-        if path != rm:
+        if path not in rm_all:
             in_col = {}
             for _, h, rows in tabs:
                 idx = [k for k, x in enumerate(h) if 'moduł' in x.lower()]

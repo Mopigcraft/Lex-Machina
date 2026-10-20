@@ -103,6 +103,8 @@ def preflight(root: Path) -> bool:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--repo-root", default=None)
+    ap.add_argument("--refaktor-base", default=None,
+                    help="korzeń skilli BAZOWYCH (sprzed refaktoru) dla T50; domyślnie env LEX_REFAKTOR_BASE")
     args = ap.parse_args()
 
     root = Path(args.repo_root).resolve() if args.repo_root else auto_root()
@@ -141,6 +143,17 @@ def main():
     code, out = run_script("ci_check_shared.py", repo_args)
     print(out)
     results["T6_T7"] = code
+
+    # T50: porównanie z drzewem BAZOWYM (zamrożonym sprzed refaktoru); bez bazy — informacyjnie PASS.
+    refaktor_base = args.refaktor_base or os.environ.get("LEX_REFAKTOR_BASE")
+    sekcja("T50 — refaktor skilli vs baza (R1–R5)")
+    if refaktor_base:
+        code, out = run_script("check_refaktor_skilli.py", ["--base-dir", refaktor_base] + repo_args)
+        print(out)
+        results["T50"] = code
+    else:
+        print("SKIP (informacyjnie): brak LEX_REFAKTOR_BASE / --refaktor-base — porównanie z bazą nie dotyczy tego przebiegu.\n")
+        results["T50"] = 0
 
     for key, label, script, sargs in [
         ("T8", "T8 WYSOKI — Zakres tytuł-vs-treść", "test_title_scope_match.py", repo_args),
@@ -200,6 +213,10 @@ def main():
         # 2026-10-11: mutacje z AUDYT-2026-10-10a utrwalone — każdy bloker musi umieć się nie udać.
         ("T49", "T49 KRYTYCZNY — mutacje: każdy bloker wykrywa wprowadzony defekt", "test_mutacje_zestawu.py", ["--repo-root", str(root)]),
         ("MOCK", "MOCK — self-test sync_dzu_eli wobec lokalnego mock-ELI", "mock_eli_server_test.py", []),
+        # Refaktor SKILL.md (progressive disclosure): selftest harnessu jest deterministyczny i offline → bloker.
+        ("T50S", "T50S KRYTYCZNY — selftest check_refaktor_skilli (mutacje R1–R5)", "check_refaktor_skilli.py", ["--selftest"]),
+        # T51: budżet aktywacji (SKILL.md <= 500 linii / 32 kB, frontmatter <= 60) — na razie WARN, nie bloker.
+        ("T51", "T51 WARN — budżet aktywacji SKILL.md (R4, bez bazy)", "check_refaktor_skilli.py", ["--budget-only"] + repo_args),
     ]:
         sekcja(label)
         code, out = run_script(script, sargs)
@@ -228,7 +245,7 @@ def main():
     # poza T19b (własne mutacje w pamięci) i T30 (wymaga historii dziennika).
     BLOCKERY = ("T1", "T2", "T6_T7", "T9", "T11", "T12", "T13", "T14", "T17", "T18", "T19", "T19b",
                 "T22", "T23", "T28", "T29", "T30", "T32", "T34", "T35", "T36", "T38", "T39", "T40",
-                "T41", "T42", "T43", "T44", "T45", "T46", "T47", "T48", "T49", "MOCK")
+                "T41", "T42", "T43", "T44", "T45", "T46", "T47", "T48", "T49", "T50", "T50S", "MOCK")
     critical_fail = False
     for key, code in results.items():
         if code == "MANUAL":

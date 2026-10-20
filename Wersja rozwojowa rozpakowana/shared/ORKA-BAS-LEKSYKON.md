@@ -16,7 +16,7 @@
 > 1975 linii. Treść 20 CZĘŚCI (I-XX) PODZIELONA na 8 plików w podkatalogu
 > `orka-bas-leksykon/`. TEN plik pozostaje pod NIEZMIENIONĄ nazwą jako
 > LEKKI INDEKSATOR — dekady odsyłaczy w całym systemie (m.in. WSZYSTKIE
-> pliki `dr-XX/SKILL.md`, `ROUTING-MAP.md`, `DEFINICJE-KLUCZOWE.md`) NIE
+> pliki `dr-XX/SKILL.md`, `ROUTING-MAP.md` [od 2026-10-20: `prawo-polskie-v2/routing/ORKA-BAS.md`], `DEFINICJE-KLUCZOWE.md`) NIE
 > WYMAGAŁY EDYCJI, ponieważ odsyłają po nazwie pliku, nie po numerze
 > linii. METAREGUŁY i QUALITY GATE (treść stosowana ZAWSZE, niezależnie
 > od szukanego hasła) POZOSTAJĄ w tym indeksie — nie zostały przeniesione.

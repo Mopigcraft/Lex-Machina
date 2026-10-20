@@ -60,234 +60,27 @@ Ta sekcja zmienia wyłącznie sposób wykonania operacji technicznych. Metodolog
 > musi w nim dosłownie występować, inaczej `[CYTAT NIEZWERYFIKOWANY]`) — przy każdym
 > cytacie; WD-3 (każdy obszar kontroli jawnie zamknięty) — przed prezentacją wyniku.
 > ⛔ Treść reguł NIE jest tu kopiowana (F-115, F-200) — obecność wywołania pilnuje T35.
-
 ## ⛔⛔⛔ HARD GATE MRG — MANDATORY-REREAD-GATE ⛔⛔⛔
 
-> Ten blok jest WIĄŻĄCY i NADRZĘDNY wobec „pamięci" modelu o treści plików
-> oraz wobec chęci szybkiego dostarczenia pisma.
-> Powstał po sprawie [SYGN-SPRAWY]: brak ponownego wczytania = brak wiedzy o krokach.
-> Cel: przed każdym krokiem [CP] i przed każdą odpowiedzią w pipeline pisma
-> stan checkpointów oraz rejestr kroków są odczytywane ze ŚWIEŻEJ wersji z dysku —
-> nigdy z pamięci modelu, która może zawierać poprzednią wersję pliku.
+Przed KAŻDĄ odpowiedzią w pipeline i przed KAŻDYM [CP] wykonaj OBA świeże odczyty: `view shared/CP-GATE.md` oraz `view shared/MOD-STEP-TRACKER.md`; CP-REJESTR i REJESTR KROKÓW aktualizuj wyłącznie z odczytu (zakaz polegania na pamięci, zakaz zamknięcia [CP] bez podwójnego view). Autodiagnoza MRG przed raportem [CP] i present_files.
 
-```
-⛔ MRG-GATE — AKTYWNY OD KROK 0 DO present_files, BEZ WYJĄTKÓW
-
-REGUŁA MRG: Przed KAŻDĄ odpowiedzią w pipeline pisma procesowego ORAZ
-przed KAŻDYM krokiem oznaczonym [CP], model MUSI wykonać OBA wywołania:
-  1. view shared/CP-GATE.md
-  2. view shared/MOD-STEP-TRACKER.md
-Następnie zaktualizować CP-REJESTR (§2 CP-GATE.md) oraz REJESTR KROKÓW
-(FAZA 0 MOD-STEP-TRACKER) WYŁĄCZNIE na podstawie ŚWIEŻO odczytanej treści.
-
-⛔ Wywołanie view() jest OBOWIĄZKOWE nawet jeśli:
-  • pliki były już wczytane wcześniej w tej samej sesji,
-  • model „pamięta" ich treść,
-  • użytkownik nie prosił o odczyt,
-  • jest to „prosty" krok pośredni,
-  • plik „nie zmieniał się" od ostatniego odczytu.
-
-⛔ ZAKAZY MRG (bezwzględne):
-  • ZAKAZ polegania na pamięci modelu zamiast wywołania view().
-  • ZAKAZ pominięcia odczytu „bo to ten sam plik co poprzednio".
-  • ZAKAZ pominięcia odczytu gdy plik „nie zmieniał się" od ostatniego razu.
-  • ZAKAZ zamknięcia jakiegokolwiek [CP] bez uprzedniego podwójnego view().
-  • ZAKAZ wpisania do pisma jakiejkolwiek treści checkpointu/rejestru
-    odtworzonej z pamięci zamiast z bieżącego odczytu.
-
-UZASADNIENIE (dlaczego tylko view() gwarantuje poprawność):
-  • Pliki mogą być aktualizowane między odpowiedziami.
-  • Pamięć modelu może zawierać poprzednią wersję pliku.
-  • Jedynie view() gwarantuje odczyt aktualnej wersji z dysku.
-
-⛔ AUTODIAGNOZA MRG (przed każdym raportem [CP] i przed present_files):
-  Zadaj sobie 1 pytanie: „Czy w TEJ odpowiedzi wywołałem view() na OBU
-  plikach (CP-GATE.md + MOD-STEP-TRACKER.md) przed bieżącym [CP]?"
-  Jeśli NIE → NIE zamykaj [CP], NIE wywołuj present_files — najpierw OBA view().
-```
-
-> Reguła interpretacyjna MRG: „ponowne wczytanie" = fizyczne wywołanie
-> narzędzia view() w bieżącej odpowiedzi. Nie jest nim odtworzenie treści
-> z pamięci ani odwołanie się do wcześniejszego wczytania w historii rozmowy.
-> Lista pozycji [CP] objętych regułą = pełny CP-REJESTR (§2 CP-GATE.md):
-> CP-1a, CP-1b, CP-1c-*, CP-PD, CP-1d-*, CP-W1, CP-PRE-W2, CP-ATAK,
-> CP-PODMIOT, CP-QUALITY, CP-AUDYT, CP-PEER.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/bramki-startowe.md` — sekcja HARD GATE MRG (pełne zakazy MRG, uzasadnienie, autodiagnoza); MUSI być przeczytana przed pierwszą odpowiedzią.
 
 ---
 
 ## ⛔⛔⛔ HARD GATE STEP-DISCLOSURE — INFORMACJA WARUNKOWA ⛔⛔⛔
 
-> Ten blok jest WIĄŻĄCY i NADRZĘDNY wobec chęci szybkiego dostarczenia pisma.
-> Powstał po sprawie [SYGN-SPRAWY] (2026-06-24), w której pismo zostało wydane
-> z pominięciem kilkunastu kroków kontroli jakości — BEZ poinformowania użytkownika.
-> Cel: każde pominięcie lub krok jeszcze-do-zrobienia MUSI być ujawniony, zanim
-> użytkownik dostanie plik. Żaden krok nie może zostać „cicho" przeskoczony.
+SD-GATE aktywny od startu do present_files: KROK A ST-INIT (REJESTR kroków, `view shared/MOD-STEP-TRACKER.md`), KROK B ST-TRACK (✅ WYKONANY / ⚠️ POMINIĘTY + powód / — N/A + uzasadnienie), KROK C ST-FINAL (pełny REJESTR przed KAŻDYM present_files). INFORMACJA WARUNKOWA: ≥1 krok wymagany ≠ ✅/N/A -> status ⚠️ DRAFT — NIEZWERYFIKOWANY, watermark w .docx, blok ujawnienia, STOP i czekanie na decyzję a/b; 0 takich kroków -> ✅ FINAL. ZAKAZ-14: brak present_files bez ST-FINAL, brak „cichego” przeskoku.
 
-```
-⛔ SD-GATE — AKTYWNY OD STARTU DO present_files, BEZ WYJĄTKÓW
-
-KROK A — ST-INIT (na starcie, raz):
-  view shared/MOD-STEP-TRACKER.md → zainicjuj REJESTR kroków.
-  Każdy krok pipeline = jeden wpis ze statusem: ○ OCZEKUJE.
-
-KROK B — ST-TRACK (w trakcie):
-  Po każdym kroku ustaw status:
-    ✅ WYKONANY  |  ⚠️ POMINIĘTY (+powód)  |  — N/A (+uzasadnienie)
-  N/A musi być uzasadnione (np. „brak dowodów pośrednich" dla MOD-LANCUCH).
-
-KROK C — ST-FINAL (OBOWIĄZKOWY i BLOKUJĄCY przed KAŻDYM present_files pisma):
-  Wyświetl PEŁNY REJESTR KROKÓW (format FAZA 3 z MOD-STEP-TRACKER):
-  kroki ✅ wykonane | ⚠️ pominięte (+powód) | ○ oczekujące | — N/A | STATUS PISMA.
-
-⛔ INFORMACJA WARUNKOWA (sedno bramki):
-  Policz kroki WYMAGANE, których status ≠ ✅ WYKONANY i ≠ — N/A
-  (tj. wszystkie ⚠️ POMINIĘTY oraz ○ OCZEKUJE).
-
-  • Jeśli liczba = 0:
-       STATUS PISMA = ✅ FINAL — GOTOWE DO ZŁOŻENIA.
-       Dozwolone present_files bez dalszych pytań.
-       Tryb PRAWNIK/kancelaria lub żądanie użytkownika → po present_files:
-       `view modules/MOD-AUDIT-BUNDLE.md` (paczka audytowa AI Act art. 12 —
-       deliverable dla audytora, nigdy dla sądu ani kontrahenta).
-
-  • Jeśli liczba ≥ 1  →  WARUNEK SPEŁNIONY → URUCHOM INFORMACJĘ WARUNKOWĄ:
-       1) STATUS PISMA = ⚠️ DRAFT — NIEZWERYFIKOWANY (X krok(ów) pominięto/do zrobienia).
-       2) .docx MUSI nosić wzmocniony watermark „DRAFT — NIEZWERYFIKOWANY"
-          (zgodnie z CP-GATE; brak watermarku = błąd krytyczny).
-       3) Wyświetl blok ujawnienia:
-
-          ┌─────────────────────────────────────────────────────────────┐
-          │ ⚠️ INFORMACJA WARUNKOWA — PISMO NIEPEŁNE                      │
-          │                                                             │
-          │ Kroki pominięte lub jeszcze do wykonania:                   │
-          │  ⚠️/○ [ID] [nazwa] — [powód / co to weryfikuje]            │
-          │  ...                                                        │
-          │                                                             │
-          │ Skutek dla jakości pisma:                                   │
-          │  → [czego nie sprawdzono / jakie ryzyko procesowe]          │
-          │                                                             │
-          │ Decyzja:                                                    │
-          │  a) Akceptuję pismo jako DRAFT (bez tych kroków)            │
-          │  b) Wykonaj brakujące kroki przed dostarczeniem (zalecane)  │
-          └─────────────────────────────────────────────────────────────┘
-
-       4) ⛔ ZAKOŃCZ ODPOWIEDŹ. Czekaj na decyzję a/b.
-          - „a"/„tak"  → present_files z plikiem DRAFT — NIEZWERYFIKOWANY.
-          - „b"/„nie" → wykonaj brakujące kroki, potem ponów ST-FINAL.
-
-⛔ ZAKAZ-14 (bezwzględny):
-  • ZAKAZ present_files jakiegokolwiek pisma BEZ uprzedniego ST-FINAL.
-  • ZAKAZ statusu ✅ FINAL, gdy istnieje choćby jeden krok ⚠️ POMINIĘTY lub ○ OCZEKUJE.
-  • ZAKAZ „cichego" przeskoku — pominięcie BEZ ujawnienia = błąd krytyczny pipeline.
-  • Polecenie „dalej"/„kontynuuj"/„generuj" NIE zwalnia z ST-FINAL ani z INFORMACJI WARUNKOWEJ.
-
-⛔ AUTODIAGNOZA KOŃCOWA (wykonaj tuż przed present_files, nawet jeśli „wydaje się gotowe"):
-  Zadaj sobie 1 pytanie: „Czy wyświetliłem REJESTR KROKÓW (ST-FINAL) w tej odpowiedzi?"
-  Jeśli NIE → NIE wywołuj present_files. Najpierw ST-FINAL.
-```
-
-> Reguła interpretacyjna: „informacja warunkowa" = informacja, której wyświetlenie
-> jest WARUNKOWANE istnieniem ≥1 kroku pominiętego/oczekującego. Warunek spełniony →
-> informacja OBOWIĄZKOWA + STOP. Warunek niespełniony → pismo FINAL, bez pytań.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/bramki-startowe.md` — sekcja HARD GATE STEP-DISCLOSURE (format bloku ujawnienia, KROK A-C, ZAKAZ-14, autodiagnoza końcowa); MUSI być przeczytana przed ST-FINAL / present_files.
 
 ---
 
 ## ⛔⛔⛔ HARD GATE WARUNKOWY — AKCEPTACJA STARTU + WCZYTANIE CHECKLISTY ⛔⛔⛔
 
-> Ten blok wykonuje się JEDNORAZOWO — na samym początku każdej sesji z tym skillem,
-> przed jakimkolwiek działaniem merytorycznym (przed Test A / Test B / Test C).
-> Jest WIĄŻĄCY i nie może być pominięty nawet gdy użytkownik podał już wszystkie dane.
->
-> Cel: użytkownik ZAWSZE wie, że (a) pipeline ma wiele etapów, (b) nie wszystkie
-> mogły zostać wykonane w przeszłości lub mogą zostać pominięte w tej sesji,
-> (c) każde pominięcie będzie jawne — nigdy ciche.
+CG-GATE jednorazowo na starcie sesji, przed jakimkolwiek krokiem merytorycznym: KROK CG-1 (INFORMACJA PRZED STARTEM — wyświetl, ZAKOŃCZ odpowiedź, czekaj na decyzję a/b), KROK CG-2 po akceptacji „a”: wczytaj `references/AUTOMAT-STANOW.md`, `references/SELF-CHECK-PISMA.md`, `references/MODULY-MAPA.md` i wyświetl REJESTR KROKÓW (ST-INIT); potem KROK 0. ZAKAZ-15: brak pominięcia CG-GATE; wyjątek tylko przy jednoznacznym sygnale użytkownika „pomijam informację wstępną”.
 
-```
-⛔ CG-GATE (CONDITIONAL GATE) — WYKONAJ JAKO ABSOLUTNIE PIERWSZY KROK
-
-KROK CG-1 — INFORMACJA WSTĘPNA (wyświetl użytkownikowi przed startem):
-
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │ ⚠️ INFORMACJA PRZED STARTEM — PISMA PROCESOWE v3                        │
-  │                                                                         │
-  │ Ten skill realizuje wieloetapowy pipeline kancelaryjny (W1 → W2 → W3)  │
-  │ z kilkunastoma obowiązkowymi krokami kontroli jakości.                  │
-  │                                                                         │
-  │ Ważne zastrzeżenie:                                                     │
-  │  → Nie wszystkie kroki pipeline'u mogły zostać wykonane w poprzednich  │
-  │    sesjach dotyczących tej sprawy.                                      │
-  │  → W tej sesji każde pominięcie kroku będzie jawnie zgłoszone         │
-  │    (INFORMACJA WARUNKOWA) — nigdy ciche.                               │
-  │  → Jeśli pominięto kroki wcześniej i sprawa jest kontynuowana,        │
-  │    zaleca się poinformowanie o tym fakcie teraz.                       │
-  │                                                                         │
-  │ Po Twojej akceptacji wczytam pełną listę kroków i checklistę,          │
-  │ a następnie przystąpię do pracy.                                        │
-  │                                                                         │
-  │ Czy akceptujesz powyższe warunki i chcesz kontynuować?                 │
-  │  a) Tak, akceptuję — wczytaj checklistę i rozpocznij                   │
-  │  b) Nie — zakończ lub wyjaśnij wątpliwości                             │
-  └─────────────────────────────────────────────────────────────────────────┘
-
-  ⛔ ZAKOŃCZ ODPOWIEDŹ PO WYŚWIETLENIU CG-1. Czekaj na decyzję a/b.
-  ⛔ NIE wykonuj żadnego kroku merytorycznego przed akceptacją.
-
-KROK CG-2 — PO OTRZYMANIU AKCEPTACJI „a" (WCZYTANIE CHECKLISTY):
-
-  Wykonaj WSZYSTKIE poniższe view() w podanej kolejności:
-
-  1. view pisma-procesowe-v3/references/AUTOMAT-STANOW.md
-     → Zawiera: PROTOKÓŁ CHECKPOINT, AUTOMAT STANÓW (STAN 0–3 z KROK 0-TRACKER),
-       MAPA CHECKPOINTÓW, ZAKAZY 1–13, REGUŁA NAPRAWY, REGUŁA-KONTYNUACJA,
-       REGUŁA AUTODIAGNOZY.
-
-  2. view pisma-procesowe-v3/references/SELF-CHECK-PISMA.md
-     → Zawiera: SELF-CHECK przed każdą odpowiedzią (pełna checklista CP),
-       REGUŁA FINALNA (11 pytań).
-
-  3. view pisma-procesowe-v3/references/MODULY-MAPA.md
-     → Zawiera: matryca engines per etap, pliki kanoniczne shared z triggerami.
-
-  Po wczytaniu — wyświetl użytkownikowi REJESTR KROKÓW (format ST-INIT):
-
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │ ✅ CHECKLIST WCZYTANA — PIPELINE AKTYWNY                                │
-  │                                                                         │
-  │ Kroki pipeline (status startowy):                                       │
-  │  ○ KROK 0: CP-GATE + STEP-TRACKER (inicjalizacja)                      │
-  │  ○ Test A / Test B / Test C (routing)                                   │
-  │  ○ W1: CLAIM-VALIDATION [CP-1a]                                         │
-  │  ○ W1: MOD-STRATEGIA-WYBOR [CP-1b] (gdy ≥2 ścieżki)                   │
-  │  ○ W1: SKAN DOWODÓW / MACIERZ / ŁAŃCUCH [CP-1c-*]                     │
-  │  ○ W1: MOD-DOKUMENT-ANOMALIE / MOD-POSZLAKI [CP-1d-*]                  │
-  │  ○ W1: RAMA + STRATEGIA [CP-W1]                                         │
-  │  ○ PRE-W2-GATE [CP-PRE-W2]                                              │
-  │  ○ W2: PROJEKT PISMA + ATAK-NA-DRAFT [CP-ATAK]                         │
-  │  ○ W3: PODMIOT-GATE [CP-PODMIOT]                                        │
-  │  ○ W3: WERYFIKACJA + WALIDACJA [CP-QUALITY]                             │
-  │  ○ W3: AUDYT-KOŃCOWY [CP-AUDYT]                                         │
-  │  ○ W3: PEER-REVIEW + POST-VALIDATION [CP-PEER]                          │
-  │                                                                         │
-  │ Zastrzeżenie: nie wszystkie kroki muszą być wymagane w Twojej sprawie  │
-  │ (N/A z uzasadnieniem). Każde pominięcie będzie jawnie zgłoszone.       │
-  │                                                                         │
-  │ Teraz przystępuję do KROKU 0 — routing.                                │
-  └─────────────────────────────────────────────────────────────────────────┘
-
-  Następnie wykonaj KROK 0 (CP-GATE → STEP-TRACKER → routing Test A/B/C).
-
-⛔ ZAKAZ-15 (bezwzględny — nowy):
-  • ZAKAZ pominięcia CG-GATE na starcie sesji.
-  • ZAKAZ rozpoczęcia jakiegokolwiek kroku merytorycznego bez akceptacji „a".
-  • ZAKAZ wczytania checklisty bez wyświetlenia najpierw bloku INFORMACJA WSTĘPNA.
-  • Polecenie „zacznij pismo" / „pisz" / „generuj od razu" NIE zwalnia z CG-GATE.
-```
-
-> Wyjątek od CG-GATE: gdy użytkownik w tej samej wiadomości co trigger pisma
-> explicite napisał „pomijam informację wstępną, znam pipeline" lub podobny
-> jednoznaczny sygnał świadomości — CG-1 można zastąpić jednolinijkowym
-> potwierdzeniem wczytania checklisty i natychmiast wykonać CG-2.
-> Bez takiego sygnału: zawsze pełny CG-1 + czekanie na odpowiedź.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/bramki-startowe.md` — sekcja HARD GATE WARUNKOWY / CG-GATE (treść ramki CG-1, lista CG-2, wyjątek); MUSI być przeczytana przed pierwszą odpowiedzią w sesji.
 
 ---
 
@@ -324,70 +117,9 @@ W3 — WERYFIKACJA ZE ŹRÓDEŁ + WALIDACJA
 > Kolejność wykonania: Test A → Test B → Test C. Test A ma priorytet —
 > jeśli dotyczy, pomija pozostałe testy.
 
-### Test A — Czy to redakcja istniejącego pisma (nie tworzenie nowego)?
+Test A — redakcja istniejącego pisma (forma/styl/długość/ton, bez nowej argumentacji) -> `modules/MOD-REDAKCJA.md`, bez W1-W2-W3. Test B — pismo proste (jedno żądanie, jedna podstawa prawna, pozycja z katalogu) -> nie pisz pisma; zaproponuj `pisma-proste-v2` komunikatem REDUKCJA DO pisma-proste-v2 (Przyczyna, pytanie o przełączenie). Test C — intake minimum (TYP PISMA, DZIEDZINA, STRONY, ETAP, CEL, MATERIAŁY; podmioty = ⚠️POD, weryfikacja w W3.0; brak danych -> `view shared/INTAKE-GAP.md`).
 
-```
-TAK, gdy WSZYSTKIE są prawdą:
-  ✓ Użytkownik dostarczył treść GOTOWEGO pisma (wklejona / plik)
-  ✓ Żądanie dotyczy formy/stylu/długości/tonu, nie nowej argumentacji
-  ✓ Nie proszono o dodanie nowych przepisów/orzeczeń/zarzutów
-
-Sygnały: "popraw to pismo", "zredaguj", "skróć", "wzmocnij ton", "przeredaguj
-na bardziej stanowczy/neutralny/negocjacyjny", "wygładź styl", "sprawdź i
-popraw" (po raporcie z KROK F przewodnika).
-
-→ TAK: przejdź do `modules/MOD-REDAKCJA.md` — NIE wykonuj W1-W2-W3, NIE
-  sprawdzaj Testu B/C.
-→ NIE: przejdź do Testu B.
-
-Test A ma priorytet — jeśli użytkownik dostarczył gotowe pismo i prosi
-o poprawki formy, nie kwalifikuj tego jako "pismo proste" (Test B) ani
-nie uruchamiaj W1 (Test C) — to są ścieżki dla pism PISANYCH OD ZERA.
-```
-
-### Test B — Czy to pismo proste?
-
-Pismo proste = spełnia WSZYSTKIE trzy warunki:
-1. Jedno żądanie procesowe
-2. Jedna podstawa prawna (nie wymaga analizy wielowątkowej)
-3. Należy do katalogu: sprzeciw od nakazu (art. 505 § 1 KPC — ⛔ art. 503 uchylony),
-   zarzuty od nakazu (art. 493 § 1 KPC; termin obu — art. 480² § 2 KPC), wniosek o klauzulę (art. 781 KPC), wniosek o wszczęcie
-   egzekucji (art. 797 KPC), zabezpieczenie (art. 730 KPC), zwolnienie od kosztów
-   (art. 102 KSCU), uzasadnienie wyroku (art. 328 § 1 KPC), przywrócenie terminu
-   (art. 168 KPC), wezwanie przedsądowe (art. 455 KC), wgląd do akt (art. 9 KPC),
-   doręczenie przez komornika (art. 139¹ KPC), sprzeciw od orzeczenia referendarza
-   (art. 398²² KPC).
-
-→ TAK na wszystkie 3: nie pisz pisma; zaproponuj `pisma-proste-v2` tym komunikatem i zapytaj użytkownika:
-
-```
-REDUKCJA DO pisma-proste-v2
-Przyczyna: [rodzaj pisma z katalogu; jedno żądanie; jedna podstawa prawna]
-Czy przełączyć na pisma-proste-v2?
-```
-
-W aplikacji Lex Machina wątek z wybranym skillem przełącza aplikacja po zgodzie użytkownika.
-→ NIE na którykolwiek: przejdź do Testu C i kontynuuj model trzech wiadomości.
-
-### Test C — Intake (dane minimalne)
-
-Przed W1 ustal minimum — brakujące dane = jedno pytanie zbiorcze:
-
-```
-□ TYP PISMA:    [pozew / apelacja / sprzeciw / wniosek / riposta / zawiadomienie]
-□ DZIEDZINA:    [cywilna / pracownicza / karna / administracyjna / gospodarcza]
-□ STRONY:       [powód/wnioskodawca + pozwany/uczestnik]
-□ ETAP:         [nowa sprawa / sprawa w toku — sygnatura: ___]
-□ CEL:          [co osiągnąć tym pismem]
-□ MATERIAŁY:    [czy użytkownik dostarczył dokumenty/akta — TAK/NIE]
-```
-
-Po uzyskaniu danych stron — oznacz każdy podmiot prowadzący działalność jako ⚠️POD.
-Weryfikacja ⚠️POD następuje w W3.0 (PODMIOT-GATE). W W1 i W2 stosuj dane
-dostarczone przez użytkownika z adnotacją ⚠️POD — nigdy nie wpisuj danych
-rejestrowych z pamięci (NIP, KRS, REGON, adres, skład zarządu).
-
-Gdy brak danych: view shared/INTAKE-GAP.md
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/krok-0-routing.md` — pełne warunki Testu A/B/C, katalog pism prostych i komunikat redukcji; przed wyborem ścieżki.
 
 ---
 
@@ -421,202 +153,33 @@ Jedno zdanie:
 
 ### W1.2a — CLAIM-VALIDATION (przed mapą przesłanek)
 
-> ⛔ OBOWIĄZKOWE — wykonaj przed W1.3. Pomiń tylko gdy pismo nie zawiera
-> żadnych twierdzeń faktycznych strony (praktycznie: nigdy).
-> Wywołaj: `view shared/CLAIM-VALIDATION.md`
+⛔ OBOWIĄZKOWE przed W1.3: `view shared/CLAIM-VALIDATION.md`; weryfikacja twierdzeń faktycznych (C1-C4), `[⛔ SPRZECZNE]` zastąp, `[⛔ NIEUDOWODNIONE]` = luka (W1.5). Engines specjalistyczne (pleading, theory-of-case, appellate, rebuttal, prosecution-complaint, opponent-pleading-attack) wywołaj przed W1.2 wg MODUŁY-MAPA.
 
-Przed zbudowaniem mapy przesłanka → dowód wykonaj weryfikację twierdzeń strony:
-
-- Dla każdego twierdzenia faktycznego z opisu sprawy i dostarczonych dokumentów
-  wykonaj kroki C1–C4 z MOD-CLAIM-VALIDATION.
-- Twierdzenie `[⛔ SPRZECZNE]` → zastąp twierdzeniem wynikającym z materiału; poinformuj użytkownika.
-- Twierdzenie `[⛔ NIEUDOWODNIONE]` → oznacz jako lukę; nie buduj na nim przesłanki;
-  wpisz do W1.5 jako ⬛ BRAK ISTOTNY lub BRAK KRYTYCZNY zależnie od wagi.
-- Wyświetl Raport Walidacji Twierdzeń jeśli wykryto błędy.
-
-> Engines specjalistyczne — wywołaj PRZED W1.2 gdy aktywne (patrz MODUŁY-MAPA):
-> ```
-> view references/engines/pleading-engine-v8.md          (każde pismo złożone — matryca roszczenia)
-> view references/engines/theory-of-case-engine.md      (≥2 roszczenia / apelacja)
-> view references/engines/appellate-engine-v8.md        (⛔ obowiązkowy przy apelacji)
-> view references/engines/rebuttal-drafting-engine-v9.md (riposta / odpowiedź)
-> view references/engines/prosecution-complaint-engine-v8.md (⛔ obowiązkowy: zażalenie do prokuratury)
-> view references/engines/opponent-pleading-attack-engine-v9.md (analiza pisma przeciwnika)
-> ```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w1-przed-rama.md` — sekcja W1.2a; MUSI być przeczytana przed wykonaniem kroku.
 
 ### W1.2a-POST — ELIMINACJA TEZ I WERYFIKACJA PRZEPISÓW (obowiązkowe po CLAIM-VALIDATION)
 
-> ⛔ OBOWIĄZKOWE — wykonaj po CLAIM-VALIDATION (W1.2a) per każde żądanie.
-> Wypełnia lukę systemową: CLAIM-VALIDATION sprawdza twierdzenia vs fakty;
-> PRAWO-HARDGATE sprawdza przepis przed cytowaniem;
-> TEN KROK sprawdza czy przepis DOTYCZY tej sytuacji i czy żądanie ma podstawę.
+⛔ OBOWIĄZKOWE po CLAIM-VALIDATION per żądanie: KROK ET (`modules/MOD-ELIMINACJA-TEZ.md`) — ET-Q1 przepis przewiduje żądanie, ET-Q2 subsumpcja przesłanek, ET-Q3 poprawność przepisów z materiału; raport ET-4 ZATWIERDZONE / EWENTUALNE / WYELIMINOWANE.
 
-```
-KROK ET: Eliminacja tez i weryfikacja przepisów
-  view modules/MOD-ELIMINACJA-TEZ.md
-
-  Per każde żądanie z petitum:
-  → ET-Q1: Czy istnieje przepis który to żądanie PRZEWIDUJE? (ELI — RZĄD 1)
-  → ET-Q2: Czy PRZESŁANKI przepisu są spełnione przez fakty F-nn?
-           (subsumpcja — per każda przesłanka osobno)
-  → ET-Q3: Czy przepisy z materiału dowodowego są PRAWIDŁOWE?
-           (nie przepisuj — weryfikuj samodzielnie)
-  → Raport ET-4: ZATWIERDZONE / EWENTUALNE / WYELIMINOWANE
-
-  WYNIK:
-  ✅ ZATWIERDZONE → wchodzą do W1.3 i petitum
-  ⚠️ EWENTUALNE  → wchodzą jako "ewentualnie" + CV-ALT
-  ⛔ WYELIMINOWANE → NIE wchodzą do petitum ani uzasadnienia
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w1-przed-rama.md` — sekcja W1.2a-POST.
 
 ### W1.2c-PRE — KARTY DOWODOWE I ŁAŃCUCHY (gdy ≥2 dokumenty dostarczone)
 
-> ⛔ OBOWIĄZKOWE gdy użytkownik dostarczył ≥2 dokumenty.
-> Wykonaj PO SD-SKAN, PRZED W1.2b i PRZED W1.3.
->
-> DIAGNOZA DLACZEGO ŁAŃCUCHY NIE BYŁY UŻYWANE (naprawione 2026-06-25):
-> MOD-LANCUCH-DOWODOWY istniał ale nie był wywołany w pipeline.
-> Brak MOD-KARTA-DOWODU powodował że system produkował LISTY, nie GRAFY.
+⛔ OBOWIĄZKOWE gdy ≥2 dokumenty: po SD-SKAN, przed W1.2b i W1.3 (karty dowodowe i łańcuchy zamiast list; MOD-KARTA-DOWODU, MOD-LANCUCH-DOWODOWY).
+
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w1-przed-rama.md` — sekcja W1.2c-PRE (wraz z KROK KD, ŁD, MT).
 
 ### W1.2c-FSL-D — FACT-SOURCE-LOCK DOKUMENTÓW (⛔ OBOWIĄZKOWE — wykonaj PRZED KROK KD)
 
-> ⛔ HARD GATE — wykonaj natychmiast po SD-VER = KOMPLET, PRZED jakąkolwiek
-> pracą na macierzy lub kartach dowodowych.
->
-> DIAGNOZA DLACZEGO FSL-D JEST KONIECZNE (sprawa [SYGN-SPRAWY], 2026-06-27):
-> Po SD-VER (wszystkie pliki odczytane ✅) model budował macierz D×T z PAMIĘCI
-> zamiast z per-teza przeszukania SD-FAKTY. Skutek: teza gotowości do pracy
-> miała 1 dowód zamiast 4. Teza pracodawcy faktycznego — argumenty ogólne
-> zamiast konkretnych wierszy XLSX i zrzutów ekranu. Nazwa pliku (Szef.odt,
-> Zatrudnienie.odt) myląca — model pomijał pliki bo „intuicyjnie nie pasowały".
->
-> FSL-D WYMUSZA: per każdą tezę → przeszukanie WSZYSTKICH D[id] z SD-REJ →
-> każde twierdzenie atomowe musi mieć D[id] + lokalizację z SD-FAKTY (nie z pamięci).
+⛔ HARD GATE natychmiast po SD-VER = KOMPLET, przed macierzą i kartami: `view shared/MOD-FSL-DOKUMENTY.md`; FSL-D-INIT, FSL-D-SCAN (per teza, atomowe twierdzenia, zakaz cytowania z pamięci i wnioskowania z nazwy pliku), FSL-D-ORPHAN, FSL-D-REPORT; luka 🔴 = STOP. ZAKAZ-FSL-D: bez FSL-D-REPORT nie przechodź do KROK KD / ŁD / MT. Dalej: KROK KD (`shared/MOD-KARTA-DOWODU.md`), KROK ŁD (`shared/MOD-LANCUCH-DOWODOWY.md`), KROK MT macierz dowód × teza (`shared/MOD-MACIERZ-DOWOD-TEZA.md`, obowiązkowa gdy ≥2 dowody i ≥2 tezy; tabela dla sądu bez symboli wewnętrznych).
 
-```
-⛔ KROK FSL-D: Fact-Source-Lock Dokumentów
-  view shared/MOD-FSL-DOKUMENTY.md
-
-  Sekwencja FSL-D (wykonaj w tej kolejności):
-
-  FSL-D-INIT:
-    1. Pobierz listę tez T1..Tn z CLAIM-VALIDATION (W1.2a)
-    2. Pobierz SD-REJ (D01..D[N]) z MOD-SKAN-DOWODOW-KOMPLETNY
-    3. Zbuduj pustą FSL-D-MACIERZ: T[n] × twierdzenia atomowe
-
-  FSL-D-SCAN (per KAŻDA teza T[n], po kolei):
-    A. Rozłóż T[n] na twierdzenia atomowe TC[n,1]..TC[n,k]
-    B. Per KAŻDE TC[n,k]: przeszukaj WSZYSTKIE D[id] z SD-REJ
-       ⛔ ZAKAZ CYTOWANIA Z PAMIĘCI: wracaj do SD-FAKTY[D[id]], nie do
-          odtworzenia z kontekstu konwersacji
-       ⛔ ZAKAZ WNIOSKOWANIA Z NAZWY PLIKU: przeszukuj każdy D[id]
-          niezależnie od tego czy jego nazwa „pasuje" do tezy
-    C. Klasyfikuj: ✅ POTWIERDZONE / ⚠️ POŚREDNIE / ⬛ FSL-D-LUKA (🔴/🟠/🟡)
-    D. Wpisz do FSL-D-MACIERZ: TC[n,k] → D[id], lok.[strona/zakładka/obraz/godz.],
-       treść wyekstrahowana z SD-FAKTY (nie parafrazowana z pamięci)
-
-  FSL-D-ORPHAN:
-    Po skanowaniu wszystkich T[n]: czy jest D[id] z 0 przypisań do tez?
-    → TAK: sprawdź czy zawiera fakty na nową tezę T_new → zaproponuj użytkownikowi
-    → NIE: FSL-D-NEUTRALNY
-
-  FSL-D-REPORT:
-    Wyświetl raport z FSL-D-MACIERZ (wg formatu z MOD-FSL-DOKUMENTY.md)
-    Policz: ✅ potwierdzone / ⚠️ pośrednie / ⬛ luki per klasa (🔴/🟠/🟡)
-
-  Rozgałęzienie:
-    ⬛ FSL-D-LUKA 🔴 → ⛔ STOP: zadaj PYTANIA FSL-D; czekaj na decyzję a/b/c/d
-    ⬛ FSL-D-LUKA 🟠 → kontynuuj, ale w piśmie: żądanie ewentualne + UWAGI REDAKCYJNE
-    ⬛ FSL-D-LUKA 🟡 → notacja w raporcie; nie blokuje
-    brak luk 🔴/🟠 → przejdź do KROK KD (karty dowodowe)
-
-  ⛔ ZAKAZ-FSL-D: NIE przystępuj do KROK KD ani KROK ŁD ani KROK MT
-     dopóki FSL-D-REPORT nie jest wyświetlony i luki 🔴 nie są rozwiązane.
-     Naruszenie = błąd krytyczny pipeline — równoważny pominięciu CLAIM-VALIDATION.
-```
-
-```
-KROK KD: Wypełnij karty dowodowe i rejestr faktów
-  view shared/MOD-KARTA-DOWODU.md
-  → Per każdy D[nn] ze SD-FAKTY: wypełnij KD-1 (karta dowodowa)
-  → Zbuduj KD-2 (rejestr faktów F-nn z pewnością i źródłem)
-  → Narysuj KD-3 (graf relacji dowód→fakt→teza per teza)
-
-KROK ŁD: Zbuduj łańcuchy dowodowe z kart
-  view shared/MOD-LANCUCH-DOWODOWY.md
-  → Per każda teza T-X: wykonaj ŁD-1..ŁD-7
-  → Ogniwa łańcucha = fakty F-nn z rejestru (nie lista plików)
-  → BRAMKA EQG (ŁB-5): wyklucz ogniwa szkodliwe
-  → Scoring ★-★★★★★ per teza główna
-  → OUTPUT łańcucha ŁD-XX → wejście do W1.3
-
-KROK MT: Macierz Dowód × Teza (⛔ OBOWIĄZKOWE gdy ≥2 dowody i ≥2 tezy)
-  view shared/MOD-MACIERZ-DOWOD-TEZA.md
-  → MT1: inwentaryzacja — lista T1..Tn z przesłankami + lista D1..Dm z kategorią A/B/C/D
-  → MT2: skan dwukierunkowy (A: każdy dowód → wszystkie tezy; B: każda teza → pokrycie przesłanek)
-  → MT3: klasyfikacja powiązań: [K] KLUCZOWY / [W] WIELOFUNKCYJNY / [R] REDUNDANTNY / [RK] RYZYKOWNY
-  → MT4: raport — tabela D×T, pokrycie tez (%), luki KRYTYCZNE/ISTOTNE, decyzje RK
-  → MT5: zasilenie pipeline:
-       • luki KRYTYCZNE z MT4 → W1.5 jako ⬛ BRAK KRYTYCZNY
-       • luki ISTOTNE z MT4   → W1.5 jako ⬛ BRAK ISTOTNY
-       • dowody [W] (wielofunkcyjne) → powołuj RAZ w sekcji "Na dowód" z listą tez
-       • po W2: MT5-MANDATE-ALL-EVIDENCE (cross-check N_pismo ≥ 0.7 × N_macierzy)
-
-  ⛔ POZYCJA: ten krok jest TUTAJ (W1.2c), NIE w W2.
-     Macierz musi powstać PRZED mapą przesłanka→dowód (W1.3).
-     Tworzenie macierzy w W2 = błąd architektoniczny: pismo redagowane
-     bez wiedzy o lukach i wielofunkcyjności dowodów.
-
-  ⛔ WBUDOWANIE W PISMO: tabela D×T z MT4 WCHODZI do treści pisma
-     jako osobna sekcja (przed lub po uzasadnieniu, zależnie od konwencji sądu).
-     Macierz nie jest tylko krokiem wewnętrznym — jest widoczna dla sądu,
-     bo art. 227 i 232 k.p.c. wymagają wskazania jakie fakty mają być wykazane
-     jakim dowodem. Wnioski dowodowe formułowane są PER TEZA (nie jako lista en bloc).
-
-  ⛔ FORMAT SĄDOWY — ZAKAZ SYMBOLI:
-     Tabela w piśmie procesowym NIE używa symboli wewnętrznych (●●●, ★, [K], [W], RK).
-     Te oznaczenia służą wyłącznie wewnętrznemu pipeline'owi (MT1–MT5).
-     Tabela dla sędziego ma WYŁĄCZNIE kolumny czytelne dla prawnika:
-       Lp. | Dowód (nazwa i opis) | Lokalizacja w aktach (str./zał./godz.) |
-       Roszczenie (T1/T2/... lub pełna nazwa) | Na okoliczność (opis faktów)
-     Dla dokumentów z protokołu: obowiązkowe wskazanie strony protokołu i godziny.
-     Dla załączników: numer załącznika.
-     Klasyfikacje wewnętrzne (siła dowodu, ryzyka krzyżowe) — tylko do użytku
-     wewnętrznego modelu; nie trafiają do pisma.
-
-⛔ Generator pisma nie pyta "jakie dowody mam?"
-   Pyta: "jakie FAKTY F-nn prowadzą do TEZY T-X i w jakim łańcuchu?"
-⛔ ZAKAZ: sekcja "Na dowód" bez powiązania z F-nn z rejestru.
-⛔ ZAKAZ: W1.3 bez gotowych łańcuchów ŁD-XX dla tez głównych.
-⛔ ZAKAZ: W1.3 bez gotowej macierzy D×T (gdy ≥2 dowody i ≥2 tezy).
-⛔ ZAKAZ: wnioski dowodowe jako lista en bloc — każdy wniosek wskazuje tezę Tn.
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w1-przed-rama.md` — sekcja W1.2c-FSL-D i KROK KD / ŁD / MT; MUSI być przeczytana przed wykonaniem bramki.
 
 ### W1.2b — MOD-STRATEGIA-WYBOR (obligatoryjna ocena i ranking ścieżek)
 
-> ⛔ HARD GATE W1.2b — dla każdego pisma złożonego gdy ≥2 ścieżki prawne
-> lub anomalia podmiotowa w materiale dowodowym.
->
-> Wywołaj: `view shared/MOD-STRATEGIA-WYBOR.md`
->
-> Moduł jest NADRZĘDNY wobec MOD-WARIANTY-POZWU — wywołuje go wewnętrznie
-> jako generator kart. Nie wywołuj MOD-WARIANTY-POZWU samodzielnie.
+⛔ HARD GATE gdy ≥2 ścieżki prawne lub anomalia podmiotowa: `view shared/MOD-STRATEGIA-WYBOR.md`; S1-S5 (ścieżki, atak przeciwnika, ranking, struktura pisma, RAPORT STRATEGII + zatwierdzenie); ścieżka z atakiem 🔴 bez kontrargumentu nigdy GŁÓWNA.
 
-Jeśli warunek aktywacji spełniony:
-1. S1 — zidentyfikuj WSZYSTKIE ścieżki (w tym anomalie podmiotowe: różne KRS/NIP)
-2. S2 — oceń każdą ścieżkę pod kątem ataku przeciwnika (OCENA-A/B/C)
-3. S3 — wygeneruj ranking z rekomendacją; ścieżka z atakiem 🔴 bez kontrargumentu
-         → PORZUĆ lub EWENTUALNA — nigdy GŁÓWNA
-4. S4 — wybierz strukturę pisma (Scenariusz 1/2/3)
-5. S5 — wyświetl RAPORT STRATEGII użytkownikowi; czekaj na zatwierdzenie
-6. Po zatwierdzeniu: zaktualizuj W1.2 (teza centralna) jeśli zmienił się wybór;
-   zapisz wynik do MOD-HISTORIA-STRATEGII PRZED W1.3
-
-⛔ ZASADA BEZWZGLĘDNA: Ścieżka z atakiem 🔴 bez kontrargumentu NIE może być
-ścieżką główną. System OBLIGATORYJNIE rekomenduje ścieżkę silniejszą — użytkownik
-może to zmienić, ale decyzja musi być explicite, nie domyślna.
-
-Jeśli warunek aktywacji NIE jest spełniony — pomiń ten krok, przejdź do W1.3.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w1-przed-rama.md` — sekcja W1.2b.
 
 ### W1.3–W1.6 + Checkpoint W1→W2
 
@@ -630,32 +193,9 @@ Jeśli warunek aktywacji NIE jest spełniony — pomiń ten krok, przejdź do W1
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ## ⛔⛔⛔ PRE-W2-VERIFICATION-GATE — BRAMKA OBOWIĄZKOWA PRZED W2 ⛔⛔⛔
 
-> **Wywołaj:** `view shared/PRE-W2-VERIFICATION-GATE.md`
->
-> ⛔ HARD GATE — BEZWZGLĘDNY. Wykonaj PO zatwierdzeniu W1 przez użytkownika,
-> PRZED W2.1. NIE można pominąć. NIE ma wyjątków (nawet "prosta sprawa",
-> "mam to z pamięci", "użytkownik podał dane", "dane są w aktach sprawy").
-> Dane z akt sprawy NIE są weryfikacją online. Dane z pamięci modelu NIE są.
-> ⛔ WERYFIKACJA [POV-B][POV-C]: web_search/web_fetch dla SĄDU i POZWANEGO
->    musi być wywołany fizycznie w tej odpowiedzi — patrz SELF-CHECK-PISMA.md blok PRE-W2.
->
-> **Co weryfikuje:**
-> - PRE-W2.B: adres i wydział sądu/organu — web_search OBOWIĄZKOWY
-> - PRE-W2.C: dane rejestrowe pozwanego — KRS/NIP/adres z rejestru
-> - PRE-W2.D: każdy numer KRS/NIP z akt — do której spółki należy?
->             Rozbieżność KRS ≠ NIP w tym samym dokumencie → STOP, wyjaśnij
->
-> **Efekt:** Raport PRE-W2 (widoczny użytkownikowi) z danymi zweryfikowanymi.
-> W2.1 używa WYŁĄCZNIE danych z raportu PRE-W2, nie z pamięci modelu.
->
-> ⛔ ZAKAZ-PRE-W2: NIE wstawiaj do W2 żadnego adresu sądu, KRS, NIP, REGON,
-> adresu pozwanego bez uprzedniej weryfikacji w PRE-W2. Naruszenie = błąd
-> krytyczny — powróć do PRE-W2 i wykonaj retroaktywnie.
->
-> **Przykłady błędów wyeliminowanych przez ten gate:**
-> - SR Katowice-Zachód VII Wydział Pracy: ul. Warszawska 45 (nie ul. Lompy 14)
-> - KRS [KRS-A] = [SPÓŁKA-A] sp. z o.o.; [SPÓŁKA-B] ma KRS [KRS-B] — bez
->   sprawdzenia rejestru model błędnie zbudował argument "ten sam KRS"
+⛔ HARD GATE BEZWZGLĘDNY: po zatwierdzeniu W1, PRZED W2.1 wykonaj `view shared/PRE-W2-VERIFICATION-GATE.md`. Weryfikacja online (web_search/web_fetch) adresu sądu/organu i danych rejestrowych pozwanego (PRE-W2.B, C, D; rozbieżność KRS ≠ NIP = STOP); Raport PRE-W2 widoczny użytkownikowi; W2.1 używa wyłącznie danych z raportu. ZAKAZ-PRE-W2.
+
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w2.md` — sekcja PRE-W2-VERIFICATION-GATE; MUSI być przeczytana przed wykonaniem bramki.
 
 ---
 
@@ -681,70 +221,9 @@ Jeśli warunek aktywacji NIE jest spełniony — pomiń ten krok, przejdź do W1
 
 ### W2.1 — Moduły do wczytania przed redakcją
 
-```
-view pisma-procesowe-v3/modules/MOD-SZABLONY.md   (zawsze)
-view pisma-procesowe-v3/modules/MOD-DOWODY.md     (gdy są dowody)
-view pisma-procesowe-v3/modules/MOD-OBAL.md       (gdy riposta/odpowiedź)
-view pisma-procesowe-v3/modules/MOD-OPLATY.md     (gdy pismo wszczynające)
-view pisma-procesowe-v3/modules/MOD-ADMIN.md      (gdy sprawa adm./KPA/WSA)
-view shared/ZAZALENIE-ADRESAT-GATE.md             (⛔ OBOWIĄZKOWE gdy pismo to
-                                                                     zażalenie/odwołanie/sprzeciw/
-                                                                     zarzuty/skarga — ustal adresata
-                                                                     PRZED redakcją nagłówka pisma,
-                                                                     nie zakładaj domyślnie instancji
-                                                                     wyższej)
-view shared/MOD-TIMING.md                         (gdy timing złożenia jest istotny:
-                                                                     pierwsza rozprawa <14 dni /
-                                                                     wniosek dowodowy grożący prekluzją /
-                                                                     korzystne postanowienie do utrwalenia)
-view modules/MOD-DOKTRYNA.md                       (gdy uzasadnienie powołuje
-                                                                     komentarze lub literaturę —
-                                                                     hierarchia: orzeczenie > doktryna)
-⛔ UWAGA: MOD-MACIERZ-DOWOD-TEZA (KROK MT) wykonany już w W1.2c.
-          W2 używa gotowej macierzy z W1.2c:
-          • wnioski dowodowe formułuj PER TEZA: "Na okoliczność Tn: dowód D[x], D[y]"
-          • dowody [W] powołuj RAZ z listą tez, nie per teza oddzielnie
-          • tabela D×T z MT4 wchodzi do treści pisma jako sekcja widoczna dla sądu
-          • MT5-MANDATE-ALL-EVIDENCE: sprawdź N_pismo ≥ 0.7 × N_macierzy po redakcji W2
-view shared/MOD-IDENTYFIKACJA-STRONY-UMOWY.md
-                                                                    (⛔ OBOWIĄZKOWE gdy: rozbieżne
-                                                                     identyfikatory stron w dokumentach
-                                                                     (różne KRS/NIP/nazwa); błędny PESEL;
-                                                                     faktura z błędnym NIP — wykonaj
-                                                                     ISU-1→ISU-5 przed W1.3;
-                                                                     ⛔ gdy PESEL w aktach i znana data
-                                                                     ur. lub płeć — wykonaj ISU-PESEL P1→P6)
-view pisma-procesowe-v3/modules/MOD-PRACODAWCA-RZECZYWISTY.md
-                                                                    (⛔ OBOWIĄZKOWE gdy: w materiale
-                                                                     widoczne są ≥2 podmioty / różne KRS
-                                                                     na umowach / zmiana nazwy pracodawcy /
-                                                                     argument o tożsamości pracodawcy —
-                                                                     wykonaj NAJPIERW ISU, potem PR1→PR4)
-view modules/MOD-BUDOWA-ARGUMENTU.md               (⛔ OBOWIĄZKOWE — zawsze przed W2.2:
-                                                                     schemat 7-elementowy każdego bloku,
-                                                                     klasyfikacja A/B/C/D, kolejność tez,
-                                                                     zamknięcie furtki, wniosek cząstkowy)
-view modules/MOD-KOSZT-ODPOWIEDZI.md               (⛔ OBOWIĄZKOWE — zawsze przed W2.2:
-                                                                     szablon KO-2 dla twierdzeń o dokumentach
-                                                                     pozwanego, numerowanie KO-4, audit KO-3
-                                                                     uruchamiany po W2 przed AUDYT-KOŃCOWY)
-view modules/MOD-SKUTEK-PROCESOWY.md               (⛔ OBOWIĄZKOWE — zawsze przed W2.2:
-                                                                     SP-1: blok skutku po każdej podstawie
-                                                                     prawnej; SP-3: 4 pytania kontrolne;
-                                                                     SP-5: pozycja w schemacie 7-el.)
-view modules/MOD-MIKROPODSUMOWANIA.md               (⛔ OBOWIĄZKOWE — zawsze przed W2.2:
-                                                                     MK-1: 3-4 zdania po każdym rozdziale;
-                                                                     MK-2: zasady redakcji; BLOKADA gdy brak)
-view modules/MOD-STRESS-TEST.md                     (⛔ OBOWIĄZKOWE — po W2, przed W3:
-                                                                     ST-1: symulacja odpowiedzi pełnomocnika;
-                                                                     ST-2: raport do wyświetlenia;
-                                                                     ST-3: fix dla argumentów 🔴;
-                                                                     BLOKADA .docx bez PASS)
-view shared/STRATEGIA-PROCESOWA.md                (⛔ OBOWIĄZKOWE — zawsze przed W2.2:
-                                                                     klasyfikacja A/B/C/D twierdzeń,
-                                                                     kolejność bloków uzasadnienia,
-                                                                     zasada niezależności tez)
-```
+Moduły do wczytania przed redakcją: `modules/MOD-SZABLONY.md` (zawsze); warunkowo MOD-DOWODY, MOD-OBAL, MOD-OPLATY, MOD-ADMIN, `shared/ZAZALENIE-ADRESAT-GATE.md`, `shared/MOD-TIMING.md`, MOD-DOKTRYNA, `shared/MOD-IDENTYFIKACJA-STRONY-UMOWY.md`, MOD-PRACODAWCA-RZECZYWISTY; ⛔ OBOWIĄZKOWE zawsze przed W2.2: MOD-BUDOWA-ARGUMENTU, MOD-KOSZT-ODPOWIEDZI, MOD-SKUTEK-PROCESOWY, MOD-MIKROPODSUMOWANIA, `shared/STRATEGIA-PROCESOWA.md`; ⛔ po W2, przed W3: MOD-STRESS-TEST (blokada .docx bez PASS). Macierz D×T z W1.2c jest gotowa (nie twórz jej w W2).
+
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w2.md` — sekcja W2.1 (warunki wczytania każdego modułu); przed redakcją W2.2.
 
 ### W2.2–W2.3 — Struktura pisma + lista placeholderów
 
@@ -754,66 +233,19 @@ view shared/STRATEGIA-PROCESOWA.md                (⛔ OBOWIĄZKOWE — zawsze p
 
 ### W2.4 — MOD-ATAK-NA-DRAFT (gate na gotowym tekście)
 
-> ⛔⛔⛔ HARD GATE W2.4 — BEZWZGLĘDNY, BEZ WYJĄTKU ⛔⛔⛔
-> Ten krok jest OBLIGATORYJNY. Nie ma warunku aktywacji. Każdy draft przez niego przechodzi.
-> NIE WOLNO przejść do W3 bez wykonania W2.4 i wyświetlenia RAPORTU D.
-> NIE WOLNO wygenerować .docx bez zamkniętego W2.4.
-> Pośpiech użytkownika, prosta sprawa, brak prośby — ŻADNE z nich nie jest wyjątkiem.
+⛔⛔⛔ HARD GATE W2.4 — obligatoryjny dla każdego draftu: `view shared/MOD-ATAK-NA-DRAFT.md`; sekwencja D1, D2, D3, D5, D4, RAPORT D (obligatoryjny); ATAK-OK/ATAK-UWAGI -> W3 automatycznie, ATAK-STOP (⬛ LUKA D4 🔴/🟠) -> STOP i pytania do użytkownika. ZAKAZ-9: bez RAPORTU D nie przechodź do W3 ani nie generuj .docx.
 
-> Wywołaj: `view shared/MOD-ATAK-NA-DRAFT.md`
-> (plik istnieje od v1.0.0 2026-06-21; jeśli view() zwróci błąd — zatrzymaj się
-> i poinformuj użytkownika o brakującym pliku zamiast cicho pomijać krok)
-
-**Sekwencja W2.4 (wykonaj w tej kolejności):**
-
-1. `view shared/MOD-ATAK-NA-DRAFT.md`
-2. D1 — skan zdań kategorycznych → naprawa redakcyjna samodzielnie
-3. D2 — test pełnomocnika akapit po akapicie → naprawa redakcyjna dla 🟡/🟢;
-         dla 🔴/🟠 bez pokrycia dowodowego → oznacz jako ⬛ LUKA D4
-4. D3 — skan sprzeczności międzyakapitowych → naprawa redakcyjna samodzielnie
-5. D5 — analiza własnych słabości i ryzyk (RP prawne / RD dowodowe / RPC procesowe)
-         → 🔴/🟠: zdanie ubezpieczające lub zmiana konstrukcji; 🟡: notacja w RAPORCIE D
-6. D4 — weryfikacja luk dowodowych → jeśli ⬛ LUKA D4 klasy 🔴/🟠: STOP
-7. Wyświetl RAPORT D (obligatoryjny — nawet gdy wynik ✅)
-
-**Rozgałęzienie po RAPORCIE D:**
-- ATAK-OK / ATAK-UWAGI → przejdź do W3 automatycznie
-- ATAK-STOP (⬛ LUKA D4 🔴/🟠) → STOP; zadaj pytania użytkownikowi;
-  czekaj na odpowiedź; dopiero po niej uzupełnij draft i przejdź do W3
-
-⛔ ZAKAZ-9 (nowy): NIE przechodzij do W3 bez wyświetlonego RAPORTU D z W2.4.
-   Naruszenie = błąd krytyczny pipeline — powróć do W2.4 i wykonaj go retroaktywnie.
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w2.md` — sekcja W2.4; MUSI być przeczytana przed wykonaniem bramki.
 
 ---
 
 <!-- lex:wczytaj-gdy: KOLEJNA-TURA -->
 ## WIADOMOŚĆ 3 — WERYFIKACJA ZE ŹRÓDEŁ + WALIDACJA
 
-> ⛔ HARD GATE W3:
-> NIE generuj pisma finalnego ani .docx przed ukończeniem W3.
-> ⛔⛔ PODMIOT-GATE (W3.0) MUSI być wykonany JAKO PIERWSZY w W3 — przed W3.1.
->     NIE przechodzij do weryfikacji przepisów (W3.1) bez zamkniętego PODMIOT-GATE.
->     Każdy ⚠️POD bez statusu ✅/⚠️/⛔ = blokada W3.1.
-> Każdy ⚠️Pn musi mieć wpis ✅ lub ⛔ w raporcie.
-> ⛔ Każdy ⚠️On (orzeczenie powołane w piśmie — CYTAT LUB GOŁE POWOŁANIE NA
->   POPARCIE TEZY) musi mieć **status GRAD z shared/WERYFIKACJA-SLAD.md
->   (GRAD-1..4), nie samą sygnaturę + URL.** Naprawa po NSA I FZ 104/26
->   (zażalenie z fabrykowanymi datami/sygnaturami niedotyczącymi w ogóle
->   powoływanej instytucji procesowej) — sam URL potwierdza tylko ISTNIENIE,
->   nie potwierdza, że orzeczenie faktycznie popiera tezę pisma.
->   → view shared/WERYFIKACJA-SLAD.md → wykonaj GRAD-1..4
->     dla KAŻDEGO ⚠️On, w tym GRAD-3b (GUARD INSTYTUCJA) gdy strony
->     anonimizowane. Wynik 🟢 → ✅. Wynik 🟠/🟡 → decyzja/złagodzenie przed
->     W3.6a. Wynik 🔴 lub kotwica nierozwiązana → ⛔ USUŃ powołanie, nie
->     "napraw" innym pinpointem tej samej sygnatury.
-> ⛔ Gdy pismo zawiera zwrot typu "zgodnie z ugruntowaną linią orzeczniczą"
->   / "utrwalone orzecznictwo" / "jednolicie przyjmuje się" — dodatkowo
->   uruchom Zasadę 10 (BILANS) z `orzeczenia-sadowe-v2` PRZED W3.6a: takie
->   sformułowanie jest twierdzeniem o STANIE CAŁEJ LINII, nie o pojedynczym
->   wyroku — wymaga sprawdzenia linii przeciwnej, nie tylko istnienia
->   przykładów zgodnych.
-> Każdy ⚠️POD musi mieć wpis ✅/⚠️/⛔ z PODMIOT-GATE.
-> Dopiero po zamknięciu wszystkich ⚠️ — pismo finalne + .docx.
+
+⛔ HARD GATE W3: bez ukończenia W3 nie generuj pisma finalnego ani .docx; PODMIOT-GATE (W3.0) jako pierwszy; każdy ⚠️Pn ma wpis ✅/⛔; każdy ⚠️On ma status GRAD-1..4 (`view shared/WERYFIKACJA-SLAD.md`, GRAD-3b przy anonimizacji; 🔴 = usuń powołanie); zwroty o „ugruntowanej linii orzeczniczej” -> Zasada 10 (BILANS) z `orzeczenia-sadowe-v2` przed W3.6a; każdy ⚠️POD ma wpis z PODMIOT-GATE.
+
+**WCZYTAJ (obowiązkowo, fail-closed):** `view pisma-procesowe-v3/references/etap-w3-hard-gate.md` — pełna treść HARD GATE W3; MUSI być przeczytana przed W3.0.
 
 ### W3.0 — PODMIOT-GATE (weryfikacja danych podmiotów przed W3.1)
 

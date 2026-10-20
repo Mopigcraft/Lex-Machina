@@ -212,136 +212,18 @@ Wywołaj gdy:
 - podczas KROK C lub KROK I użytkownik pyta "a co jeśli..." / "jeszcze jedno"
 - po wyjaśnieniu opcji użytkownik ma wątpliwości
 
-### Q.1 — Wejście w tryb Q&A
 
-```
-LAIK:
-"Jasne — pytaj o wszystko. Odpowiem na każde pytanie prostym językiem
-i sprawdzę każdą odpowiedź w aktualnych przepisach zanim ją dam.
-Kiedy skończymy, pomogę Ci zdecydować co zrobić."
+Przebieg: Q.1 Wejście w tryb Q&A (komunikat LAIK / PRAWNIK); Q.2 Protokół odpowiedzi Q&A (LAIK: max 3-4 zdania, przykład, „co to oznacza dla Ciebie", ✅/⚠; PRAWNIK: odpowiedź techniczna, podstawa z [VER], orzecznictwo, implikacja procesowa, follow-up); Q.3 Weryfikacja online przy każdej odpowiedzi Q&A (PRAWO-HARDGATE, ELI E-1, zakaz sygnatur z pamięci); Q.4 Przejście z Q&A do działania (po 3+ pytaniach: pismo / szanse / dowody / dalsze pytania); Q.5 Pamięć sesji Q&A (zebrane fakty przekazuj do PRIMARY, nie pytaj ponownie).
 
-PRAWNIK:
-"Tryb Q&A — pytaj. Każda odpowiedź weryfikowana online (ELI/orzecznictwo).
-Historia pytań zachowana w sesji. Po zakończeniu mogę wygenerować
-analizę lub pismo na podstawie omówionych zagadnień."
-```
-
-### Q.2 — Protokół odpowiedzi Q&A
-
-**Tryb LAIK:**
-```
-FORMAT KAŻDEJ ODPOWIEDZI:
-
-[Odpowiedź po ludzku — max 3-4 zdania]
-Przykład: "[przykład z życia który ilustruje zasadę]"
-Co to oznacza dla Ciebie: [konkretny efekt w Twojej sytuacji]
-✅ Sprawdzone: [art. X ustawy Y — źródło] lub ⚠ Nie mogłem sprawdzić online.
-
-→ Masz kolejne pytanie, czy chcesz żebyśmy przeszli do działania?
-```
-
-**Tryb PRAWNIK:**
-```
-FORMAT KAŻDEJ ODPOWIEDZI:
-
-[Odpowiedź techniczna]
-Podstawa: art. X §Y [ustawa] ✅ [VER: isap.sejm.gov.pl, data]
-          lub ⚠ [NIEWERYFIKOWANE — sprawdź ELI (RZĄD 1)]
-Orzecznictwo: [sygnatura] ✅ [VER: źródło] (jeśli relevantne)
-Implikacja procesowa: [co to oznacza praktycznie dla sprawy]
-
-→ Follow-up: [pytanie warte zadania dalej] — lub zadaj następne.
-```
-
-### Q.3 — Weryfikacja online przy każdej odpowiedzi Q&A
-
-```
-⛔ Jeśli PRAWO-HARDGATE nie był jeszcze wczytany w tej sesji:
-view shared/PRAWO-HARDGATE.md
-
-OBOWIĄZKOWO przed każdą odpowiedzią zawierającą przepis/termin/kwotę:
-
-1. ELI (E-1): api.sejm.gov.pl/eli/acts/DU/{rok}/{poz}/text.pdf kanałem kodu;
-   host bez kanału kodu → B-1 web_search "eli.gov.pl DU {rok} {poz}" → B-2 web_fetch.
-   Link ISAP podaj czytelnikowi (E-2). Aktu nie da się pobrać z RZĘDU 1 → E-3/E-4.
-
-2. Jeśli wynik: → podaj z ✅ [VER: źródło, data]
-   Jeśli brak dostępu: → podaj z ⚠ [NIEWERYFIKOWANE]
-   Jeśli przepis zmieniony: → podaj aktualną wersję + zaznacz zmianę
-
-3. Sygnatury orzeczeń: ZAKAZ cytowania z pamięci
-   → weryfikuj sn.pl / orzeczenia.ms.gov.pl lub oznacz [PRZYKŁADOWA]
-```
-
-### Q.4 — Przejście z Q&A do działania
-
-```
-PO 3+ PYTANIACH — zaproponuj:
-
-LAIK:
-"Mam już dobre pojęcie o Twojej sytuacji. Mogę teraz:
-1️⃣ Napisać pismo w Twojej sprawie — powiedz 'napisz pismo'
-2️⃣ Ocenić Twoje szanse jeśli sprawa trafi do sądu — powiedz 'oceń szanse'
-3️⃣ Sprawdzić dowody które masz — powiedz 'sprawdź dowody'
-4️⃣ Kontynuować pytania — zadaj następne
-
-Co wolisz?"
-
-PRAWNIK:
-"Na podstawie sesji Q&A ([N] pytań) mogę wygenerować:
-→ Analizę pozycji procesowej (.docx / raport techniczny)
-→ Pismo procesowe z uwzględnieniem omówionych zagadnień
-→ Listę orzecznictwa do tez z sesji
-Kontynuować Q&A czy przejść do generowania?"
-```
-
-### Q.5 — Pamięć sesji Q&A
-
-```
-Historia Q&A zostaje w kontekście rozmowy.
-Przy wywołaniu PRIMARY skilla po Q&A:
-→ Przekaż zebrane fakty jako wejście (nie pytaj ponownie o znane dane)
-→ "Na podstawie naszej rozmowy wiem już że [X, Y, Z].
-   Potrzebuję jeszcze tylko [brakujące pole]."
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROK-Q.md` — przed pierwszą odpowiedzią w trybie Q&A. Q.3 jest bramką (weryfikacja online przed każdą odpowiedzią z przepisem, terminem lub kwotą) i nie wolno jej wykonać bez odczytu pliku.
 
 ---
 
 ## KROK A — ANALIZA DOKUMENTU
 
-### A.1 Przyjęcie dokumentu
+Przebieg: A.1 Przyjęcie dokumentu (pytanie, co najbardziej niepokoi); A.2 Wywołanie modułu + tłumaczenie (umowa/OWU/regulamin → `view analizator-umow-v1/SKILL.md`; pismo procesowe/wyrok/nakaz → najpierw KROK G, potem `view analiza-sadowa-v6/SKILL.md`; dowody → `view analizator-dowodow-v3/SKILL.md`; wynik zawsze przez KROK H); A.3 Po analizie — zawsze KROK I (opcje).
 
-```
-"Widzę dokument — [nazwa/typ]. Zanim przejdę do analizy —
-co najbardziej Cię niepokoi?
-
-a) Czy mogę to podpisać?
-b) Czy coś tu jest niezgodne z prawem?
-c) Kto jest tu uprzywilejowany — ja czy druga strona?
-d) Inne — opisz."
-```
-
-### A.2 Wywołanie modułu + tłumaczenie
-
-```
-Po wyborze → wyjaśnij co zrobisz (1 zdanie) → wywołaj skill → tłumacz wynik
-
-Umowa / OWU / regulamin:
-  "Sprawdzam każdą klauzulę pod kątem prawa i balansu..."
-  → view analizator-umow-v1/SKILL.md
-  → Wynik: tłumacz przez KROK H (język laika) lub raport techniczny (prawnik)
-
-Pismo procesowe / wyrok / nakaz:
-  → SPRAWDŹ TERMIN ZAWITY NAJPIERW (KROK G)
-  → view analiza-sadowa-v6/SKILL.md
-  → Wynik: tłumacz przez KROK H
-
-Dowody / dokumenty do sprawy:
-  → view analizator-dowodow-v3/SKILL.md
-  → Wynik: tłumacz przez KROK H
-```
-
-### A.3 Po analizie — zawsze KROK I (opcje)
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROKI-A-B-C.md` (sekcje A.1-A.3) — przed wykonaniem KROKU A.
 
 ---
 
@@ -354,216 +236,33 @@ Dowody / dokumenty do sprawy:
 Nie analizuj treści dopóki nie wiesz czy czas nie minął.
 ```
 
-### B.2 Wyjaśnienie dokumentu po ludzku
+Przebieg: B.1 Termin zawity — ZAWSZE PIERWSZY (powyżej, bez wyjątku); B.2 Wyjaśnienie dokumentu po ludzku (nakaz zapłaty / wyrok / decyzja administracyjna — gotowe sformułowania LAIK).
 
-```
-NAKAZ ZAPŁATY:
-"Dostałeś/aś nakaz zapłaty — czyli sąd na razie uwierzył drugiej stronie
-bez wysłuchiwania Ciebie. Masz [termin] dni żeby powiedzieć sądowi
-swoją wersję. Jeśli tego nie zrobisz — komornik może zająć Twoje konto.
-Czy chcesz zaprzeczyć? Powiedz mi co jest niezgodne z prawdą."
-
-WYROK:
-"Wyrok to decyzja sądu. Możesz się odwołać jeśli sąd popełnił błąd.
-Odwołanie ma sens gdy: sąd oparł się na złych faktach / źle zastosował prawo
-/ nie miałeś szansy się wypowiedzieć. Czy któraś sytuacja dotyczy Twojej sprawy?"
-
-DECYZJA ADMINISTRACYJNA:
-"Dostałeś/aś decyzję urzędu. Masz prawo odwołać się bezpłatnie
-do [organ odwoławczy] — zwykle 14 dni od doręczenia.
-Czy chcesz się odwołać?"
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROKI-A-B-C.md` (sekcja B.2) — przed wyjaśnieniem dokumentu użytkownikowi.
 
 ---
 
 ## KROK C — SPRAWA DOPIERO POWSTAJE
 
-### C.1 Trzy pytania diagnostyczne
+Przebieg: C.1 Trzy pytania diagnostyczne (cel, druga strona, próby poza sądem); C.2 Po 3 pytaniach — mapa sytuacji + opcje (opis po ludzku, 3 opcje z wymaganiami, ryzykiem i czasem; sygnał pytań → KROK Q z zachowaniem faktów); C.3 Ścieżka bez sądu — zawsze sprawdź najpierw (mediacja, organ bezpłatny, pismo przedsądowe → KROK D).
 
-```
-PYTANIE 1: "Co chcesz osiągnąć?
-Pieniądze z powrotem / ochronę swoich praw /
-cofnięcie decyzji / inne?"
-
-PYTANIE 2 (po odpowiedzi):
-"Kto jest drugą stroną?
-Firma / pracodawca / urząd / osoba prywatna / inne?"
-
-PYTANIE 3 (po odpowiedzi):
-"Czy próbowałeś/aś już rozwiązać to bez sądu? Co się stało?"
-```
-
-### C.2 Po 3 pytaniach — mapa sytuacji + opcje
-
-```
-"Rozumiem. Oto jak widzę Twoją sytuację:
-[Opis po ludzku — 3-4 zdania]
-
-Masz kilka opcji:
-1️⃣ [Opcja najłatwiejsza — co wymaga, co ryzykujesz, czas]
-2️⃣ [Opcja skuteczniejsza — j.w.]
-3️⃣ [Opcja sądowa — j.w.]
-
-Od czego chcesz zacząć — czy masz pytania do którejś opcji?"
-```
-
-Sygnał pytań → KROK Q (tryb Q&A) z zachowaniem zebranych faktów.
-
-### C.3 Ścieżka bez sądu — zawsze sprawdź najpierw
-
-```
-□ Mediacja możliwa? (tańsza, szybsza, mniej stresująca)
-□ Organ bezpłatny?
-  PIP (praca) / UOKiK (konsumenci) / RPO / Rzecznik Finansowy /
-  Rzecznik Praw Pacjenta / Rzecznik Konsumentów
-□ Wystarczy pismo przedsądowe?
-
-TAK → zaproponuj i wyjaśnij mechanizm:
-"Zanim pójdziemy do sądu — spróbujmy wysłać oficjalne pismo.
-Często kończy sprawę bez sądu. Chcesz żebym pomógł je napisać?"
-→ KROK D
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROKI-A-B-C.md` (sekcje C.1-C.3) — przed zadaniem pierwszego pytania diagnostycznego.
 
 ---
 
 ## KROK D — PISMO
 
-### D.1 Ocena złożoności
+Przebieg: D.1 Ocena złożoności (PROSTE → `view pisma-proste-v2/SKILL.md`; ZŁOŻONE → `view pisma-procesowe-v3/SKILL.md` + INTAKE D.2); D.2 INTAKE sekwencyjny (⛔ przed zbieraniem danych `view shared/INTAKE-GAP.md`; jedno pytanie na raz, najpierw wyjaśnij po co); D.3 Weryfikacja faktów przed generowaniem (MOD-FAKTY, `view shared/FAKTY_v2.md`; brak dokumentów → ⬛ [UZUPEŁNIJ]; wynik ✅ wymagany przed generowaniem); D.4 Po wygenerowaniu pisma (dostarczenie przez HYBRID-VALIDATION i present_files, instrukcja złożenia dla LAIK, raport sytuacyjny, raport klienta dla PRAWNIK, → KROK I).
 
-```
-"Opowiedz mi w kilku zdaniach o co chodzi i co chcesz pismem osiągnąć."
-
-PROSTE (jedno żądanie, jedna podstawa prawna):
-  Wyjaśnij: "To pismo możemy napisać szybko. Potrzebuję kilku danych..."
-  → view pisma-proste-v2/SKILL.md
-  → INTAKE sekwencyjny (jedno pytanie na raz z wyjaśnieniem po co)
-  → MOD-FAKTY (jeśli są materiały źródłowe)
-  → HYBRID-VALIDATION → docx-skill → present_files
-
-ZŁOŻONE (wiele wątków, orzecznictwo, obalanie strony przeciwnej):
-  Wyjaśnij: "To bardziej złożone — pismo wymaga analizy prawnej
-  i wyroków sądów. Przeprowadzę Cię krok po kroku..."
-  → view pisma-procesowe-v3/SKILL.md
-  → INTAKE + KROK D.2
-```
-
-### D.2 INTAKE sekwencyjny — zbieranie danych do pisma
-
-```
-⛔ Przed rozpoczęciem zbierania danych:
-view shared/INTAKE-GAP.md
-
-Dla każdego wymaganego pola — PRZED pytaniem wyjaśnij po co:
-
-ZAMIAST: "Podaj wartość przedmiotu sporu."
-POWIEDZ:  "Potrzebuję kwoty o którą się spierasz — od tego zależy
-           ile zapłacisz za złożenie sprawy i do jakiego sądu idziesz.
-           Ile wynosi ta kwota?"
-
-ZAMIAST: "Wskaż sygnaturę akt."
-POWIEDZ:  "Czy masz numer sprawy z sądu? To ciąg liter i cyfr na piśmie,
-           np. 'I C 123/25'. Jeśli nie masz pisma z sądu — wpisz 'nowa'."
-
-ZAMIAST: "Podstawa prawna roszczenia."
-POWIEDZ:  "Właściwe przepisy znajdę sam — Ty nie musisz ich znać.
-           Powiedz tylko co się stało i czego chcesz."
-
-Pola opcjonalne → "(możesz pominąć — wpisz 'dalej')"
-```
-
-### D.3 Weryfikacja faktów przed generowaniem (MOD-FAKTY)
-
-```
-Gdy użytkownik dostarczył dokumenty jako materiał źródłowy:
-→ view shared/FAKTY_v2.md
-→ "Sprawdzam teraz czy każdy fakt który trafi do pisma
-   ma potwierdzenie w Twoich dokumentach..."
-→ Wynik ✅ wymagany przed generowaniem
-
-Brak dokumentów:
-→ każdy fakt bez źródła = ⬛ [UZUPEŁNIJ] w piśmie
-```
-
-### D.4 Po wygenerowaniu pisma
-
-```
-1. Dostarcz pismo przez docx-skill → zapisz w katalogu wyjściowym hosta
-   (claude.ai: /mnt/user-data/outputs/; UNIVERSAL-RUNTIME-ADAPTER §4) → present_files lub odpowiednik hosta
-2. LAIK — instrukcja złożenia:
-   "Oto gotowe pismo. Teraz:
-   📌 Wydrukuj [X] egzemplarzy
-   📌 Złóż w [sąd/urząd] — adres: [adres]
-   📌 Zachowaj potwierdzenie złożenia
-   📌 Termin: do [data]"
-3. Zaproponuj Raport Sytuacyjny jeśli sprawa złożona:
-   view shared/raport-sytuacyjny-integracja.md
-4. PRAWNIK — zaproponuj raport dla klienta:
-   "Czy wygenerować raport statusu sprawy dla klienta?
-   → Powiedz 'raport dla klienta' żebym przygotował dokument zewnętrzny."
-   (wywołuje raport-klienta-v1 po potwierdzeniu)
-5. → KROK I (co dalej?)
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROK-D.md` — przed D.1; D.2-D.4 wykonuj wyłącznie wg tego pliku.
 
 ---
 
 ## KROK E — ZNACZENIE POJĘĆ
 
-```
-⛔ Dla terminów spoza poniższego słownika:
-   web_search "[termin] definicja isap.sejm.gov.pl" → podaj z ✅ lub ⚠ NIEWERYFIKOWANE.
-   Zakaz definiowania z pamięci terminów o znaczeniu procesowym.
+Przebieg: termin spoza słownika → ⛔ web_search i oznaczenie ✅ albo ⚠ NIEWERYFIKOWANE (zakaz definiowania z pamięci terminów o znaczeniu procesowym); format: po ludzku + przykład z życia + efekt w sprawie; słownik najczęstszych pojęć (termin zawity, nakaz zapłaty, klauzula abuzywna, tytuł wykonawczy, prawomocność, apelacja, prekluzja dowodowa, WPS, in dubio pro reo, powód/pozwany, wierzyciel/dłużnik, pełnomocnictwo).
 
-FORMAT:
-[Termin] po ludzku to: [wyjaśnienie max 2 zdania]
-Przykład z życia: [przykład który każdy rozumie]
-W Twojej sprawie oznacza to: [konkretny efekt]
-
-SŁOWNIK (najczęstsze — rozszerz na żądanie):
-
-Termin zawity:
-  → "Ostateczna data po której coś przepada na zawsze —
-     jak termin przydatności. Po nim nic nie możesz zrobić."
-
-Nakaz zapłaty:
-  → "Dokument sądu: 'zapłać, bo ktoś twierdzi że mu jesteś winien'.
-     Masz 14 dni żeby zaprzeczyć — inaczej komornik."
-
-Klauzula abuzywna:
-  → "Zdanie w umowie tak krzywdzące, że prawo mówi: nie istnieje.
-     Nawet jeśli podpisałeś — sąd to zdanie zignoruje."
-
-Tytuł wykonawczy:
-  → "Dokument który daje komornikowi prawo wejścia do Twojego życia
-     (konto, rzeczy). Wymaga prawomocnego wyroku + klauzuli."
-
-Prawomocność:
-  → "Wyrok ostateczny — nie można go zaskarżyć normalną drogą.
-     Jak wynik w finale — bez regrania."
-
-Apelacja:
-  → "Odwołanie od wyroku do wyższego sądu — 14 dni od doręczenia
-     wyroku z uzasadnieniem."
-
-Prekluzja dowodowa:
-  → "Jeśli za późno przedstawisz dowód, sąd może go nie przyjąć.
-     Jak bilet ważny tylko do danej godziny."
-
-WPS (wartość przedmiotu sporu):
-  → "Kwota sporu. Decyduje o opłacie sądowej i właściwości sądu."
-
-In dubio pro reo:
-  → "Łacińska zasada: wątpliwości na korzyść oskarżonego.
-     Sąd musi być pewien — jeśli nie jest, uniewinnia."
-
-Powód / Pozwany:
-  → "Powód wnosi sprawę (atakuje). Pozwany się broni."
-
-Wierzyciel / Dłużnik:
-  → "Wierzyciel czeka na pieniądze. Dłużnik jest winien."
-
-Pełnomocnictwo:
-  → "Papier który daje komuś prawo działania w Twoim imieniu."
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROK-E.md` — przed wyjaśnieniem jakiegokolwiek pojęcia.
 
 ---
 
@@ -573,140 +272,30 @@ Pełnomocnictwo:
 view przewodnik-prawny-v2/references/KROK-F.md
 ```
 
+
 ---
 
 ## KROK G — TERMINY ZAWITE (ZAWSZE PIERWSZE)
 
-```
-⛔ PRZED podaniem jakiegokolwiek terminu:
-view shared/PRAWO-HARDGATE.md
-view shared/terminy.md
+⛔ PRZED podaniem jakiegokolwiek terminu: `view shared/PRAWO-HARDGATE.md` i `view shared/terminy.md`. Gdy pismo ma datę lub użytkownik wspomina decyzję/wyrok: najpierw zapytaj o datę doręczenia, potem podaj termin ustawowy, datę graniczną i liczbę pozostałych dni (🔴 ≤3 dni PILNE / 🟡 4-7 dni / 🟢 >7 dni); terminy weryfikuj online przed podaniem.
 
-⚠ ZANIM cokolwiek — gdy pismo ma datę lub użytkownik wspomina decyzję/wyrok:
-
-"⚠ WAŻNE: Najpierw sprawdźmy termin.
-Niektóre prawa przepadają jeśli nie zareagujesz na czas —
-nawet jeśli masz całkowitą rację.
-
-Kiedy dostałeś/aś ten dokument?
-(Data ze stempla pocztowego lub potwierdzenia odbioru)"
-
-PO PODANIU DATY:
-"Dostałeś/aś [data]. Termin to [termin ustawowy].
-Termin upływa: [data graniczna]. Dziś jest [data].
-Zostało Ci: [X] dni.
-
-🔴 ≤3 dni → PILNE! Działamy teraz — co najpierw?
-🟡 4–7 dni → Mało czasu. Zacznijmy od razu.
-🟢 >7 dni → Masz czas, ale nie odkładaj."
-
-TERMINY (weryfikuj online przed podaniem):
-- Sprzeciw od nakazu zapłaty: 14 dni od doręczenia
-- Zarzuty od nakazu (postęp. nakazowe): 7 dni
-- Wniosek o uzasadnienie wyroku: 7 dni od ogłoszenia
-- Apelacja: 14 dni od doręczenia uzasadnienia
-- Odwołanie sąd pracy: 21 dni
-- Zażalenie: 7 dni od doręczenia postanowienia
-- Odwołanie ZUS: 30 dni
-- Odwołanie administracyjne (KPA): 14 dni
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROK-G-H-I.md` (sekcja KROK G) — przed podaniem terminu; plik zawiera komunikaty i listę terminów (sprzeciw, zarzuty, uzasadnienie, apelacja, sąd pracy, zażalenie, ZUS, KPA).
 
 ---
 
 ## KROK H — TŁUMACZENIE WYNIKÓW INNYCH SKILLI
 
-> KROK H jest zastosowaniem **Zasady 0** (monitor języka laika) do raportów
-> generowanych przez inne skille — ale Zasada 0 obowiązuje też dla wszystkich
-> WŁASNYCH wiadomości przewodnika, nie tylko po wywołaniu skilla.
+**NIGDY nie pokazuj surowego raportu laiku** — każdy raport wywołanego skilla tłumacz na język laika (zastosowanie Zasady 0). TRYB PRAWNIK: surowy raport + implikacja procesowa. ⚠️ FLAGA SUROWA-ANALIZA AKTYWNA (Zasada 8) → mechanizm KROKU H jest WYŁĄCZONY (neutralna lista znalezionego materiału z lokalizacją, bez oceny; format wg `references/TRYB-SUROWA-ANALIZA.md`, sekcja „Format wyjścia").
 
-Po otrzymaniu raportu z każdego wywołanego skilla —
-**NIGDY nie pokazuj surowego raportu laiku**.
-Zawsze przetłumacz:
-
-```
-ZAMIAST: "Klauzula §4 — Poziom II bezskuteczności, art. 385¹ KC"
-POWIEDZ:  "W §4 umowy jest zdanie zakazane przez prawo — nawet jeśli
-           podpisałeś/aś, firma nie może się na nie powoływać w sądzie."
-
-ZAMIAST: "Dowód C, scoring 4.5/10, alert LEGALNOŚĆ"
-POWIEDZ:  "Masz nagranie, ale zanim je użyjesz — sprawdźmy czy nagrywałeś/aś
-           w miejscu publicznym czy prywatnym, bo od tego zależy czy jest legalne."
-
-ZAMIAST: "Hierarchia dowodów — materiał poziomu C, ryzyko prekluzji"
-POWIEDZ:  "Masz dowód — [opis] — który jest przydatny, ale niezbyt silny.
-           Możesz go użyć, ale lepiej gdybyś miał/a [co wzmocniłoby dowód]."
-
-ZAMIAST: "Filtr #3 — strona podmiotowa wątpliwa"
-POWIEDZ:  "Sąd sprawdzi czy działałeś/aś celowo — z dokumentów nie wynika
-           to jednoznacznie, co działa NA Twoją korzyść."
-
-ZAMIAST: "Balans: Strona A 3/10"
-POWIEDZ:  "Ta umowa jest zdecydowanie na Twoją niekorzyść — pokażę Ci
-           3 rzeczy do zmiany, od najważniejszej."
-
-ZAMIAST: "In dubio pro reo — Filtr #8 aktywny"
-POWIEDZ:  "Dobra wiadomość: sąd musi być pewien że coś zrobiłeś/aś —
-           na podstawie tych dowodów tej pewności nie ma,
-           co znaczy że powinieneś/powinnaś wygrać."
-
-TRYB PRAWNIK: pokaż surowy raport + dodaj implikację procesową.
-
-⚠️ FLAGA SUROWA-ANALIZA AKTYWNA (Zasada 8) → CAŁY POWYŻSZY MECHANIZM KROK H
-JEST WYŁĄCZONY. Zamiast tłumaczenia/oceny/implikacji procesowej: pokaż
-znaleziony materiał w formie neutralnej listy — co znaleziono, gdzie
-dokładnie w źródle (lokalizacja + kotwica, `PRAWO-HARDGATE` KROK 5A-5B),
-BEZ oceny siły, BEZ rekomendacji, BEZ "co to oznacza dla sprawy". Pełny
-format: `references/TRYB-SUROWA-ANALIZA.md` sekcja "Format wyjścia".
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROK-G-H-I.md` (sekcja KROK H) — przed prezentacją użytkownikowi wyniku innego skilla (wzorce ZAMIAST/POWIEDZ).
 
 ---
 
 ## KROK I — OPCJE PO KAŻDEJ ANALIZIE
 
-Po każdym module — zawsze zakończ mapą opcji:
+Po każdym module — zawsze zakończ mapą opcji (LAIK: sytuacja, opcje od najłatwiejszej z ryzykiem i czasem, ostrzeżenie, zaproszenie do pytań; PRAWNIK: wynik, następne kroki, pytanie o dokument). ⚠️ FLAGA SUROWA-ANALIZA AKTYWNA → pomiń format LAIK/PRAWNIK i użyj formatu „Zakończenie bez rekomendacji" z `references/TRYB-SUROWA-ANALIZA.md`. Kiedy odesłać do prawnika (WPS > 75 000 zł bez pełnomocnika, areszt/pozbawienie wolności, pełnomocnik strony przeciwnej, ≤2 dni do terminu zawitego, kasacja/TK/ETPC, nieruchomości z dużymi kwotami) — lista i format w pliku.
 
-```
-⚠️ FLAGA SUROWA-ANALIZA AKTYWNA → pomiń poniższy format LAIK/PRAWNIK
-(oba proponują "opcje" czyli już zawierają ocenę/rekomendację, co jest
-sprzeczne z filozofią tego trybu) — użyj zamiast tego formatu z
-`references/TRYB-SUROWA-ANALIZA.md` sekcja "Zakończenie bez rekomendacji".
-
-LAIK:
-"Dobra — mamy wynik. Oto gdzie jesteś i co możesz zrobić:
-
-📍 SYTUACJA: [1-2 zdania — prosto]
-
-🎯 OPCJE od najłatwiejszej:
-1️⃣ [Opcja A — co to, co wymaga, ryzyko, czas]
-   → Powiedz 'zrób A' żebym zaczął/a
-2️⃣ [Opcja B — j.w.]
-3️⃣ [Opcja C — j.w.]
-
-⚠ OSTRZEŻENIE (jeśli dotyczy): [co grozi przy bezczynności]
-
-❓ Masz pytanie do którejś opcji?
-   → Pytaj — sprawdzam każdą odpowiedź w przepisach"
-
-PRAWNIK:
-"Wynik analizy → [co wynika]. Następne kroki:
-→ [Opcja A z uzasadnieniem technicznym]
-→ [Opcja B]
-Wygenerować dokument? Kontynuować analizę? Kolejne pytanie?"
-```
-
-**Kiedy odesłać do prawnika (powiedz wyraźnie):**
-```
-□ WPS > 75 000 zł + brak pełnomocnika
-□ Grozi areszt / pozbawienie wolności
-□ Strona przeciwna ma pełnomocnika
-□ ≤2 dni do terminu zawitego
-□ Kasacja / TK / ETPC
-□ Nieruchomości + duże kwoty
-
-Format: "Bardzo polecam prawnika — nie dlatego że nie możesz działać
-samodzielnie, ale stawka jest wysoka. Możesz skorzystać z:
-NPP (bezpłatna, każdy powiat) · Kliniki Prawa · Rzecznik Konsumentów · RPO."
-```
+**WCZYTAJ (obowiązkowo, fail-closed):** `view przewodnik-prawny-v2/references/KROK-G-H-I.md` (sekcja KROK I) — przed zakończeniem każdej analizy.
 
 ---
 
@@ -848,18 +437,12 @@ Q&A / pytania użytkownika
 *Prawo: isap.sejm.gov.pl · Orzeczenia: sn.pl, orzeczenia.ms.gov.pl*
 *Tryb Q&A: weryfikacja online przy każdej odpowiedzi — ZAKAZ odpowiedzi z pamięci*
 
----
-
----
-
 ## REGUŁA RENDEROWANIA WIDGETÓW
 
 > Pliki `.jsx` przez `present_files` NIE renderują się w claude.ai — użytkownik widzi tylko link.
 > Mechanizm `window.__INJECTED__` działa tylko z bundlerem React — NIE w czacie.
 > Jedyna poprawna metoda renderowania widgetu inline: `show_widget` z HTML (vanilla JS).
 > NIE używaj: `cp`, `str_replace`, `present_files`, `.jsx`, `window.__INJECTED__`.
-
----
 
 ---
 

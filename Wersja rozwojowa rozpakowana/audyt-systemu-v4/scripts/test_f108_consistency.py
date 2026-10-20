@@ -8,6 +8,9 @@ from pathlib import Path
 import argparse
 import re
 import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _lex_common import read_routing
 if hasattr(sys.stdout, "reconfigure"):  # konsola Windows (cp1250): emoji/polskie znaki nie mogą wywalić skryptu
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -67,7 +70,7 @@ for module in required_modules:
     if not module.exists():
         fail(f"required F-108 COV module missing: {module.relative_to(DEV)}")
 
-routing = ROUTING.read_text(encoding="utf-8")
+routing = read_routing(ROUTING)  # indeks + routing/*.md
 if "Dz.U. 2025 poz. 1071 ze zm." in routing:
     fail("stale KC 2025/1071 remains in active ROUTING-MAP")
 if "| Ustawa Prawo o prokuraturze | Dz.U. 2024 poz. 390" in routing:

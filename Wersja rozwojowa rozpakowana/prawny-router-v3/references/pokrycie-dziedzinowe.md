@@ -1,11 +1,11 @@
 # POKRYCIE DZIEDZINOWE — Mapa dziedzin → DR-skills
 
 > Wczytuj ten plik tylko gdy potrzebna jest pełna mapa dziedzin z powiązanymi skillami.
-> Dla samego routingu wystarczy KROK 1B → prawo-polskie-v2 → ROUTING-MAP.md.
+> Dla samego routingu wystarczy KROK 1B → prawo-polskie-v2 → ROUTING-MAP.md → routing/DR-xx.md.
 >
 > ⚠️ ZASADA ARCHITEKTONICZNA: Treść prawa materialnego mieszka WYŁĄCZNIE w DR-skills (dr-01..dr-16).
 > Router nie duplikuje treści — tylko kieruje. Routing odbywa się przez:
-> KROK1-detekcja.md → prawo-polskie-v2/ROUTING-MAP.md → DR-skill → moduł aktu.
+> KROK1-detekcja.md → prawo-polskie-v2/ROUTING-MAP.md → routing/DR-xx.md → DR-skill → moduł aktu.
 >
 > **Stan operacyjny 2026-08-28:** wszystkie DR-01..DR-16 mają `MAPA-POKRYCIA.md`.
 > Każda lokalna `MAPA-POKRYCIA.md` jest jedynym bieżącym źródłem statusu pokrycia dla danego DR.
@@ -70,7 +70,7 @@
 
 Mosty nie zawierają prawa — wskazują kanoniczny moduł DR/shared. Wczytaj most tylko,
 gdy KROK 1 wskazał jedną z tych dziedzin, a `prawo-polskie-v2/ROUTING-MAP.md` nie jest
-w kontekście; inaczej idź wprost do modułu z ROUTING-MAP.
+w kontekście; inaczej idź wprost do modułu z `prawo-polskie-v2/routing/DR-xx.md`.
 
 ```text
 view prawny-router-v3/references/cyberprzestepstwa.md          → dr-03 (art. 267–269c KK)

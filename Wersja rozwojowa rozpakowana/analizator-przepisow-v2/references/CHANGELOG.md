@@ -1,5 +1,7 @@
 # CHANGELOG — analizator-przepisow-v2
 
+2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 631 -> 332 linii; treść bez zmian.
+
 - 2.12 (2026-10-06): sn.pl: wyszukiwarka-orzeczen zamiast nieczynnego /orzecznictwo; link = karta
 
 - 2.11 (2026-10-05g, AUDYT-2026-10-05g): Szablony widgetów w `assets/`: `widget-wybor-przepisu.html` (Krok 0.3, formularz bez danych) i `widget-wyniki.html` (Moduł 8, 7 zakładek, zasilany danymi; tryb krokowy drzewa przesłanek, filtry tierów, powiązania przez sendPrompt). Krok 0.3 i Moduł 8: wariant szablonu oraz specyfikacja do samodzielnego wygenerowania z paskiem MOD-WIDGET-IO (oznaczona `lex:wykonuje-aplikacja: WIDGET-DANE`); instrukcja MOD-WIDGET-IO wyjęta z bloku sekwencji do tej podsekcji. Treść merytoryczna bez zmian.

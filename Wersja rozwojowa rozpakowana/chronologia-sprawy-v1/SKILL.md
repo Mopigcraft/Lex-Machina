@@ -125,91 +125,17 @@ KROK A6 — Wygeneruj raport chronologiczny (FORMAT RAPORTU niżej):
 KROK A7 — Zaproponuj widget jeśli ≥5 zdarzeń lub ≥2 wątki lub użytkownik potrzebuje eksportu
 ```
 
+**Pliki szczegółowe TRYBU A (czytaj `view` PRZED krokiem, który ich dotyczy; brak pliku = fail-closed, nie działaj z pamięci):** KROK A1 `chronologia-sprawy-v1/references/ekstrakcja-zdarzen.md`; KROK A4 przy kwotach `chronologia-sprawy-v1/references/korelacja-finansowa-3b.md`; budowa osi i KROK A6 `chronologia-sprawy-v1/references/osie-czasu-i-format-raportu.md`; KROK A5 `chronologia-sprawy-v1/references/sprzecznosci-dat.md` oraz `chronologia-sprawy-v1/references/reguly-sprzecznosci-eksport.md`.
+
 ### TRYB C — Graf przyczynowy (zależności zdarzeń, wpływ wzajemny, „co jeśli”) — od v1.13
 
-Gdy użytkownik pyta „co z czego wynika”, „jak zdarzenia na siebie wpływają”, „co jeśli X się nie
-utrzyma”, „pokaż zależności / graf”, albo gdy oś czasu ma ≥ 2 wątki ze wspólnymi węzłami:
-
-```
-KROK C1 — Oś czasu z TRYBU A (zdarzenia z polem id Z-nnn; bez osi czasu TRYB C nie rusza)
-KROK C2 — view shared/MOD-GRAF-PRZYCZYNOWY.md → krawędzie: dowód połączenia (MET-PT), csqn,
-          przypisanie prawne; bramy I/LUB; wersja przeciwnika jako OSLABIA/PRZERYWA
-KROK C3 — Raport: python3 shared/tools/graf_przyczynowy.py graf.json (MD; --mermaid dla diagramu)
-          albo — gdy brak wykonania kodu — ten sam model ręcznie wg §4 modułu, z jawnym rachunkiem
-KROK C4 — Widget: visualize:read_me(["interactive"]) → show_widget z
-          assets/widget-graf-przyczynowy.html (podmień stałą GRAF; pasek MOD-WIDGET-IO JSON/MD;
-          kliknięcie węzła = scenariusz obalony/udowodniony z przeliczeniem na żywo)
-KROK C5 — Ogniwa krytyczne i flagi (post hoc, csqn, art. 361 § 1/362/441 KC, art. 2 KK) do raportu
-          końcowego; liczby zawsze z zastrzeżeniem założeń (§4 modułu)
-```
+Gdy użytkownik pyta o zależności zdarzeń lub oś ma ≥ 2 wątki ze wspólnymi węzłami: KROK C1-C5 (oś z TRYBU A, `shared/MOD-GRAF-PRZYCZYNOWY.md`, raport grafu, widget grafu `assets/widget-graf-przyczynowy.html`, ogniwa krytyczne i flagi).
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/tryby-b-c-widget-graf.md — przed KROK C1.
 
 ### TRYB B — Widget interaktywny
 
-Gdy użytkownik wpisuje "widget" / "pokaż oś czasu" / "timeline" / "aplikację":
-
-> ⚠️ REGUŁA RENDEROWANIA — pliki `.jsx` przez `present_files` NIE renderują się w claude.ai.
-> Jedyna poprawna metoda: `show_widget` z HTML (vanilla JS).
-
-```
-KROK B1 — Wyciągnij z rozmowy zdarzenia jako strukturę chronologiczną (schemat poniżej)
-KROK B2 — Wywołaj visualize:read_me z modules=["interactive","mockup"]
-KROK B2a — ⛔ MOD-WIDGET-IO (OBOWIĄZKOWE przed show_widget):
-            view shared/MOD-WIDGET-IO.md
-            → wbuduj pasek IO w nagłówek widgetu (powyżej osi czasu)
-            → IO_SKILL_ID='chronologia-sprawy-v1', IO_CASE_ID=sygnatura
-            → matryca: Export JSON ✅ MD ✅ | Import JSON ✅
-            → ioGetState(): { watki, zdarzenia, sprzecznosci }
-            → ioSetState(s): odtwórz oś czasu z wczytanego JSON
-KROK B3 — Wywołaj show_widget z HTML vanilla JS:
-           • zdarzenia i wątki jako literały JS wbudowane bezpośrednio w HTML
-           • osobna oś czasu per wątek (zakładki lub sekcje)
-           • widok zbiorczy CROSS-WĄTEK jako opcja
-           • filtrowanie po klasie pewności, wątku, znaczeniu
-           • węzły wspólne wyróżnione wizualnie z linkami między wątkami
-           • CSS variables (var(--color-*)) — BEZ React, BEZ importów
-           • NIE używaj cp, str_replace ani present_files
-
-SCHEMAT DANYCH (wbuduj jako literały JS w HTML):
-  watki: [{ id, nazwa }]
-  zdarzenia: [{
-    data, pewnosc,          // BEZSPORNE / PEWNE / WYDEDUKOWANE / SPORNE
-    dedukacja,              // null lub { podstawa, wniosek, pewnosc_0_10 }
-    opis, strona,
-    proweniencja: { typ_zrodla, dok_id, strona_dok, autor_twierdzenia },
-    watki,                  // tablica id wątków
-    wezel_wspolny,
-    znaczenie,
-    kolizja_id              // null lub "SPRZECZNOŚĆ-01"
-  }]
-  finanse: [{                // [NOWE v1.2] — sekcja 3B, wypełniane RÓWNOLEGLE ze zdarzeniami
-    id,                      // "FIN-01"
-    kwota, waluta,
-    tytul,
-    platnik, odbiorca,       // string lub "[OSOBA-NIEZIDENTYFIKOWANA-N]"
-    termin,                  // string lub null — NIE zgaduj, jeśli brak w dokumencie
-    status,                  // ZAPŁACONE / DO_ZAPŁATY / ZALEGŁE / SPORNE_CZY_ZWRÓCONE / NIEZNANY
-    proweniencja: { typ_zrodla, dok_id, strona_dok, autor_twierdzenia },
-    powiazane_dok_id,        // tablica DOK-XX potwierdzających/wzmiankujących tę samą kwotę
-    kolizja_id               // null lub "SPRZECZNOŚĆ-01" (typ KWOTA)
-  }]
-  sprzecznosci: [{
-    id,          // "SPRZECZNOŚĆ-01"
-    typ,         // DATA / OPIS / DATA_I_OPIS / IDENT / KWOTA [NOWE v1.2]
-    zdarzenie,
-    watek,
-    wersja_a: { tresc, dok_id, strona_dok, autor },
-    wersja_b: { tresc, dok_id, strona_dok, autor },
-    common_ground,       // null lub string — co OBIE strony faktycznie przyznają
-                          // w tej kwestii, niezależnie od spornego elementu
-                          // (np. "obie strony zgadzają się, że dokument porozumienia
-                          // został podpisany 9.10.2024 — sporna jest tylko ocena
-                          // okoliczności podpisania")
-    roznica_dni,         // null dla TYP=OPIS/IDENT
-    kategoria,           // A-KRYTYCZNA / B-ISTOTNA / C-MARGINALNA
-    wplyw, rekomendacja
-  }]
-  Pola null → null. Nie wymyślaj dat.
-```
+Na żądanie ("widget", "pokaż oś czasu", "timeline"): KROK B1-B3 przez `show_widget` z HTML (vanilla JS), obowiązkowo MOD-WIDGET-IO (KROK B2a, `view shared/MOD-WIDGET-IO.md`) przed show_widget; schemat danych (watki, zdarzenia, finanse, sprzecznosci) w pliku.
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/tryby-b-c-widget-graf.md — przed KROK B1.
 
 ---
 
@@ -359,396 +285,88 @@ Oznaczenie: ⚠ [SPORNE]  — zawsze z odesłaniem do INDEKSU SPRZECZNOŚCI
 
 ## 3B. KORELACJA FINANSOWA MIĘDZY DOKUMENTAMI (OBOWIĄZKOWA, v1.2)
 
-> ⛔ KROK-FIN-GATE — HARD GATE. Nie wolno zamknąć FAZY EKSTRAKCJI (KROK A4/A6)
-> jeśli w materiale występuje ≥1 wzmianka o kwocie pieniężnej, a rekord FINANSE
-> nie został wypełniony i skorelowany z pozostałymi dokumentami. Pominięcie tego
-> kroku jest traktowane tak samo jak pominięcie ekstrakcji daty — jako niepełna
-> analiza, nie jako pominięcie nieistotnego szczegółu.
+KROK-FIN-GATE (HARD GATE): nie zamykaj FAZY EKSTRAKCJI (KROK A4/A6), jeśli w materiale jest ≥1 wzmianka o kwocie, a rekord FINANSE nie został wypełniony i skorelowany z pozostałymi dokumentami.
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/korelacja-finansowa-3b.md — przed wypełnieniem jakiegokolwiek rekordu FINANSE i przed zamknięciem FAZY EKSTRAKCJI.
 
 ### Dlaczego to osobna bramka, a nie część ogólnej ekstrakcji zdarzeń
 
-Data i opis zdarzenia odpowiadają na pytanie "co i kiedy się stało". Kwota
-odpowiada na trzy DODATKOWE pytania, które model pomija, jeśli kwotę potraktuje
-się jako zwykły szczegół zdarzenia: **komu**, **ile dokładnie** i **czy/kiedy
-rozliczono**. Te trzy pytania rzadko mają odpowiedź w jednym dokumencie —
-odpowiedź składa się z fragmentów rozproszonych po wielu źródłach (arkusz +
-korespondencja + zeznanie), więc wymaga jawnego, osobnego kroku korelacji, a nie
-tylko ekstrakcji.
+Kwota wymaga odpowiedzi na: komu, ile dokładnie, czy i kiedy rozliczono; odpowiedź jest rozproszona po dokumentach.
 
 ### Rekord FINANSE — pola obowiązkowe
 
-```
-Dla KAŻDEJ wzmianki o kwocie wypełnij:
-
-kwota:            liczba + waluta (np. "700 zł", "1200 PLN") — nigdy w przybliżeniu,
-                  jeśli dokument podaje kwotę dokładną
-tytul:            za co (opłata za pozwolenie na pracę, zwrot, kara umowna, …)
-plator:           kto płaci / kto ma zapłacić (imię, nazwa, lub "NIEZIDENTYFIKOWANY")
-odbiorca:         kto otrzymuje / ma otrzymać
-termin:           data lub warunek płatności, jeśli wskazany w dokumencie
-                  ("po 1 miesiącu", "do 10. dnia następnego miesiąca") — jeśli brak
-                  terminu w dokumencie, pole = null, NIE domyślaj się terminu
-status:           ZAPŁACONE / DO_ZAPŁATY / ZALEGŁE / SPORNE_CZY_ZWRÓCONE / NIEZNANY
-dok_id:           źródło (jak w proweniencji zdarzeń)
-strona_dok:       lokalizacja w dokumencie
-powiazane_osoby:  lista identyfikatorów osób/podmiotów, których kwota dotyczy
-                  (nawet jeśli w danym dokumencie występują tylko pod pseudonimem,
-                  numerem telefonu lub inicjałem — patrz KROK-FIN-3 niżej)
-```
+kwota, tytul, plator, odbiorca, termin (null, gdy brak w dokumencie), status, dok_id, strona_dok, powiazane_osoby.
 
 ### KROK-FIN-1 — Inwentaryzacja kwot per dokument
 
-Dla każdego DOK-XX zawierającego kwotę: wypełnij rekord FINANSE jak wyżej.
-Rób to RÓWNOLEGLE z inwentaryzacją dat — nie jako odrębny, późniejszy przebieg,
-żeby uniknąć sytuacji, w której dokument bez daty procesowej (np. zrzut czatu,
-arkusz kalkulacyjny) zostaje uznany za "niekwalifikujący się" do analizy.
+Rekord FINANSE per DOK-XX z kwotą, równolegle z inwentaryzacją dat.
 
 ### KROK-FIN-2 — Zestawienie krzyżowe (tabela rekoncyliacji)
 
-Zbuduj tabelę: wiersz = jedna relacja płatnicza (jedna osoba/podmiot ↔ jedna
-kwota), kolumny = wszystkie DOK-XX, w których ta relacja występuje. Dla każdej
-pary dokumentów dotyczących tej samej osoby/kwoty sprawdź:
-
-```
-CZY kwota z DOK-A zgadza się z kwotą z DOK-B?
-  TAK → oznacz jako potwierdzoną (podnieś pewność zdarzenia o jeden poziom,
-        jeśli wcześniej było [WYDEDUKOWANE])
-  NIE → SPRZECZNOŚĆ-[N], TYP: KWOTA (nowy podtyp — patrz references/sprzecznosci-dat.md
-        → KATEGORIA D) — nie uśredniaj ani nie wybieraj kwoty "bardziej prawdopodobnej"
-        bez jawnego uzasadnienia hierarchią źródeł
-
-CZY status (zapłacone/do zapłaty) jest spójny w czasie?
-  Zbuduj mini-oś: kwota zgłoszona jako należna (data X) → kwota potwierdzona
-  jako zapłacona (data Y, jeśli istnieje) → jeśli status "do zapłaty"/"zaległe"
-  utrzymuje się w najpóźniejszym chronologicznie dokumencie → oznacz jako
-  [NIEROZLICZONE NA DZIEŃ NAJPÓŹNIEJSZEGO DOKUMENTU], nie milcz na ten temat
-```
+Tabela relacji płatniczych x dokumenty; niezgodność kwot = SPRZECZNOŚĆ typu KWOTA; status niezmieniony w najpóźniejszym dokumencie = NIEROZLICZONE.
 
 ### KROK-FIN-3 — Identyfikacja osób przy danych szczątkowych
 
-Dokumenty finansowe nieformalne (czat, WhatsApp, SMS) często identyfikują
-osoby przez numer telefonu, pseudonim czy samo imię, bez nazwiska. Nie wolno:
-(a) milcząco pominąć takiej kwoty, bo "nie wiadomo czyja", ani
-(b) domyślnie przypisać jej do strony postępowania bez wskazania podstawy.
-
-```
-JEŻELI tożsamość płatnika/odbiorcy nie jest jednoznaczna z samego dokumentu:
-  → oznacz osobę jako [OSOBA-NIEZIDENTYFIKOWANA-N] (numeruj kolejno w obrębie sprawy)
-  → wskaż wszystkie poszlaki dostępne w materiale, które mogłyby pomóc w identyfikacji
-    (numer telefonu, kontekst rozmowy, zbieżność kwoty z innym, w pełni
-    zidentyfikowanym dokumentem)
-  → NIE zgaduj tożsamości bez jawnego zaznaczenia, że to dedukcja z przypisaną
-    skalą pewności (patrz [WYDEDUKOWANE], sekcja 3 wyżej)
-```
+Osoby bez pełnej tożsamości: [OSOBA-NIEZIDENTYFIKOWANA-N] z poszlakami; zakaz pomijania i zgadywania.
 
 ### KROK-FIN-4 — Eksport
 
-W eksporcie do pisma (sekcja "Rekoncyliacja finansowa", dodatkowa wobec sekcji
-A–D z rozdziału EKSPORT DO PISMA PROCESOWEGO) każda relacja płatnicza ma osobny
-akapit z kwotą, tytułem, stronami, terminem, statusem i źródłem — w kolejności
-chronologicznej rozliczenia, nie w kolejności występowania w aktach.
+Sekcja "Rekoncyliacja finansowa" w eksporcie do pisma, osobny akapit per relacja płatnicza.
 
 ### SELF-CHECK (uzupełnienie do sekcji SELF-CHECK głównej)
 
-```
-□ Czy KAŻDA wzmianka o kwocie w KAŻDYM dostarczonym dokumencie (w tym w plikach
-  nieformalnych — czat, arkusz, SMS) ma wypełniony rekord FINANSE?
-□ Czy zbudowano tabelę rekoncyliacji krzyżowej (KROK-FIN-2) zamiast wypisania
-  kwot osobno per dokument bez zestawienia ich ze sobą?
-□ Czy każda kwota o niejasnym statusie rozliczenia (zapłacone/zaległe) na dzień
-  najpóźniejszego dostępnego dokumentu została jawnie oznaczona jako
-  NIEROZLICZONE, a nie pominięta milczeniem?
-□ Czy tożsamości niepełne (telefon/pseudonim) oznaczono jako
-  [OSOBA-NIEZIDENTYFIKOWANA-N] zamiast pominięcia lub domysłu bez zastrzeżenia?
-```
-
----
+Cztery pytania kontrolne o rekordy FINANSE, tabelę rekoncyliacji, status NIEROZLICZONE i tożsamości niepełne (w pliku; łącz z SELF-CHECK głównym niżej).
 
 ## OSIE CZASU PER WĄTEK PRAWNY
 
+Oś per wątek prawny, widok zbiorczy CROSS-WĄTEK, jednolita struktura zdarzenia (id Z-nnn, data, pewnosc, opis, strona, proweniencja, watki, znaczenie, kolizja_id).
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/osie-czasu-i-format-raportu.md — przed budową osi i raportu.
+
 ### Zasada wątków
 
-```
-KROK W1 — Identyfikuj wątki prawne przed budową chronologii:
-  Przykłady:
-  • Sprawa pracownicza: [W1] Stosunek pracy, [W2] Wypowiedzenie, [W3] Mobbing, [W4] ZUS
-  • Sprawa cywilna:     [W1] Umowa, [W2] Naruszenie, [W3] Szkoda, [W4] Postępowanie sądowe
-  • Sprawa karna:       [W1] Czyn, [W2] Postępowanie przygotowawcze, [W3] Sąd I inst.
-
-KROK W2 — Przypisz każde zdarzenie do wątku (lub kilku — węzeł wspólny):
-  zdarzenie.watki = ["W1", "W2"]  ← pojawia się na obu osiach z oznaczeniem [WSPÓLNY]
-
-KROK W3 — Buduj osobną oś czasu per wątek:
-  Każda oś: tylko zdarzenia należące do danego wątku
-  Węzły wspólne: wyróżnione wizualnie, z odesłaniem do innych wątków
-
-KROK W4 — Generuj widok zbiorczy (CROSS-WĄTEK):
-  Wszystkie zdarzenia razem — do wykrywania sprzeczności MIĘDZY wątkami
-```
+KROK W1-W4: identyfikacja wątków, przypisanie zdarzeń, osobna oś per wątek, widok zbiorczy.
 
 ### Struktura zdarzenia (v1.1)
 
-```
-ZDARZENIE:
-  id:                [Z-001, Z-002, … — od v1.13; ten sam ID w grafie przyczynowym i w MP13 (pole fakt_m1)]
-  data:              [dd.mm.rrrr lub zakres lub ~miesiąc.rrrr lub "MIĘDZY X a Y"]
-  pewnosc:           [BEZSPORNE / PEWNE / WYDEDUKOWANE / SPORNE]
-  dedukacja:         [null / opis rozumowania + podstawa + przedział czasowy]
-  opis:              [co się wydarzyło — 1 zdanie, faktycznie, bez ocen]
-  strona:            [kto działał: powód / pozwany / sąd / organ / osoba trzecia]
-
-  proweniencja:
-    typ_zrodla:      [DOKUMENT_URZEDOWY / DOKUMENT_PRYWATNY / ZEZNANIE /
-                      KORESPONDENCJA / DEDUKCJA / TWIERDZENIE_STRONY]
-    dok_id:          [DOK-01 / DOK-02 / … — identyfikator z inwentaryzacji]
-    strona_dok:      [numer strony / akapit / §X / nagłówek / "str. 3, ust. 2"]
-    autor_twierdzenia: [powód / pozwany / sąd / biegły / organ / obie_strony]
-
-  watki:             ["W1", "W3"]  — lista wątków prawnych
-  wezel_wspolny:     [true / false]
-  znaczenie:         [KLUCZOWE / ISTOTNE / TŁO]
-  kolizja_id:        [null / "SPRZECZNOŚĆ-01" — odesłanie do Indeksu Sprzeczności]
-  typ_kolizji:       [null / DATA / OPIS / DATA_I_OPIS]
-  przyczyny:         [od v1.13, opcjonalnie — [{ "od": "Z-003", "typ": "WYWOLUJE", "dowod": "KORELACJA" }];
-                      tylko gdy materiał mówi coś o MECHANIZMIE; sama kolejność dat to nie przyczyna
-                      (post hoc) — pełna analiza w TRYBIE C]
-```
-
----
+Pełna lista pól zdarzenia w pliku; nie wymyślaj dat, pola null zostają null.
 
 ## FORMAT RAPORTU CHRONOLOGICZNEGO (TRYB A)
 
-```
-## CHRONOLOGIA SPRAWY — [tytuł sprawy lub opis]
-Wygenerowano: [data]  |  Dokumentów: N  |  Wątków: W  |  Zdarzeń: M  |  Sprzeczności: K
-
-### INWENTARYZACJA DOKUMENTÓW
-DOK-01: [nazwa / typ / data pisma / autor]
-DOK-02: …
-
-### OŚ CZASU — WĄTEK [W1]: [nazwa wątku]
-
-[data]  ✓✓ [BEZSPORNE]
-        [opis zdarzenia]
-        Strona: [kto] | Prow.: DOK-01, str. 3 | Autor twierdzenia: obie strony
-        Wątki: W1
-
-[data]  ✓ [PEWNE]
-        [opis zdarzenia]
-        Strona: [kto] | Prow.: DOK-02, str. 1, nagłówek | Autor: powód
-
-[data]  ~ [WYDEDUKOWANE / pewność: 8/10]
-        [opis zdarzenia]
-        Dedukuję: DOK-01 (str. 4) potwierdza X, DOK-03 (str. 2) potwierdza Y
-        Wniosek: zdarzenie nastąpiło MIĘDZY 12.03.2023 a 15.04.2023
-        Strona: [kto] | Wątki: W1, W2 ← [WSPÓLNY]
-
-[data]  ⚠ [SPORNE] → zob. SPRZECZNOŚĆ-01
-        [opis zdarzenia]
-        Prow.: DOK-02 str. 5 (powód) vs DOK-04 str. 1 (pozwany)
-
-### OŚ CZASU — WĄTEK [W2]: [nazwa wątku]
-…
-
-### OŚ CZASU — WIDOK ZBIORCZY (CROSS-WĄTEK)
-[wszystkie zdarzenia posortowane chronologicznie, z oznaczeniem wątku]
-
-### FAKTY BEZSPORNE
-✓✓ [lista zdarzeń klasy BEZSPORNE — do prezentacji w piśmie bez dowodzenia]
-
-### INDEKS SPRZECZNOŚCI
-
-Rejestr obejmuje WSZYSTKIE wykryte rozbieżności — zarówno dotyczące dat,
-jak i opisów zdarzeń (co się stało, w jaki sposób, kto był sprawcą, jaki był przebieg).
-
-SPRZECZNOŚĆ-[N]:
-  Typ:         [DATA / OPIS / DATA_I_OPIS / IDENT]
-  Zdarzenie:   [opis zdarzenia którego dotyczy sprzeczność]
-  Wątek:       [W1 / W2 / …]
-
-  ── jeśli Typ = DATA lub DATA_I_OPIS ──
-  Data wg A:   [data1] | DOK-[XX], str. [N] | Autor: [powód / pozwany / sąd / …]
-  Data wg B:   [data2] | DOK-[YY], str. [M] | Autor: [powód / pozwany / sąd / …]
-  Różnica:     [N dni]
-
-  ── jeśli Typ = OPIS lub DATA_I_OPIS ──
-  Opis wg A:   "[dosłowny opis lub cytat]" | DOK-[XX], str. [N] | Autor: [powód / …]
-  Opis wg B:   "[dosłowny opis lub cytat]" | DOK-[YY], str. [M] | Autor: [pozwany / …]
-  Rozbieżność: [co dokładnie się różni — przebieg / sprawca / skutek / okoliczności]
-
-  ── jeśli Typ = IDENT ──
-  Osoba wg sprawy:     [imię/nazwisko jak w pismach procesowych] | DOK-[XX]
-  Osoba wg dokumentu:  [zapis na podpisie/dokumencie] | DOK-[YY], str. [M]
-  Rozbieżność:         [literówka / inna osoba / błąd OCR / niewyjaśnione]
-
-  ── wspólne dla wszystkich typów ──
-  Common ground: [null lub opis tego, co OBIE strony przyznają w tej kwestii —
-                   element niesporny mimo istnienia sprzeczności]
-  Kategoria:   [A-KRYTYCZNA / B-ISTOTNA / C-MARGINALNA]
-  Wpływ:       [opis konsekwencji procesowych]
-  Rekomendacja: [które źródło wiarygodniejsze i dlaczego / co wyjaśnić]
-
-### ZDARZENIA WYDEDUKOWANE — REJESTR
-[lista wszystkich zdarzeń WYDEDUKOWANE z pełnym opisem rozumowania i przedziałem czasowym]
-
-### LUKI CZASOWE
-  📌 Wątek [W1]: Brak dokumentów z okresu [od] → [do] ([N dni])
-     Potencjalnie istotne: [co mogło się wydarzyć]
-
-### ZDARZENIA NIEUSTALONE CHRONOLOGICZNIE
-  ? [opis] — brak daty, wzmiankowane w: DOK-XX, str. N
-
-### REKOMENDACJE DO PISMA
-  → Fakty bezsporne (nie wymagają dowodzenia): [lista]
-  → Fakty pewne kluczowe dla uzasadnienia: [lista]
-  → Fakty wydedukowane — rozwinąć łańcuch logiczny: [lista]
-  → Daty wymagające weryfikacji lub wyjaśnienia sprzeczności: [lista]
-  → Sugerowana kolejność w uzasadnieniu faktycznym: [numerowana lista]
-```
-
----
+Kolejność sekcji raportu: INWENTARYZACJA DOKUMENTÓW (ze statusem SD-VER), OŚ CZASU per wątek, widok zbiorczy, FAKTY BEZSPORNE, INDEKS SPRZECZNOŚCI, ZDARZENIA WYDEDUKOWANE, LUKI CZASOWE, ZDARZENIA NIEUSTALONE, REKOMENDACJE DO PISMA. Szablon w pliku (ten sam plik co wyżej).
 
 ## REGUŁY EKSTRAKCJI
 
+Co jest zdarzeniem, czego nie traktować jako zdarzenia i priorytety wiarygodności źródeł (7 stopni).
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/reguly-sprzecznosci-eksport.md — przed ekstrakcją i oceną wiarygodności źródeł.
+
 ### Co traktować jako zdarzenie
 
-```
-✓ Złożenie pisma / doręczenie (data z prezentatą lub potwierdzeniem)
-✓ Zawarcie umowy / aneksu
-✓ Zwolnienie / wypowiedzenie / rozwiązanie stosunku
-✓ Wyrok / postanowienie / decyzja administracyjna
-✓ Przekroczenie terminu
-✓ Płatność / brak płatności / wezwanie do zapłaty
-✓ Zdarzenie faktyczne (wypadek, incydent, spotkanie)
-✓ Zawiadomienie organów (policja, prokuratura, PIP, UOKiK)
-✓ Upływ terminu zawitego
-✓ Zmiana stanu prawnego lub faktycznego strony
-```
+Lista dziesięciu kategorii zdarzeń (pisma, umowy, wypowiedzenia, orzeczenia, terminy, płatności, zdarzenia faktyczne, zawiadomienia).
 
 ### Czego NIE traktować jako zdarzenie
 
-```
-✗ Daty pisania pisma procesowego (chyba że = data zdarzenia)
-✗ Daty powołanych przepisów (wejście w życie ustaw) — chyba że kluczowe
-✗ Daty orzeczeń powoływanych jako precedens
-✗ Daty hipotetyczne / warunkowe ("gdyby doszło do...")
-```
+Daty pisania pism, wejścia w życie przepisów, orzeczeń-precedensów, daty hipotetyczne.
 
 ### Priorytety wiarygodności źródeł
 
-```
-1. Dokumenty urzędowe z pieczęcią / prezentata sądu
-2. Wyroki i postanowienia z sygnaturą
-3. Korespondencja z potwierdzeniem odbioru
-4. Zeznania potwierdzone przez ≥2 świadków
-5. Korespondencja e-mail / SMS z metadanymi
-6. Zeznania jednostronne
-7. Twierdzenia w pismach procesowych (bez dowodu)
-```
-
----
+Hierarchia od dokumentów urzędowych do twierdzeń w pismach bez dowodu.
 
 ## SPRZECZNOŚCI — PROTOKÓŁ OBSŁUGI
 
-Indeks obejmuje dwa typy sprzeczności — obsługuj oba identyczną ścieżką.
+Typy: DATA, OPIS, DATA_I_OPIS, IDENT; wspólny protokół 7 kroków (numer, typ, obie wersje z proweniencją, wpływ KRYTYCZNY/ISTOTNY/MARGINALNY, rekomendacja, STOP przy KRYTYCZNYM, flaga kolizja_id). Najpierw bramka A0 z `chronologia-sprawy-v1/references/sprzecznosci-dat.md`.
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/reguly-sprzecznosci-eksport.md — przed zgłoszeniem jakiejkolwiek sprzeczności.
 
 ### Typy sprzeczności
 
-```
-TYP: DATA
-  Definicja: różne źródła podają różne daty dla tego samego zdarzenia
-  Wykrywanie: porównaj pole `data` dla zdarzeń o tym samym opisie
-  Przykłady:
-    • Pracodawca datuje wypowiedzenie 10.04, pracownik zeznaje że otrzymał 15.04
-    • Wyrok podaje datę zdarzenia 03.03, zeznanie świadka wskazuje 05.03
-  Odesłanie do katalogu: references/sprzecznosci-dat.md → kategoria A/B/C
-
-TYP: OPIS
-  Definicja: źródła zgodnie (lub w przybliżeniu) co do daty, ale różnią się
-             w opisie przebiegu, sprawcy, skutku lub okoliczności zdarzenia
-  Wykrywanie: porównaj treść opisów zdarzeń o tej samej lub zbliżonej dacie
-  Przykłady:
-    • Świadek A zeznaje: "krzyczał wulgarnie", świadek B: "mówił podniesionym głosem"
-    • Pozew: "pracownik odmówił wykonania polecenia", protokół: "pracownik poprosił
-      o pisemne potwierdzenie polecenia"
-    • DOK-01 (umowa): "termin płatności 30 dni", DOK-03 (faktura): "termin 14 dni"
-    • Zeznanie pokrzywdzonego: "uderzył mnie", zeznanie świadka: "popchnął go"
-  Odesłanie do katalogu: references/sprzecznosci-dat.md → analogicznie kategoria A/B/C
-
-TYP: DATA_I_OPIS
-  Definicja: źródła różnią się zarówno datą, jak i opisem — traktuj jako dwie
-             sprzeczności wpisane w jeden rekord SPRZECZNOŚĆ-[N]
-
-TYP: IDENT
-  Definicja: dokument dowodowy (podpis, pokwitowanie, formularz) zawiera zapis
-             imienia/nazwiska/nazwy podmiotu, który różni się od danych tej samej
-             osoby/strony/świadka używanych w pismach procesowych
-  Wykrywanie: porównaj zapisy imion/nazwisk/nazw dla osób w tej samej roli procesowej
-             (strona, świadek, podpisujący) między dokumentem dowodowym a pismami
-  Przykłady:
-    • Strona w pozwie: "Jan Nowakowski"; pokwitowanie z 9.10.2024: podpis "Michał Nowak"
-    • Świadek w piśmie: "Bishal Poudel"; pokwitowanie z 5.12.2024: "Bishal Paudel"
-  Nie zakładaj automatycznie zgodności ani niezgodności — oznacz [SPORNE] i wymagaj
-  wyjaśnienia. Jeśli żadna ze stron nigdy nie odniosła się do rozbieżności, podnieś
-  kategorię do A-KRYTYCZNA (zob. references/ekstrakcja-zdarzen.md → A-O5).
-```
+DATA, OPIS, DATA_I_OPIS, IDENT: definicje, wykrywanie, przykłady (w pliku).
 
 ### Protokół obsługi (wspólny dla obu typów)
 
-```
-GDY wykryjesz sprzeczność:
-1. Nadaj numer: SPRZECZNOŚĆ-[N] — numeruj sekwencyjnie w obrębie sprawy
-2. Określ TYP: DATA / OPIS / DATA_I_OPIS
-3. Zapisz obie wersje z pełną proweniencją (dok_id, strona_dok, autor_twierdzenia)
-4. Oceń WPŁYW PROCESOWY:
-   - KRYTYCZNY:
-       DATA:  sprzeczność dotyczy terminu zawitego / przedawnienia / skuteczności doręczenia
-       OPIS:  sprzeczność zmienia kwalifikację czynu lub zasadność roszczenia głównego
-   - ISTOTNY:
-       DATA:  sprzeczność zmienia sekwencję przyczynową
-       OPIS:  sprzeczność osłabia lub wzmacnia wiarygodność kluczowego świadka / strony
-   - MARGINALNY:
-       DATA:  różnica nie wpływa na rozstrzygnięcie
-       OPIS:  różnica stylistyczna / subiektywna ocena bez wpływu na ustalenia faktyczne
-5. Zaproponuj rekomendację:
-   DATA:  które źródło wiarygodniejsze (hierarchia z REGUŁY EKSTRAKCJI pkt 7) i dlaczego
-   OPIS:  co wyjaśnić, jaki dowód rozstrzygnąłby sprzeczność (konfrontacja, biegły, dokument)
-6. Jeśli wpływ KRYTYCZNY → STOP i poinformuj użytkownika przed kontynuacją analizy
-7. Oznacz oba (lub wszystkie) zdarzenia flagą: kolizja_id = "SPRZECZNOŚĆ-[N]"
-```
-
----
+Siedem kroków od numeracji SPRZECZNOŚĆ-[N] do oznaczenia zdarzeń flagą kolizja_id; wpływ KRYTYCZNY = STOP i informacja do użytkownika.
 
 ## EKSPORT DO PISMA PROCESOWEGO
 
-```
-Na żądanie "eksportuj do pisma" / "uzasadnienie faktyczne" / "sekcja faktów":
-
-FORMAT EKSPORTU — SEKCJA A: FAKTY BEZSPORNE
-"Niespornym jest, że:
-[Numer]. W dniu [data] [podmiot] [zdarzenie]. [brak wskazania dowodu — fakt bezsporny]"
-
-FORMAT EKSPORTU — SEKCJA B: FAKTY UDOWODNIONE
-"[Numer]. W dniu [data] [podmiot] [zdarzenie opisane w czasie przeszłym,
-bezosobowo, bez ocen]. [Dowód: DOK-XX — nazwa dokumentu, str. N]."
-
-FORMAT EKSPORTU — SEKCJA C: FAKTY WYDEDUKOWANE
-"[Numer]. Z materiału dowodowego wynika, że [zdarzenie].
-[Dowód pośredni: DOK-XX (str. N) oraz DOK-YY (str. M) — rozumowanie: ...]"
-
-FORMAT EKSPORTU — SEKCJA D: FAKTY SPORNE
-"[Numer]. Powód twierdzi, że [wersja A]. Pozwany kwestionuje tę okoliczność,
-wskazując, że [wersja B]. [Dowód strony powodowej: DOK-XX. Dowód strony pozwanej: DOK-YY]."
-
-ZASADY:
-✓ Każde zdarzenie = osobny akapit z numerem
-✓ Sekcja A (BEZSPORNE) zawsze pierwsza — skraca pismo i skupia uwagę sądu
-✓ Tylko zdarzenia [BEZSPORNE], [PEWNE] lub [WYDEDUKOWANE z adnotacją] w sekcjach A–C
-✓ Zdarzenia [SPORNE] → wyłącznie sekcja D
-✓ Kolejność: ścisła chronologiczna (od najstarszego) w obrębie każdej sekcji
-✓ Styl: bezosobowy, faktyczny, bez ocen prawnych
-✓ Proweniencja (dok_id + strona) → przy każdym fakcie w sekcjach B i C
-```
+Na żądanie eksportu: sekcje A (bezsporne), B (udowodnione), C (wydedukowane), D (sporne), zasady stylu i kolejności chronologicznej.
+**WCZYTAJ (obowiązkowo, fail-closed):** view chronologia-sprawy-v1/references/reguly-sprzecznosci-eksport.md — przed eksportem.
 
 ---
 

@@ -1,5 +1,7 @@
 # CHANGELOG — dr-06-podatki-finanse-publiczne-aml
 
+- 2026-10-20 refaktor: progressive disclosure — szczegóły etapów przeniesione do references/, SKILL.md 787 -> 217 linii; treść bez zmian.
+
 - 3.99 (2026-10-09g, AUDYT-2026-10-09g): VAT: nowa nowelizacja po t.j. 2026/1263 — Dz.U. 2026 poz. 1270 (od 1.12.2026/1.01.2027, dalsze etapy do 1.07.2028) w MAPA-AKTOW i 10 modułach VAT. ELI 2026-10-09.
 
 - 3.98 (2026-10-09f, AUDYT-2026-10-09f): Doradztwo podatkowe: t.j. Dz.U. 2026 poz. 1274 w module i SKILL.md (było wygasłe 2021/2117); BAZA-AKTOW-OKOLOPODATKOWYCH: VAT t.j. 2026/1263 (było wygasłe 2025/775); odesłanie do `shared/SAMORZADY-ZAWODOWE-DOKUMENTY.md` (KIDP). ELI 2026-10-09.
